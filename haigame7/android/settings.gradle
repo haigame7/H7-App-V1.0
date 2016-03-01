@@ -1,0 +1,3 @@
+rootProject.name = 'haigame7'
+
+include ':app'
