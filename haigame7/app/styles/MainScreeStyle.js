@@ -1,11 +1,15 @@
-import React, {
-  Text,
-  View,
-  Navigator,
-  BackAndroid,
-} from 'react-native';
+/**
+ * Created by wangchenlong on 15/11/29.
+ */
+'use strict';
 
-export default class MainScreeStyle {
+var React = require('react-native');
+
+var {
+  StyleSheet
+  } = React;
+
+var MainScreeStyle = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -22,4 +26,6 @@ export default class MainScreeStyle {
     color: '#333333',
     marginBottom: 5
   }
-}
+});
+
+module.exports = MainScreeStyle;

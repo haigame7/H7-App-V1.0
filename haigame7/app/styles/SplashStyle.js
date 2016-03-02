@@ -1,10 +1,12 @@
 'use strict';
 
-import React, {
-  StyleSheet
-} from 'react-native';
+var React = require('react-native');
 
-export default class SplashStyle {
+var {
+  StyleSheet
+  } = React;
+
+var SplashStyle = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column'
@@ -20,4 +22,6 @@ export default class SplashStyle {
     bottom: 10,
     backgroundColor: 'transparent'
   }
-}
+});
+
+module.exports = SplashStyle;
