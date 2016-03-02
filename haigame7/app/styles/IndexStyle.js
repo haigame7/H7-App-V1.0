@@ -1,12 +1,16 @@
-'use strict'
+'use strict';
 
-import React, {
-  StyleSheet,
-} from 'react-native';
+var React = require('react-native');
 
-export default class IndexStyle {
+var {
+  StyleSheet
+  } = React;
+
+var IndexStyle = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column'
   },
-}
+});
+
+module.exports = IndexStyle;
