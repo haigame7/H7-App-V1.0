@@ -1,10 +1,5 @@
 'use strict';
 
-/**
- * 过场样式
- * 后面可设置多屏操作和面
- * @author aran.hu
- */
 var React = require('react-native');
 
 var {

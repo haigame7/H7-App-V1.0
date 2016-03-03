@@ -1,9 +1,5 @@
 'use strict';
-/**
- * APPs首屏
- * @return {[SplashScreen Component]}
- * @author aran.hu
- */
+
 var React = require('react-native');
 
 var {
