@@ -13,6 +13,7 @@ var {
   Dimensions, // 尺寸
   Animated,   // 动画
   } = React;
+  
 
 var styles = require('../../styles/SplashStyle');
 
