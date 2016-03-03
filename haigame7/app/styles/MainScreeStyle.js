@@ -1,5 +1,5 @@
 /**
- * Created by wangchenlong on 15/11/29.
+ * 主题控件
  */
 'use strict';
 
@@ -11,20 +11,55 @@ var {
 
 var MainScreeStyle = StyleSheet.create({
   container: {
+  },
+  heads: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  bodys:{
     flex: 1,
-    justifyContent: 'center',
+    margin: 0,
+    height,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
+  foots: {
+    height: 40,
+    backgroundColor: '#FF0009',
+    position: 'absolute',
+    overflow: 'hidden',
+    left: 0,
+    right: 0,
+    bottom: 0, 
+  },
+  loginbg:{
+    margin: 0,
+    width,
+    height,
+    padding: 10,
+    alignItems: 'center',
+  },
+  btndefault: {
+    height:40,
+    width: btnwidth,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FF0009',
+  },
+  btnactive: {
+    height:40,
+    width: btnwidth,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0,
+    borderRadius: 2,
+    backgroundColor: '#FFFF00',
+  },
+  btnfont: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
+    color: '#FFFFFF',
   }
 });
 
