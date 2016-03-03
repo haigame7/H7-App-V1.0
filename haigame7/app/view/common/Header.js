@@ -31,6 +31,8 @@ module.exports = React.createClass({
   },
 
   _pop: function(){
-    this.props.navigator.pop();
+    if(this.props.navigator!==undefined){
+     this.props.navigator.pop();  
+    }
   }
 });
