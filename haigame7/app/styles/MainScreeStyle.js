@@ -1,8 +1,11 @@
-/**
- * Created by wangchenlong on 15/11/29.
- */
 'use strict';
 
+/**
+ * 首屏样式
+ * @param  {[type]} 'react-native' [description]
+ * @return {[type]}                [description]
+ * @author aran.hu
+ */
 var React = require('react-native');
 
 var {
