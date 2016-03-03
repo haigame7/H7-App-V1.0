@@ -1,8 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
+
 'use strict';
+
+/**
+ * [APP入口]
+ * @author aran.hu
+ */
 var React = require('react-native');
 var {
   Text,
@@ -27,9 +29,13 @@ BackAndroid.addEventListener('hardwareBackPress', function () {
   return false;
 });
 
+
 var haigame7 = React.createClass({
    mixins: [TimerMixin], // 延迟器
 
+   const mapStateToProps = state => ({
+     router: state.router,
+   });
    // 初始化状态
    getInitialState: function () {
      return {
@@ -46,9 +52,15 @@ var haigame7 = React.createClass({
     },
 
     // 线路映射
+    /**
+     * [routeMapper description]
+     * @param  {[type]} route:     Map           [router parameter]
+     * @param  {[type]} navigator: Navigator     [navigator compoent]
+     * @return {[type]}            [description]
+     * http://www.cnblogs.com/flyingzl/articles/4913693.html 后面按照这个改就行
+     */
     routeMapper: function (route: Map, navigator: Navigator) {
       _navigator = navigator;
-
       if (route.name === 'home') {
         return (
           <View style={IndexStyle.container}>
