@@ -12,6 +12,7 @@ var {
   Navigator,
   BackAndroid,
   AppRegistry,
+  Component
 } = React;
 
 var IndexStyle = require('./app/styles/IndexStyle'); // 样式
@@ -21,22 +22,18 @@ var MainScreen = require('./app/view/common/MainScreen'); // 主屏
 var _navigator; // 页面管理器
 
 // 后退按钮 Android
-BackAndroid.addEventListener('hardwareBackPress', function () {
-  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
-    _navigator.pop();
-    return true;
-  }
-  return false;
-});
+// BackAndroid.addEventListener('hardwareBackPress', function () {
+//   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+//     _navigator.pop();
+//     return true;
+//   }
+//   return false;
+// });
 
 
 var haigame7 = React.createClass({
-   mixins: [TimerMixin], // 延迟器
-
-   const mapStateToProps = state => ({
-     router: state.router,
-   });
-   // 初始化状态
+   //mixins: [TimerMixin], // 延迟器 可以不用这个了 官网可以改成es6的方式
+  //  // 初始化状态
    getInitialState: function () {
      return {
        splashed: true
@@ -45,9 +42,10 @@ var haigame7 = React.createClass({
    // 页面加载
   componentDidMount: function () {
     //mixin fun
-    this.setTimeout(
+    this.timer = setTimeout(
       ()=> {
         this.setState({splashed: false});
+        console.log('生效啦');
       }, 2000);
     },
 
