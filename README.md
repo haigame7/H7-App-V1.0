@@ -1,6 +1,6 @@
 # H7-App-V1.0
 
-氦7互娱 Project For Ios&amp;Android 
+氦7互娱 App For Ios&amp;Android 
 
 ## 开发环境版本
 * Python 2.7.10
