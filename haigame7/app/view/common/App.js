@@ -1,14 +1,18 @@
 import React, { Component, View, Text, ScrollView } from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
-var Header = require('./Header'); // 主屏
-var MainScreen = require('./MainScreen'); // 主屏
+var Header = require('./header'); // 主屏
+var Match  = require('../match.js');
+var Fight  = require('../fight.js');
+var Team  = require('../team.js');
+var Rank  = require('../rank.js');
+var User  = require('../user.js');
 const glypy = glypyMapMaker({
-  Home: 'e900',
-  Enshrine: 'e901',
-  Message: 'e902',
-  Fight: 'e903',
-  Favorite: 'e904'
+  Match: 'e900',
+  Fight: 'e901',
+  Team: 'e902',
+  Rank: 'e903',
+  User: 'e904'
 });
 
 export default class App extends Component {
@@ -51,46 +55,64 @@ export default class App extends Component {
   render() {
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
-        <Tab name="收藏">
-          <IconWithBar label="收藏" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Enshrine} from={'Cochin'}/>
+        <Tab name="赛事">
+          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} from={'Cochin'}/>
           <RawContent>
           <View>
-          <Header initObj={{
-          title:'Main',
-          backName:'',
-         }}   navigator={this.props.navigator}></Header>
-         <MainScreen/>
+           <Header initObj={{
+           title:'赛事',
+           backName:'',
+           }}   navigator={this.props.navigator}></Header>
+           <Match/>
           </View>
           </RawContent>
         </Tab>
         <Tab name="约战" >
           <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} from={'Cochin'}/>
-          <RawContent >
-            <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent:'center' }}>
-              <Text onPress={()=>console.log('camera')}>Camera</Text>
-            </View>
+          <RawContent>
+          <View>
+           <Header initObj={{
+           title:'约战',
+           backName:'',
+           }}   navigator={this.props.navigator}></Header>
+           <Fight/>
+          </View>
           </RawContent>
         </Tab>
-        <Tab name="消息">
-          <IconWithBar label="消息" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Message} from={'Cochin'}/>
+        <Tab name="组队">
+          <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} from={'Cochin'}/>
           <RawContent>
-            <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent:'center' }}>
-              <Text onPress={()=>console.log('stats')}>Stats</Text>
-            </View>
+          <View>
+           <Header initObj={{
+           title:'组队',
+           backName:'',
+           }}   navigator={this.props.navigator}></Header>
+           <Team/>
+          </View>
           </RawContent>
         </Tab>
-        <Tab name="favorite">
-          <IconWithBar label="Fav" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Favorite} from={'Cochin'}/>
+        <Tab name="排行">
+          <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} from={'Cochin'}/>
           <RawContent>
-            <Text onPress={()=>console.log('stats')}>Stats</Text>
+          <View>
+           <Header initObj={{
+           title:'排行',
+           backName:'',
+           }}   navigator={this.props.navigator}></Header>
+           <Rank/>
+          </View>
           </RawContent>
         </Tab>
         <Tab name="我的">
-          <IconWithBar label="我的" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Home} from={'Cochin'}/>
+          <IconWithBar label="我的" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.User} from={'Cochin'}/>
           <RawContent>
-            <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent:'center' }}>
-              <Text onPress={()=>console.log('settings')}>Settings</Text>
-            </View>
+          <View>
+           <Header initObj={{
+           title:'我的',
+           backName:'',
+           }}   navigator={this.props.navigator}></Header>
+           <User/>
+          </View>
           </RawContent>
         </Tab>
       </Tabbar>

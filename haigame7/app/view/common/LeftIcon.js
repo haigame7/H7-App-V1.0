@@ -1,6 +1,6 @@
 var React = require('react-native');
 
-var HeaderStyle = require('../../styles/HeaderStyle');
+var CommonStyle = require('../../styles/commonstyle');
 var {
   StyleSheet,
   Text,
@@ -11,7 +11,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <View>
-        <View style={HeaderStyle.go}>
+        <View style={CommonStyle.headerGo}>
         </View>
       </View>
     );
