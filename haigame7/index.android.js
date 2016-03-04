@@ -38,6 +38,7 @@ var haigame7 = React.createClass({
    },
    // 页面加载
   componentDidMount: function () {
+    //mixin fun
     this.setTimeout(
       ()=> {
         this.setState({splashed: false});
