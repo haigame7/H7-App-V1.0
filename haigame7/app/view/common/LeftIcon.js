@@ -6,7 +6,7 @@ var {
   Text,
   View
   } = React;
-
+//
 module.exports = React.createClass({
   render: function(){
     return (
