@@ -10,10 +10,16 @@ import React, {
   Text,
   View
 } from 'react-native';
+var Header = require('./app/view/common/Header'); // 主屏
 
 class haigame7 extends Component {
   render() {
     return (
+      <View>
+        <Header initObj={{
+        title:'首页',
+        backName:'',
+      }}   navigator={this.props.navigator}></Header>
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to React Native!
@@ -25,6 +31,7 @@ class haigame7 extends Component {
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
+      </View>
       </View>
     );
   }
