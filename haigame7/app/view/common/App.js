@@ -6,11 +6,13 @@ var Match  = require('../match.js');
 var Fight  = require('../fight.js');
 var Team  = require('../team.js');
 var Rank  = require('../rank.js');
+var User  = require('../user.js');
 const glypy = glypyMapMaker({
   Match: 'e900',
   Fight: 'e901',
   Team: 'e902',
   Rank: 'e903',
+  User: 'e904'
 });
 
 export default class App extends Component {
@@ -93,7 +95,18 @@ export default class App extends Component {
           </View>
           </RawContent>
         </Tab>
-
+        <Tab name="我的">
+          <IconWithBar label="我的" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.User} from={'Cochin'}/>
+          <RawContent>
+          <View>
+           <Header initObj={{
+           title:'我的',
+           backName:'',
+           }}   navigator={this.props.navigator}></Header>
+           <User navigator={this.props.navigator}/>
+          </View>
+          </RawContent>
+        </Tab>
       </Tabbar>
     );
   }

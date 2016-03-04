@@ -3,8 +3,6 @@ var Icon = require('./lefticon');
 var Util = require('./util');
 
 var CommonStyle = require('../../styles/commonstyle');
-var User = require('../user');
-
 
 var {
   StyleSheet,
@@ -19,26 +17,22 @@ var {
 module.exports = React.createClass({
   render: function(){
     var obj = this.props.initObj;
-
     return (
-
       <View style={[CommonStyle.header, CommonStyle.headerRow, CommonStyle.headerCenter]}>
-         <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
-           <Text style={[CommonStyle.headerFontFFF, CommonStyle.headerTitlePos]} numberOfLines={1}>{obj.title}</Text>
-         </View>
-         <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._user}>
-          <Image style={CommonStyle.headerImage}  source={{uri: 'http://images.haigame7.com/common/avator.png'}} />
-         </TouchableOpacity>
+        <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pop}>
+          <Icon/>
+          <Text style={CommonStyle.headerFontFFF}>{obj.backName}</Text>
+        </TouchableOpacity>
+        <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
+          <Text style={[CommonStyle.headerFontFFF, CommonStyle.headerTitlePos]} numberOfLines={1}>{obj.title}</Text>
+        </View>
       </View>
     );
   },
 
-
-  _user: function(){
-
-  console.log( this.props.navigator);
-   this.props.navigator.push({
-      component: User,
-     });
+  _pop: function(){
+    if(this.props.navigator!==undefined){
+     this.props.navigator.pop();
+    }
   }
 });
