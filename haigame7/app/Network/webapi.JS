@@ -4,6 +4,7 @@ import GlobalSetup from '../constants/GlobalSetup'
 getApiPath() {
 	return GlobalSetup.API_PATH;
 }
+
 function api(api, v){
 	if(v instanceof Object){
 		var p = Object.keys(v).map(function(k) {
