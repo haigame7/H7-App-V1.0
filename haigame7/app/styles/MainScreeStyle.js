@@ -11,6 +11,7 @@ var {
 
 var MainScreeStyle = StyleSheet.create({
   container: {
+    flex: 1,
   },
   heads: {
     height: 40,
@@ -18,7 +19,6 @@ var MainScreeStyle = StyleSheet.create({
     borderColor: 'red',
   },
   bodys:{
-    flex: 1,
     margin: 0,
     height,
     alignItems: 'center',
@@ -32,25 +32,56 @@ var MainScreeStyle = StyleSheet.create({
     right: 0,
     bottom: 0, 
   },
-  loginbg:{
-    margin: 0,
-    width,
-    height,
-    padding: 10,
-    alignItems: 'center',
+  row: {
+    height:20,
+    width: width - 72,
+    justifyContent: 'center',
+    marginTop: 20,
+    flexDirection: 'row',
   },
-  btndefault: {
+  col1: {
+    flex: 1,
+    height: 20,
+  },
+  col2: {
+    flex: 2,
+    height: 20,
+  },
+  col3: {
+    flex: 3,
+    height: 20,
+  },
+  left: {
+    textAlign: 'left',
+  },
+  right: {
+    textAlign: 'right',
+  },
+  relative: {
+    position: 'relative',
+  },
+  absolute: {
+    position: 'absolute',
+  },
+  white: {
+    color: 'white',
+  },
+  blue: {
+    color: 'blue',
+  },
+  btn: {
     height:40,
-    width: btnwidth,
+    width: width - 72,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0,
     borderRadius: 2,
-    backgroundColor: '#FF0009',
+    backgroundColor: '#D31B25',
+    marginTop: 20,
   },
   btnactive: {
     height:40,
-    width: btnwidth,
+    width: width - 72,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0,
@@ -60,7 +91,21 @@ var MainScreeStyle = StyleSheet.create({
   btnfont: {
     fontSize: 20,
     color: '#FFFFFF',
-  }
+  },
+  input: {
+    height:40,
+    width: width - 72,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#D31B25',
+    borderRadius: 3,
+    marginTop: 20,
+  },
+  inputfont: {
+    color: '#000000',
+    opacity: 1,
+  },
 });
 
 module.exports = MainScreeStyle;
