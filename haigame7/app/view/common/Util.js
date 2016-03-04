@@ -6,7 +6,7 @@
  */
 var React = require('react-native');
 var Dimensions = require('Dimensions');
-//
+
 var {
   PixelRatio,
   ActivityIndicatorIOS
