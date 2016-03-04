@@ -5,7 +5,7 @@
  * @author aran.hu
  */
 var React = require('react-native');
-
+var Header = require('./common/headernav'); // 主屏
 var {
   View,
   Text,
@@ -48,6 +48,10 @@ var User = React.createClass({
   render: function () {
     return (
       <View >
+      <Header initObj={{
+      title:'个人中心',
+      backName:'返回',
+      }}   navigator={this.props.navigator}></Header>
         <Text >
           User Screen.
         </Text>

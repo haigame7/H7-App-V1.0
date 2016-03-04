@@ -59,10 +59,8 @@ export default class App extends Component {
           <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} from={'Cochin'}/>
           <RawContent>
           <View>
-           <Header initObj={{
-           title:'赛事',
-           backName:'',
-           }}   navigator={this.props.navigator}></Header>
+          <Header initObj={{title:'赛事',}}  
+           navigator={this.props.navigator}></Header>
            <Match/>
           </View>
           </RawContent>
@@ -71,10 +69,8 @@ export default class App extends Component {
           <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} from={'Cochin'}/>
           <RawContent>
           <View>
-           <Header initObj={{
-           title:'约战',
-           backName:'',
-           }}   navigator={this.props.navigator}></Header>
+          <Header initObj={{title:'约战',}}
+           navigator={this.props.navigator}></Header>
            <Fight/>
           </View>
           </RawContent>
@@ -83,10 +79,8 @@ export default class App extends Component {
           <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} from={'Cochin'}/>
           <RawContent>
           <View>
-           <Header initObj={{
-           title:'组队',
-           backName:'',
-           }}   navigator={this.props.navigator}></Header>
+           <Header initObj={{title:'组队',}}
+            navigator={this.props.navigator}></Header>
            <Team/>
           </View>
           </RawContent>
@@ -95,10 +89,8 @@ export default class App extends Component {
           <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} from={'Cochin'}/>
           <RawContent>
           <View>
-           <Header initObj={{
-           title:'排行',
-           backName:'',
-           }}   navigator={this.props.navigator}></Header>
+           <Header initObj={{title:'排行',}}
+           navigator={this.props.navigator}></Header>
            <Rank/>
           </View>
           </RawContent>
