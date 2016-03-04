@@ -111,7 +111,7 @@ export default class App extends Component {
            title:'我的',
            backName:'',
            }}   navigator={this.props.navigator}></Header>
-           <User/>
+           <User navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>

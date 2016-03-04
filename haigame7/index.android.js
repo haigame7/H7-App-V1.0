@@ -97,8 +97,25 @@ var {
 // AppRegistry.registerComponent('haigame7', () => haigame7);
 //
 import App from './app/view/common/App';
-var Header = require('./app/view/common/Header'); // 主屏
+// var Header = require('./app/view/common/Header'); // 主屏
+
+class haigame7 extends Component {
+  render() {
+      var defaultName = 'AppComponent';
+      var defaultComponent = App;
+      return (
+        <Navigator
+          initialRoute={{ name: defaultName,component: defaultComponent }}
+          configureScene={(route) => {
+            return Navigator.SceneConfigs.VerticalDownSwipeJump;
+          }}
+          renderScene={(route, navigator) => {
+            let Component  = route.component;
+            return <Component {...route.params} navigator={navigator} />
+          }}/>
+      );
+    }
+}
 
 
-
-AppRegistry.registerComponent('haigame7', () => App);
+AppRegistry.registerComponent('haigame7', () => haigame7);
