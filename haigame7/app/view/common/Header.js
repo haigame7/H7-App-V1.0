@@ -18,7 +18,7 @@ module.exports = React.createClass({
   render: function(){
     var obj = this.props.initObj;
     return (
-      <View style={[CommonStyle.header, CommonStyle.headeRow, CommonStyle.headerCenter]}>
+      <View style={[CommonStyle.header, CommonStyle.headerRow, CommonStyle.headerCenter]}>
         <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pop}>
           <Icon/>
           <Text style={CommonStyle.headerFontFFF}>{obj.backName}</Text>
