@@ -14,20 +14,29 @@ var CommonStyle = StyleSheet.create({
       height:15,
       transform: [{rotate: '45deg'}],
       borderColor:'#FFF',
-      marginLeft:10
+      marginLeft:10,
+      marginTop:20,
     },
     headerRow:{
      flexDirection:'row'
     },
     header:{
-     height:50,
+     height:65,
      backgroundColor:'rgb(240, 12, 12)'
     },
     headerFontFFF:{
      color:'#fff',
      fontSize:17,
+     marginTop:20,
+     marginRight:-20,
      fontWeight:'bold'
     },
+    headerImage:{
+    width: 20,
+    height: 20,
+    marginRight:10,
+    marginTop:20
+   },
     headerTitle:{
      flex:1
     },

@@ -19,7 +19,8 @@ var IndexStyle = require('./app/styles/IndexStyle'); // 样式
 var TimerMixin = require('react-timer-mixin'); // RN的计时器
 var SplashScreen = require('./app/view/common/SplashScreen'); // 飞屏
 var MainScreen = require('./app/view/common/MainScreen'); // 主屏
-var Header = require('./app/view/common/Header'); // 主屏
+//var Header = require('./app/view/common/Header'); // 主屏
+import App from './app/view/common/app';
 var _navigator; // 页面管理器
 
 // 后退按钮 Android
@@ -94,4 +95,4 @@ var haigame7 = React.createClass({
       }
 });
 
-AppRegistry.registerComponent('haigame7', () => haigame7);
+AppRegistry.registerComponent('haigame7', () => App);

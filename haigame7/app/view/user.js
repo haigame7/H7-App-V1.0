@@ -1,6 +1,6 @@
 'use strict';
 /**
- * APPs我的首页
+ * APPs我入口文件
  * @return {[SplashScreen Component]}
  * @author aran.hu
  */
