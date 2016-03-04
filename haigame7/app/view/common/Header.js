@@ -1,8 +1,8 @@
 var React = require('react-native');
-var Icon = require('./LeftIcon');
-var Util = require('./Util');
+var Icon = require('./lefticon');
+var Util = require('./util');
 
-var HeaderStyle = require('../../styles/HeaderStyle');
+var CommonStyle = require('../../styles/commonstyle');
 
 var {
   StyleSheet,
@@ -18,13 +18,13 @@ module.exports = React.createClass({
   render: function(){
     var obj = this.props.initObj;
     return (
-      <View style={[HeaderStyle.header, HeaderStyle.row, HeaderStyle.center]}>
-        <TouchableOpacity style={[HeaderStyle.row,HeaderStyle.center]} onPress={this._pop}>
+      <View style={[CommonStyle.header, CommonStyle.headeRow, CommonStyle.headerCenter]}>
+        <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pop}>
           <Icon/>
-          <Text style={HeaderStyle.fontFFF}>{obj.backName}</Text>
+          <Text style={CommonStyle.headerFontFFF}>{obj.backName}</Text>
         </TouchableOpacity>
-        <View style={[HeaderStyle.title, HeaderStyle.center]}>
-          <Text style={[HeaderStyle.fontFFF, HeaderStyle.titlePos]} numberOfLines={1}>{obj.title}</Text>
+        <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
+          <Text style={[CommonStyle.headerFontFFF, CommonStyle.headerTitlePos]} numberOfLines={1}>{obj.title}</Text>
         </View>
       </View>
     );
@@ -32,7 +32,7 @@ module.exports = React.createClass({
 
   _pop: function(){
     if(this.props.navigator!==undefined){
-     this.props.navigator.pop();  
+     this.props.navigator.pop();
     }
   }
 });

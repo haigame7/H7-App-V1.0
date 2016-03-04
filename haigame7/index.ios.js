@@ -10,8 +10,7 @@ import React, {
   Text,
   View
 } from 'react-native';
-import App from './app/view/common/App';
-var Header = require('./app/view/common/Header'); // 主屏
+import App from './app/view/common/app';
 
 
 

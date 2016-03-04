@@ -1,7 +1,7 @@
 import React, { Component, View, Text, ScrollView } from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
-var Header = require('./Header'); // 主屏
+var Header = require('./header'); // 主屏
 var MainScreen = require('./MainScreen'); // 主屏
 const glypy = glypyMapMaker({
   Home: 'e900',
