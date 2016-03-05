@@ -96,7 +96,7 @@ var {
 //
 // AppRegistry.registerComponent('haigame7', () => haigame7);
 //
-import App from './app/view/common/App';
+import App from './app/view/common/app';
 // var Header = require('./app/view/common/Header'); // 主屏
 
 class haigame7 extends Component {
