@@ -38,6 +38,7 @@ export default class extends Component {
   }
 
   renderScene(route, navigator) {
+    console.log('&&&&&&&&&&&');
     _navigator = navigator;
     switch (route.name) {
       case 'register':

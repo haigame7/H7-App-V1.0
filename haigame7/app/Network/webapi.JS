@@ -39,6 +39,17 @@ function getTopic(id){
 	return api('topics/'+id+'.json');
 }
 
+
+
+/*************
+ * User Auth *
+ *
+ *************/
+
+register_api() {
+	return ''
+}
+
 module.exports = {
 	Nodes: getNodes,
 	HomeTopics: getHomeTopics,

@@ -121,8 +121,11 @@ export default class extends Component {
   }
 
   gotoRoute(name) {
+    // console.log(this.props.navigator.push);
+    // console.log(this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name);
+    // console.log('******');
     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-      this.props.navigator.push({name: name});
+      this.props.navigator.push({name: name,component: Register,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
     }
   }
 
