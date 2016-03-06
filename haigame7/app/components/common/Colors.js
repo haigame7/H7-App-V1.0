@@ -8,6 +8,7 @@
 const  React = require('react-native');
 const { processColor } = React;
 
+//
 const colors = {
 	lineGray: '#F0F0F0',
 	green: '#80BD01',

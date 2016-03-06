@@ -1,2 +1,13 @@
 'use strict';
-s
+
+import FecthService from './fetchservice'
+export default class{
+  constructor() {
+    super();
+  }
+
+  register(data) {
+    FecthService.doFecth()
+  }
+
+}
