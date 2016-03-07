@@ -31,6 +31,12 @@ var CommonStyle = StyleSheet.create({
      marginRight:-25,
      marginTop:20,
     },
+    headerFontFFFNav:{
+     color:'#fff',
+     fontSize:19,
+     fontWeight:'bold',
+     marginTop:20,
+    },
     headerTitle:{
      flex:1
     },
