@@ -11,13 +11,13 @@ import React, {
   ToastAndroid
 } from 'react-native';
 
-import api from './server';
-import styles from './style';
+import styles from '../../styles/userstyle';
+import api, {host, key} from './server';
+import Header from '../common/headernav';
 
 export default class extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       data: {
              name: undefined,

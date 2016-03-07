@@ -22,7 +22,7 @@
  import styles from '../../styles/userstyle';
  import api, {host, key} from './server';
  import Register from './registerscreen';
- import Header from '../common/headernav'
+ import Header from '../common/headernav';
 
  export default class extends Component {
    constructor(props) {
@@ -45,9 +45,6 @@
      ];
      return (
      <View style={{ flex: 1 }}>
-       <TouchableOpacity activeOpacity={1} >
-
-       </TouchableOpacity>
        <View style={styles.bgImageWrapper}>
         <Image source={{uri:'http://sso.haigame7.com/images/banner9.jpg'}} style={styles.bgImage} />
      </View>
@@ -62,7 +59,7 @@
          <View key={'email'} style={styles.inputContainer}>
            <TextInput {...fields[0]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.email = text} />
          </View>
-         <View key={'password'} style={styles.inputContainer}>
+         <View key={'password'} style={styles.inputContainerSecond}>
            <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[1]})} onChangeText={(text) => this.state.data.password = text} />
          </View>
 
