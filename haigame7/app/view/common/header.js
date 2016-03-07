@@ -4,6 +4,7 @@ var Util = require('./util');
 
 var CommonStyle = require('../../styles/commonstyle');
 
+
 var {
   StyleSheet,
   Text,
@@ -19,13 +20,12 @@ module.exports = React.createClass({
     var obj = this.props.initObj;
     return (
       <View style={[CommonStyle.header, CommonStyle.headerRow, CommonStyle.headerCenter]}>
-        <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pop}>
-          <Icon/>
-          <Text style={CommonStyle.headerFontFFF}>{obj.backName}</Text>
-        </TouchableOpacity>
         <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
           <Text style={[CommonStyle.headerFontFFF, CommonStyle.headerTitlePos]} numberOfLines={1}>{obj.title}</Text>
         </View>
+        <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pop}>
+          <Image source={{uri:'http://images.haigame7.com/common/avator.png'}}  style={CommonStyle.headerImage}/>
+        </TouchableOpacity>
       </View>
     );
   },
@@ -34,5 +34,6 @@ module.exports = React.createClass({
     if(this.props.navigator!==undefined){
      this.props.navigator.pop();
     }
-  }
+  },
+
 });

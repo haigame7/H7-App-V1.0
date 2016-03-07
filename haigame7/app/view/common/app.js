@@ -59,7 +59,7 @@ export default class App extends Component {
           <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} from={'Cochin'}/>
           <RawContent>
           <View>
-          <Header initObj={{title:'赛事',}}  
+          <Header initObj={{title:'赛事',}}
            navigator={this.props.navigator}></Header>
            <Match/>
           </View>
@@ -92,18 +92,6 @@ export default class App extends Component {
            <Header initObj={{title:'排行',}}
            navigator={this.props.navigator}></Header>
            <Rank/>
-          </View>
-          </RawContent>
-        </Tab>
-        <Tab name="我的">
-          <IconWithBar label="我的" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.User} from={'Cochin'}/>
-          <RawContent>
-          <View>
-           <Header initObj={{
-           title:'我的',
-           backName:'',
-           }}   navigator={this.props.navigator}></Header>
-           <User navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>

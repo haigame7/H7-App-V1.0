@@ -20,13 +20,15 @@ var CommonStyle = StyleSheet.create({
      flexDirection:'row'
     },
     header:{
-    //  height:50,
+     height:70,
      backgroundColor:'rgb(240, 12, 12)'
     },
     headerFontFFF:{
      color:'#fff',
-     fontSize:17,
-     fontWeight:'bold'
+     fontSize:19,
+     fontWeight:'bold',
+     marginRight:-25,
+     marginTop:20,
     },
     headerTitle:{
      flex:1
@@ -35,6 +37,12 @@ var CommonStyle = StyleSheet.create({
      textAlign:'center',
      marginLeft:-20,
     //  width:200
+    },
+    headerImage:{
+      width:25,
+      height:25,
+      marginRight:10,
+      marginTop:20,
     },
     headerCenter:{
      justifyContent:'center',
