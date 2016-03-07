@@ -18,7 +18,7 @@ var {
 
 var UserStyle = require('../styles/userstyle');
 import SecondPageComponent from './common/SecondPageComponent';
-import Login from './common/register/login';
+import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
 import Gwdemo from '../../temp/gwdemo';

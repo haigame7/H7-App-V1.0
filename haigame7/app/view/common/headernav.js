@@ -25,7 +25,7 @@ module.exports = React.createClass({
 
         </TouchableOpacity>
         <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
-          <Text style={[CommonStyle.headerFontFFF]} numberOfLines={1}>{obj.title}</Text>
+          <Text style={[CommonStyle.headerFontFFFNav]} numberOfLines={1}>{obj.title}</Text>
         </View>
       </View>
     );
