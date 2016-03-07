@@ -22,10 +22,10 @@ module.exports = React.createClass({
       <View style={[CommonStyle.header, CommonStyle.headerRow, CommonStyle.headerCenter]}>
         <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pop}>
           <Icon/>
-          <Text style={CommonStyle.headerFontFFF}>{obj.backName}</Text>
+
         </TouchableOpacity>
         <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
-          <Text style={[CommonStyle.headerFontFFFNav, CommonStyle.headerTitlePos]} numberOfLines={1}>{obj.title}</Text>
+          <Text style={[CommonStyle.headerFontFFF]} numberOfLines={1}>{obj.title}</Text>
         </View>
       </View>
     );
@@ -34,4 +34,5 @@ module.exports = React.createClass({
   _pop: function(){
     this.props.navigator.pop();
   }
+
 });

@@ -1,7 +1,7 @@
 var React = require('react-native');
 var Icon = require('./lefticon');
 var Util = require('./util');
-
+var User = require('../user');
 var CommonStyle = require('../../styles/commonstyle');
 
 
@@ -23,7 +23,7 @@ module.exports = React.createClass({
         <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
           <Text style={[CommonStyle.headerFontFFF, CommonStyle.headerTitlePos]} numberOfLines={1}>{obj.title}</Text>
         </View>
-        <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pop}>
+        <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pushroute}>
           <Image source={{uri:'http://images.haigame7.com/common/avator.png'}}  style={CommonStyle.headerImage}/>
         </TouchableOpacity>
       </View>
@@ -35,5 +35,8 @@ module.exports = React.createClass({
      this.props.navigator.pop();
     }
   },
+  _pushroute:function(){
+    this.props.navigator.push({component:User});
+  }
 
 });
