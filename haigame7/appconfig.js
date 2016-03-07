@@ -4,4 +4,5 @@ var config = {
   'GithubClientSecret': 'YOUR_GITHUB_SECRET',
   "scopes": ['public_repo', 'user', 'notifications'],
   'userAgent': 'GithubFeed',
+  
 }

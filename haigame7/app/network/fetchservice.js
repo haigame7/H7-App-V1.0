@@ -7,10 +7,9 @@ import React, {
   Text,
   View
 } from 'react-native';
-
 //import GlobalSetup from '../constants/GlobalSetup';
 /** 网络请求 */
-export default class FetchService {
+export default class{
 
   constructor() {
     super();

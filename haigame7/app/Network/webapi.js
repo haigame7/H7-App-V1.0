@@ -4,6 +4,7 @@ import GlobalSetup from '../constants/GlobalSetup'
 getApiPath() {
 	return GlobalSetup.API_PATH;
 }
+
 function api(api, v){
 	if(v instanceof Object){
 		var p = Object.keys(v).map(function(k) {
@@ -36,6 +37,17 @@ function getNodeTopics(node_id, offset, limit){
 
 function getTopic(id){
 	return api('topics/'+id+'.json');
+}
+
+
+
+/*************
+ * User Auth *
+ *
+ *************/
+
+register_api() {
+	return ''
 }
 
 module.exports = {
