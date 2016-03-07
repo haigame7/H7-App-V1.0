@@ -32,7 +32,7 @@ export default class{
   }
 
 /**
- * Fecth Request
+ * Post Fecth Request
  * @param  {[string]} url=''            [Request Url]
  * @param  {[map]} params_map=new Map() [Params Map] e.g {'name','aran.hu'}
  * @return {
@@ -41,7 +41,7 @@ export default class{
  * }
  * @author aran.hu
  */
-  doFecth(url='',params_map=new Map()) {
+  postFecth(url='',params_map=new Map()) {
     return(
       //console.log(params_map === null); //这个new出来的是个啥
       if(url === '' || params_map === null){
@@ -73,6 +73,26 @@ export default class{
         console.log(JSON.parse(error));
         throw new Error(error);
       })
+      .done()
     )
   }
+
+  /**
+   * Get Fetch Request
+   * @param  {[type]} url: string        [请求URL]
+   * @return {[type]}      [description]
+   */
+  getFetch(url: string) {
+    fetch(url)
+    .then((response) => response.json())
+    .then((responseText) =>{
+      return responseText;
+    })
+    .catch((error) => {
+      console.log(JSON.parse(error));
+      throw new Error(error);
+    })
+    .done()
+  }
+
 }
