@@ -10,10 +10,11 @@ var CommonStyle = StyleSheet.create({
     headerGo:{
       borderLeftWidth: 4 * Util.pixel,
       borderBottomWidth: 4 * Util.pixel,
-      // width:15,
-      // height:15,
+       width:15,
+       height:15,
       transform: [{rotate: '45deg'}],
       borderColor:'#FFF',
+      marginTop:15,
       marginLeft:10
     },
     headerRow:{
