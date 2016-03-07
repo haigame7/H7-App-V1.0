@@ -11,7 +11,15 @@ import React, {
   View
 } from 'react-native';
 import App from './app/view/common/app';
+import Navigator from './app/view/common/navigation';
 
 
+class haigame7 extends Component {
 
-AppRegistry.registerComponent('haigame7', () => App);
+  render(){
+   return(
+     <Navigator component={App} />
+   );
+  }
+}
+AppRegistry.registerComponent('haigame7', () => haigame7);
