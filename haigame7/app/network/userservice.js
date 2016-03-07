@@ -1,17 +1,20 @@
 'use strict';
 
-import FecthService from './fetchservice'
-export default class{
-  constructor() {
-    super();
-  }
-
+import FecthService from './fetchservice';
+import {ToastAndroid} from 'react-native';
+import ApiConfig from '../constants/apiconfig';
+export default{
   register(data) {
-    FecthService.doFecth()
-  }
+    // FecthService.doFecth();
+  },
+  getVerifiCode(phone) {
+      // ToastAndroid.show(phone, ToastAndroid.SHORT);
+      var result = FecthService.postFecth(ApiConfig.USER_API.GETVERIFYCODE1,{'PhoneNumber':phone});
+      console.log(result.Message);
+      // ToastAndroid.show(GlobalSetup.API_CONFIG.API_PATH, ToastAndroid.SHORT);
+  },
 
-
-  _urlForQueryAndPage: function(query: string, pageNumber: number): string {
+  _urlForQueryAndPage(query: string, pageNumber: number): string {
     // var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     // if (query) {
     //   return (
@@ -25,5 +28,5 @@ export default class{
     //     '&page_limit=20&page=' + pageNumber
     //   );
     // }
-  }
+  },
 }

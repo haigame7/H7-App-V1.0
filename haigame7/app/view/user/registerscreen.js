@@ -12,6 +12,7 @@ import React, {
 } from 'react-native';
 
 import styles from '../../styles/registerstyle';
+import UserService from '../../network/userservice';
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +51,7 @@ export default class extends Component {
     console.log(this.state.loading);
     if (this.state.loading) {
       ToastAndroid.show('Please Wait . . .', ToastAndroid.SHORT);
+      //网络访问请求
       return null;
     }
 
@@ -60,11 +62,13 @@ export default class extends Component {
     argument.map((val, key) => {
       if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
     });
-    
+
   }
-
+  _getVerifiCode() {
+// ToastAndroid.show(this.refs['registerFormC'][''], ToastAndroid.SHORT);
+    UserService.getVerifiCode(this.state.data.phone)
+  }
   render() {
-
     let fields = [
       {ref: 'phone', placeholder: '手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
       {ref: 'password', placeholder: '密码',keyboardType: 'default', secureTextEntry: false, message: '* 密码必填', style: [styles.inputText]},
@@ -83,13 +87,16 @@ export default class extends Component {
           <TextInput {...fields[0]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phone = text} />
         </View>
         <View key={'password'} style={styles.inputContainer}>
-          <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phone = text} />
+          <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[1]})} onChangeText={(text) => this.state.data.password = text} />
         </View>
         <View key={'passwordd'} style={styles.inputContainer}>
-          <TextInput {...fields[2]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phone = text} />
+          <TextInput {...fields[2]} onFocus={() => this.onFocus({...fields[2]})} onChangeText={(text) => this.state.data.passwordd = text} />
         </View>
         <View key={'securitycode'} style={styles.inputContainer}>
-          <TextInput {...fields[3]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phone = text} />
+          <TextInput {...fields[3]} onFocus={() => this.onFocus({...fields[3]})} onChangeText={(text) => this.state.data.securitycode = text} />
+          <TouchableOpacity onPress={this._getVerifiCode.bind(this)}>
+            <Text>获取验证码</Text>
+          </TouchableOpacity>
         </View>
         <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.onSubmit(fields)}>
           <Text style={styles.buttonText}>{this.state.loading ? 'Please Wait . . .' : 'Submit'}</Text>

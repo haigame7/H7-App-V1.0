@@ -82,6 +82,7 @@ export default class extends Component {
     }
   }
 
+//这个方法干啥
   onFocus(argument) {
     setTimeout(() => {
       let scrollResponder = this.refs.registerFormC.getScrollResponder();

@@ -5,17 +5,12 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View
+  View,
+  ToastAndroid
 } from 'react-native';
-//import GlobalSetup from '../constants/GlobalSetup';
+import GlobalSetup from '../constants/globalsetup';
 /** 网络请求 */
-export default class{
-
-  constructor() {
-    super();
-  }
-
-
+export default{
   /*************************
    * 请求头                 *
    * @return {TokenHeader] *
@@ -25,11 +20,33 @@ export default class{
     let tHeader = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'User-Agent': ''
     }
-    console.log('token header is:' + JSON.stringify(tHeader));
+    // console.log('token header is:' + JSON.stringify(tHeader));
     return tHeader;
-  }
+  },
+
+  /**
+   * Get 方法可以
+   * @param  {[type]} api [path]
+   * @param  {[type]} v   [params]
+   * @return {[type]}     [description]
+   */
+  _api(api, v){
+  	if(v instanceof Object){
+  		var p = Object.keys(v).map(function(k) {
+  			return encodeURIComponent(k) + "=" + encodeURIComponent(v[k]);
+  		}).join('&');
+  	}else if(v){
+  		var p = v;
+
+    }else{
+      var p ='';
+  	}
+    // var _url = GlobalSetup.API_CONFIG.API_PATH + api + '?access_token=' + GlobalSetup.API_CONFIG.ACCESS_TOKEN + '&' + p;
+    // console.log('网络请求' + _url);
+  	return '';
+  },
+
 
 /**
  * Post Fecth Request
@@ -41,41 +58,36 @@ export default class{
  * }
  * @author aran.hu
  */
-  postFecth(url='',params_map=new Map()) {
+  postFecth(url,params,v) {
+    // ToastAndroid.show(JSON.stringify(params), ToastAndroid.SHORT);
+    // return '';
+    console.log(this.getTokenHeader());
+    console.log(url);
+    // ToastAndroid.show('开始请求', ToastAndroid.SHORT);
+    // ToastAndroid.show(url, ToastAndroid.SHORT);
+    // return '';
     return(
-      //console.log(params_map === null); //这个new出来的是个啥
-      if(url === '' || params_map === null){
-        console.log('传递参数错误');
-        throw new Error(error);
-        return;
-      }
-      console.log('网络请求' + url);
+
       fetch(url,{
         method: 'POST',//RESTFUL API
         headers: this.getTokenHeader(),
-        body: JSON.stringify(params_map)
+        body: JSON.stringify(params)
       })
-      .then((response) => {
-          const response_status = response.status;
-          if(response_status < 400){
-            console.log(JSON.parse(response));
-          }
-      })
-      .then((data) => {
-        const data_status = data.status;
-        if(data_status < 400){
-            console.log(JSON.parse(data));
-        }
-
+      .then((response) => response.json())
+      .then((responseText) => {
+        var _status = responseText.status;
+        // console.log('response status code ' + response_status);
+        // if(data_status < 400){
+        //   console.log(JSON.parse(data));
+        // }
+        return responseText;
       })
       .catch((error) => {
-        //设置一个异常捕获工具,现在就先log了
-        console.log(JSON.parse(error));
-        throw new Error(error);
+        ToastAndroid.show('error.messages', ToastAndroid.SHORT);
+        return 'FAIL';
       })
-      .done()
     )
-  }
+  },
 
   /**
    * Get Fetch Request
@@ -93,6 +105,6 @@ export default class{
       throw new Error(error);
     })
     .done()
-  }
+  },
 
 }
