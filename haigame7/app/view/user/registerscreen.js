@@ -10,9 +10,13 @@ import React, {
   TextInput,
   ToastAndroid
 } from 'react-native';
+var {CountDownText} = require('react-native-sk-countdown');
+
 
 import styles from '../../styles/registerstyle';
 import UserService from '../../network/userservice';
+import GlobalSetup from '../../constants/globalsetup';
+
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +28,9 @@ export default class extends Component {
         securitycode: undefined
       },
       loading: false,
-      messages: []
+      messages: [],
+      getCodeMsg: '获取验证码',
+      isToushable: true,
     }
   };
 
@@ -64,10 +70,38 @@ export default class extends Component {
     });
 
   }
+  /**
+   * 获取验证码
+   * @return {[type]} [description]
+   */
   _getVerifiCode() {
-// ToastAndroid.show(this.refs['registerFormC'][''], ToastAndroid.SHORT);
-    UserService.getVerifiCode(this.state.data.phone)
+    console.log(this);
+    if (this.state.data.phone == undefined) {
+      ToastAndroid.show('请填写手机号先',ToastAndroid.SHORT);
+      return;
+    }
+    this.setState({
+      isToushable: false,
+    });
+    UserService.getVerifiCode(this.state.data.phone,(response) => {
+      //return:{MessageCode: 0, Message: ""}
+      console.log(response);
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+          ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+        this.setState({
+          isToushable: true,
+        });
+      }
+    })
+
   }
+
+
+
+
+
   render() {
     let fields = [
       {ref: 'phone', placeholder: '手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
@@ -75,6 +109,26 @@ export default class extends Component {
       {ref: 'passwordd', placeholder: '确认密码',keyboardType: 'default', secureTextEntry: false, message: '* 密码必填', style: [styles.inputText]},
       {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
     ]
+    var codebtn;
+    if (this.state.isToushable) {
+      codebtn = <TouchableOpacity onPress={this._getVerifiCode.bind(this)}><Text>{this.state.getCodeMsg}</Text></TouchableOpacity>;
+    } else {
+      codebtn = <View><CountDownText
+        countType='seconds'
+        auto={true}
+        afterEnd={() => {
+          this.setState({
+            isToushable: true,
+            getCodeMsg: '获取验证码'
+          });
+        }}
+        timeLeft={5}
+        step={-1}
+        startText='获取验证码'
+        endText='获取验证码'
+        intervalText={(sec) => sec + '秒重新获取'}
+      /></View>;
+    }
     return(
       <ScrollView ref={'registerFormC'} {...this.props}>
         <TouchableOpacity activeOpacity={1} style={styles.titleContainer}>
@@ -94,9 +148,7 @@ export default class extends Component {
         </View>
         <View key={'securitycode'} style={styles.inputContainer}>
           <TextInput {...fields[3]} onFocus={() => this.onFocus({...fields[3]})} onChangeText={(text) => this.state.data.securitycode = text} />
-          <TouchableOpacity onPress={this._getVerifiCode.bind(this)}>
-            <Text>获取验证码</Text>
-          </TouchableOpacity>
+          {codebtn}
         </View>
         <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.onSubmit(fields)}>
           <Text style={styles.buttonText}>{this.state.loading ? 'Please Wait . . .' : 'Submit'}</Text>

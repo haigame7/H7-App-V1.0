@@ -7,11 +7,20 @@ export default{
   register(data) {
     // FecthService.doFecth();
   },
-  getVerifiCode(phone) {
-      // ToastAndroid.show(phone, ToastAndroid.SHORT);
-      let result = FecthService.postFecth(ApiConfig.USER_API.GETVERIFYCODE1,{'PhoneNumber':phone});
-      console.log(result.Message);
-      // ToastAndroid.show(GlobalSetup.API_CONFIG.API_PATH, ToastAndroid.SHORT);
+
+  /* 注册获取验证码 */
+  getVerifiCode(phone,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.USER_API.GETVERIFYCODE1,
+        {'PhoneNumber':phone},
+        callback
+      );
   },
 
   _urlForQueryAndPage(query: string, pageNumber: number): string {

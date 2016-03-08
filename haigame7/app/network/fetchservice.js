@@ -14,11 +14,9 @@ export default{
 
   status(response) {
     if(response.status >= 200 && response.status <=300) {
-      // ToastAndroid.show(response.type.toString(), ToastAndroid.SHORT);
       return Promise.resolve(response);
     } else {
-      // console.log('请求错误');
-      ToastAndroid.show('请求错误', ToastAndroid.SHORT);
+      console.log('请求错误');
       return Promise.reject(new Error(response.statusText));
     }
   },
@@ -73,7 +71,7 @@ export default{
  * }
  * @author aran.hu
  */
-  postFecth(url,params) {
+  postFecth(url,params,callback) {
     // ToastAndroid.show(JSON.stringify(params), ToastAndroid.SHORT);
     // return '';
     // console.log(this.getTokenHeader());
@@ -90,15 +88,12 @@ export default{
       .then(this.status)
       .then(this.json)
       .then((responseText) => {
-        ToastAndroid.show('返回数据', ToastAndroid.SHORT);
-        ToastAndroid.show(responseText.MessageCode, ToastAndroid.SHORT);
-        // console.log('返回数据');
         // console.log(responseText);
-        return responseText;
+        callback(responseText)
       })
       .catch((error) => {
-        console.log(error);
-        return 'FAIL';
+        // throw error;
+        callback(GlobalSetup.REQUEST_FAIL);
       })
     )
   },
