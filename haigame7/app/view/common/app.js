@@ -75,16 +75,6 @@ export default class App extends Component {
           </View>
           </RawContent>
         </Tab>
-        <Tab name="组队">
-          <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} from={'icomoon'}/>
-          <RawContent>
-          <View>
-           <Header initObj={{title:'组队',}}
-            navigator={this.props.navigator}></Header>
-           <Team/>
-          </View>
-          </RawContent>
-        </Tab>
         <Tab name="排行">
           <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} from={'icomoon'}/>
           <RawContent>
@@ -92,6 +82,16 @@ export default class App extends Component {
            <Header initObj={{title:'排行',}}
            navigator={this.props.navigator}></Header>
            <Rank/>
+          </View>
+          </RawContent>
+        </Tab>
+        <Tab name="组队">
+          <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} from={'icomoon'}/>
+          <RawContent>
+          <View>
+           <Header initObj={{title:'组队',}}
+            navigator={this.props.navigator}></Header>
+           <Team/>
           </View>
           </RawContent>
         </Tab>
