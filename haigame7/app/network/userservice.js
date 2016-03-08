@@ -9,7 +9,7 @@ export default{
   },
   getVerifiCode(phone) {
       // ToastAndroid.show(phone, ToastAndroid.SHORT);
-      var result = FecthService.postFecth(ApiConfig.USER_API.GETVERIFYCODE1,{'PhoneNumber':phone});
+      let result = FecthService.postFecth(ApiConfig.USER_API.GETVERIFYCODE1,{'PhoneNumber':phone});
       console.log(result.Message);
       // ToastAndroid.show(GlobalSetup.API_CONFIG.API_PATH, ToastAndroid.SHORT);
   },

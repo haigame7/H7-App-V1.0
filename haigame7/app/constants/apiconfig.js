@@ -13,3 +13,8 @@ var userApi = {
 module.exports = {
   USER_API: userApi,
 }
+
+//这样写应该也行
+// export {
+//   USER_API: userApi,
+// }

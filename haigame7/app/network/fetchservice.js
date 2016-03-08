@@ -11,6 +11,22 @@ import React, {
 import GlobalSetup from '../constants/globalsetup';
 /** 网络请求 */
 export default{
+
+  status(response) {
+    if(response.status >= 200 && response.status <=300) {
+      // ToastAndroid.show(response.type.toString(), ToastAndroid.SHORT);
+      return Promise.resolve(response);
+    } else {
+      // console.log('请求错误');
+      ToastAndroid.show('请求错误', ToastAndroid.SHORT);
+      return Promise.reject(new Error(response.statusText));
+    }
+  },
+
+  json(response) {
+    return response.json();
+  },
+
   /*************************
    * 请求头                 *
    * @return {TokenHeader] *
@@ -21,23 +37,22 @@ export default{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     }
-    // console.log('token header is:' + JSON.stringify(tHeader));
     return tHeader;
   },
 
   /**
-   * Get 方法可以
+   * Get 方法可以用
    * @param  {[type]} api [path]
    * @param  {[type]} v   [params]
    * @return {[type]}     [description]
    */
-  _api(api, v){
+  _api(api, params){
   	if(v instanceof Object){
-  		var p = Object.keys(v).map(function(k) {
-  			return encodeURIComponent(k) + "=" + encodeURIComponent(v[k]);
+  		var p = Object.keys(params).map(function(k) {
+  			return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
   		}).join('&');
-  	}else if(v){
-  		var p = v;
+  	}else if(params){
+  		var p = params;
 
     }else{
       var p ='';
@@ -58,32 +73,31 @@ export default{
  * }
  * @author aran.hu
  */
-  postFecth(url,params,v) {
+  postFecth(url,params) {
     // ToastAndroid.show(JSON.stringify(params), ToastAndroid.SHORT);
     // return '';
-    console.log(this.getTokenHeader());
-    console.log(url);
+    // console.log(this.getTokenHeader());
+    // console.log(url);
     // ToastAndroid.show('开始请求', ToastAndroid.SHORT);
     // ToastAndroid.show(url, ToastAndroid.SHORT);
     // return '';
     return(
-
       fetch(url,{
         method: 'POST',//RESTFUL API
         headers: this.getTokenHeader(),
         body: JSON.stringify(params)
       })
-      .then((response) => response.json())
+      .then(this.status)
+      .then(this.json)
       .then((responseText) => {
-        var _status = responseText.status;
-        // console.log('response status code ' + response_status);
-        // if(data_status < 400){
-        //   console.log(JSON.parse(data));
-        // }
+        ToastAndroid.show('返回数据', ToastAndroid.SHORT);
+        ToastAndroid.show(responseText.MessageCode, ToastAndroid.SHORT);
+        // console.log('返回数据');
+        // console.log(responseText);
         return responseText;
       })
       .catch((error) => {
-        ToastAndroid.show('error.messages', ToastAndroid.SHORT);
+        console.log(error);
         return 'FAIL';
       })
     )
