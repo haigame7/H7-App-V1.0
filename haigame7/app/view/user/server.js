@@ -1,7 +1,7 @@
 'use strict';
 
 export const  key = '@lussatech:session';
-export const host = 'http://aprs.lussa.net';
+export const host = 'http://api.haigame7.com/v1';
 export default {
   auth: {
     login: function (data) {
@@ -55,6 +55,20 @@ export default {
           };
 
       return fetch(url, opt);
-    }
+    },
+    registerVertifyCode: function (data) {
+      let url = `${host}/user/verifycode1?accesstoken=ABC12abc`,
+          opt = {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          };
+
+      return fetch(url, opt);
+    },
+
   }
 };
