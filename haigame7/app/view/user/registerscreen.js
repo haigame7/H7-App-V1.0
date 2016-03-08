@@ -9,6 +9,7 @@ import React, {
   View,
   Image,
   TextInput,
+  Navigator,
   ToastAndroid
 } from 'react-native';
 
@@ -16,6 +17,7 @@ import styles from '../../styles/userstyle';
 import registerstyles from '../../styles/registerstyle';
 import Header from '../common/headernav';
 import api, {host, key} from './server';
+import Setpwd from './setpwd.js';
 
 export default class extends Component {
   constructor(props) {
@@ -30,50 +32,13 @@ export default class extends Component {
       loading: false,
       messages: []
     }
-  };
-
-  renderMessages() {
-    if (this.state.messages.length > 0) {
-      let messages = this.state.messages.map((val, key) => {
-        if (val.message) return <Text style={styles.message} key={key}>{val.message}</Text>;
-      });
-
-      return messages;
-    }
-  }
-
-  onFocus(argument) {
-    setTimeout(() => {
-      // let scrollResponder = this.refs.registerFormC.getScrollResponder();
-      //     scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-      //       React.findNodeHandle(this.refs[argument.ref]), 110, true
-      //     );
-    }, 50);
-  }
-
-  onSubmit(argument) {
-    console.log(this.state.loading);
-    if (this.state.loading) {
-      ToastAndroid.show('Please Wait . . .', ToastAndroid.SHORT);
-      return null;
-    }
-
-    let keys = Object.keys(this.state.data).map((val,key) => {
-      if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
-    });
-    this.setState({messages: []});
-    argument.map((val, key) => {
-      if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
-    });
-
   }
 
   render() {
-
     let fields = [
       {ref: 'phone', placeholder: '手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
-      {ref: 'password', placeholder: '密码',keyboardType: 'default', secureTextEntry: false, message: '* 密码必填', style: [styles.inputText]},
-      {ref: 'passwordd', placeholder: '确认密码',keyboardType: 'default', secureTextEntry: false, message: '* 密码必填', style: [styles.inputText]},
+      {ref: 'password', placeholder: '密码',keyboardType: 'default', secureTextEntry: false, message: '', style: [styles.inputText]},
+      {ref: 'passwordd', placeholder: '确认密码',keyboardType: 'default', secureTextEntry: false, message: '', style: [styles.inputText]},
       {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
     ]
     return(
@@ -103,12 +68,52 @@ export default class extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.submitText}>
-        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.onSubmit(fields)}>
-          <Text style={styles.buttonText} onPress={()=>this.onSubmit()}>{'下一步'}</Text>
+        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.gotoRoute('setpwd')}>
+          <Text style={styles.buttonText} >{'下一步'}</Text>
         </TouchableHighlight>
         </View>
       </View>
 
     );
   }
+  renderMessages() {
+    if (this.state.messages.length > 0) {
+      let messages = this.state.messages.map((val, key) => {
+        if (val.message) return <Text style={styles.message} key={key}>{val.message}</Text>;
+      });
+
+      return messages;
+    }
+  }
+  onFocus(argument) {
+    setTimeout(() => {
+      // let scrollResponder = this.refs.registerFormC.getScrollResponder();
+      //     scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+      //       React.findNodeHandle(this.refs[argument.ref]), 110, true
+      //     );
+    }, 50);
+  }
+  gotoRoute(name) {
+
+    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
+      this.props.navigator.push({name: name,component: Setpwd,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+    }
+    return;
+  }
+
+  onSubmit(argument) {
+    console.log(this.state.loading);
+    if (this.state.loading) {
+      ToastAndroid.show('Please Wait . . .', ToastAndroid.SHORT);
+      return null;
+    }
+
+        let keys = Object.keys(this.state.data).map((val,key) => {
+          if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
+        });
+        this.setState({messages: []});
+        argument.map((val, key) => {
+          if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
+        });
+      }
 }

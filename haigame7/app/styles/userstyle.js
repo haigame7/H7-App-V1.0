@@ -140,5 +140,19 @@ export default StyleSheet.create({
    marginLeft:40,
    width:Dimensions.get('window').width-80,
 
-  }
+ },
+ switchBarContainer:{
+   flexDirection:'row',
+   justifyContent:'flex-end',
+ },
+ switchBarText:{
+   color:'rgb(154, 156, 157)',
+   fontSize:15,
+   marginRight:10
+ },
+ switchBarButton:{
+  marginTop:-10,
+  marginRight:40
+ },
+
 });
