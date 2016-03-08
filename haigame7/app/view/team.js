@@ -1,6 +1,8 @@
 'use strict';
 /**
  * 组队模块
+ * 整体包括
+ * 切换按钮，战队列表，用户列表，我的战队名片
  * @return {[Team Component]}
  * @author aran.hu
  */
@@ -31,7 +33,7 @@ var Team = React.createClass({
           </TouchableHighlight>
         </View>
       </View>
-      
+
     );
   }
 });
