@@ -90,6 +90,7 @@ export default class App extends Component {
         </Tab>
         <Tab name="组队">
           <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'icomoon'}/>
+
           <RawContent>
           <View>
            <Header initObj={{title:'组队',}}
