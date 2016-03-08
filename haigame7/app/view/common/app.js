@@ -8,11 +8,14 @@ var Team  = require('../team.js');
 var Rank  = require('../rank.js');
 var User  = require('../user.js');
 const glypy = glypyMapMaker({
-  Match: 'e900',
-  Fight: 'e901',
-  Team: 'e902',
-  Rank: 'e903',
-  User: 'e904'
+  MatchOn: 'e623',
+  Match: 'e624',
+  FightOn: 'e625',
+  Fight: 'e626',
+  TeamOn: 'e627',
+  Team: 'e628',
+  RankOn: 'e621',
+  Rank: 'e622'
 });
 
 export default class App extends Component {
@@ -56,7 +59,7 @@ export default class App extends Component {
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
         <Tab name="赛事">
-          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} from={'icomoon'}/>
+          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'icomoon'}/>
           <RawContent>
           <View>
           <Header initObj={{title:'赛事',}}
@@ -66,7 +69,7 @@ export default class App extends Component {
           </RawContent>
         </Tab>
         <Tab name="约战" >
-          <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} from={'icomoon'}/>
+          <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} ontype={glypy.FightOn} from={'icomoon'}/>
           <RawContent>
           <View>
           <Header initObj={{title:'约战',}}
@@ -75,23 +78,23 @@ export default class App extends Component {
           </View>
           </RawContent>
         </Tab>
-        <Tab name="组队">
-          <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} from={'icomoon'}/>
-          <RawContent>
-          <View>
-           <Header initObj={{title:'组队',}}
-            navigator={this.props.navigator}></Header>
-           <Team/>
-          </View>
-          </RawContent>
-        </Tab>
         <Tab name="排行">
-          <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} from={'icomoon'}/>
+          <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} ontype={glypy.RankOn} from={'icomoon'}/>
           <RawContent>
           <View>
            <Header initObj={{title:'排行',}}
            navigator={this.props.navigator}></Header>
            <Rank/>
+          </View>
+          </RawContent>
+        </Tab>
+        <Tab name="组队">
+          <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'icomoon'}/>
+          <RawContent>
+          <View>
+           <Header initObj={{title:'组队',}}
+            navigator={this.props.navigator}></Header>
+           <Team/>
           </View>
           </RawContent>
         </Tab>
