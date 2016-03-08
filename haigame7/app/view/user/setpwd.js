@@ -24,20 +24,25 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {
-        phone: undefined,
-        password: undefined,
-        passwordd: undefined,
-        securitycode: undefined
-      },
+        phone: this.props.data.phone,
+        securitycode: null,
       loading:false,
       notshow: true,
       messages: []
     }
-    console.log('name='+this.props.name);
   };
 
-
+  componentDidMount() {
+              //这里获取从FirstPageComponent传递过来的参数: id
+              this.setState({
+                  phone:this.props.data.phone,
+                  securitycode:'123123',
+              });
+              console.log(this.state.phone);
+              console.log(this.state.securitycode);
+              console.log(this.props.data.phone);
+              console.log(this.props.data);
+      }
 
   onFocus(argument) {
     setTimeout(() => {

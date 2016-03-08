@@ -63,9 +63,9 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   certifyButtonText:{
-    fontSize: 12,
+    fontSize: 11,
     color: 'black',
-    marginTop:-5,
+    marginTop:-3,
     alignSelf: 'center'
 
   },
