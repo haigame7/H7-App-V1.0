@@ -22,6 +22,7 @@
  import styles from '../../styles/userstyle';
  import api, {host, key} from './server';
  import Register from './registerscreen';
+ import Forgetpwd from './forgetpwd';
  import Header from '../common/headernav';
 
  export default class extends Component {
@@ -40,7 +41,9 @@
 
    render() {
      let fields = [
-       {ref: 'email', placeholder: '手机号码', keyboardType: 'email-address', secureTextEntry: false, style: [styles.inputText]},
+       {ref: 'email', placeholder: '手机号码', keyboardType: 'numeric', secureTextEntry: false, style: [styles.inputText]},
+       {ref: 'password', placeholder: '请您设置密码',keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.inputText]},
+       {ref: 'passwordd', placeholder: '请再次确认密码',keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.inputText]},
        {ref: 'password', placeholder: '输入密码', keyboardType: 'default', secureTextEntry: true, style: [styles.inputText]},
      ];
      return (
@@ -60,11 +63,11 @@
            <TextInput {...fields[0]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.email = text} />
          </View>
          <View key={'password'} style={styles.inputContainerSecond}>
-           <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[1]})} onChangeText={(text) => this.state.data.password = text} />
+           <TextInput {...fields[3]} onFocus={() => this.onFocus({...fields[1]})} onChangeText={(text) => this.state.data.password = text} />
          </View>
 
          <View style={styles.linkText}>
-           <TouchableOpacity activeOpacity={0.7} onPress={() => this.gotoRoute('register')}>
+           <TouchableOpacity activeOpacity={0.7} onPress={() => this.gotoRoute('forgetpwd')}>
                <Text style={styles.linkTextLeft}>{'忘记密码? '}</Text>
            </TouchableOpacity>
 
@@ -138,12 +141,16 @@
    }
 
    gotoRoute(name) {
-     // console.log(this.props.navigator.push);
-     // console.log(this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name);
-     // console.log('******');
-     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-       this.props.navigator.push({name: name,component: Register,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+     if(name== 'forgetpwd'){
+       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
+         this.props.navigator.push({name: name,component: Forgetpwd,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+       }
+     }else if(name == 'register'){
+       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
+         this.props.navigator.push({name: name,component: Register,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+       }
      }
+
    }
 
    replaceRoute(name) {
