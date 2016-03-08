@@ -1,15 +1,17 @@
 'use strict';
 /**
- * APPs我的首页
- * @return {[SplashScreen Component]}
+ * 组队模块
+ * @return {[Team Component]}
  * @author aran.hu
  */
 var React = require('react-native');
+var CommonStyle = require('../styles/commonstyle');
 
 var {
   View,
   Text,
-  Image
+  Image,
+  TouchableHighlight,
   } = React;
 
 var TeamStyle = require('../styles/teamstyle');
@@ -17,12 +19,19 @@ var TeamStyle = require('../styles/teamstyle');
 var Team = React.createClass({
   render: function () {
     return (
-      <View >
-        <Text >
-          Team Screen.
-        </Text>
-        <Image style={{width: 15,height: 15}} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
+      <View style={CommonStyle.headerRow}>
+        <View style={CommonStyle.headerTitle}>
+          <TouchableHighlight >
+          <Text>加入战队</Text>
+          </TouchableHighlight>
+        </View>
+        <View  style={CommonStyle.headerTitle}>
+          <TouchableHighlight>
+          <Text>招募队员</Text>
+          </TouchableHighlight>
+        </View>
       </View>
+      
     );
   }
 });
