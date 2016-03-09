@@ -11,6 +11,7 @@ import React, {
   Switch,
   TextInput,
   Navigator,
+  AsyncStorage,
   Alert,
   ToastAndroid
 } from 'react-native';
@@ -34,13 +35,15 @@ export default class extends Component {
       },
       loading:false,
       notshow: true,
+      reset:undefined,
       messages: []
     }
-      console.log(this.props.navigator.getCurrentRoutes());
   };
 
   componentDidMount() {
+    this.setState({reset:this.props.reset});
               //这里获取从FirstPageComponent传递过来的参数: id
+
 
   }
 
@@ -65,45 +68,80 @@ export default class extends Component {
    * 用户注册
    * @return {[type]} [description]
    */
-  register() {
+  register(isreset) {
     if (this.state.data.password !== this.state.data.passwordd) {
         Alert.alert('两次密码输入不一致');
       return;
     }
-    UserService.registerByInfo(this.state.data,(response) => {
-      //return:{MessageCode: 0, Message: ""}
-      if (response !== GlobalSetup.REQUEST_SUCCESS) {
-        let message = '';
-        if(response.MessageCode == '40001'){
-          message = '服务器请求异常';
-        }else if(response.MessageCode == '10004'){
-          message = '该手机号已注册';
-        }else if(response.MessageCode == '10005'){
-          message = '验证码输入有误';
-        }else if(response.MessageCode == '10006'){
-          message = '验证码过期';
-        }else if(response.MessageCode == '0'){
-          message = '注册成功';
+    if(isreset){
+      UserService.resetPassword(this.state.data,(response) => {
+        //return:{MessageCode: 0, Message: ""}
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+          let message = '';
+          if(response.MessageCode == '40001'){
+            message = '服务器请求异常';
+          }else if(response.MessageCode == '10001'){
+            message = '手机号不存在';
+          }else if(response.MessageCode == '10005'){
+            message = '验证码输入有误';
+          }else if(response.MessageCode == '10006'){
+            message = '验证码过期';
+          }else if(response.MessageCode == '0'){
+            message = '重置成功';
+          }
+           Alert.alert(
+            message ,
+          );
+          if(message=='重置成功'){
+            //重置完自动登录
+             AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
+            //跳转到个人中心
+            setTimeout(() => {
+              var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
+               this.props.navigator.jumpTo(route);
+            }, 2000);
+          }
+            //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+        } else {
+          Alert.alert('请求错误');
+          //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
         }
-         Alert.alert(
-          message ,
-        );
-
-        console.log();
-        if(message=='注册成功'){
-          //跳转到个人中心
-          setTimeout(() => {
-            this.props.navigator.pop();
-            this.props.navigator.pop();
-          }, 2000);
+     })
+   }else{
+      UserService.registerByInfo(this.state.data,(response) => {
+        //return:{MessageCode: 0, Message: ""}
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+          let message = '';
+          if(response.MessageCode == '40001'){
+            message = '服务器请求异常';
+          }else if(response.MessageCode == '10004'){
+            message = '该手机号已注册';
+          }else if(response.MessageCode == '10005'){
+            message = '验证码输入有误';
+          }else if(response.MessageCode == '10006'){
+            message = '验证码过期';
+          }else if(response.MessageCode == '0'){
+            message = '注册成功';
+          }
+           Alert.alert(
+            message ,
+          );
+          if(message=='注册成功'){
+            //注册完自动登录
+             AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
+            //跳转到个人中心
+            setTimeout(() => {
+              var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
+               this.props.navigator.jumpTo(route);
+            }, 2000);
+          }
+            //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+        } else {
+          Alert.alert('请求错误');
+          //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
         }
-          //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
-      } else {
-        Alert.alert('请求错误');
-        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
-      }
-    })
-
+      })
+    }
   }
 
 
@@ -115,6 +153,12 @@ export default class extends Component {
       {ref: 'passwordd', placeholder: '请再次确认密码',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.inputText]},
       {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
     ]
+    var isreset;
+    if (this.state.reset) {
+      isreset = <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register(this.state.reset)}> <Text style={styles.buttonText} >{'完成'}</Text></TouchableHighlight>
+    } else {
+      isreset = <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register(this.state.reset)}> <Text style={styles.buttonText} >{'完成'}</Text></TouchableHighlight>
+    }
     return(
       <View style={{ flex: 1 }}>
         <View style={styles.bgImageWrapper}>

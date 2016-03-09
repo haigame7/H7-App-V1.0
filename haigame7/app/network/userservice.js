@@ -22,6 +22,20 @@ export default{
         callback
       );
   },
+  /* 找回密码获取验证码 */
+  getVerifiCode2(phone,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.USER_API.GETVERIFYCODE2,
+        {'PhoneNumber':phone},
+        callback
+      );
+  },
   /* 注册 */
   registerByInfo(data,callback) {
     /**
@@ -32,6 +46,24 @@ export default{
      */
       FecthService.postFecth(
         ApiConfig.USER_API.REGISTERUSER,
+        {
+          'PhoneNumber':data.phone,
+          'PassWord':data.password,
+          'VerifyCode':data.securitycode
+        },
+        callback
+      );
+  },
+  /* 重置密码 */
+  resetPassword(data,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.USER_API.RESETPASSWORD,
         {
           'PhoneNumber':data.phone,
           'PassWord':data.password,
