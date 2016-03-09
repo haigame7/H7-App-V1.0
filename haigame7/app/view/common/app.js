@@ -59,7 +59,7 @@ export default class App extends Component {
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
         <Tab name="赛事">
-          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'icomoon'}/>
+          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
           <Header initObj={{title:'赛事',}}
@@ -69,7 +69,7 @@ export default class App extends Component {
           </RawContent>
         </Tab>
         <Tab name="约战" >
-          <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} ontype={glypy.FightOn} from={'icomoon'}/>
+          <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} ontype={glypy.FightOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
           <Header initObj={{title:'约战',}}
@@ -79,7 +79,7 @@ export default class App extends Component {
           </RawContent>
         </Tab>
         <Tab name="排行">
-          <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} ontype={glypy.RankOn} from={'icomoon'}/>
+          <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} ontype={glypy.RankOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
            <Header initObj={{title:'排行',}}
@@ -89,8 +89,7 @@ export default class App extends Component {
           </RawContent>
         </Tab>
         <Tab name="组队">
-          <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'icomoon'}/>
-
+          <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
            <Header initObj={{title:'组队',}}
