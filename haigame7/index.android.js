@@ -102,6 +102,8 @@ var {
 import App from './app/view/common/app';
 // var Header = require('./app/view/common/Header'); // 主屏
 let _navigator;
+let lastBackPressed;
+let _timer;
 class haigame7 extends Component {
   componentWillMount() {
       if (Platform.OS === 'android') {
@@ -116,23 +118,29 @@ class haigame7 extends Component {
     onBackAndroid(){
       const nav = _navigator;
       const routers = nav.getCurrentRoutes();
-      var lastBackPressed = Date.now();
+
       if (routers.length > 1) {
         nav.pop();
         return true;
       }else {
-        console.log(lastBackPressed);
-        console.log(lastBackPressed + 2000 >=Date.now());
         if (lastBackPressed && lastBackPressed + 2000 >= Date.now()) {
           //最近2秒内按过back键，可以退出应用。
+          // ToastAndroid.show('这里应该退出',ToastAndroid.SHORT);
           return false;
         }
         lastBackPressed = Date.now();
-        ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
+        //不好用。。。。
+        // ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
+        console.log('再按一次退出应用');
         return true;
       }
     }
-
+    componentWillUnmount() {
+        // 如果存在this.timer，则使用clearTimeout清空。
+        // 如果你使用多个timer，那么用多个变量，或者用个数组来保存引用，然后逐个clear
+        console.log('卸载');
+        _timer && clearTimeout(_timer);
+      }
   render() {
       var defaultName = 'AppComponent';
       var defaultComponent = App;
