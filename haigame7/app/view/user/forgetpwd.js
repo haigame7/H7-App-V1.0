@@ -71,12 +71,12 @@ export default class extends Component {
   }
   gotoRoute(name) {
     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-      this.props.navigator.push({name: name,component: Setpwd,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+      this.props.navigator.push({name: name,component: Setpwd,passProps:this.state.data,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
     }
   }
 
   render() {
-
+   console.log(this.props.navigator.name);
     let fields = [
       {ref: 'phone', placeholder: '请输入手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
       {ref: 'securitycode', placeholder: '请输入验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
@@ -108,7 +108,7 @@ export default class extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.submitText}>
-        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.onSubmit(fields)}>
+        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.gotoRoute('setnewpwd')}>
           <Text style={styles.buttonText} onPress={() => this.gotoRoute('setnewpwd')}>{'下一步'}</Text>
         </TouchableHighlight>
         </View>
