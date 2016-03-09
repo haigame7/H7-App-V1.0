@@ -2,12 +2,16 @@
 /**
  * 组队模块
  * 整体包括
- * 切换按钮，战队列表，用户列表，我的战队名片
+ *
+ * 加入战队组件，战队招募组件
  * @return {[Team Component]}
  * @author aran.hu
  */
 var React = require('react-native');
 var CommonStyle = require('../styles/commonstyle');
+var TeamStyle = require('../styles/teamstyle');
+var Loading = require('./common/loading');
+var FindTeam = require('./team/findteam');
 
 var {
   View,
@@ -16,25 +20,24 @@ var {
   TouchableHighlight,
   } = React;
 
-var TeamStyle = require('../styles/teamstyle');
-
 var Team = React.createClass({
-  render: function () {
-    return (
-      <View style={CommonStyle.headerRow}>
-        <View style={CommonStyle.headerTitle}>
-          <TouchableHighlight >
-          <Text>加入战队</Text>
-          </TouchableHighlight>
-        </View>
-        <View  style={CommonStyle.headerTitle}>
-          <TouchableHighlight>
-          <Text>招募队员</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
 
-    );
+  getInitialState: function()
+  {
+    return {load: false};
+  },
+  componentDidMount:function()
+  {
+    this.setState({load:true});
+  },
+
+  render: function ()
+  {
+    if (!this.state.load)
+    {
+      return (<Loading/>);
+    }
+    return (<FindTeam/>);
   }
 });
 
