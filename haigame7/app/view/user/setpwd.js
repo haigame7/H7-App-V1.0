@@ -11,38 +11,38 @@ import React, {
   Switch,
   TextInput,
   Navigator,
+  Alert,
   ToastAndroid
 } from 'react-native';
 
 import styles from '../../styles/userstyle';
 import registerstyles from '../../styles/registerstyle';
 import Header from '../common/headernav';
-import api, {host, key} from './server';
-import Setpwd from './setpwd.js';
+import User from '../user.js';
+import UserService from '../../network/userservice';
+import GlobalSetup from '../../constants/globalsetup';
 
 export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        phone: this.props.data.phone,
-        securitycode: null,
+      data: {
+           phone: this.props.data.phone,
+        password: undefined,
+        passwordd: undefined,
+        securitycode:this.props.data.securitycode,
+      },
       loading:false,
       notshow: true,
       messages: []
     }
+      console.log(this.props.navigator.getCurrentRoutes());
   };
 
   componentDidMount() {
               //这里获取从FirstPageComponent传递过来的参数: id
-              this.setState({
-                  phone:this.props.data.phone,
-                  securitycode:'123123',
-              });
-              console.log(this.state.phone);
-              console.log(this.state.securitycode);
-              console.log(this.props.data.phone);
-              console.log(this.props.data);
-      }
+
+  }
 
   onFocus(argument) {
     setTimeout(() => {
@@ -53,22 +53,6 @@ export default class extends Component {
     }, 50);
   }
 
-  onSubmit(argument) {
-    console.log(this.state.loading);
-    if (this.state.loading) {
-      ToastAndroid.show('Please Wait . . .', ToastAndroid.SHORT);
-      return null;
-    }
-
-    let keys = Object.keys(this.state.data).map((val,key) => {
-      if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
-    });
-    this.setState({messages: []});
-    argument.map((val, key) => {
-      if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
-    });
-
-  }
   showPwd(notshow){
   if(notshow){
       this.setState({notshow: false});
@@ -76,6 +60,50 @@ export default class extends Component {
       this.setState({notshow: true});
    }
   return this.state.notshow;
+  }
+  /**
+   * 用户注册
+   * @return {[type]} [description]
+   */
+  register() {
+    if (this.state.data.password !== this.state.data.passwordd) {
+        Alert.alert('两次密码输入不一致');
+      return;
+    }
+    UserService.registerByInfo(this.state.data,(response) => {
+      //return:{MessageCode: 0, Message: ""}
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        let message = '';
+        if(response.MessageCode == '40001'){
+          message = '服务器请求异常';
+        }else if(response.MessageCode == '10004'){
+          message = '该手机号已注册';
+        }else if(response.MessageCode == '10005'){
+          message = '验证码输入有误';
+        }else if(response.MessageCode == '10006'){
+          message = '验证码过期';
+        }else if(response.MessageCode == '0'){
+          message = '注册成功';
+        }
+         Alert.alert(
+          message ,
+        );
+
+        console.log();
+        if(message=='注册成功'){
+          //跳转到个人中心
+          setTimeout(() => {
+            this.props.navigator.pop();
+            this.props.navigator.pop();
+          }, 2000);
+        }
+          //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+      } else {
+        Alert.alert('请求错误');
+        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+      }
+    })
+
   }
 
 
@@ -116,8 +144,8 @@ export default class extends Component {
             />
         </View>
         <View style={styles.submitText}>
-        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.onSubmit(fields)}>
-          <Text style={styles.buttonText} onPress={() => this.onSubmit()}>{'完成'}</Text>
+        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register()}>
+          <Text style={styles.buttonText} onPress={() => this.register()}>{'完成'}</Text>
         </TouchableHighlight>
         </View>
       </View>

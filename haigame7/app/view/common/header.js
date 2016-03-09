@@ -36,7 +36,7 @@ module.exports = React.createClass({
     }
   },
   _pushroute:function(){
-    this.props.navigator.push({component:User});
+    this.props.navigator.push({name:'user',component:User});
   }
 
 });
