@@ -49,14 +49,14 @@
      return (
      <View style={{ flex: 1 }}>
        <View style={styles.bgImageWrapper}>
-        <Image source={{uri:'http://sso.haigame7.com/images/banner9.jpg'}} style={styles.bgImage} />
+        <Image source={require('../../images/loginbg.jpg')} style={styles.bgImage} />
      </View>
      <Header initObj={{
       title:'用户登录',
        backName:'返回',
       }}   navigator={this.props.navigator}></Header>
          <View activeOpacity={1} style={styles.titleContainer}>
-          <Image style={{width:80,height:80,}} source={{uri:'http://sso.haigame7.com/images/logo.png'}} />
+          <Image style={{width:80,height:80,}} source={require('../../images/logo.png')} />
          </View>
 
          <View key={'email'} style={styles.inputContainer}>
