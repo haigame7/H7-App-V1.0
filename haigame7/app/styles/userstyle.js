@@ -19,9 +19,10 @@ export default StyleSheet.create({
        position: 'absolute',
        top: 0, bottom: 0, left: 0, right: 0
    },
-   bgImage: {
+   loginbg: {
        flex: 1,
-       resizeMode: "stretch"
+       height: Dimensions.get('window').height,
+       width: Dimensions.get('window').width,
    },
   button: {
     backgroundColor: 'rgb(240, 12, 12)',

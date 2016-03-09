@@ -19,6 +19,7 @@
    Navigator,
    Image
  } from 'react-native';
+ var Icon = require('react-native-vector-icons/FontAwesome');
 
  import styles from '../../styles/userstyle';
  import Register from './registerscreen';
@@ -40,25 +41,26 @@
              role: 0
        },
        loading: false,
-       login:false
+       login: false
      };
    }
 
    render() {
      let fields = [
-       {ref: 'phone', placeholder: '手机号码', keyboardType: 'numeric', secureTextEntry: false, style: [styles.inputText]},
-       {ref: 'password', placeholder: '输入密码', keyboardType: 'default', secureTextEntry: true, style: [styles.inputText]},
+       {ref: 'phone', placeholder: '手机号码', placeholderTextColor: 'white', keyboardType: 'numeric', secureTextEntry: false, style: [styles.inputText]},
+       {ref: 'password', placeholder: '请您设置密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.inputText]},
+       {ref: 'passwordd', placeholder: '请再次确认密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.inputText]},
+       {ref: 'password', placeholder: '输入密码', placeholderTextColor: 'white',  keyboardType: 'default', secureTextEntry: true, style: [styles.inputText]},
      ];
      return (
      <View style={{ flex: 1 }}>
        <View style={styles.bgImageWrapper}>
-        <Image source={require('../../images/loginbg.jpg')} style={styles.bgImage} />
+        <Image source={require('../../images/loginbg.jpg')} style={styles.loginbg} resizeMode={"cover"} />
      </View>
      <Header initObj={{
       title:'用户登录',
        backName:'返回',
       }}   navigator={this.props.navigator}></Header>
-
          <View activeOpacity={1} style={styles.titleContainer}>
           <Image style={{width:80,height:80,}} source={require('../../images/logo.png')} />
          </View>
@@ -71,11 +73,11 @@
          </View>
 
          <View style={styles.linkText}>
-           <TouchableOpacity activeOpacity={0.7} onPress={() => this.gotoRoute('forgetpwd')}>
+           <TouchableOpacity onPress={() => this.gotoRoute('forgetpwd')}>
                <Text style={styles.linkTextLeft}>{'忘记密码? '}</Text>
            </TouchableOpacity>
 
-           <TouchableOpacity activeOpacity={0.7} onPress={() => this.gotoRoute('register')}>
+           <TouchableOpacity onPress={() => this.gotoRoute('register')}>
              <Text style={styles.linkTextRight}>{'新用户注册'}</Text>
            </TouchableOpacity>
           </View>
@@ -112,7 +114,9 @@
       console.log('message wrong'+this.state.messages.length);
       return;
     }
+
      this.setState({loading: true});
+
      UserService.loginByInfo(this.state.data,(response) => {
        //return:{MessageCode: 0, Message: ""}
        if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -145,7 +149,6 @@
          //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
        }
      })
-
    }
 
    async onSuccess(data) {
