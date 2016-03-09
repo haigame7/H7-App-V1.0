@@ -24,8 +24,10 @@
  import Register from './registerscreen';
  import Forgetpwd from './forgetpwd';
  import Header from '../common/headernav';
+ import HeaderPre from '../common/header';
  import UserService from '../../network/userservice';
  import GlobalVariable from '../../constants/globalvariable';
+ import GlobalSetup from '../../constants/globalsetup';
 
  export default class extends Component {
    constructor(props) {
@@ -37,7 +39,8 @@
          password: undefined,
              role: 0
        },
-       loading: false
+       loading: false,
+       login:false
      };
    }
 
@@ -55,6 +58,7 @@
       title:'用户登录',
        backName:'返回',
       }}   navigator={this.props.navigator}></Header>
+
          <View activeOpacity={1} style={styles.titleContainer}>
           <Image style={{width:80,height:80,}} source={require('../../images/logo.png')} />
          </View>
@@ -127,11 +131,11 @@
           Alert.alert(
            message ,
          );
+
+         //保存用户信息
          if(message=='登录成功'){
-           //保存用户信息
-           AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(data));
+           AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
            setTimeout(() => {
-             this.props.navigator.pop();
              this.props.navigator.pop();
            }, 2000);
          }

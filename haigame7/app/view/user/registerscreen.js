@@ -70,7 +70,7 @@ export default class extends Component {
      return;
    }
     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-      this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+      this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data,reset:false},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
     }
     return;
   }
@@ -114,6 +114,8 @@ export default class extends Component {
           message = '服务器请求异常';
         }else if(response.MessageCode == '10003'){
           message = '手机号有误请重新输入';
+        }else if(response.MessageCode == '10004'){
+          message = '手机号已注册';
         }else if(response.MessageCode == '0'){
           message = '验证码已发送，请查看';
         }
