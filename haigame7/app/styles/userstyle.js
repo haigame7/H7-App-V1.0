@@ -19,9 +19,36 @@ export default StyleSheet.create({
        position: 'absolute',
        top: 0, bottom: 0, left: 0, right: 0
    },
-   bgImage: {
+   loginbg: {
        flex: 1,
-       resizeMode: "stretch"
+       height: Dimensions.get('window').height,
+       width: Dimensions.get('window').width,
+   },
+   centerbg: {
+       flex:1,
+       backgroundColor:'rgb(70, 70, 70)',
+       height: Dimensions.get('window').height,
+       width: Dimensions.get('window').width,
+   },
+   centerheadbg: {
+       flex:1,
+      height: Dimensions.get('window').height*4/11,
+       width: Dimensions.get('window').width,
+   },
+   centerfootbg:{
+     height: Dimensions.get('window').height*7/11,
+     width: Dimensions.get('window').width,
+   },
+   centerlitext:{
+     color:'rgb(90, 90, 90)',
+   },
+   centerliicon:{
+     margin:10,
+     height:40,
+     width:40,
+   },
+   centerlicontent:{
+     flexDirection:'row',
    },
   button: {
     backgroundColor: 'rgb(240, 12, 12)',
@@ -63,9 +90,9 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   certifyButtonText:{
-    fontSize: 12,
+    fontSize: 11,
     color: 'black',
-    marginTop:-5,
+    marginTop:-3,
     alignSelf: 'center'
 
   },
@@ -134,6 +161,13 @@ export default StyleSheet.create({
    marginTop:-20,
    color:'rgb(46, 97, 209)',
    marginLeft:Dimensions.get('window').width/2-40,
+  },
+  setpwdText:{
+    marginLeft:40,
+
+    width:Dimensions.get('window').width-60,
+    color:'rgb(121, 121, 121)',
+
   },
   submitText:{
    marginBottom:Dimensions.get('window').width/2+40,

@@ -8,16 +8,21 @@ import React, {
   TouchableHighlight,
   View,
   Image,
+  Alert,
   TextInput,
   Navigator,
   ToastAndroid
 } from 'react-native';
+var {CountDownText} = require('react-native-sk-countdown');
 
 import styles from '../../styles/userstyle';
 import registerstyles from '../../styles/registerstyle';
 import Header from '../common/headernav';
 import api, {host, key} from './server';
 import Setpwd from './setpwd.js';
+import UserService from '../../network/userservice';
+import GlobalSetup from '../../constants/globalsetup';
+
 
 export default class extends Component {
   constructor(props) {
@@ -25,12 +30,12 @@ export default class extends Component {
     this.state = {
       data: {
         phone: undefined,
-        password: undefined,
-        passwordd: undefined,
         securitycode: undefined
       },
       loading: false,
-      messages: []
+      messages: [],
+      getCodeMsg: '获取验证码',
+      isToushable: true,
     }
   };
 
@@ -53,38 +58,96 @@ export default class extends Component {
     }, 50);
   }
 
-  onSubmit(argument) {
-    console.log(this.state.loading);
-    if (this.state.loading) {
-      ToastAndroid.show('Please Wait . . .', ToastAndroid.SHORT);
-      return null;
-    }
 
+  gotoRoute(name,argument) {
     let keys = Object.keys(this.state.data).map((val,key) => {
-      if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
-    });
-    this.setState({messages: []});
-    argument.map((val, key) => {
-      if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
-    });
-
-  }
-  gotoRoute(name) {
+     if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
+   });
+   this.setState({messages: []});
+   argument.map((val, key) => {
+     if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
+   });
+   if(this.state.messages.length>0){
+     console.log('message wrong'+this.state.messages.length);
+     return;
+   }
     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-      this.props.navigator.push({name: name,component: Setpwd,sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+      this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data,reset:true},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
     }
+    return;
+  }
+  /**
+   * 获取验证码
+   * @return {[type]} [description]
+   */
+  _getVerifiCode() {
+    console.log(this.state.data);
+    if (this.state.data.phone == undefined) {
+        Alert.alert('请填写手机号先');
+      //ToastAndroid.show('请填写手机号先',ToastAndroid.SHORT);
+      return;
+    }
+    this.setState({
+      isToushable: false,
+    });
+    UserService.getVerifiCode2(this.state.data.phone,(response) => {
+      //return:{MessageCode: 0, Message: ""}
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        let message = '';
+        if(response.MessageCode == '40001'){
+          message = '服务器请求异常';
+        }else if(response.MessageCode == '10001'){
+          message = '手机号有误请重新输入';
+        }else if(response.MessageCode == '10003'){
+          message = '验证码获取失败';
+        }else if(response.MessageCode == '0'){
+          message = '验证码已发送，请查看';
+        }
+       Alert.alert(
+        message ,
+      );
+          //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+      } else {
+        Alert.alert('请求错误');
+        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+        this.setState({
+          isToushable: true,
+        });
+      }
+    })
+
   }
 
   render() {
-
     let fields = [
-      {ref: 'phone', placeholder: '请输入手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
-      {ref: 'securitycode', placeholder: '请输入验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
+      {ref: 'phone', placeholder: '请输入手机号',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
+      {ref: 'securitycode', placeholder: '请输入验证码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
     ]
+    var codebtn;
+    if (this.state.isToushable) {
+      codebtn = <TouchableOpacity style={this.state.loading ? styles.cetifyButtonDisabled : styles.certifyButton} underlayColor={'#2bbbad'} onPress={this._getVerifiCode.bind(this)}><Text style={styles.certifyButtonText}>{this.state.getCodeMsg}</Text></TouchableOpacity>;
+    } else {
+      codebtn = <View style={styles.certifyButton}><CountDownText
+        style={styles.certifyButtonText}
+        countType='seconds'
+        auto={true}
+        afterEnd={() => {
+          this.setState({
+            isToushable: true,
+            getCodeMsg: '获取验证码'
+          });
+        }}
+        timeLeft={5}
+        step={-1}
+        startText='获取验证码'
+        endText='获取验证码'
+        intervalText={(sec) => sec + '秒重新获取'}
+      /></View>;
+    }
     return(
       <View style={{ flex: 1 }}>
         <View style={styles.bgImageWrapper}>
-         <Image source={{uri:'http://sso.haigame7.com/images/banner9.jpg'}} style={styles.bgImage} />
+         <Image source={require('../../images/loginbg.jpg')}  style={styles.loginbg}  />
       </View>
       <Header initObj={{
        title:'密码找回',
@@ -103,13 +166,11 @@ export default class extends Component {
 
         <View key={'securitycode'} style={styles.inputContainerSecond}>
           <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.securitycode = text} />
-          <TouchableHighlight style={this.state.loading ? styles.cetifyButtonDisabled : styles.certifyButton} underlayColor={'#2bbbad'} onPress={() => this.onSubmit(fields)}>
-            <Text style={styles.certifyButtonText} onPress={()=>this.gotoRoute()}>{'获取验证码'}</Text>
-          </TouchableHighlight>
+          {codebtn}
         </View>
         <View style={styles.submitText}>
-        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.onSubmit(fields)}>
-          <Text style={styles.buttonText} onPress={() => this.gotoRoute('setnewpwd')}>{'下一步'}</Text>
+        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.gotoRoute('setnewpwd',fields)}>
+          <Text style={styles.buttonText} >{'下一步'}</Text>
         </TouchableHighlight>
         </View>
       </View>
