@@ -2,8 +2,10 @@
 
 var React = require('react-native');
 var Util = require('../view/common/util');
+
 var {
-  StyleSheet
+  StyleSheet,
+  Platform
   } = React;
 
 var CommonStyle = StyleSheet.create({
@@ -21,19 +23,19 @@ var CommonStyle = StyleSheet.create({
      flexDirection:'row'
     },
     header:{
-     height:70,
+     height:(Platform.OS === 'ios') ? 64 : 48,
      backgroundColor:'rgb(240, 12, 12)'
     },
     headerFontFFF:{
      color:'#fff',
-     fontSize:19,
+     fontSize:18,
      fontWeight:'bold',
      marginRight:-25,
      marginTop:20,
     },
     headerFontFFFNav:{
      color:'#fff',
-     fontSize:19,
+     fontSize:18,
      fontWeight:'bold',
      marginTop:20,
     },
