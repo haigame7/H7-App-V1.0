@@ -16,7 +16,7 @@ var {
   Navigator
   } = React;
 
-var UserStyle = require('../styles/userstyle');
+ import styles from '../styles/userstyle';
 import SecondPageComponent from './common/SecondPageComponent';
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
@@ -90,27 +90,37 @@ var User = React.createClass({
   render: function () {
     return (
       <View >
-      <Header initObj={{
-      title:'个人中心',
-      backName:'返回',
-      }}   navigator={this.props.navigator}></Header>
-        <Text >
-          User Screen.
-        </Text>
-        <Image style={{width: 15,height: 15}} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
-        <TouchableOpacity onPress={this._pressButton.bind(null,this)}>
-          <Text>登陆</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._toRegister.bind(null,this)}>
-          <Text>注册</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._pressZH.bind(null,this)}>
-          <Text>知乎日报</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._pressGwdemo.bind(null,this)}>
-          <Text>官网Demo</Text>
-        </TouchableOpacity>
+      <View style={styles.bgImageWrapper}>
+      <View style={styles.centerbg}>
       </View>
+      </View>
+      <Header initObj={{title:'个人中心',message:true,}}   navigator={this.props.navigator}></Header>
+      <Image source={require('../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode={"cover"} >
+       <Text style={{color:'white'}}>我的战队</Text>
+      </Image>
+        <View style={styles.centerfootbg}>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressButton.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>我的战队</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._toRegister.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'rgb(86, 213, 226)'}]} ></View>
+          <Text style={styles.centerlitext}>我的赛事</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressZH.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>我的约战</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressGwdemo.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>我的精彩</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressGwdemo.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>我的任务</Text>
+        </TouchableOpacity>
+        </View>
+    </View>
     );
   }
 });

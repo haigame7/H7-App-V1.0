@@ -18,6 +18,12 @@ var {
 module.exports = React.createClass({
   render: function(){
     var obj = this.props.initObj;
+    var message;
+    if(obj.message!==undefined){
+     message = <Image source={{uri:'http://sso.haigame7.com/images/logo.png'}}  style={CommonStyle.headerImage}/>
+     }else{
+     message = <View></View>
+    }
     return (
       <View style={[CommonStyle.header, CommonStyle.row]}>
         <View style={CommonStyle.col1}>
@@ -26,13 +32,20 @@ module.exports = React.createClass({
         <View style={[CommonStyle.col1, CommonStyle.viewcenter]}>
           <Text style={CommonStyle.headertext} numberOfLines={1}>{obj.title}</Text>
         </View>
-        <View style={CommonStyle.col1}></View>
+        <View style={CommonStyle.col1}>
+        <TouchableOpacity style={CommonStyle.headerright} activeOpacity={0.8} onPress={this._pushroute}>
+        {message}
+        </TouchableOpacity>
+        </View>
       </View>
     );
   },
 
   _pop: function(){
     this.props.navigator.pop();
+  },
+  _pushroute:function(){
+    //this.props.navigator.push({name:'login',component:Login});
   }
 
 });

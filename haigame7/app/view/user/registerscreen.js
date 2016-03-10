@@ -140,8 +140,8 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'phone', placeholder: '手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
-      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
+      {ref: 'phone', placeholder: '手机号', keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
+      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
     ]
     var codebtn;
     if (this.state.isToushable) {
@@ -167,7 +167,7 @@ export default class extends Component {
     return(
       <View style={{ flex: 1 }}>
         <View style={styles.bgImageWrapper}>
-         <Image source={{uri:'http://sso.haigame7.com/images/banner9.jpg'}} style={styles.bgImage} />
+         <Image source={require('../../images/loginbg.jpg')} style={styles.loginbg} />
       </View>
       <Header initObj={{
        title:'注册',
