@@ -2,6 +2,7 @@
 
 import {StyleSheet} from 'react-native';
 var Dimensions = require('Dimensions');
+var Utils = require('../view/common/util');
 export default StyleSheet.create({
   titleContainer: {
     justifyContent: 'center',
@@ -26,7 +27,7 @@ export default StyleSheet.create({
    },
    centerbg: {
        flex:1,
-       backgroundColor:'rgb(70, 70, 70)',
+       backgroundColor:'rgb(0, 0, 0)',
        height: Dimensions.get('window').height,
        width: Dimensions.get('window').width,
    },
@@ -39,17 +40,88 @@ export default StyleSheet.create({
      height: Dimensions.get('window').height*7/11,
      width: Dimensions.get('window').width,
    },
+   centertitle:{
+     justifyContent: 'center',
+     alignItems: 'center',
+   },
+   centertab:{
+     flexDirection:'row',
+     top:Dimensions.get('window').height*1/15,
+   },
+   centertabname:{
+     color:'rgb(230, 193, 39)',
+     marginLeft:Dimensions.get('window').width*1/9,
+     marginRight:Dimensions.get('window').width*1/9,
+   },
+   centertabattr:{
+     color:'red',
+     fontSize:16,
+     marginTop:5,
+     marginLeft:Dimensions.get('window').width*1/9,
+     marginRight:Dimensions.get('window').width*1/9,
+   },
+   centerimage:{
+    width:100,
+    height:100,
+    borderRadius: 50,
+    top:Dimensions.get('window').height*1/40-5
+   },
+   centername:{
+     color:'#fff',
+     fontSize:18,
+     top:Dimensions.get('window').height*1/25
+   },
+   centersign:{
+     color:'rgb(120,120,120)',
+     width:Dimensions.get('window').width-80,
+     marginLeft:40,
+     marginRight:40,
+     textAlign:'center',
+     top:Dimensions.get('window').height*1/20
+
+   },
    centerlitext:{
-     color:'rgb(90, 90, 90)',
+     marginTop:10,
+     color:'#fff',
    },
    centerliicon:{
-     margin:10,
-     height:40,
-     width:40,
+     margin:5,
+     height:30,
+     borderRadius:5,
+     width:30,
+   },
+   centerangelright:{
+     marginTop:10,
+     marginLeft: Dimensions.get('window').width*7/11,
+     color:'rgb(90,90,90)',
+   },
+   centersplit: {
+     position:'absolute',
+     left: 40,
+     marginTop:40,
+     backgroundColor:'rgb(50,50,50)',
+     width:Dimensions.get('window').width*9/11,
+     height: Utils.pixel,
+   },
+   centersplitvertical:{
+     marginTop:20,
+     backgroundColor:'rgb(255,255,255)',
+     width:Utils.pixel,
+
+     height:Dimensions.get('window').width*1/20,
+     marginBottom:20,
+
+   },
+   centersplitblock: {
+     justifyContent: 'center',
+     alignItems: 'center',
+     backgroundColor:'rgb(70,70,70)',
+     height: 20
    },
    centerlicontent:{
      flexDirection:'row',
    },
+
   button: {
     backgroundColor: 'rgb(240, 12, 12)',
     padding: 15,
