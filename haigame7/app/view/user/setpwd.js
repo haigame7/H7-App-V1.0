@@ -148,30 +148,25 @@ export default class extends Component {
   render() {
 
     let fields = [
-      {ref: 'phone', placeholder: '手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
-      {ref: 'password', placeholder: '请您设置密码',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.inputText]},
-      {ref: 'passwordd', placeholder: '请再次确认密码',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.inputText]},
-      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
+      {ref: 'phone', placeholder: '手机号',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
+      {ref: 'password', placeholder: '请您设置密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.inputText]},
+      {ref: 'passwordd', placeholder: '请再次确认密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.inputText]},
+      {ref: 'securitycode', placeholder: '验证码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
     ]
-    var isreset;
-    if (this.state.reset) {
-      isreset = <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register(this.state.reset)}> <Text style={styles.buttonText} >{'完成'}</Text></TouchableHighlight>
-    } else {
-      isreset = <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register(this.state.reset)}> <Text style={styles.buttonText} >{'完成'}</Text></TouchableHighlight>
+    var headerset;
+    var footerset;
+    if(this.state.reset){
+      headerset =  <View><Header initObj={{title:'设置新密码',backName:'返回',}}  navigator={this.props.navigator}></Header><View activeOpacity={1} style={styles.titleContainer}></View></View>
+    }else{
+        headerset =<View><Header initObj={{title:'设置氦7密码',backName:'返回',}}  navigator={this.props.navigator}></Header><View activeOpacity={1} style={styles.titleContainer}></View><Text style={styles.setpwdText}>{'设置氦7密码后，您可以用手机号和密码同时登陆氦7电脑版和手机版'}</Text></View>
     }
     return(
       <View style={{ flex: 1 }}>
         <View style={styles.bgImageWrapper}>
-         <Image source={{uri:'http://sso.haigame7.com/images/banner9.jpg'}} style={styles.bgImage} />
+         <Image source={require('../../images/loginbg.jpg')}  style={styles.loginbg}  />
       </View>
-      <Header initObj={{
-       title:'设置氦7密码',
-        backName:'返回',
-       }}   navigator={this.props.navigator}></Header>
 
-       <View activeOpacity={1} style={styles.titleContainer}>
-
-       </View>
+        {headerset}
         <View key={'password'} style={styles.inputContainer}>
           <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[1]})} onChangeText={(text) => this.state.data.password = text} />
         </View>
@@ -188,8 +183,8 @@ export default class extends Component {
             />
         </View>
         <View style={styles.submitText}>
-        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register()}>
-          <Text style={styles.buttonText} onPress={() => this.register()}>{'完成'}</Text>
+        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register(this.state.reset)}>
+          <Text style={styles.buttonText} onPress={() => this.register(this.state.reset)}>{'完成'}</Text>
         </TouchableHighlight>
         </View>
       </View>
