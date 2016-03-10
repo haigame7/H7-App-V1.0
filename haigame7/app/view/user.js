@@ -22,6 +22,7 @@ import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
 import Gwdemo from '../../temp/gwdemo';
+import MyMsg from './user/message_list_screen';
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
@@ -87,6 +88,18 @@ var User = React.createClass({
       console.log('导航设置错误');
     }
   },
+  _myMsg() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '信息',
+        component: MyMsg,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
   render: function () {
     return (
       <View >
@@ -98,6 +111,10 @@ var User = React.createClass({
       <Image source={require('../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode={"cover"} >
        <Text style={{color:'white'}}>我的战队</Text>
       </Image>
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._myMsg.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>我的信息</Text>
+      </TouchableOpacity>
         <View style={styles.centerfootbg}>
         <TouchableOpacity style={styles.centerlicontent} onPress={this._pressButton.bind(null,this)}>
           <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
@@ -119,6 +136,7 @@ var User = React.createClass({
           <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
           <Text style={styles.centerlitext}>我的任务</Text>
         </TouchableOpacity>
+
         </View>
     </View>
     );

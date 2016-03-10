@@ -19,16 +19,16 @@ var {
 
 
 
-BackAndroid.addEventListener('hardwareBackPress', function() {
-  if(_navigator == null){
-    return false;
-  }
-  if(_navigator.getCurrentRoutes().length === 1){
-    return false;
-  }
-  _navigator.pop();
-  return true;
-});
+// BackAndroid.addEventListener('hardwareBackPress', function() {
+//   if(_navigator == null){
+//     return false;
+//   }
+//   if(_navigator.getCurrentRoutes().length === 1){
+//     return false;
+//   }
+//   _navigator.pop();
+//   return true;
+// });
 
 var _navigator ;
 var PAGES = 5;
