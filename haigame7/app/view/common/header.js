@@ -1,8 +1,8 @@
 var React = require('react-native');
-var Icon = require('./lefticon');
 var Util = require('./util');
 var User = require('../user');
 import Login from '../user/login';
+var Icon = require('react-native-vector-icons/FontAwesome');
 var CommonStyle = require('../../styles/commonstyle');
 import GlobalVariable from '../../constants/globalvariable';
 
@@ -35,16 +35,19 @@ module.exports = React.createClass({
     if (this.state.data!==null) {
       userLogin = <Image source={{uri:'http://sso.haigame7.com/images/logo.png'}}  style={CommonStyle.headerImage}/>
     } else {
-      userLogin = <Image source={{uri:'http://images.haigame7.com/common/avator.png'}}  style={CommonStyle.headerImage}/>
+      userLogin = <Icon name="user" size={30} color="#FFF" />
     }
     return (
-      <View style={[CommonStyle.header, CommonStyle.headerRow, CommonStyle.headerCenter]}>
-        <View style={[CommonStyle.headerTitle, CommonStyle.headerCenter]}>
-          <Text style={[CommonStyle.headerFontFFF, CommonStyle.headerTitlePos]} numberOfLines={1}>{obj.title}</Text>
+      <View style={[CommonStyle.header, CommonStyle.row]}>
+        <View style={CommonStyle.col1}></View>
+        <View style={[CommonStyle.col1, CommonStyle.viewcenter]}>
+          <Text style={CommonStyle.headertext} numberOfLines={1}>{obj.title}</Text>
         </View>
-        <TouchableOpacity style={[CommonStyle.headerRow,CommonStyle.headerCenter]} onPress={this._pushroute}>
-        {userLogin}
-        </TouchableOpacity>
+        <View style={CommonStyle.col1}>
+          <TouchableOpacity style={CommonStyle.headerright} activeOpacity={0.8} onPress={this._pushroute}>
+          {userLogin}
+          </TouchableOpacity>
+        </View>
       </View>
     );
   },
