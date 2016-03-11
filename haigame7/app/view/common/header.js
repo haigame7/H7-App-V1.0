@@ -62,7 +62,8 @@ module.exports = React.createClass({
     if (this.state.data!==null){
         this.props.navigator.push({name:'user',component:User});
     }else{
-        this.props.navigator.push({name:'login',component:Login});
+        // this.props.navigator.push({name:'login',component:Login});
+        this.props.navigator.push({name:'user',component:User});
     }
 
   }

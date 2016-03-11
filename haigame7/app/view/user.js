@@ -23,6 +23,7 @@ import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
 import Gwdemo from '../../temp/gwdemo';
+import MyMsg from './user/message_list_screen';
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
@@ -88,6 +89,18 @@ var User = React.createClass({
       console.log('导航设置错误');
     }
   },
+  _myMsg() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '信息',
+        component: MyMsg,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
   render: function () {
     return (
       <View >
@@ -126,6 +139,10 @@ var User = React.createClass({
 
        </View>
       </Image>
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._myMsg.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>我的信息</Text>
+      </TouchableOpacity>
         <View style={styles.centerfootbg}>
         <TouchableOpacity style={styles.centerlicontent} onPress={this._pressButton.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'orange'}]} />
@@ -158,6 +175,7 @@ var User = React.createClass({
           <Icon name="angle-right" size={25} style={styles.centerangelright} />
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
+<<<<<<< HEAD
         <View style={styles.centersplitblock}></View>
         <TouchableOpacity style={styles.centerlicontent} onPress={this._pressGwdemo.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(105, 61, 231)'}]} />
@@ -166,6 +184,8 @@ var User = React.createClass({
           <Icon name="angle-right" size={25} style={styles.centerangelright} />
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
+=======
+>>>>>>> master
 
         </View>
     </View>

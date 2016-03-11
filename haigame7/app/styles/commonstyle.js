@@ -9,9 +9,6 @@ var {
 } = React;
 
 var CommonStyle = StyleSheet.create({
-    headerRow: {
-        flexDirection: 'row'
-    },
     header: {
         height: (Platform.OS === 'ios') ? 64 : 48,
         padding: (Platform.OS === 'ios') ? 20 : 0,
@@ -125,44 +122,6 @@ var CommonStyle = StyleSheet.create({
     icon: {
       height: 30,
       width: 30,
-    },
-    btn: {
-        // height:40,
-        // width: width - 72,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 0,
-        borderRadius: 2,
-        backgroundColor: '#D31B25',
-        marginTop: 20,
-    },
-    btnactive: {
-        // height:40,
-        // width: width - 72,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 0,
-        borderRadius: 2,
-        backgroundColor: '#FFFF00',
-    },
-    btnfont: {
-        fontSize: 20,
-        color: '#FFFFFF',
-    },
-    //输入框
-    input: {
-        // height:40,
-        // width: width - 72,
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        borderWidth: 2,
-        borderColor: '#D31B25',
-        borderRadius: 3,
-        marginTop: 20,
-    },
-    inputfont: {
-        color: '#000000',
-        opacity: 1,
     },
 });
 
