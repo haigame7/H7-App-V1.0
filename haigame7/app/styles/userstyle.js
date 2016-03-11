@@ -214,6 +214,10 @@ export default StyleSheet.create({
         marginTop: -10,
         marginRight: 40
     },
+    switchSetting:{
+      marginTop:5,
+      left:Util.size.width*1/2 ,
+    },
     centerbg: {
        flex:1,
        backgroundColor:'rgb(70, 70, 70)',
@@ -307,6 +311,23 @@ export default StyleSheet.create({
    },
    centerlicontent:{
      flexDirection:'row',
+   },
+   centertextarea:{
+     height:Util.size.height*1/3,
+     top:10,
+     marginLeft:20,
+     fontSize:15,
+     color:'rgb(120,120,120)',
+     width:Util.size.width-40,
+     backgroundColor:'rgb(50,50,50)',
+   },
+   centertextareacount:{
+    position:'absolute',
+    fontSize:15,
+    color:'rgb(120,120,120)',
+    right:30,
+    marginTop:-15,
+    backgroundColor:'rgb(50,50,50)',
    },
    infotextright:{
      marginTop:25,
