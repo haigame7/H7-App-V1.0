@@ -1,13 +1,10 @@
 'use strict';
 
-<<<<<<< HEAD
-import {StyleSheet} from 'react-native';
-var Dimensions = require('Dimensions');
-var Utils = require('../view/common/util');
-=======
+
 import { StyleSheet, Platform } from 'react-native';
 var Util = require('../view/common/util');
->>>>>>> master
+
+
 export default StyleSheet.create({
     loginbg: {
         flex: 1,
@@ -219,15 +216,9 @@ export default StyleSheet.create({
     },
     centerbg: {
        flex:1,
-<<<<<<< HEAD
-       backgroundColor:'rgb(0, 0, 0)',
-       height: Dimensions.get('window').height,
-       width: Dimensions.get('window').width,
-=======
        backgroundColor:'rgb(70, 70, 70)',
        height: Util.size.height,
        width: Util.size.width,
->>>>>>> master
    },
    centerheadbg: {
        flex:1,
@@ -244,38 +235,38 @@ export default StyleSheet.create({
    },
    centertab:{
      flexDirection:'row',
-     top:Dimensions.get('window').height*1/15,
+     top:Util.size.height*1/15,
    },
    centertabname:{
      color:'rgb(230, 193, 39)',
-     marginLeft:Dimensions.get('window').width*1/9,
-     marginRight:Dimensions.get('window').width*1/9,
+     marginLeft:Util.size.width*1/9,
+     marginRight:Util.size.width*1/9,
    },
    centertabattr:{
      color:'red',
      fontSize:16,
      marginTop:5,
-     marginLeft:Dimensions.get('window').width*1/9,
-     marginRight:Dimensions.get('window').width*1/9,
+     marginLeft:Util.size.width*1/9,
+     marginRight:Util.size.width*1/9,
    },
    centerimage:{
     width:100,
     height:100,
     borderRadius: 50,
-    top:Dimensions.get('window').height*1/40-5
+    top:Util.size.height*1/40-5
    },
    centername:{
      color:'#fff',
      fontSize:18,
-     top:Dimensions.get('window').height*1/25
+     top:Util.size.height*1/25
    },
    centersign:{
      color:'rgb(120,120,120)',
-     width:Dimensions.get('window').width-80,
+     width:Util.size.width-80,
      marginLeft:40,
      marginRight:40,
      textAlign:'center',
-     top:Dimensions.get('window').height*1/20
+     top:Util.size.height*1/20
 
    },
    centerlitext:{
@@ -290,7 +281,7 @@ export default StyleSheet.create({
    },
    centerangelright:{
      marginTop:10,
-     marginLeft: Dimensions.get('window').width*7/11,
+     marginLeft: Util.size.width*7/11,
      color:'rgb(90,90,90)',
    },
    centersplit: {
@@ -298,15 +289,15 @@ export default StyleSheet.create({
      left: 40,
      marginTop:40,
      backgroundColor:'rgb(50,50,50)',
-     width:Dimensions.get('window').width*9/11,
-     height: Utils.pixel,
+     width:Util.size.width*9/11,
+     height: Util.pixel,
    },
    centersplitvertical:{
      marginTop:20,
      backgroundColor:'rgb(255,255,255)',
-     width:Utils.pixel,
+     width:Util.pixel,
 
-     height:Dimensions.get('window').width*1/20,
+     height:Util.size.width*1/20,
      marginBottom:20,
 
    },
@@ -319,8 +310,6 @@ export default StyleSheet.create({
    centerlicontent:{
      flexDirection:'row',
    },
-<<<<<<< HEAD
-
   button: {
     backgroundColor: 'rgb(240, 12, 12)',
     padding: 15,
@@ -338,7 +327,7 @@ export default StyleSheet.create({
   certifyButton: {
     backgroundColor: 'rgb(252, 204, 95)',
     padding: 15,
-    width:Dimensions.get('window').width/4,
+    width:Util.size.width/4,
     height:35,
     borderRadius:5,
     marginTop: -40,
@@ -348,7 +337,7 @@ export default StyleSheet.create({
   cetifyButtonDisabled: {
     backgroundColor: 'rgba(252, 204, 95,0.61)',
     padding: 15,
-    width:Dimensions.get('window').width/4,
+    width:Util.size.width/4,
     borderRadius:5,
     marginTop: 20,
     justifyContent: 'center',
@@ -394,14 +383,14 @@ export default StyleSheet.create({
     marginLeft: 5
   },
   inputContainer: {
-    width:Dimensions.get('window').width-40,
+    width:Util.size.width-40,
     height:80,
     marginTop:20,
     borderBottomWidth: 1,
     borderBottomColor: 'transparent'
   },
   inputContainerSecond: {
-    width:Dimensions.get('window').width-40,
+    width:Util.size.width-40,
     height:80,
     marginTop:-10,
     borderBottomWidth: 1,
@@ -431,12 +420,9 @@ export default StyleSheet.create({
    fontSize:13,
    marginTop:-20,
    color:'rgb(46, 97, 209)',
-   marginLeft:Dimensions.get('window').width/2-40,
+   marginLeft:Util.size.width/2-40,
   },
-  setpwdText:{
-=======
    setpwdText:{
->>>>>>> master
     marginLeft:40,
     width:Util.size.width-60,
     color:'rgb(121, 121, 121)',
