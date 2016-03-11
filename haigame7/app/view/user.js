@@ -175,7 +175,6 @@ var User = React.createClass({
           <Icon name="angle-right" size={25} style={styles.centerangelright} />
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
-<<<<<<< HEAD
         <View style={styles.centersplitblock}></View>
         <TouchableOpacity style={styles.centerlicontent} onPress={this._pressGwdemo.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(105, 61, 231)'}]} />
@@ -184,8 +183,6 @@ var User = React.createClass({
           <Icon name="angle-right" size={25} style={styles.centerangelright} />
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
-=======
->>>>>>> master
 
         </View>
     </View>
