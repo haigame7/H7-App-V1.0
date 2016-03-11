@@ -20,6 +20,8 @@ var {
 
  import styles from '../styles/userstyle';
 import UserInfo from './user/userinfo';
+import Setting from './user/setting';
+import UserSign from './user/usersign';
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
@@ -78,12 +80,24 @@ var User = React.createClass({
     }
   },
 
-  _pressGwdemo() {
+  _pressSetting() {
     const nav = this.state._navigator;
     if(nav) {
       nav.push({
-        name: 'zhrb',
-        component: Gwdemo,
+        name: 'setting',
+        component: Setting,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('_navigator_navigator_navigator_navigator');
+    }
+  },
+  _pressSign() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: 'usersign',
+        component: UserSign,
         sceneConfig:Navigator.SceneConfigs.FloatFromRight
       })
     }else{
@@ -122,14 +136,16 @@ var User = React.createClass({
       <View style={styles.centerbg}>
       </View>
       </View>
-      <Header initObj={{title:'个人中心',message:true,}}   navigator={this.props.navigator}></Header>
+      <Header initObj={{title:'个人中心',message:'message',}}   navigator={this.props.navigator}></Header>
       <Image source={require('../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode={"cover"} >
        <TouchableOpacity style={styles.centertitle} onPress={this._pressUserInfo.bind(null,this)}>
        <Image style={styles.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
        </TouchableOpacity>
        <View style={styles.centertitle}>
         <Text style={styles.centername}>我的名字</Text>
-        <Text style={styles.centersign}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+         <TouchableOpacity onPress={this._pressSign.bind(null,this)}>
+         <Text style={styles.centersign} >个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+         </TouchableOpacity>
        </View>
        <View style={styles.centertab}>
         <View>
@@ -173,20 +189,20 @@ var User = React.createClass({
           <Icon name="angle-right" size={25} style={styles.centerangelright} />
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressGwdemo.bind(null,this)}>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressSetting.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(86, 213, 226)'}]} />
           <Text style={styles.centerlitext}>我的竞猜</Text>
           <Icon name="angle-right" size={25} style={styles.centerangelright} />
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressGwdemo.bind(null,this)}>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressSetting.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(185, 44, 193)'}]}  />
           <Text style={styles.centerlitext}>我的任务</Text>
           <Icon name="angle-right" size={25} style={styles.centerangelright} />
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
         <View style={styles.centersplitblock}></View>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressGwdemo.bind(null,this)}>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressSetting.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(105, 61, 231)'}]} />
           <Text style={styles.centerlitext}>设置</Text>
           <View style={{marginLeft:28}}></View>
