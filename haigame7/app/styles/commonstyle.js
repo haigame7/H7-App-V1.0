@@ -35,6 +35,11 @@ var CommonStyle = StyleSheet.create({
         height: 48,
         marginRight: 15,
     },
+    headertextright:{
+    fontSize:16,
+    color:'#fff',
+    right:0,
+    },
     bodys: {
         margin: 0,
         alignItems: 'center',
