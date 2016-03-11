@@ -20,7 +20,7 @@ module.exports = React.createClass({
     var obj = this.props.initObj;
     var message;
     if(obj.message!==undefined){
-     message = <Image source={{uri:'http://sso.haigame7.com/images/logo.png'}}  style={CommonStyle.headerImage}/>
+     message = <Icon name="folder" size={30} color="#fff" />
      }else{
      message = <View></View>
     }
