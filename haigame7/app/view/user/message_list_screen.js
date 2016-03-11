@@ -1,92 +1,126 @@
 'use strict';
- 
-const React = require('react-native');
-const {
-  AppRegistry,
-  ScrollView,
-  StyleSheet,
-  RefreshControl,
-  Text,
-  View,
-} = React;
- 
-const styles = StyleSheet.create({
-  row: {
-    borderColor: 'red',
-    borderWidth: 5,
-    padding: 20,
-    backgroundColor: '#3a5795',
-    margin: 5,
-  },
-  text: {
-    alignSelf: 'center',
-    color: '#fff',
-  },
-  scrollview: {
-    flex: 1,
-  },
-});
- 
-const Row = React.createClass({
-  _onClick: function() {
-    this.props.onClick(this.props.data);
-  },
-  render: function() {
-    return (
-        <View style={styles.row}>
-          <Text style={styles.text}>
-            {this.props.data.text}
-          </Text>
-        </View>
-    );
-  },
-});
- 
-const RefreshControlDemo = React.createClass({
-  getInitialState() {
-    return {
-      isRefreshing: false,
-      loaded: 0,
-      rowData: Array.from(new Array(20)).map(
-        (val, i) => ({text: '初始行 ' + i})),
-    };
-  },
-  render() {
-    const rows = this.state.rowData.map((row, ii) => {
-      return <Row key={ii} data={row}/>;
-    });
-    return (
-      <ScrollView
-        style={styles.scrollview}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.isRefreshing}
-            onRefresh={this._onRefresh}
-            colors={['#ff0000', '#00ff00', '#0000ff','#3ad564']}
-            progressBackgroundColor="#ffffff"
-          />
-        }>
-        {rows}
-      </ScrollView>
-    );
-  },
-  _onRefresh() {
-    this.setState({isRefreshing: true});
-    setTimeout(() => {
-      // 准备下拉刷新的5条数据
-      const rowData = Array.from(new Array(5))
-      .map((val, i) => ({
-        text: '刷新行 ' + (+this.state.loaded + i)
-      }))
-      .concat(this.state.rowData);
- 
-      this.setState({
-        loaded: this.state.loaded + 5,
-        isRefreshing: false,
-        rowData: rowData,
-      });
-    }, 5000);
-  },
-});
- module.exports = RefreshControlDemo;
-// AppRegistry.registerComponent('RefreshControlDemo', () => RefreshControlDemo);
+import React, {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  ListView,
+  Text,
+  TouchableHighlight
+} from 'react-native';
+
+import styles from '../../styles/msg_list_style';
+import ShowMsg from './message_show_screen';
+import Header from '../common/headernav';
+
+//https://gist.github.com/iahu/0e524f4612a8925f2f9c
+//http://bbs.reactnative.cn/topic/52/listview-datasource-clonewithrows-%E7%9A%84%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/2
+
+var README_URL = 'https://coding.net/u/levi/p/imouto-host/git/raw/master/README.md';
+var MAP = {'Acrylated':'AcrylicHosts','Hosts-ä': 'Hosts-a'};
+var BASE_URL = 'https://coding.net/u/levi/p/imouto-host/git/raw/master/';
+var GOOGLE_HOSTS_URL = 'https://raw.githubusercontent.com/txthinking/google-hosts/master/hosts';
+
+export default class extends React.Component {
+  constructor(props){
+    super(props);
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(['row1','row2']),
+      pressTest: 0,
+			loaded: false,
+			updatePressed: false
+    }
+  }
+  componentDidMount() {
+  		this.getData();
+  }
+
+  getData() {
+    let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
+    fetch(README_URL)
+    .then((response) => response.text())
+    .then((responseText) => {
+      let f = responseText.match(/\- (.+)/g);
+      f = f.map((line, idx) => {
+					let l = line.replace(/^\s?-\s?/, '') + '\n';
+					let a = l.split(/\s?\:\s?/);
+					return {
+						title: a.shift(),
+						desc: a.join(':').split(' ').shift()
+					};
+				});
+        f.push({
+          title: 'google-hosts',
+          desc: '每天2:00-3:00'
+        });
+        var _ds = JSON.parse(JSON.stringify(f));
+        // console.log(_ds);
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(_ds),
+          loaded: true
+        });
+    }).done();
+
+  }
+
+  render() {
+    if(!this.state.loaded){
+      return this.renderLoadingView();
+    }
+    return this.renderList();
+  }
+
+  renderLoadingView() {
+    return (
+	      <View style={styles.loading}>
+	        <Text>
+	          Loading ...
+	        </Text>
+	      </View>
+	    );
+  }
+
+  renderList() {
+    return(
+      <View style={styles.container}>
+        <Header initObj={{title:'我的信息{33}',}} navigator={this.props.navigator}></Header>
+          <ListView
+    					style={styles.listGroup}
+    					dataSource={this.state.dataSource}
+    					renderRow= {this._renderRow.bind(this)} />
+        </View>
+    );
+  }
+
+  _renderRow(rowData, sectionID, rowID) {
+    return(
+      <TouchableHighlight onPress={()=> this._onItemPress(rowData)} underlayColor="#06f">
+
+      <View style={styles.listItem} id={rowID}>
+				<View style={styles.itemContent}>
+				<Text style={styles.itemTitle}>发件人{rowData.title}{rowData.desc}</Text>
+				<Text>标题标题标题标题：WFK</Text>
+				</View>
+				<View>
+          <Text>内容是啥</Text>
+        </View>
+			</View>
+      </TouchableHighlight>
+    );
+  }
+
+  _onItemPress(rowData) {
+    let _nav = this.props.navigator;
+    console.log(_nav);
+    if (_nav) {
+      _nav.push({
+        name: 'ShowMsg',
+        component: ShowMsg,
+        params: {
+         rowData: rowData,
+       }
+      });
+    }
+  }
+}
