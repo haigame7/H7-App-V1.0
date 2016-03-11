@@ -14,11 +14,12 @@ var {
   Image,
   TouchableOpacity,
   ToastAndroid,
-  Navigator
+  Navigator,
+  ScrollView
   } = React;
 
  import styles from '../styles/userstyle';
-import SecondPageComponent from './common/SecondPageComponent';
+import UserInfo from './user/userinfo';
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
@@ -47,6 +48,19 @@ var User = React.createClass({
          name: 'Login',
          id: 1
        }
+      })
+    }else{
+      console.log('_navigator_navigator_navigator_navigator');
+    }
+  },
+  _pressUserInfo() {
+    // console.log(this.refs.login_btn.getDOMNode().value);
+    // ToastAndroid.show('登陆喽', ToastAndroid.SHORT);
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: 'userinfo',
+        component: UserInfo,
       })
     }else{
       console.log('_navigator_navigator_navigator_navigator');
@@ -110,7 +124,7 @@ var User = React.createClass({
       </View>
       <Header initObj={{title:'个人中心',message:true,}}   navigator={this.props.navigator}></Header>
       <Image source={require('../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode={"cover"} >
-       <TouchableOpacity style={styles.centertitle}>
+       <TouchableOpacity style={styles.centertitle} onPress={this._pressUserInfo.bind(null,this)}>
        <Image style={styles.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
        </TouchableOpacity>
        <View style={styles.centertitle}>
@@ -139,11 +153,7 @@ var User = React.createClass({
 
        </View>
       </Image>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._myMsg.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>我的信息</Text>
-      </TouchableOpacity>
-        <View style={styles.centerfootbg}>
+        <ScrollView style={styles.centerfootbg}>
         <TouchableOpacity style={styles.centerlicontent} onPress={this._pressButton.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'orange'}]} />
           <Text style={styles.centerlitext}>我的战队</Text>
@@ -184,7 +194,7 @@ var User = React.createClass({
             <View style={styles.centersplit}></View>
         </TouchableOpacity>
 
-        </View>
+        </ScrollView>
     </View>
     );
   }

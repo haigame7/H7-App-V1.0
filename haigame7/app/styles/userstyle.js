@@ -267,7 +267,6 @@ export default StyleSheet.create({
      marginRight:40,
      textAlign:'center',
      top:Util.size.height*1/20
-
    },
    centerlitext:{
      marginTop:10,
@@ -296,7 +295,6 @@ export default StyleSheet.create({
      marginTop:20,
      backgroundColor:'rgb(255,255,255)',
      width:Util.pixel,
-
      height:Util.size.width*1/20,
      marginBottom:20,
 
@@ -309,6 +307,33 @@ export default StyleSheet.create({
    },
    centerlicontent:{
      flexDirection:'row',
+   },
+   infotextright:{
+     marginTop:25,
+     position:'absolute',
+     right: Util.size.width*1/8,
+     color:'rgb(90,90,90)',
+   },
+   infoangelright:{
+     marginTop:20,
+     position:'absolute',
+     left: Util.size.width*10/11,
+     color:'rgb(90,90,90)',
+   },
+   infoimage:{
+    width:78,
+    height:78,
+    borderRadius: 39,
+    left: Util.size.width*4/7,
+    top:Util.size.height*1/40-10
+   },
+   infosplit: {
+     position:'absolute',
+     left: 10,
+     marginTop:58,
+     backgroundColor:'rgb(50,50,50)',
+     width:Util.size.width*10/11,
+     height: Util.pixel,
    },
   button: {
     backgroundColor: 'rgb(240, 12, 12)',
