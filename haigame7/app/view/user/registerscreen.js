@@ -70,7 +70,7 @@ export default class extends Component {
      return;
    }
     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-      this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+      this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data,reset:false},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
     }
     return;
   }
@@ -114,6 +114,8 @@ export default class extends Component {
           message = '服务器请求异常';
         }else if(response.MessageCode == '10003'){
           message = '手机号有误请重新输入';
+        }else if(response.MessageCode == '10004'){
+          message = '手机号已注册';
         }else if(response.MessageCode == '0'){
           message = '验证码已发送，请查看';
         }
@@ -138,8 +140,8 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'phone', placeholder: '手机号', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
-      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
+      {ref: 'phone', placeholder: '手机号', keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
+      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
     ]
     var codebtn;
     if (this.state.isToushable) {
@@ -165,7 +167,7 @@ export default class extends Component {
     return(
       <View style={{ flex: 1 }}>
         <View style={styles.bgImageWrapper}>
-         <Image source={{uri:'http://sso.haigame7.com/images/banner9.jpg'}} style={styles.bgImage} />
+         <Image source={require('../../images/loginbg.jpg')} style={styles.loginbg} />
       </View>
       <Header initObj={{
        title:'注册',
