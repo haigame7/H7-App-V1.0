@@ -6,6 +6,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "@remobile/react-native-simple-button":"^1.0.0",
+    "@remobile/react-native-datetime-picker": "^1.0.3",
     "react-native": "^0.20.0",
     "react-native-complex-user-register": "^1.0.3",
     "react-native-sk-countdown": "^1.0.0",

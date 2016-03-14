@@ -4,11 +4,12 @@ import com.facebook.react.ReactActivity;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
+import com.remobile.datetimepicker.*;  // <--- import
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends ReactActivity {
+public class MainActivity extends ReactActivity implements DefaultHardwareBackBtnHandler {
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -18,7 +19,25 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "haigame7";
     }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+     super.onCreate(savedInstanceState);
+     mReactRootView = new ReactRootView(this);
 
+     mReactInstanceManager = ReactInstanceManager.builder()
+     .setApplication(getApplication())
+     .setBundleAssetName("index.android.bundle")
+     .setJSMainModuleName("index.android")
+     .addPackage(new MainReactPackage())
+     .addPackage(new RCTDateTimePickerPackage())              // <------ add here
+     .setUseDeveloperSupport(BuildConfig.DEBUG)
+     .setInitialLifecycleState(LifecycleState.RESUMED)
+     .build();
+
+    mReactRootView.startReactApplication(mReactInstanceManager, "ExampleRN", null);
+
+    setContentView(mReactRootView);
+    }
     /**
      * Returns whether dev mode should be enabled.
      * This enables e.g. the dev menu.

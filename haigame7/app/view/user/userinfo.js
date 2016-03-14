@@ -3,6 +3,9 @@
 var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/FontAwesome');
+var DateTimePicker = require('@remobile/react-native-datetime-picker');
+var Button = require('@remobile/react-native-simple-button');
+
 var {
   View,
   Text,
@@ -17,9 +20,27 @@ var {
 
 
 var UserInfo = React.createClass({
-
-
-
+  getInitialState() {
+       return {
+           date: new Date(),
+       }
+   },
+   showDatePicker() {
+       var date = this.state.date;
+       this.picker.showDatePicker(date, (d)=>{
+           this.setState({date:d});
+       });
+   },
+   showTimePicker() {
+       var date = this.state.date;
+       this.picker.showTimePicker(date, (d)=>{
+           this.setState({date:d});
+       });
+   },
+   formatDate (strTime) {
+     var date = new Date(strTime);
+     return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+   },
   render:function(){
 
     return (
@@ -59,10 +80,11 @@ var UserInfo = React.createClass({
           <Icon name="angle-right" size={25} style={styles.infoangelright} />
             <View style={[styles.infosplit,{marginTop:55}]}></View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
+        <TouchableOpacity style={styles.centerlicontent} onPress={this.showDatePicker} >
           <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>生日</Text>
-          <Text style={[styles.infotextright]}>昵称123123</Text>
+          <Text style={[styles.infotextright]}>{this.formatDate(this.state.date.toString())}</Text>
           <Icon name="angle-right" size={25} style={styles.infoangelright} />
+
             <View style={[styles.infosplit]}></View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.centerlicontent} >
@@ -78,7 +100,7 @@ var UserInfo = React.createClass({
           <Icon name="angle-right" size={25} style={styles.infoangelright} />
 
         </TouchableOpacity>
-
+     <DateTimePicker ref={(picker)=>{this.picker=picker}}/>
         </ScrollView>
     </View>
     );
