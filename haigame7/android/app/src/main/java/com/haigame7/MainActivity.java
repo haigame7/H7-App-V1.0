@@ -9,7 +9,7 @@ import com.remobile.datetimepicker.*;  // <--- import
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends ReactActivity implements DefaultHardwareBackBtnHandler {
+public class MainActivity extends ReactActivity {
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -19,7 +19,7 @@ public class MainActivity extends ReactActivity implements DefaultHardwareBackBt
     protected String getMainComponentName() {
         return "haigame7";
     }
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
      super.onCreate(savedInstanceState);
      mReactRootView = new ReactRootView(this);
