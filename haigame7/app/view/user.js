@@ -17,13 +17,17 @@ var {
   Navigator
   } = React;
 
- import styles from '../styles/userstyle';
+import styles from '../styles/userstyle';
 import SecondPageComponent from './common/SecondPageComponent';
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
 import Gwdemo from '../../temp/gwdemo';
 import MyMsg from './user/message_list_screen';
+import ReSetPwd from './user/reset_pwd_screen';
+import About from './user/about_screen';
+import Share from './user/share_screen';
+import Help from './user/help_screen';
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
@@ -101,6 +105,56 @@ var User = React.createClass({
       console.log('导航设置错误');
     }
   },
+
+  _reSetPwd() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '重置密码',
+        component: ReSetPwd,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
+
+  _about() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '关于H7',
+        component: About,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
+  _share() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '分享',
+        component: Share,
+        sceneConfig:Navigator.SceneConfigs.HorizontalSwipeJump
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
+  _help() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '帮助与反馈',
+        component: Help,
+        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
   render: function () {
     return (
       <View >
@@ -142,6 +196,22 @@ var User = React.createClass({
       <TouchableOpacity style={styles.centerlicontent} onPress={this._myMsg.bind(null,this)}>
         <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
         <Text style={styles.centerlitext}>我的信息</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._reSetPwd.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>重置密码密码</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._about.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>关于H7</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._share.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>分享</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._help.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>帮助与反馈</Text>
       </TouchableOpacity>
         <View style={styles.centerfootbg}>
         <TouchableOpacity style={styles.centerlicontent} onPress={this._pressButton.bind(null,this)}>
