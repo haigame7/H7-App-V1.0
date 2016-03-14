@@ -468,6 +468,9 @@ export default StyleSheet.create({
    color:'rgb(46, 97, 209)',
    marginLeft:Util.size.width/2-40,
   },
+   pickerSex:{
+    backgroundColor:'#fff',
+   },
    setpwdText:{
     marginLeft:40,
     width:Util.size.width-60,
