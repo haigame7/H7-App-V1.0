@@ -13,6 +13,8 @@ var {
   TouchableOpacity,
   ToastAndroid,
   Navigator,
+  Modal,
+  Picker,
   ScrollView
   } = React;
 
@@ -23,6 +25,8 @@ var UserInfo = React.createClass({
   getInitialState() {
        return {
            date: new Date(),
+           modalVisible:false,
+           sex:'1',
        }
    },
    showDatePicker() {
@@ -41,6 +45,14 @@ var UserInfo = React.createClass({
      var date = new Date(strTime);
      return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
    },
+   changemodalvisible(visible){
+   if(visible){
+       this.setState({modalVisible: false});
+    }else{
+       this.setState({modalVisible: true});
+    }
+   return this.state.notshow;
+  },
   render:function(){
 
     return (
@@ -68,9 +80,9 @@ var UserInfo = React.createClass({
             <Icon name="angle-right" size={25} style={[styles.infoangelright]} />
               <View style={[styles.infosplit]}></View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
+        <TouchableOpacity style={styles.centerlicontent} onPress={()=>this.changemodalvisible(this.state.modalVisible)} >
           <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:30,color:'rgb(120,120,120)'}]}>性别</Text>
-          <Text style={[styles.infotextright,{marginTop:30}]}>男</Text>
+          <Text style={[styles.infotextright,{marginTop:30}]}>{parseInt(this.state.sex) ? '男' : '女'} </Text>
           <Icon name="angle-right" size={25} style={[styles.infoangelright,{marginTop:25}]} />
             <View style={[styles.infosplit]}></View>
         </TouchableOpacity>
@@ -100,6 +112,17 @@ var UserInfo = React.createClass({
           <Icon name="angle-right" size={25} style={styles.infoangelright} />
 
         </TouchableOpacity>
+    <Modal visible={this.state.modalVisible} animated={true} transparent={true} >
+    <View style={styles.pickerSex}>
+      <Picker
+      selectedValue={this.state.sex}
+      onValueChange={(lang) => this.setState({sex: lang})}>
+      <Picker.Item label="男" value="1" />
+      <Picker.Item label="女" value="0" />
+      </Picker>
+      <Text style={[styles.buttonText,{color:'#000'}]} onPress={()=>this.changemodalvisible(this.state.modalVisible)}>完成</Text>
+     </View>
+    </Modal>
      <DateTimePicker ref={(picker)=>{this.picker=picker}}/>
         </ScrollView>
     </View>
