@@ -22,7 +22,7 @@ module.exports = React.createClass({
     if(obj.message==undefined){
      message = <View></View>;
    }else if(obj.message=='message'){
-     message = <Icon name="folder" size={30} color="#fff" />
+     message = <Icon name="envelope" size={30} color="#fff" />
    }else if(obj.message=='finish'){
      message = <Text style={CommonStyle.headertextright}>完成</Text>
    }
