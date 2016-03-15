@@ -204,7 +204,7 @@ var User = React.createClass({
       <View style={styles.centerbg}>
       </View>
       </View>
-      <Header initObj={{title:'个人中心',message:'message',}}   navigator={this.props.navigator}></Header>
+      <Header screenTitle='个人中心'  iconName='folder'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}></Header>
       <Image source={require('../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode={"cover"} >
        <TouchableOpacity style={styles.centertitle} onPress={this._pressUserInfo.bind(null,this)}>
        <Image style={styles.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />

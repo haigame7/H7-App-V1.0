@@ -6,6 +6,7 @@ import React, {
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+var Icon = require('react-native-vector-icons/FontAwesome') //不知道这个能不能直接用
 export default class extends React.Component {
   constructor() {
     super();
@@ -18,6 +19,7 @@ export default class extends React.Component {
     this.setState({isOpen: true});
   }
   _closeModa() {
+    console.log('******');
      this.setState({isOpen: false});
   }
 
@@ -32,7 +34,7 @@ export default class extends React.Component {
     return(
       <View style={styles.wrapper}>
        <Button onPress={this._openModa.bind(this)} style={styles.btn}>点击弹出Modal</Button>
-       <Modal isOpen={this.state.isOpen} style={[styles.modal, styles.modal4]} position={"center"} backdropContent={BContent}>
+       <Modal isOpen={this.state.isOpen} onClosed={this._closeModa.bind(this)}style={[styles.modal, styles.modal4]} position={"center"} backdropContent={BContent}>
           <View>
             <Text style={styles.text_1}>亲爱的用户，你还没有建立或加入战队呢，赶快点击下面按钮，开启你的约战之旅吧！！！</Text>
             <Text style={styles.text_2}>说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊</Text>
