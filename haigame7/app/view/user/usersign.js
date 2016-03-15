@@ -3,7 +3,6 @@
 var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/FontAwesome');
-var Util = require('../common/util');
 var {
   View,
   Component,
@@ -11,7 +10,6 @@ var {
   TextArea,
   TextInput,
   Navigator,
-  StyleSheet,
   ScrollView
   } = React;
 
@@ -47,7 +45,7 @@ export default class extends Component{
       <View style={[styles.centerbg,{backgroundColor:'#000'}]}>
 
        <TextInput
-      style={[styles.centertextarea,UserSignStyle.centertextarea]}
+      style={[styles.centertextarea]}
       multiline={true}
       placeholder='生命不息，电竞不止...'
       placeholderTextColor='rgb(120,120,120)'
@@ -57,23 +55,10 @@ export default class extends Component{
       value={this.state.value}
       maxLength={200}
       ></TextInput>
-      <Text style={[styles.centertextareacount,UserSignStyle.centertextareacount]}>{this.state.textnumber}/200</Text>
+      <Text style={styles.centertextareacount}>{this.state.textnumber}/200</Text>
       </View>
 
     </View>
     );
   }
 }
-var UserSignStyle = StyleSheet.create({
-centertextarea:{
-  left:20,
-  width:Util.size.width-40,
-  height:Util.size.height/2-40,
-  backgroundColor:'rgb(120,120,120)',
-},
-centertextareacount:{
-  height:30,
-  color:'rgb(255,255,255)',
-},
-
-});
