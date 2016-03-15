@@ -73,7 +73,7 @@ export default class extends Component {
                          <Text style = {[styles.linkright, commonstyle.blue]} > { '新用户注册' } </Text>
                      </TouchableOpacity>
                 </View>
-                <TouchableHighlight style = { styles.btn } underlayColor = {'#FF0000'} onPress = {() => this.onSubmit(fields) } >
+                <TouchableHighlight style = {this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor = {'#FF0000'} onPress = {() => this.onSubmit(fields) } >
                      <Text style = {styles.btnfont}> { this.state.loading ? '正在登录...' : '登录' } </Text>
                 </TouchableHighlight>
             </Image>

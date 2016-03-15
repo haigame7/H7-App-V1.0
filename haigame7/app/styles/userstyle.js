@@ -67,6 +67,53 @@ export default StyleSheet.create({
         fontSize: 20,
         color: '#FFFFFF',
     },
+    btncode: {
+        position: 'absolute',
+        top: 2,
+        right: 4,
+        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+        height:32,
+        borderWidth: 0,
+        borderRadius: 2,
+        backgroundColor: '#FFCA00',
+    },
+    btncodefont: {
+        fontSize: 14,
+        color: '#282828',
+    },
+    btndisable: {
+        backgroundColor: '#484848',
+    },
+    //区域块
+    loginblock: {
+        width: Util.size.width - 72,
+        marginTop: 20,
+        marginLeft: 36,
+        marginRight: 36,
+    },
+    //滑块
+    switchblock: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 36,
+        marginRight: 36,
+        width: Util.size.width - 72,
+        height: 20,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    switchtext: {
+        flex: 1,
+        color: '#C3C3C3',
+        textAlign: 'right',
+        marginRight: 10
+    },
+    switchbar: {
+        width: 50,
+        height: 20,
+    },
     //原
     title: {
         color: '#FFFFFF',
