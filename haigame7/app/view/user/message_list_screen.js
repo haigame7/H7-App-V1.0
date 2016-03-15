@@ -29,6 +29,7 @@ var swipeoutBtns = [
     backgroundColor: '#f61d4b'
   }
 ]
+const jsonData = '[{"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}]';
 export default class extends React.Component {
   constructor(props){
     super(props);
@@ -39,38 +40,49 @@ export default class extends React.Component {
 			loaded: false,
 			updatePressed: false,
       onpress: this._onItemPress.bind(this),
-      isRefreshing: false
+      isRefreshing: false,
+      dataCount:0,
+      keykey:0,
+      footerMsg: "点击加载更多"
     }
   }
   componentDidMount() {
+    // this.makeData();
   		this.getData();
+
   }
 
   getData() {
-    let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
-    fetch(README_URL)
-    .then((response) => response.text())
-    .then((responseText) => {
-      let f = responseText.match(/\- (.+)/g);
-      f = f.map((line, idx) => {
-					let l = line.replace(/^\s?-\s?/, '') + '\n';
-					let a = l.split(/\s?\:\s?/);
-					return {
-						title: a.shift(),
-						desc: a.join(':').split(' ').shift()
-					};
-				});
-        f.push({
-          title: 'google-hosts',
-          desc: '每天2:00-3:00'
-        });
-        var _ds = JSON.parse(JSON.stringify(f));
-        // console.log(_ds);
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(_ds),
-          loaded: true
-        });
-    }).done();
+    // let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
+
+    let _ds = JSON.parse(jsonData);
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(_ds),
+      loaded: true
+    });
+    // fetch(README_URL)
+    // .then((response) => response.text())
+    // .then((responseText) => {
+    //   let f = responseText.match(/\- (.+)/g);
+    //   f = f.map((line, idx) => {
+		// 			let l = line.replace(/^\s?-\s?/, '') + '\n';
+		// 			let a = l.split(/\s?\:\s?/);
+		// 			return {
+		// 				title: a.shift(),
+		// 				desc: a.join(':').split(' ').shift()
+		// 			};
+		// 		});
+    //     f.push({
+    //       title: 'google-hosts',
+    //       desc: '每天2:00-3:00'
+    //     });
+    //     var _ds = JSON.parse(JSON.stringify(f));
+    //     // console.log(_ds);
+    //     this.setState({
+    //       dataSource: this.state.dataSource.cloneWithRows(_ds),
+    //       loaded: true
+    //     });
+    // }).done();
 
   }
 
@@ -95,13 +107,11 @@ _onRefresh() {
     isRefreshing: true
   });
   console.log("下拉刷新");
-  setTimeout(
-      () => { this.setState({
-        isRefreshing: false
-      }); },
-      1000
-    );
-
+  setTimeout(()=>{
+    this.setState({
+      isRefreshing: false
+    });
+  },1000);
 }
   renderList() {
     return(
@@ -110,8 +120,6 @@ _onRefresh() {
           <ListView
     					style={styles.listGroup}
     					dataSource={this.state.dataSource}
-              onEndReached={() => console.log('上拉加载')}
-              onEndReachedThreshold={5}
               refreshControl={
                   <RefreshControl
                     refreshing={this.state.isRefreshing}
@@ -123,12 +131,51 @@ _onRefresh() {
                   />
                 }
     					renderRow= {this._renderRow.bind(this)}
-              renderFooter={() => (<View><Text>点击加载更多</Text></View>)}
+              renderFooter={this._renderFooter.bind(this)}
               />
         </View>
     );
   }
+  _onLoadMore() {
+    if (this.state.keykey > 3) {
+      this.setState({
+        footerMsg: "木有更多多数据了~~~~"
+      });
+    }else{
+      let _ds = JSON.parse(jsonData);
+      this.setState({
+        footerMsg: "正在加载....."
+      });
+      let jsonstr='[{"title" : "标题123123", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}]'
+      let newData = JSON.parse(jsonstr)
+      let dd = _ds.push(newData)
+      //这等到有api在搞吧
+      setTimeout(()=>{
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(_ds),
+          loaded: true,
+          footerMsg: "点击加载更多",
+          keykey: this.state.keykey += 1
+        });
+      },2000);
+    }
 
+  }
+
+  _renderFooter() {
+    return(
+      <View>
+        <TouchableOpacity
+          onPress={this._onLoadMore.bind(this)}
+          >
+          <View style={{alignSelf: 'center'}}>
+            <Text>
+              {this.state.footerMsg}
+            </Text></View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   _renderRow(rowData, sectionID, rowID) {
     return(
       <Swipeout right={swipeoutBtns} close={true}>
@@ -136,10 +183,10 @@ _onRefresh() {
           <View style={styles.listItem} id={rowID}>
     				<View style={styles.itemContent}>
     				<Text style={styles.itemTitle}>发件人{rowData.title}{rowData.desc}</Text>
-    				<Text>标题标题标题标题：WFK</Text>
+    				<Text>标题标题标题标题：{rowData.title}</Text>
     				</View>
     				<View>
-              <Text>内容是啥</Text>
+              <Text>{rowData.content}</Text>
             </View>
     			</View>
         </TouchableOpacity>
@@ -149,7 +196,6 @@ _onRefresh() {
 
   _onItemPress(rowData) {
     let _nav = this.props.navigator;
-    console.log(_nav);
     if (_nav) {
       _nav.push({
         name: 'ShowMsg',
