@@ -23,6 +23,8 @@ import styles from '../styles/userstyle';
 import UserInfo from './user/userinfo';
 import Setting from './user/setting';
 import UserSign from './user/usersign';
+import UserCertify from './user/usercertify';
+ import UserAsset from './user/userasset';
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
@@ -74,12 +76,12 @@ var User = React.createClass({
       console.log('_navigator_navigator_navigator_navigator');
     }
   },
-  _pressZH() {
+  _pressUserAsset() {
     const nav = this.state._navigator;
     if(nav) {
       nav.push({
-        name: 'zhrb',
-        component: ZHRB
+        name: 'userasset',
+        component: UserAsset
       })
     }else{
       console.log('_navigator_navigator_navigator_navigator');
@@ -110,6 +112,19 @@ var User = React.createClass({
       console.log('_navigator_navigator_navigator_navigator');
     }
   },
+  _pressCertify() {
+     const nav = this.state._navigator;
+     if(nav) {
+       nav.push({
+         name: 'usercertify',
+         component: UserCertify,
+         sceneConfig:Navigator.SceneConfigs.FloatFromRight
+       })
+     }else{
+       console.log('_navigator_navigator_navigator_navigator');
+     }
+   },
+
 
   _toRegister() {
     const nav = this.state._navigator;
@@ -223,11 +238,11 @@ var User = React.createClass({
 
         </View>
        <View style={styles.centersplitvertical} ></View>
-        <View>
+      <TouchableOpacity onPress={this._pressUserAsset.bind(null,this)}>
           <Text style={styles.centertabname}>氦金</Text>
           <Text style={styles.centertabattr}>000</Text>
 
-        </View>
+        </TouchableOpacity>
         <View style={styles.centersplitvertical} />
         <View>
           <Text style={styles.centertabname}>游戏</Text>
@@ -278,7 +293,7 @@ var User = React.createClass({
             <Icon name="angle-right" size={25} style={styles.centerangelright} />
               <View style={styles.centersplit}></View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressZH.bind(null,this)}>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressCertify.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(221, 49, 116)'}]} />
           <Text style={styles.centerlitext}>我的约战</Text>
           <Icon name="angle-right" size={25} style={styles.centerangelright} />

@@ -19,25 +19,7 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "haigame7";
     }
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-     super.onCreate(savedInstanceState);
-     mReactRootView = new ReactRootView(this);
 
-     mReactInstanceManager = ReactInstanceManager.builder()
-     .setApplication(getApplication())
-     .setBundleAssetName("index.android.bundle")
-     .setJSMainModuleName("index.android")
-     .addPackage(new MainReactPackage())
-     .addPackage(new RCTDateTimePickerPackage())              // <------ add here
-     .setUseDeveloperSupport(BuildConfig.DEBUG)
-     .setInitialLifecycleState(LifecycleState.RESUMED)
-     .build();
-
-    mReactRootView.startReactApplication(mReactInstanceManager, "ExampleRN", null);
-
-    setContentView(mReactRootView);
-    }
     /**
      * Returns whether dev mode should be enabled.
      * This enables e.g. the dev menu.
@@ -55,6 +37,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new RCTDateTimePickerPackage(MainActivity.this),
         new VectorIconsPackage()
       );
     }
