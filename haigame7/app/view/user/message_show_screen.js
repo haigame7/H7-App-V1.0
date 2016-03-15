@@ -9,7 +9,7 @@ import React, {
   Navigator
 } from 'react-native';
 
-import Header from '../common/header';
+import Header from '../common/headernav';
 export default class extends React.Component {
   constructor(props){
     super(props);
