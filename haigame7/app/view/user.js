@@ -19,7 +19,7 @@ var {
   } = React;
 
 
- import styles from '../styles/userstyle';
+import styles from '../styles/userstyle';
 import UserInfo from './user/userinfo';
 import Setting from './user/setting';
 import UserSign from './user/usersign';
@@ -34,6 +34,7 @@ import ReSetPwd from './user/reset_pwd_screen';
 import About from './user/about_screen';
 import Share from './user/share_screen';
 import Help from './user/help_screen';
+import HintCreatTeamScreen from './user/hint_createteam_screen'
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
@@ -199,6 +200,18 @@ var User = React.createClass({
       console.log('导航设置错误');
     }
   },
+  _hint() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '提示创建战队',
+        component: HintCreatTeamScreen,
+        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
   render: function () {
     return (
       <View >
@@ -206,7 +219,7 @@ var User = React.createClass({
       <View style={styles.centerbg}>
       </View>
       </View>
-      <Header initObj={{title:'个人中心',message:'message',}}   navigator={this.props.navigator}></Header>
+      <Header screenTitle='个人中心'  iconName='folder'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}></Header>
       <Image source={require('../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode={"cover"} >
        <TouchableOpacity style={styles.centertitle} onPress={this._pressUserInfo.bind(null,this)}>
        <Image style={styles.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
@@ -263,7 +276,10 @@ var User = React.createClass({
         <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
         <Text style={styles.centerlitext}>帮助与反馈</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._hint.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>提示创建战队</Text>
+      </TouchableOpacity>
         <TouchableOpacity style={styles.centerlicontent} onPress={this._pressButton.bind(null,this)}>
           <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'orange'}]} />
           <Text style={styles.centerlitext}>我的战队</Text>
