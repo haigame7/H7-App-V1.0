@@ -19,11 +19,13 @@ module.exports = React.createClass({
   render: function(){
     var obj = this.props.initObj;
     var message;
-    if(obj.message!==undefined){
+    if(obj.message==undefined){
+     message = <View></View>;
+   }else if(obj.message=='message'){
      message = <Icon name="folder" size={30} color="#fff" />
-     }else{
-     message = <View></View>
-    }
+   }else if(obj.message=='finish'){
+     message = <Text style={CommonStyle.headertextright}>完成</Text>
+   }
     return (
       <View style={[CommonStyle.header, CommonStyle.row]}>
         <View style={CommonStyle.col1}>
