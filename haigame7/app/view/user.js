@@ -34,7 +34,12 @@ import ReSetPwd from './user/reset_pwd_screen';
 import About from './user/about_screen';
 import Share from './user/share_screen';
 import Help from './user/help_screen';
-import HintCreatTeamScreen from './user/hint_createteam_screen'
+import HintCreatTeamScreen from './user/hint_createteam_screen';
+import CreateTeam from './team/team_create_screen';
+import ShowTeam from './team/team_show_screen';
+import ShowTeamUser from './team/teamuser_show_screen';
+import EditSlogan from './team/teamslogan_edit_screen';
+import ManagerTeamUser from './team/teamuser_manager_screen';
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
@@ -212,6 +217,66 @@ var User = React.createClass({
       console.log('导航设置错误');
     }
   },
+  _createTeam() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '创建战队',
+        component: CreateTeam,
+        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
+  _showTeam() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '战队信息',
+        component: ShowTeam,
+        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
+  _showTeamUser() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '队员信息',
+        component: ShowTeamUser,
+        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
+  _editTeamSlogan() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '战队口号',
+        component: EditSlogan,
+        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
+  _managerTeamUser() {
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: '队员管理',
+        component: ManagerTeamUser,
+        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
   render: function () {
     return (
       <View >
@@ -254,8 +319,26 @@ var User = React.createClass({
       </Image>
 
         <ScrollView style={styles.centerfootbg}>
-
-
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._managerTeamUser.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>队员管理</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._editTeamSlogan.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>战队口号</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._showTeamUser.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>队员信息</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.centerlicontent} onPress={this._showTeam.bind(null,this)}>
+          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+          <Text style={styles.centerlitext}>战队信息</Text>
+        </TouchableOpacity>
+      <TouchableOpacity style={styles.centerlicontent} onPress={this._createTeam.bind(null,this)}>
+        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+        <Text style={styles.centerlitext}>创建战队</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.centerlicontent} onPress={this._myMsg.bind(null,this)}>
         <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
         <Text style={styles.centerlitext}>我的消息</Text>
