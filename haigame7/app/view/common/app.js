@@ -1,7 +1,7 @@
 import React, { Component, View, Text, ScrollView } from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
-var Header = require('./header'); // 主屏
+var Headernav = require('./headernav');
 var Match  = require('../match.js');
 var Fight  = require('../fight.js');
 var Team  = require('../team.js');
@@ -62,8 +62,12 @@ export default class App extends Component {
           <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-          <Header initObj={{title:'赛事',}}
-           navigator={this.props.navigator}></Header>
+          <Headernav
+            screenTitle='赛事'
+            iconName='user'
+            nextComponent={{name:'用户中心',component:User}}
+            isPop={false}
+            navigator={this.props.navigator} />
            <Match/>
           </View>
           </RawContent>
@@ -72,8 +76,12 @@ export default class App extends Component {
           <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} ontype={glypy.FightOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-          <Header initObj={{title:'约战',}}
-           navigator={this.props.navigator}></Header>
+           <Headernav
+             screenTitle='约战'
+             iconName='user'
+             nextComponent={{name:'用户中心',component:User}}
+             isPop={false}
+             navigator={this.props.navigator} />
            <Fight/>
           </View>
           </RawContent>
@@ -82,8 +90,12 @@ export default class App extends Component {
           <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} ontype={glypy.RankOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-           <Header initObj={{title:'排行',}}
-           navigator={this.props.navigator}></Header>
+           <Headernav
+             screenTitle='排行'
+             iconName='user'
+             nextComponent={{name:'用户中心',component:User}}
+             isPop={false}
+             navigator={this.props.navigator} />
            <Rank/>
           </View>
           </RawContent>
@@ -92,8 +104,12 @@ export default class App extends Component {
           <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-           <Header initObj={{title:'组队',}}
-            navigator={this.props.navigator}></Header>
+            <Headernav
+              screenTitle='组队'
+              iconName='user'
+              nextComponent={{name:'用户中心',component:User}}
+              isPop={false}
+              navigator={this.props.navigator} />
            <Team/>
           </View>
           </RawContent>
