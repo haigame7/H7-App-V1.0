@@ -116,7 +116,7 @@ _onRefresh() {
   renderList() {
     return(
       <View style={styles.container}>
-        <Header initObj={{title:'我的信息{33}',}} navigator={this.props.navigator}></Header>
+        <Header screenTitle='我的信息{33}' isPop={true} navigator={this.props.navigator}/>
           <ListView
     					style={styles.listGroup}
     					dataSource={this.state.dataSource}

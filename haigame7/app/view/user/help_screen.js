@@ -28,7 +28,7 @@ export default class extends React.Component {
   render() {
     return(
       <View >
-        <Header initObj={{title:'分享',}} navigator={this.props.navigator}></Header>
+        <Header screenTitle='帮助与反馈' isPop={true} navigator={this.props.navigator}/>
           <View>
             <TextInput
              style={{height: 40, borderColor: 'gray', borderWidth: 1}}

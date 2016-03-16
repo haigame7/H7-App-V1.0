@@ -18,7 +18,7 @@ export default class extends React.Component {
   render() {
     return(
       <View>
-        <Header initObj={{title:'信息{1}',}} navigator={this.props.navigator}></Header>
+        <Header screenTitle='信息标题' isPop={true} navigator={this.props.navigator}/>
         <Text>这里是MSG 详情</Text>
 
       </View>
