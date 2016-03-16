@@ -4,34 +4,32 @@
  * @return {[SplashScreen Component]}
  * @author aran.hu
  */
-var React = require('react-native');
 var Util = require('./common/util');
 var Icon = require('react-native-vector-icons/FontAwesome');
-var {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  } = React;
-
 var RankStyle = require('../styles/rankstyle');
+import React, {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    Component,
+    TouchableOpacity,
+    TouchableHighlight,
+    } from 'react-native';
 
-var Rank = React.createClass({
-  getInitialState() {
-    console.log('UserScreen Init Data');
-    return {
-      navbar: 0,
-      data:{
-          subnavbar:1,
-          subnavbarname:'热度',
-      },
-    };
-  },
-  componentDidMount() {
-    // console.log(this.state._navigator);
-  },
-  _switchNavbar:function(nav){
+    export default class extends Component{
+      constructor(props) {
+        super(props);
+        this.state = {
+          navbar: 0,
+          data:{
+              subnavbar:1,
+              subnavbarname:'热度',
+          },
+          }
+        }
+
+  _switchNavbar(nav){
     var name ='热度';
      if(nav==1){
        name = '大神系数';
@@ -41,8 +39,8 @@ var Rank = React.createClass({
       data:{subnavbar:1,subnavbarname:name},
     });
     return;
-  },
-  _switchSubNavbar:function(sub){
+  }
+  _switchSubNavbar(sub){
     var name ='热度';
      if(this.state.navbar==1){
        name = '大神系数';
@@ -51,40 +49,39 @@ var Rank = React.createClass({
       data:{subnavbar:sub,subnavbarname:name},
     });
     return;
-  },
-  render: function () {
-    return (
-    <View style={styles.container}>
-
-      <View style={styles.nav}>
-        <TouchableOpacity style={styles.nav_item} onPress={this._switchNavbar.bind(this, 0)} >
-        <Text style={this.state.navbar==0?styles.nav_item_text_active:styles.nav_item_text}>荣耀团队</Text>
-        <View style={this.state.navbar==0?styles.nav_item_line_active:styles.nav_item_line}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.nav_item} onPress={this._switchNavbar.bind(this, 1)}>
-        <Text style={this.state.navbar==1?styles.nav_item_text_active:styles.nav_item_text}>名人堂</Text>
-        <View style={this.state.navbar==1?styles.nav_item_line_active:styles.nav_item_line}></View>
-        </TouchableOpacity>
-         <View style={styles.sub_nav}>
-         <TouchableOpacity style={styles.sub_nav_item} onPress={this._switchSubNavbar.bind(this, 1)}>
-         <Text style={this.state.navbar==0?styles.sub_nav_item_text:styles.sub_nav_item_text_switch}>{this.state.data.subnavbarname}</Text>
-         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==1?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
-         <View style={styles.sub_nav_item_line}/>
-         </TouchableOpacity>
-         <TouchableOpacity style={styles.sub_nav_item} onPress={this._switchSubNavbar.bind(this, 2)}>
-         <Text style={styles.sub_nav_item_text}>战斗力</Text>
-         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==2?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
-         <View style={styles.sub_nav_item_line}/>
-         </TouchableOpacity>
-         <TouchableOpacity style={styles.sub_nav_item} onPress={this._switchSubNavbar.bind(this, 3)}>
-         <Text style={styles.sub_nav_item_text}>氦金</Text>
-         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==3?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
-
-         </TouchableOpacity>
+  }
+  renderrankList(){
+    if(this.state.navbar==0){
+      return(
+        <View>
+        <View style={[styles.ranklist]}>
+        <Image style={[styles.rankimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <View style={[styles.rankcontent]}>
+         <Text style={[styles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
+         <Text style={[styles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
+          <View style={[styles.rankrowtext]}>
+          <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
+          <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+          <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
+          <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+          </View>
          </View>
-        <View style={[styles.infosplit]}></View>
         </View>
-        <View style={[styles.centerbg]}>
+         <View style={[styles.ranksplit]}></View>
+         <View style={[styles.ranklist]}>
+         <Image style={[styles.rankimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <View style={[styles.rankcontent]}>
+          <Text style={[styles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
+          <Text style={[styles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
+           <View style={[styles.rankrowtext]}>
+           <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
+           <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+           <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
+           <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+           </View>
+          </View>
+         </View>
+         <View style={[styles.ranksplit]}></View>
          <View style={[styles.ranklist]}>
          <Image style={[styles.rankimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
           <View style={[styles.rankcontent]}>
@@ -99,39 +96,56 @@ var Rank = React.createClass({
           </View>
          </View>
           <View style={[styles.ranksplit]}></View>
-          <View style={[styles.ranklist]}>
-          <Image style={[styles.rankimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-           <View style={[styles.rankcontent]}>
-           <Text style={[styles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
-           <Text style={[styles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
-            <View style={[styles.rankrowtext]}>
-            <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
-            <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
-            <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
-            <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
-            </View>
-           </View>
           </View>
-          <View style={[styles.ranksplit]}></View>
-          <View style={[styles.ranklist]}>
-          <Image style={[styles.rankimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-           <View style={[styles.rankcontent]}>
-           <Text style={[styles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
-           <Text style={[styles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
-            <View style={[styles.rankrowtext]}>
-            <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
-            <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
-            <Text style={[styles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
-            <Text style={[styles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
-            </View>
-           </View>
-          </View>
-           <View style={[styles.ranksplit]}></View>
+      );
+    }
+    else{
+      return(
+        <View></View>
+      );
+    }
+  }
+  render() {
+      let ranklist = this.renderrankList();
+    return (
+
+    <View style={styles.container}>
+
+      <View style={styles.nav}>
+        <TouchableOpacity style={styles.nav_item}  onPress = {() => this._switchNavbar(0)} >
+        <Text style={this.state.navbar==0?styles.nav_item_text_active:styles.nav_item_text}>荣耀团队</Text>
+        <View style={this.state.navbar==0?styles.nav_item_line_active:styles.nav_item_line}></View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.nav_item}  onPress = {() => this._switchNavbar(1)}>
+        <Text style={this.state.navbar==1?styles.nav_item_text_active:styles.nav_item_text}>名人堂</Text>
+        <View style={this.state.navbar==1?styles.nav_item_line_active:styles.nav_item_line}></View>
+        </TouchableOpacity>
+         <View style={styles.sub_nav}>
+         <TouchableOpacity style={styles.sub_nav_item}  onPress = {() => this._switchSubNavbar(1)}>
+         <Text style={this.state.navbar==0?styles.sub_nav_item_text:styles.sub_nav_item_text_switch}>{this.state.data.subnavbarname}</Text>
+         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==1?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
+         <View style={styles.sub_nav_item_line}/>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.sub_nav_item} onPress = {() => this._switchSubNavbar(2)}>
+         <Text style={styles.sub_nav_item_text}>战斗力</Text>
+         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==2?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
+         <View style={styles.sub_nav_item_line}/>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.sub_nav_item} onPress = {() => this._switchSubNavbar(3)}>
+         <Text style={styles.sub_nav_item_text}>氦金</Text>
+         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==3?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
+
+         </TouchableOpacity>
+         </View>
+        <View style={[styles.infosplit]}></View>
+        </View>
+        <View style={[styles.centerbg]}>
+        {ranklist}
         </View>
       </View>
     );
   }
-});
+}
 var styles = StyleSheet.create({
   container:{
     flex:1,
@@ -255,4 +269,3 @@ var styles = StyleSheet.create({
  }
 
  });
-module.exports = Rank;

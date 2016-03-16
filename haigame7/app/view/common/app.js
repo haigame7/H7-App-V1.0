@@ -4,9 +4,9 @@ import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-nativ
 var Headernav = require('./headernav');
 var Match  = require('../match.js');
 var Fight  = require('../fight.js');
-var Team  = require('../team.js');
-var Rank  = require('../rank.js');
 var User  = require('../user.js');
+import Team from '../team.js';
+import Rank from '../rank.js';
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
