@@ -13,16 +13,17 @@ var {
   Image,
   ScrollView,
   TouchableOpacity,
-  Navigator
+  Navigator,
+  ToastAndroid
   } = React;
 
 /**
  * 顶部导航组件
- * @param  icon_name: icon 插件的 name属性
- * @param  icon_size: icon 插件的 size属性
- * @param  icon_color: icon 插件的 color属性
- * @param  icon_text: icon 插件的 text属性
- * @param  current_title: 当前页面导航 title
+ * @param  iconName: icon 插件的 name属性
+ * @param  iconText: icon 插件的 text属性
+ * @param  screenTitle: 当前页面导航 title属性
+ * @param  icon_size: icon 插件的 size属性 暂不可更改
+ * @param  icon_color: icon 插件的 color属性 暂不可更改
  * @param  navigator: 导航组件 navigator
  * @param  nextComponent: 当前页面 navigator.push 下一个页面的组件参数  component
  * @param  isPop: 当前页面 navigator.pop true|false
@@ -38,6 +39,7 @@ module.exports = React.createClass({
       navigator: undefined,
    icon_onPress: null,
  next_component: null,
+   callback_fun: undefined,
           isPop: this.props.isPop == undefined ? true : this.props.isPop
 
     }
@@ -48,6 +50,11 @@ module.exports = React.createClass({
         navigator: this.props.navigator,
    next_component: this.props.nextComponent,
      icon_onPress: this._pushroute,
+      });
+    }
+    if (this.props.callback != undefined) {
+      this.setState({
+        icon_onPress: this.props.callback
       });
     }
   },
@@ -100,7 +107,7 @@ module.exports = React.createClass({
   },
 
   _pop: function(){
-    this.state.navigator.pop();
+    this.props.navigator.pop();
   },
   _pushroute:function(){
     if (this.props.navigator != undefined){
@@ -112,5 +119,8 @@ module.exports = React.createClass({
     } else {
       console.log('导航数据错误');
     }
-  }
+  },
+  _callback:function() {
+    this.state.callback_fun();
+  },
 });

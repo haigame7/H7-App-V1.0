@@ -17,13 +17,16 @@ const fullImage = {uri: 'http://img1.imgtn.bdimg.com/it/u=2633980629,4278863756&
 export default class extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      
+    }
 
   }
 
   render() {
     return(
       <View >
-        <Header initObj={{title:'分享',}} navigator={this.props.navigator}></Header>
+          <Header screenTitle='分享' isPop={true} navigator={this.props.navigator}/>
           <View>
             <Image style={styles.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
 
