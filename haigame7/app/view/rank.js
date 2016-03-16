@@ -11,41 +11,76 @@ var {
   View,
   Text,
   Image,
+  TouchableOpacity,
   StyleSheet,
   } = React;
 
 var RankStyle = require('../styles/rankstyle');
 
 var Rank = React.createClass({
+  getInitialState() {
+    console.log('UserScreen Init Data');
+    return {
+      navbar: 0,
+      data:{
+          subnavbar:1,
+          subnavbarname:'热度',
+      },
+    };
+  },
+  componentDidMount() {
+    // console.log(this.state._navigator);
+  },
+  _switchNavbar:function(nav){
+    var name ='热度';
+     if(nav==1){
+       name = '大神系数';
+     }
+    this.setState({
+      navbar:nav,
+      data:{subnavbar:1,subnavbarname:name},
+    });
+    return;
+  },
+  _switchSubNavbar:function(sub){
+    var name ='热度';
+     if(this.state.navbar==1){
+       name = '大神系数';
+     }
+    this.setState({
+      data:{subnavbar:sub,subnavbarname:name},
+    });
+    return;
+  },
   render: function () {
     return (
     <View style={styles.container}>
 
       <View style={styles.nav}>
-        <View style={styles.nav_item}>
-        <Text style={styles.nav_item_text}>荣耀团队</Text>
-        <View style={styles.nav_item_line}></View>
-        </View>
-        <View style={styles.nav_item}>
-        <Text style={styles.nav_item_text}>名人堂</Text>
-        <View style={styles.nav_item_line}></View>
-        </View>
+        <TouchableOpacity style={styles.nav_item} onPress={this._switchNavbar.bind(this, 0)} >
+        <Text style={this.state.navbar==0?styles.nav_item_text_active:styles.nav_item_text}>荣耀团队</Text>
+        <View style={this.state.navbar==0?styles.nav_item_line_active:styles.nav_item_line}></View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.nav_item} onPress={this._switchNavbar.bind(this, 1)}>
+        <Text style={this.state.navbar==1?styles.nav_item_text_active:styles.nav_item_text}>名人堂</Text>
+        <View style={this.state.navbar==1?styles.nav_item_line_active:styles.nav_item_line}></View>
+        </TouchableOpacity>
          <View style={styles.sub_nav}>
-         <View style={styles.sub_nav_item}>
-         <Text style={styles.sub_nav_item_text}>热度</Text>
-         <Icon name="angle-down" size={10} style={styles.sub_nav_item_icon}/>
+         <TouchableOpacity style={styles.sub_nav_item} onPress={this._switchSubNavbar.bind(this, 1)}>
+         <Text style={this.state.navbar==0?styles.sub_nav_item_text:styles.sub_nav_item_text_switch}>{this.state.data.subnavbarname}</Text>
+         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==1?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
          <View style={styles.sub_nav_item_line}/>
-         </View>
-         <View style={styles.sub_nav_item}>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.sub_nav_item} onPress={this._switchSubNavbar.bind(this, 2)}>
          <Text style={styles.sub_nav_item_text}>战斗力</Text>
-         <Icon name="angle-down" size={10} style={styles.sub_nav_item_icon}/>
+         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==2?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
          <View style={styles.sub_nav_item_line}/>
-         </View>
-         <View style={styles.sub_nav_item}>
+         </TouchableOpacity>
+         <TouchableOpacity style={styles.sub_nav_item} onPress={this._switchSubNavbar.bind(this, 3)}>
          <Text style={styles.sub_nav_item_text}>氦金</Text>
-         <Icon name="angle-down" size={10} style={styles.sub_nav_item_icon}/>
+         <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==3?styles.sub_nav_item_icon_active:styles.sub_nav_item_icon}/>
 
-         </View>
+         </TouchableOpacity>
          </View>
         <View style={[styles.infosplit]}></View>
         </View>
@@ -177,22 +212,45 @@ var styles = StyleSheet.create({
     width:Util.size.width*7/15,
     backgroundColor:'rgb(120,120,120)',
   },
+  nav_item_line_active:{
+    position:'absolute',
+    left:-Util.size.width/6,
+    marginTop:Util.pixel*30,
+    height:Util.pixel*4,
+    width:Util.size.width*7/15,
+    backgroundColor:'red',
+  },
   nav_item_text:{
    fontSize:15,
    color:'rgb(150,150,150)'
  },
+ nav_item_text_active:{
+  fontSize:15,
+  color:'red'
+},
   sub_nav_item_text:{
    fontSize:12,
    color:'rgb(150,150,150)'
+ },
+ sub_nav_item_text_switch:{
+   fontSize:12,
+   left:-20,
+    color:'rgb(150,150,150)'
  },
  sub_nav_item_icon:{
    marginLeft:Util.pixel*6,
    color:'rgb(150,150,150)'
  },
+ sub_nav_item_icon_active:{
+   marginLeft:Util.pixel*6,
+   color:'red'
+ },
  sub_nav_item_line:{
+   position:'absolute',
    width:Util.pixel,
    height:Util.pixel*30,
-   left:Util.size.width/10,
+
+   left:Util.size.width/5,
    backgroundColor:'rgb(150,150,150)',
  }
 
