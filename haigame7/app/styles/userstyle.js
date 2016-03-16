@@ -3,6 +3,7 @@
 import { StyleSheet, Platform } from 'react-native';
 var Util = require('../view/common/util');
 export default StyleSheet.create({
+    //登陆界面
     loginbg: {
         flex: 1,
         height: Util.size.height - 48,
@@ -14,6 +15,52 @@ export default StyleSheet.create({
         padding: 10,
         marginTop: 20,
         height: 100
+    },
+    //个人中心
+    headbg: {
+        flex: 1,
+        height: 260,
+        width: Util.size.width,
+    },
+    headportrait: {
+        width: 100,
+        height: 100,
+        borderWidth: 4,
+        borderRadius: 50,
+        borderColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    headname: {
+        fontSize: 18,
+    },
+    headtext: {
+        marginTop: 5,
+        paddingLeft: 50,
+        paddingRight: 50,
+        alignItems: 'center',
+    },
+    headtab: {
+        marginTop: 20,
+    },
+    headtabli: {
+        alignItems: 'center',
+        width: Util.size.width/3-1,
+        height: 40,
+    },
+    headtabtitle: {
+        alignItems: 'center',
+        height: 20,
+    },
+    headtabnumber: {
+        alignItems: 'center',
+        height: 20,
+    },
+    headtabline: {
+        marginTop:10,
+        marginBottom:10,
+        backgroundColor:'#FFFFFF',
+        width:Util.pixel,
+        height: 20,
+
     },
     //输入框
     logininput: {
@@ -92,6 +139,50 @@ export default StyleSheet.create({
         marginTop: 20,
         marginLeft: 36,
         marginRight: 36,
+    },
+    blocktop: {
+        marginTop: 10,
+        alignItems: 'center',
+    },
+    blockbottom: {
+        marginBottom: 10,
+        alignItems: 'center',
+    },
+    //列表块
+    listview: {
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginRight: 10,
+        paddingTop: 7,
+        paddingBottom: 7,
+        height: 45,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+        backgroundColor: '#000000',
+    },
+    listviewiconleft: {
+        width: 30,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 3,
+        marginRight: 10,
+    },
+    listviewiconright: {
+        width:15,
+        height: 30,
+        marginLeft: 10,
+    },
+    listviewtext: {
+        flex: 1,
+        color: '#FFFFFF',
+        marginTop: 5,
+        justifyContent: 'center',
+    },
+    listbox: {
+        height: 20,
+        backgroundColor: '#484848',
+        marginTop: -1,
     },
     //滑块
     switchblock: {
