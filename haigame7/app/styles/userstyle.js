@@ -8,6 +8,7 @@ export default StyleSheet.create({
         flex: 1,
         height: Util.size.height - 48,
         width: Util.size.width,
+        backgroundColor: '#000000',
     },
     logo: {
         justifyContent: 'center',
@@ -29,14 +30,27 @@ export default StyleSheet.create({
         borderRadius: 50,
         borderColor: 'rgba(255, 255, 255, 0.4)',
     },
+    headportraitv: {
+        position: 'absolute',
+        flexDirection: 'row',
+        left: Util.size.width/2 + 20,
+        bottom: 0,
+        width: 50,
+    },
+    headportraitvfont: {
+        color: '#FFFFFF',
+        fontSize: 10,
+    },
     headname: {
         fontSize: 18,
     },
     headtext: {
         marginTop: 5,
-        paddingLeft: 50,
-        paddingRight: 50,
-        alignItems: 'center',
+        paddingLeft: 60,
+        paddingRight: 60,
+    },
+    headtextfont: {
+        textAlign: 'center',
     },
     headtab: {
         marginTop: 20,
@@ -148,6 +162,25 @@ export default StyleSheet.create({
         marginBottom: 10,
         alignItems: 'center',
     },
+    //文本框
+    textareabox: {
+        margin: 10,
+        width: Util.size.width - 20,
+        height: 80,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+    },
+    textareainput: {
+        height: 50,
+        color: '#C3C3C3',
+        alignItems: 'flex-start',
+    },
+    textareanumber: {
+        position: 'absolute',
+        right: 5,
+        bottom: 0,
+        color: '#C3C3C3',
+    },
     //列表块
     listview: {
         flexDirection: 'row',
@@ -173,16 +206,38 @@ export default StyleSheet.create({
         height: 30,
         marginLeft: 10,
     },
+    listviewtextbox: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
     listviewtext: {
         flex: 1,
         color: '#FFFFFF',
         marginTop: 5,
+    },
+    listviewtextleft: {
+        color: '#C3C3C3',
+        marginTop: 5,
         justifyContent: 'center',
+    },
+    listviewtextright: {
+        color: '#484848',
+        justifyContent: 'center',
+    },
+    listviewtextimg: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
     },
     listbox: {
         height: 20,
         backgroundColor: '#484848',
         marginTop: -1,
+    },
+    //模态框
+    pickerview: {
+        backgroundColor:'#FFFFFF',
     },
     //滑块
     switchblock: {

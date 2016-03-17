@@ -96,7 +96,7 @@ export default class App extends Component {
              nextComponent={{name:'用户中心',component:User}}
              isPop={false}
              navigator={this.props.navigator} />
-           <Rank/>
+           <Rank navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
@@ -110,7 +110,7 @@ export default class App extends Component {
               nextComponent={{name:'用户中心',component:User}}
               isPop={false}
               navigator={this.props.navigator} />
-           <Team/>
+           <Team navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
