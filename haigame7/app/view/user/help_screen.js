@@ -13,8 +13,8 @@ import React, {
   TextInput
 } from 'react-native';
 import Header from '../common/headernav'; //导航有问题
-import Util from '../common/util';
-const fullImage = {uri: 'http://img1.imgtn.bdimg.com/it/u=2633980629,4278863756&fm=21&gp=0.jpg'};
+import styles from '../../styles/userstyle';
+
 export default class extends React.Component {
   constructor(props){
     super(props);
@@ -23,6 +23,14 @@ export default class extends React.Component {
    navigator: this.props.navigator,
     }
 
+  }
+  onChange(text){
+    this.setState(
+      {
+        textnumber:text.length
+      }
+    );
+    console.log(text.length);
   }
 
   _callback() {
@@ -34,26 +42,13 @@ export default class extends React.Component {
     return(
       <View >
         <Header screenTitle='帮助与反馈' isPop={true} iconText='完成' callback={this._callback.bind(this)} navigator={this.props.navigator}/>
-          <View>
-            <TextInput
-             style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-             onChangeText={(text) => this.setState({text})}
-             default={this.state.text}
-           />
-
-
+        <View style={styles.loginbg}>
+          <View style={styles.textareabox}>
+            <TextInput style={styles.textareainput} multiline={true}placeholder='请简述您的意见...' placeholderTextColor='#C3C3C3' onChangeText={(text) => this.onChange(text)} default={this.state.text} />
+            <Text style={styles.textareanumber}>{this.state.textnumber}/2000</Text>
           </View>
+        </View>
       </View>
-
     );
   }
 }
-var styles = StyleSheet.create({
-  centerimage:{
-   width:100,
-   height:100,
-   borderRadius: 50,
-   top:Util.size.height*1/40-5
-  },
-
-});
