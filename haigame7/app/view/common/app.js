@@ -68,7 +68,7 @@ export default class App extends Component {
             nextComponent={{name:'用户中心',component:User}}
             isPop={false}
             navigator={this.props.navigator} />
-           <Match/>
+           <Match navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>

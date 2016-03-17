@@ -44,7 +44,7 @@ module.exports = React.createClass({
 
     }
   },
-  componentDidMount() {
+  componentWillMount() {
     if (this.state.icon_name != undefined){
       this.setState({
         navigator: this.props.navigator,
