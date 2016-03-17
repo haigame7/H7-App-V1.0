@@ -16,6 +16,7 @@ var {
 import GiftedlistView from '../../temp/giftedlistView';
 import SectionView from '../../temp/listviewsection';
 import SectionHeader from '../../temp/sectionHeader';
+import MyApply from './user/myapply_screen';
 var MatchStyle = require('../styles/matchstyle');
 
 var Match = React.createClass({
@@ -38,6 +39,17 @@ var Match = React.createClass({
       console.log('导航设置错误');
     }
   },
+  _pressButton_1() {
+    const nav = this.props.navigator;
+    if(nav) {
+      nav.push({
+        name: 'listview',
+        component: MyApply
+      })
+    }else{
+      console.log('导航设置错误');
+    }
+  },
 
   render: function () {
     return (
@@ -48,6 +60,9 @@ var Match = React.createClass({
         <Image style={{width: 15,height: 15}} source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}} />
         <TouchableOpacity  onPress={this._pressButton}>
           <Text >列表测试</Text>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={this._pressButton_1}>
+          <Text >我的申请</Text>
         </TouchableOpacity>
       </View>
     );
