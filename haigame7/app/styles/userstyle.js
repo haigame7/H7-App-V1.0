@@ -8,6 +8,7 @@ export default StyleSheet.create({
         flex: 1,
         height: Util.size.height - 48,
         width: Util.size.width,
+        backgroundColor: '#000000',
     },
     logo: {
         justifyContent: 'center',
@@ -160,6 +161,25 @@ export default StyleSheet.create({
     blockbottom: {
         marginBottom: 10,
         alignItems: 'center',
+    },
+    //文本框
+    textareabox: {
+        margin: 10,
+        width: Util.size.width - 20,
+        height: 80,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+    },
+    textareainput: {
+        height: 50,
+        color: '#C3C3C3',
+        alignItems: 'flex-start',
+    },
+    textareanumber: {
+        position: 'absolute',
+        right: 5,
+        bottom: 0,
+        color: '#C3C3C3',
     },
     //列表块
     listview: {
