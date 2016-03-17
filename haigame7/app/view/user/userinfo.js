@@ -21,7 +21,8 @@ var {
 
   } = React;
 
- import styles from '../../styles/userstyle';
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/userstyle';
 
 
 var UserInfo = React.createClass({
@@ -59,108 +60,79 @@ var UserInfo = React.createClass({
 
     return (
       <View >
-      <View style={styles.bgImageWrapper}>
-      <View style={[styles.centerbg,{backgroundColor:'#000'}]}>
-      </View>
-      </View>
-      <Header initObj={{title:'我的资料',}}   navigator={this.props.navigator}></Header>
-
-        <ScrollView style={styles.centerfootbg}>
-        <TouchableOpacity style={styles.centerlicontent} >
-
-          <Text style={[styles.centerlitext,{marginLeft:10,marginTop:30,color:'rgb(120,120,120)'}]}>头像</Text>
-          <TouchableOpacity style={styles.centertitle} onPress={this._pressUserInfo}>
-          <Image style={[styles.infoimage,,UserInfoStyle.infoimage]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+      <Header screenTitle='我的资料'  navigator={this.props.navigator}/>
+      <ScrollView style={commonstyle.bodyer}>
+        <View style={[styles.listview, {height: 100,}]}>
+          <Text style={[styles.listviewtextleft, {marginTop: 35,}]}>头像</Text>
+          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._pressUserInfo}>
+            <Image style={styles.listviewtextimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
           </TouchableOpacity>
-          <Icon name="angle-right" size={25} style={[styles.infoangelright,UserInfoStyle.infoangelright,{top:10}]} />
-          <View style={[styles.infosplit,UserInfoStyle.infosplit,{top:55}]}></View>
+          <Icon name="angle-right" size={30} color={'#484848'} style={[styles.listviewiconright, {marginTop: 30,}]} />
+        </View>
 
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>昵称</Text>
-          <Text style={[styles.infotextright,UserInfoStyle.infotextright]}>昵称123123</Text>
-               <Icon name="angle-right" size={25} style={[styles.infoangelright,UserInfoStyle.infoangelright]} />
-                <View style={[styles.infosplit,UserInfoStyle.infosplit]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={()=>this.changemodalvisible(this.state.modalVisible)} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:30,color:'rgb(120,120,120)'}]}>性别</Text>
-          <Text style={[styles.infotextright,UserInfoStyle.infotextright,{marginTop:30}]}>{parseInt(this.state.sex) ? '男' : '女'} </Text>
-            <Icon name="angle-right" size={25} style={[styles.infoangelright,UserInfoStyle.infoangelright,{marginTop:25}]} />
-              <View style={[styles.infosplit,UserInfoStyle.infosplit]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>地区</Text>
-          <Text style={[styles.infotextright,UserInfoStyle.infotextright]}>昵称123123</Text>
-            <Icon name="angle-right" size={25} style={[styles.infoangelright,UserInfoStyle.infoangelright]} />
-              <View style={[styles.infosplit,UserInfoStyle.infosplit,{marginTop:55}]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this.showDatePicker} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>生日</Text>
-          <Text style={[styles.infotextright,UserInfoStyle.infotextright]}>{this.formatDate(this.state.date.toString())}</Text>
-          <Icon name="angle-right" size={25} style={[styles.infoangelright,UserInfoStyle.infoangelright]} />
+        <View style={styles.listview} >
+          <Text  style={styles.listviewtextleft}>昵称</Text>
+          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8}>
+            <Text style={styles.listviewtextright}>昵称123123</Text>
+          </TouchableOpacity>
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+        </View>
 
-         <View style={[styles.infosplit,UserInfoStyle.infosplit]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>手机</Text>
-         <Text style={[styles.infotextright,UserInfoStyle.infotextright]}>12323232323</Text>
-          <View style={{marginLeft:28}}></View>
-          <Icon name="angle-right" size={25} style={[styles.infoangelright,UserInfoStyle.infoangelright]} />
-            <View style={[styles.infosplit,UserInfoStyle.infosplit]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>个性签名</Text>
-         <Text style={[styles.infotextright,UserInfoStyle.infotextright]}>昵称123123</Text>
-          <Icon name="angle-right" size={25} style={styles.infoangelright} />
+        <View style={styles.listview} >
+          <Text  style={styles.listviewtextleft}>性别</Text>
+          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={()=>this.changemodalvisible(this.state.modalVisible)} >
+            <Text style={styles.listviewtextright}>{parseInt(this.state.sex) ? '男' : '女'} </Text>
+          </TouchableOpacity>
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+        </View>
 
-        </TouchableOpacity>
+        <View style={styles.listview} >
+          <Text  style={styles.listviewtextleft}>地区</Text>
+          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} >
+            <Text style={styles.listviewtextright}>朝阳 - 北京</Text>
+          </TouchableOpacity>
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+        </View>
+
+        <View style={styles.listview} >
+          <Text  style={styles.listviewtextleft}>生日</Text>
+          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this.showDatePicker} >
+            <Text style={styles.listviewtextright}>{this.formatDate(this.state.date.toString())}</Text>
+          </TouchableOpacity>
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+        </View>
+
+        <View style={styles.listview} >
+          <Text  style={styles.listviewtextleft}>手机</Text>
+          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8}>
+          <Text style={styles.listviewtextright}>12323232323</Text>
+          </TouchableOpacity>
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+        </View>
+
+        <View style={styles.listview} >
+          <Text  style={styles.listviewtextleft}>个性签名</Text>
+          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} >
+            <Text style={styles.listviewtextright}>生命不息，电竞不止。</Text>
+          </TouchableOpacity>
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+        </View>
+
+        
         <Modal visible={this.state.modalVisible} animated={true} transparent={true} >
-  <View style={UserInfoStyle.pickerSex}>
-    <Picker
-    selectedValue={this.state.sex}
-    onValueChange={(lang) => this.setState({sex: lang})}>
-    <Picker.Item label="男" value="1" />
-    <Picker.Item label="女" value="0" />
-    </Picker>
-    <Text style={[styles.buttonText,{color:'#000'}]} onPress={()=>this.changemodalvisible(this.state.modalVisible)}>完成</Text>
-   </View>
-  </Modal>
-     <DateTimePicker ref={(picker)=>{this.picker=picker}}/>
+          <View style={styles.pickerview}>
+            <Picker selectedValue={this.state.sex} onValueChange={(lang) => this.setState({sex: lang})}>
+            <Picker.Item label="男" value="1" />
+            <Picker.Item label="女" value="0" />
+            </Picker>
+            <Text style={[styles.buttonText,{color:'#000'}]} onPress={()=>this.changemodalvisible(this.state.modalVisible)}>完成</Text>
+          </View>
+        </Modal>
+        <DateTimePicker ref={(picker)=>{this.picker=picker}}/>
         </ScrollView>
     </View>
     );
   },
 });
-var UserInfoStyle = StyleSheet.create({
-   pickerSex:{
-     backgroundColor:'#fff',
-   },
-   infoimage:{
-     width:90,
-     height:90,
-     borderRadius: 45,
-     left:Util.size.width/2,
-     top:Util.size.height*1/40-5,
-   },
-   infotextright: {
-   marginLeft:Util.size.width/2,
-   marginTop:25,
-   color:'rgb(120,120,120)'
-   },
-  infoangelright:{
-    position:'absolute',
-    left:Util.size.width-30,
-    marginTop:20,
-    color:'rgb(120,120,120)'
-  },
-  infosplit:{
-    position:'absolute',
-    left:0,
-    marginTop:50,
-    height:Util.pixel,
-    width:Util.size.width,
-    backgroundColor:'rgb(120,120,120)',
-  },
- });
 
 module.exports = UserInfo;
