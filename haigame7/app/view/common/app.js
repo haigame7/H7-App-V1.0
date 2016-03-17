@@ -3,10 +3,11 @@ import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-nativ
 
 var Headernav = require('./headernav');
 var Match  = require('../match.js');
-var Fight  = require('../fight.js');
+
 var User  = require('../user.js');
 import Team from '../team.js';
 import Rank from '../rank.js';
+import Fight from '../fight.js';
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
@@ -68,7 +69,7 @@ export default class App extends Component {
             nextComponent={{name:'用户中心',component:User}}
             isPop={false}
             navigator={this.props.navigator} />
-           <Match/>
+           <Match navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
@@ -82,7 +83,7 @@ export default class App extends Component {
              nextComponent={{name:'用户中心',component:User}}
              isPop={false}
              navigator={this.props.navigator} />
-           <Fight/>
+           <Fight navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
