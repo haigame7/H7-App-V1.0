@@ -4,8 +4,6 @@ var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/FontAwesome');
 var DateTimePicker = require('@remobile/react-native-datetime-picker');
-var Button = require('@remobile/react-native-simple-button');
-var Util = require('../common/util');
 var {
   View,
   Text,
