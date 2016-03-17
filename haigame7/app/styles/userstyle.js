@@ -235,6 +235,25 @@ export default StyleSheet.create({
         backgroundColor: '#484848',
         marginTop: -1,
     },
+    listviewlable: {
+        justifyContent: 'center',
+        width: 80,
+        borderRightWidth: 1,
+        borderRightColor: '#D31B25',
+    },
+    listviewlablefont: {
+        color: '#C3C3C3',
+    },
+    listviewinput: {
+        flex: 1,
+        height: 30,
+        width: Util.size.width - 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    listviewinputfont: {
+        color: '#484848',
+    },
     //模态框
     pickerview: {
         backgroundColor:'#FFFFFF',
@@ -259,6 +278,26 @@ export default StyleSheet.create({
     switchbar: {
         width: 50,
         height: 20,
+    },
+    //关于
+    abouttext: {
+        marginLeft: 10,
+        marginRight: 10,
+        width: Util.size.width - 20,
+    },
+    aboutbtn: {
+        flex: 1,
+        width: Util.size.width/2-10,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 2,
+        borderRadius: 2,
+        borderColor: '#D31B25',
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        marginTop: 5,
+        marginLeft: 5,
+        marginRight: 5,
     },
     //原
     title: {
