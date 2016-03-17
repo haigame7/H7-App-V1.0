@@ -39,7 +39,6 @@ module.exports = React.createClass({
       navigator: undefined,
    icon_onPress: null,
  next_component: null,
-   callback_fun: undefined,
           isPop: this.props.isPop == undefined ? true : this.props.isPop
 
     }
@@ -119,8 +118,5 @@ module.exports = React.createClass({
     } else {
       console.log('导航数据错误');
     }
-  },
-  _callback:function() {
-    this.state.callback_fun();
   },
 });
