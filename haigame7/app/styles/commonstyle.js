@@ -18,7 +18,7 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         height: 48,
-        marginLeft: 15,
+        marginLeft: 0,
     },
     headertext: {
         textAlign: 'center',
@@ -33,7 +33,7 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
         height: 48,
-        marginRight: 15,
+        marginRight: 0,
     },
     headertextright:{
     fontSize:16,
