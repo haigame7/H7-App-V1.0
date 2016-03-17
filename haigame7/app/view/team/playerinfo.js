@@ -15,6 +15,7 @@ var {
   Component,
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
   ToastAndroid,
   Navigator,
   ScrollView
@@ -34,7 +35,7 @@ export default class extends Component{
 
   render(){
     return (
-      <View >
+      <View>
       <View style={PlayInfoStyle.bgImageWrapper}>
       <View style={PlayInfoStyle.centerbg}>
       </View>
@@ -46,7 +47,7 @@ export default class extends Component{
        </TouchableOpacity>
        <View style={PlayInfoStyle.centertitle}>
         <Text style={PlayInfoStyle.centername}>我的名字</Text>
-        <View style={[PlayInfoStyle.rowtext]}>
+        <View style={[PlayInfoStyle.rowtext,{ top:Util.size.height*1/20}]}>
         <Text style={[PlayInfoStyle.contenttext,{left:-10,color:'rgb(230, 193, 39)'}]}>{'战斗力'}</Text>
         <Text style={[PlayInfoStyle.contenttext,{color:'rgb(208, 46, 70)'}]}>{'1234'}</Text>
         <View style={PlayInfoStyle.contentsplit}/>
@@ -59,10 +60,39 @@ export default class extends Component{
      </Image>
 
         <ScrollView style={PlayInfoStyle.centerfootbg}>
+        <View style={[PlayInfoStyle.rowtext,{height:40}]}>
+        <Text style={PlayInfoStyle.centerlitext}>性别</Text>
+          <Text style={[PlayInfoStyle.centerlitext,{left:Util.size.width/5}]}>男</Text>
+              <View style={PlayInfoStyle.centersplit}></View>
+        </View>
+        <View style={[PlayInfoStyle.rowtext,{height:40}]}>
+          <Text style={PlayInfoStyle.centerlitext}>地区</Text>
+            <Text style={[PlayInfoStyle.centerlitext,{left:Util.size.width/5}]}>北京-西城区</Text>
+              <View style={PlayInfoStyle.centersplit}></View>
+        </View>
+        <View style={[PlayInfoStyle.rowtext,{height:40}]}>
+          <Text style={PlayInfoStyle.centerlitext}>擅长位置</Text>
+            <Text style={[PlayInfoStyle.centerlitext,{left:Util.size.width/5-30}]}>辅助</Text>
+              <View style={PlayInfoStyle.centersplit}></View>
+        </View>
+        <View style={[PlayInfoStyle.rowtext,{height:40}]}>
+          <Text style={PlayInfoStyle.centerlitext}>注册时间</Text>
+            <Text style={[PlayInfoStyle.centerlitext,{left:Util.size.width/5-30}]}>2016/1/23</Text>
+              <View style={PlayInfoStyle.centersplit}></View>
+        </View>
+        <View style={[PlayInfoStyle.rowtext,{height:40}]}>
+          <Text style={PlayInfoStyle.centerlitext}>擅长英雄</Text>
+          <View style={[PlayInfoStyle.teamheroimagecontainer]}>
+          <Image style={[PlayInfoStyle.teamheroimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={[PlayInfoStyle.teamheroimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={[PlayInfoStyle.teamheroimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
 
-
-
-
+           </View>
+              <View style={[PlayInfoStyle.centersplit,{marginTop:60}]}></View>
+        </View>
+        <TouchableHighlight style = {PlayInfoStyle.btn} underlayColor = {'#FF0000'}  >
+             <Text style = {PlayInfoStyle.btnfont}> {'发出邀请'} </Text>
+        </TouchableHighlight>
         </ScrollView>
     </View>
     );
@@ -125,6 +155,48 @@ var PlayInfoStyle = StyleSheet.create({
  },
  rowtext:{
    flexDirection:'row',
- top:Util.size.height*1/20,
+ },
+
+ centerlitext:{
+   left:10,
+   color:'#fff',
+ },
+ centersplit: {
+   position:'absolute',
+   left:10,
+   marginTop:30,
+   backgroundColor:'rgb(50,50,50)',
+   width:Util.size.width,
+   height: Util.pixel,
+ },
+ teamheroimagecontainer:{
+      marginLeft:Util.size.width/5-30,
+      flexDirection:'row',
+
+      borderRadius: 5,
+ },
+ teamheroimage:{
+   width:50,
+   height:50,
+   borderWidth:1,
+   marginRight:Util.pixel*10,
+   borderColor:'rgb(208, 46, 70)',
+  borderRadius: 5,
+ },
+ btn: {
+     height:45,
+     width: Util.size.width - 72,
+     alignItems: 'center',
+     justifyContent: 'center',
+     borderWidth: 0,
+     borderRadius: 2,
+     backgroundColor: '#D31B25',
+     marginTop: 30,
+     marginLeft: 36,
+     marginRight: 36,
+ },
+ btnfont: {
+     fontSize: 18,
+     color: '#FFFFFF',
  },
 });
