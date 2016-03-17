@@ -14,6 +14,8 @@ var {
   Navigator
   } = React;
 import GiftedlistView from '../../temp/giftedlistView';
+import SectionView from '../../temp/listviewsection';
+import SectionHeader from '../../temp/sectionHeader';
 var MatchStyle = require('../styles/matchstyle');
 
 var Match = React.createClass({
