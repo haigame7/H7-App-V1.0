@@ -19,16 +19,21 @@ export default class extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      text: '右上角的提交都还没有',
+        text: '右上角的提交都还没有',
+   navigator: this.props.navigator,
     }
 
   }
 
+  _callback() {
+    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
+    this.state.navigator.pop()
+  }
 
   render() {
     return(
       <View >
-        <Header screenTitle='帮助与反馈' isPop={true} navigator={this.props.navigator}/>
+        <Header screenTitle='帮助与反馈' isPop={true} iconText='完成' callback={this._callback.bind(this)} navigator={this.props.navigator}/>
           <View>
             <TextInput
              style={{height: 40, borderColor: 'gray', borderWidth: 1}}

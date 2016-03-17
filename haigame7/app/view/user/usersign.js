@@ -10,7 +10,8 @@ var {
   StyleSheet,
   TextInput,
   Navigator,
-  ScrollView
+  ScrollView,
+  ToastAndroid
   } = React;
 
  import styles from '../../styles/userstyle';
@@ -22,9 +23,18 @@ export default class extends Component{
     this.state = {
       content:undefined,
       textnumber:0,
-      messages: []
+      messages: [],
+     navigator: undefined,
+      iconText: '完成'
     }
   }
+
+  componentDidMount(){
+      this.setState({
+        navigator: this.props.navigator,
+      });
+  }
+
   onChange(text){
     this.setState(
       {
@@ -34,10 +44,14 @@ export default class extends Component{
     console.log(text.length);
   }
 
+  _callback() {
+    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
+    this.state.navigator.pop()
+  }
   render(){
     return (
       <View >
-        <Header screenTitle='个性签名' iconText='完成' navigator={this.props.navigator}/>
+        <Header screenTitle='战队信息' isPop={true}   iconText={this.state.iconText} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <View style={styles.loginbg}>
           <View style={styles.textareabox}>
             <TextInput
