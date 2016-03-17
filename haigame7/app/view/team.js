@@ -27,6 +27,7 @@ import React, {
 
 import TeamRecruit from './team/teamrecruit';
 import PlayerInfo from './team/playerinfo';
+import TeamInfo from './team/teaminfo';
   export default class extends Component{
     constructor(props) {
       super(props);
@@ -49,14 +50,17 @@ import PlayerInfo from './team/playerinfo';
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
               this.props.navigator.push({ name: name, component: PlayerInfo, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
-
+        }else if (name == 'teaminfo') {
+          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+              this.props.navigator.push({ name: name, component: TeamInfo, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+          }
         }
     }
   renderteamList(){
     if(this.state.navbar==0){
       return(
         <View>
-        <View style={[styles.teamlist]}>
+      <TouchableOpacity style={[styles.teamlist]}  onPress={()=>this.gotoRoute('teaminfo')}>
         <Image style={[styles.teamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
          <View style={[styles.teamcontent]}>
          <View style={[styles.teamrowtext]}>
@@ -69,12 +73,12 @@ import PlayerInfo from './team/playerinfo';
          <TouchableOpacity style = {this.state.invite==0 ? styles.teambuttoninvite : styles.teambuttoninvited}  >
               <Text style = {this.state.invite==0 ? styles.btnfontinvite:styles.btnfontinvited}> { this.state.invite==0 ? '申请加入' : '已申请' } </Text>
          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
          <View style={[styles.teamsplit]}></View>
          <View style={[styles.teamlist]}>
-            <TouchableOpacity>
+
          <Image style={[styles.teamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-           </TouchableOpacity>
+
          <View style={[styles.teamcontent]}>
          <View style={[styles.teamrowtext]}>
          <Text style={[styles.teamcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
@@ -87,6 +91,7 @@ import PlayerInfo from './team/playerinfo';
               <Text style = {this.state.invite==0 ? styles.btnfontinvite:styles.btnfontinvited}> { this.state.invite==0 ? '申请加入' : '已申请' } </Text>
          </TouchableOpacity>
          </View>
+
          <View style={[styles.teamsplit]}></View>
          <View style={[styles.teamlist]}>
          <Image style={[styles.teamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
@@ -131,11 +136,9 @@ import PlayerInfo from './team/playerinfo';
          <Icon name='angle-right' size={25} style={styles.teamangleright}/>
         </View>
          <View style={[styles.teamsplit]}></View>
-         <View style={[styles.teamlist]}>
-         <TouchableOpacity  onPress={()=>this.gotoRoute('playerinfo')}>
+         <TouchableOpacity style={[styles.teamlist]}  onPress={()=>this.gotoRoute('playerinfo')}>
          <Image style={[styles.teamrecruitimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-         </TouchableOpacity>
-         <TouchableOpacity style={[styles.teamcontent]}  onPress={()=>this.gotoRoute('playerinfo')}>
+         <View style={[styles.teamcontent]} >
 
          <Text style={[styles.teamcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]} onPress={()=>this.gotoRoute('playerinfo')}>{'犀利拍立冬至'}</Text>
 
@@ -154,11 +157,11 @@ import PlayerInfo from './team/playerinfo';
           </View>
           </View>
 
-        </TouchableOpacity>
+        </View>
          <TouchableOpacity style = {this.state.invite==0 ? styles.teambuttonrecruit : styles.teambuttonrecruited}  >
               <Text style = {this.state.invite==0 ? styles.btnfontinvite:styles.btnfontinvited}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
          </TouchableOpacity>
-         </View>
+         </TouchableOpacity>
          <View style={[styles.teamsplit,{marginTop:Util.pixel*10}]}></View>
          <View style={[styles.teamlist]}>
          <Image style={[styles.teamrecruitimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
