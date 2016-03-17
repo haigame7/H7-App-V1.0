@@ -10,13 +10,14 @@ import React, {
 } from 'react-native';
 import Button from 'react-native-button';
 import Header from '../common/headernav';
+import TeamHeader from './teamheader_screen';
 export default class extends React.Component {
   constructor() {
     super();
     this.state = {
         navigator: undefined,
         isCaptain: true,
-         iconText: '创建战队',
+         iconText: '添加战队',
   defaultTeamLogo: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
     }
   }
@@ -72,18 +73,7 @@ render() {
     <View>
     <Header screenTitle='战队信息' isPop={true} iconText={this.state.iconText} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
       <View>
-        <View>
-          <Image style={{width:40,height:40}} source={{uri:this.state.defaultTeamLogo}} />
-          <Text>KICK ASS 战队</Text>
-        </View>
-        <View>
-          <View style={{flexDirection: 'row'}}>
-            <Text>战斗力</Text><Text>1300</Text><Text>氦金</Text><Text>1000</Text>
-          </View>
-          <View>
-            <Text>战队宣言：宣言宣言宣言宣言宣言</Text>
-          </View>
-        </View>
+        <TeamHeader navigator={this.props.navigator} />
       </View>
       <View>
         <ScrollView>

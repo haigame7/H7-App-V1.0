@@ -9,6 +9,7 @@ import React, {
 } from 'react-native';
 import Button from 'react-native-button';
 import Header from '../common/headernav';
+import UserHeader from '../user/userheader_screen';
 export default class extends React.Component {
   constructor() {
     super();
@@ -51,20 +52,9 @@ render() {
     }
   return(
     <View>
-    <Header screenTitle='战队信息' isPop={true} navigator={this.props.navigator}/>
+    <Header screenTitle='队员信息' isPop={true} navigator={this.props.navigator}/>
       <View>
-        <View>
-          <Image style={{width:40,height:40}} source={{uri:this.state.defaultTeamLogo}} />
-          <Text>KICK ASS 战队</Text>
-        </View>
-        <View>
-          <View style={{flexDirection: 'row'}}>
-            <Text>战斗力</Text><Text>1300</Text><Text>氦金</Text><Text>1000</Text>
-          </View>
-          <View>
-            <Text>个性签名：宣言宣言宣言宣言宣言</Text>
-          </View>
-        </View>
+        <UserHeader navigator={this.props.navigator}/>
       </View>
       <View>
         <ScrollView>

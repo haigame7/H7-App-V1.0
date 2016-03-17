@@ -21,11 +21,8 @@ var {
 
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/userstyle';
-import UserInfo from './user/userinfo';
+import UserHeader from './user/userheader_screen';
 import Setting from './user/setting';
-import UserSign from './user/usersign';
-import UserCertify from './user/usercertify';
- import UserAsset from './user/userasset';
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
@@ -70,49 +67,12 @@ var User = React.createClass({
       console.log('_navigator_navigator_navigator_navigator');
     }
   },
-  _pressUserInfo() {
-    // console.log(this.refs.login_btn.getDOMNode().value);
-    // ToastAndroid.show('登陆喽', ToastAndroid.SHORT);
-    const nav = this.state._navigator;
-    if(nav) {
-      nav.push({
-        name: 'userinfo',
-        component: UserInfo,
-      })
-    }else{
-      console.log('_navigator_navigator_navigator_navigator');
-    }
-  },
-  _pressUserAsset() {
-    const nav = this.state._navigator;
-    if(nav) {
-      nav.push({
-        name: 'userasset',
-        component: UserAsset
-      })
-    }else{
-      console.log('_navigator_navigator_navigator_navigator');
-    }
-  },
-
   _pressSetting() {
     const nav = this.state._navigator;
     if(nav) {
       nav.push({
         name: 'setting',
         component: Setting,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
-      })
-    }else{
-      console.log('_navigator_navigator_navigator_navigator');
-    }
-  },
-  _pressSign() {
-    const nav = this.state._navigator;
-    if(nav) {
-      nav.push({
-        name: 'usersign',
-        component: UserSign,
         sceneConfig:Navigator.SceneConfigs.FloatFromRight
       })
     }else{
@@ -284,35 +244,7 @@ var User = React.createClass({
       <View >
       <Header screenTitle='个人中心'  iconName='folder'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}/>
      <ScrollView style={commonstyle.bodyer}>
-       <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-         <TouchableOpacity style={styles.blocktop} onPress={this._pressUserInfo.bind(null,this)}>
-           <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-         </TouchableOpacity>
-
-         <View style={styles.blocktop}>
-           <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
-           <TouchableOpacity style={styles.headtext} onPress={this._pressSign.bind(null,this)}>
-             <Text style={commonstyle.cream}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
-           </TouchableOpacity>
-         </View>
-
-         <View style={[commonstyle.row, styles.headtab]}>
-           <View style={[commonstyle.col1, styles.headtabli]}>
-             <Text style={[styles.headtabtitle, commonstyle.yellow]}>战斗力</Text>
-             <Text style={[styles.headtabnumber, commonstyle.cream]}>000</Text>
-           </View>
-           <View style={styles.headtabline} ></View>
-           <TouchableOpacity style={[commonstyle.col1, styles.headtabli]} activeOpacity={0.8} onPress={this._pressUserAsset.bind(null,this)}>
-             <Text style={[styles.headtabtitle, commonstyle.yellow]}>氦金</Text>
-             <Text style={[styles.headtabnumber, commonstyle.red]}>000</Text>
-           </TouchableOpacity>
-           <View style={styles.headtabline} ></View>
-           <View style={[commonstyle.col1, styles.headtabli]}>
-             <Text style={[styles.headtabtitle, commonstyle.yellow]}>游戏</Text>
-             <Text style={[styles.headtabnumber, commonstyle.red]}>000</Text>
-           </View>
-         </View>
-       </Image>
+        <UserHeader navigator={this.state._navigator}/>
        <TouchableOpacity style={styles.centerlicontent} onPress={this._managerTeamUser.bind(null,this)}>
          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
          <Text style={styles.centerlitext}>队员管理</Text>
