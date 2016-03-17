@@ -120,4 +120,7 @@ module.exports = React.createClass({
       console.log('导航数据错误');
     }
   },
+  _callback:function() {
+    this.state.callback_fun();
+  },
 });
