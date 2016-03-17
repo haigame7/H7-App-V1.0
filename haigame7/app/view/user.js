@@ -219,14 +219,15 @@ var User = React.createClass({
       <Header screenTitle='个人中心'  iconName='folder'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}/>
       <ScrollView style={commonstyle.bodyer}>
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-          <TouchableOpacity style={styles.blocktop} onPress={this._pressUserInfo.bind(null,this)}>
+          <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._pressUserInfo.bind(null,this)}>
             <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+            <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
           </TouchableOpacity>
 
           <View style={styles.blocktop}>
             <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
             <TouchableOpacity style={styles.headtext} onPress={this._pressSign.bind(null,this)}>
-              <Text style={commonstyle.cream}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+              <Text style={[commonstyle.cream, styles.headtextfont]}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
             </TouchableOpacity>
           </View>
 
@@ -253,42 +254,42 @@ var User = React.createClass({
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的消息</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._reSetPwd.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>重置密码密码</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._about.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>关于H7</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._share.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>分享</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._help.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>帮助与反馈</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._hint.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>提示创建战队</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
 
         <View style={styles.listbox}></View>
@@ -298,35 +299,35 @@ var User = React.createClass({
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的战队</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toRegister.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#00b4ff'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的赛事</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressCertify.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#ff7062'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的约战</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressSetting.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#30ccc2'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的竞猜</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressSetting.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#c13380'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的任务</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
 
         <View style={styles.listbox}></View>
@@ -336,7 +337,7 @@ var User = React.createClass({
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>设置</Text>
-          <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
 
         <View style={styles.listbox}></View>
