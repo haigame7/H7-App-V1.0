@@ -19,6 +19,7 @@ var {
   } = React;
 
 
+import commonstyle from '../styles/commonstyle';
 import styles from '../styles/userstyle';
 import UserInfo from './user/userinfo';
 import Setting from './user/setting';
@@ -40,6 +41,7 @@ import ShowTeam from './team/team_show_screen';
 import ShowTeamUser from './team/teamuser_show_screen';
 import EditSlogan from './team/teamslogan_edit_screen';
 import ManagerTeamUser from './team/teamuser_manager_screen';
+
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
@@ -280,130 +282,176 @@ var User = React.createClass({
   render: function () {
     return (
       <View >
-      <View style={styles.bgImageWrapper}>
-      <View style={styles.centerbg}>
-      </View>
-      </View>
       <Header screenTitle='个人中心'  iconName='folder'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}/>
-      <Image source={require('../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode={"cover"} >
-       <TouchableOpacity style={styles.centertitle} onPress={this._pressUserInfo.bind(null,this)}>
-       <Image style={styles.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-       </TouchableOpacity>
-       <View style={styles.centertitle}>
-        <Text style={styles.centername}>我的名字</Text>
-         <TouchableOpacity onPress={this._pressSign.bind(null,this)}>
-         <Text style={styles.centersign} >个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+     <ScrollView style={commonstyle.bodyer}>
+       <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
+         <TouchableOpacity style={styles.blocktop} onPress={this._pressUserInfo.bind(null,this)}>
+           <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
          </TouchableOpacity>
-       </View>
-       <View style={styles.centertab}>
-        <View>
 
-          <Text style={styles.centertabname}>战斗力</Text>
-          <Text style={[styles.centertabattr,{color:'#fff'}]}>000</Text>
+         <View style={styles.blocktop}>
+           <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
+           <TouchableOpacity style={styles.headtext} onPress={this._pressSign.bind(null,this)}>
+             <Text style={commonstyle.cream}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+           </TouchableOpacity>
+         </View>
 
-        </View>
-       <View style={styles.centersplitvertical} ></View>
-      <TouchableOpacity onPress={this._pressUserAsset.bind(null,this)}>
-          <Text style={styles.centertabname}>氦金</Text>
-          <Text style={styles.centertabattr}>000</Text>
+         <View style={[commonstyle.row, styles.headtab]}>
+           <View style={[commonstyle.col1, styles.headtabli]}>
+             <Text style={[styles.headtabtitle, commonstyle.yellow]}>战斗力</Text>
+             <Text style={[styles.headtabnumber, commonstyle.cream]}>000</Text>
+           </View>
+           <View style={styles.headtabline} ></View>
+           <TouchableOpacity style={[commonstyle.col1, styles.headtabli]} activeOpacity={0.8} onPress={this._pressUserAsset.bind(null,this)}>
+             <Text style={[styles.headtabtitle, commonstyle.yellow]}>氦金</Text>
+             <Text style={[styles.headtabnumber, commonstyle.red]}>000</Text>
+           </TouchableOpacity>
+           <View style={styles.headtabline} ></View>
+           <View style={[commonstyle.col1, styles.headtabli]}>
+             <Text style={[styles.headtabtitle, commonstyle.yellow]}>游戏</Text>
+             <Text style={[styles.headtabnumber, commonstyle.red]}>000</Text>
+           </View>
+         </View>
+       </Image>
+       <TouchableOpacity style={styles.centerlicontent} onPress={this._managerTeamUser.bind(null,this)}>
+         <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+         <Text style={styles.centerlitext}>队员管理</Text>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.centerlicontent} onPress={this._editTeamSlogan.bind(null,this)}>
+         <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+         <Text style={styles.centerlitext}>战队口号</Text>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.centerlicontent} onPress={this._showTeamUser.bind(null,this)}>
+         <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+         <Text style={styles.centerlitext}>队员信息</Text>
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.centerlicontent} onPress={this._showTeam.bind(null,this)}>
+         <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+         <Text style={styles.centerlitext}>战队信息</Text>
+       </TouchableOpacity>
+     <TouchableOpacity style={styles.centerlicontent} onPress={this._createTeam.bind(null,this)}>
+       <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+       <Text style={styles.centerlitext}>创建战队</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.centerlicontent} onPress={this._myMsg.bind(null,this)}>
+       <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+       <Text style={styles.centerlitext}>我的消息</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.centerlicontent} onPress={this._reSetPwd.bind(null,this)}>
+       <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+       <Text style={styles.centerlitext}>重置密码密码</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.centerlicontent} onPress={this._about.bind(null,this)}>
+       <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+       <Text style={styles.centerlitext}>关于H7</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.centerlicontent} onPress={this._share.bind(null,this)}>
+       <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+       <Text style={styles.centerlitext}>分享</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.centerlicontent} onPress={this._help.bind(null,this)}>
+       <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+       <Text style={styles.centerlitext}>帮助与反馈</Text>
+     </TouchableOpacity>
+     <TouchableOpacity style={styles.centerlicontent} onPress={this._hint.bind(null,this)}>
+       <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
+       <Text style={styles.centerlitext}>提示创建战队</Text>
+     </TouchableOpacity>
 
-        </TouchableOpacity>
-        <View style={styles.centersplitvertical} />
-        <View>
-          <Text style={styles.centertabname}>游戏</Text>
-          <Text style={styles.centertabattr}>000</Text>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._myMsg.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>我的消息</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._reSetPwd.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>重置密码密码</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._about.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>关于H7</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._share.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>分享</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._help.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>帮助与反馈</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._hint.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>提示创建战队</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
 
-        </View>
+       <View style={styles.listbox}></View>
 
-       </View>
-      </Image>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressButton.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>我的战队</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toRegister.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#00b4ff'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>我的赛事</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressCertify.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#ff7062'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>我的约战</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressSetting.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#30ccc2'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>我的竞猜</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressSetting.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#c13380'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>我的任务</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
 
-        <ScrollView style={styles.centerfootbg}>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._managerTeamUser.bind(null,this)}>
-          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-          <Text style={styles.centerlitext}>队员管理</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._editTeamSlogan.bind(null,this)}>
-          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-          <Text style={styles.centerlitext}>战队口号</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._showTeamUser.bind(null,this)}>
-          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-          <Text style={styles.centerlitext}>队员信息</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._showTeam.bind(null,this)}>
-          <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-          <Text style={styles.centerlitext}>战队信息</Text>
-        </TouchableOpacity>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._createTeam.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>创建战队</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._myMsg.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>我的消息</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._reSetPwd.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>重置密码密码</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._about.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>关于H7</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._share.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>分享</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._help.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>帮助与反馈</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.centerlicontent} onPress={this._hint.bind(null,this)}>
-        <View style={[styles.centerliicon,{backgroundColor:'orange'}]} ></View>
-        <Text style={styles.centerlitext}>提示创建战队</Text>
-      </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressButton.bind(null,this)}>
-          <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'orange'}]} />
-          <Text style={styles.centerlitext}>我的战队</Text>
-            <Icon name="angle-right" size={25} style={styles.centerangelright} />
-          <View style={styles.centersplit}></View>
+       <View style={styles.listbox}></View>
 
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._toRegister.bind(null,this)}>
-          <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(115, 152, 200)'}]} />
-          <Text style={styles.centerlitext}>我的赛事</Text>
-            <Icon name="angle-right" size={25} style={styles.centerangelright} />
-              <View style={styles.centersplit}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressCertify.bind(null,this)}>
-          <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(221, 49, 116)'}]} />
-          <Text style={styles.centerlitext}>我的约战</Text>
-          <Icon name="angle-right" size={25} style={styles.centerangelright} />
-            <View style={styles.centersplit}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressSetting.bind(null,this)}>
-          <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(86, 213, 226)'}]} />
-          <Text style={styles.centerlitext}>我的竞猜</Text>
-          <Icon name="angle-right" size={25} style={styles.centerangelright} />
-            <View style={styles.centersplit}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressSetting.bind(null,this)}>
-          <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(185, 44, 193)'}]}  />
-          <Text style={styles.centerlitext}>我的任务</Text>
-          <Icon name="angle-right" size={25} style={styles.centerangelright} />
-            <View style={styles.centersplit}></View>
-        </TouchableOpacity>
-        <View style={styles.centersplitblock}></View>
-        <TouchableOpacity style={styles.centerlicontent} onPress={this._pressSetting.bind(null,this)}>
-          <Icon name="book" size={20} color={'#fff'} style={[styles.centerliicon,{backgroundColor:'rgb(105, 61, 231)'}]} />
-          <Text style={styles.centerlitext}>设置</Text>
-          <View style={{marginLeft:28}}></View>
-          <Icon name="angle-right" size={25} style={styles.centerangelright} />
-            <View style={styles.centersplit}></View>
-        </TouchableOpacity>
+       <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressSetting.bind(null,this)}>
+         <View style={[styles.listviewiconleft,{backgroundColor:'#3543e7'}]}>
+           <Icon name="book" size={20} color={'#fff'} />
+         </View>
+         <Text style={styles.listviewtext}>设置</Text>
+         <Icon name="angle-right" size={30} color={'#fff'} style={styles.listviewiconright} />
+       </TouchableOpacity>
 
-        </ScrollView>
+       <View style={styles.listbox}></View>
+       <View style={styles.listbox}></View>
+     </ScrollView>
     </View>
     );
   }

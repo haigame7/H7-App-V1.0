@@ -40,11 +40,11 @@ var CommonStyle = StyleSheet.create({
     color:'#fff',
     right:0,
     },
-    bodys: {
-        margin: 0,
-        alignItems: 'center',
+    bodyer: {
+        height: (Platform.OS === 'ios') ? Util.size.height - 64 : Util.size.height - 48,
+        backgroundColor: '#000000',
     },
-    foots: {
+    footer: {
         backgroundColor: '#FF0009',
         position: 'absolute',
         overflow: 'hidden',
