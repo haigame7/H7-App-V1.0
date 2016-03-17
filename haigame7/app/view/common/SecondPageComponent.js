@@ -20,7 +20,7 @@ export default class SecondPageComponent extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
         //这里获取从FirstPageComponent传递过来的参数: id
         this.setState({
             id: this.props.id //这个ID是从第一个component中传过来的
