@@ -49,22 +49,22 @@ export default class extends React.Component {
         onPress={null}
       >
       <View style={[screenStyles.ranklist]}>
-      <Image style={[screenStyles.rankimage]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-       <View style={[screenStyles.rankcontent]}>
-        <View style={{flexDirection:'row'}}>
-         <Text style={[screenStyles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
-         <View style={{borderColor:'rgb(208, 46, 70)',marginTop: 20,marginLeft: 50,borderColor:'rgb(208, 46, 70)',borderWidth:1,borderRadius: 5,height:30,width:60}}>
-           <Text style={{color: 'rgb(230, 193, 39)',textAlign:'center'}}>等待回复</Text>
-         </View>
-       </View>
-       <Text style={[screenStyles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
-        <View style={[screenStyles.rankrowtext]}>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+        <Image style={[screenStyles.rankimage]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+        <View style={[screenStyles.rankcontent]}>
+          <View style={{flexDirection:'row'}}>
+             <Text style={[screenStyles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
+               <View style={{borderColor:'rgb(208, 46, 70)',marginTop: 20,marginLeft: 50,borderWidth:1,borderRadius: 5,height:30,width:60}}>
+                 <Text style={{color: 'rgb(230, 193, 39)',textAlign:'center'}}>等待回复</Text>
+               </View>
+          </View>
+          <Text style={[screenStyles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
+          <View style={[screenStyles.rankrowtext]}>
+            <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
+            <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+            <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
+            <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+          </View>
         </View>
-       </View>
       </View>
       </TouchableHighlight>
     );
@@ -185,7 +185,7 @@ export default class extends React.Component {
   render() {
     return(
       <View style={screenStyles.container}>
-        <Header screenTitle='申请信息' isPop={true} navigator={this.props.navigator}/>
+        <Header screenTitle='我的申请' isPop={true} navigator={this.props.navigator}/>
         <GiftedListView
           rowView={this._renderRowView}
 

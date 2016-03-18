@@ -53,7 +53,7 @@ export default class extends React.Component {
        <View style={[screenStyles.rankcontent]}>
         <View style={{flexDirection:'row'}}>
          <Text style={[screenStyles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
-         <View style={{borderColor:'rgb(208, 46, 70)',marginTop: 20,marginLeft: 50,borderColor:'rgb(208, 46, 70)',borderWidth:1,borderRadius: 5,height:30,width:60}}>
+         <View style={{borderColor:'rgb(208, 46, 70)',marginTop: 20,marginLeft: 50,borderWidth:1,borderRadius: 5,height:30,width:60}}>
            <Text style={{color: 'rgb(230, 193, 39)',textAlign:'center'}}>等待回复</Text>
          </View>
        </View>
