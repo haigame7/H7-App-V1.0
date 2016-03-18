@@ -25,12 +25,8 @@ module.exports = React.createClass({
       data:undefined
    };
   },
-  componentDidMount:function()
-  {
-   AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>this.setState({data:value}));
-  },
   render: function(){
-    var obj = this.props.initObj;
+    var screenTitle = this.props.screenTitle;
 
     if (this.state.data!==null) {
       userLogin = <Image source={{uri:'http://sso.haigame7.com/images/logo.png'}}  style={CommonStyle.headerImage}/>
@@ -39,14 +35,15 @@ module.exports = React.createClass({
     }
     return (
       <View style={[CommonStyle.header, CommonStyle.row]}>
-        <View style={CommonStyle.col1}></View>
+        <View style={CommonStyle.col1}>
+        <TouchableOpacity style={CommonStyle.headerleft} onPress={this._pop}>
+          <Icon name="angle-left" size={30} color="#FFF" />
+        </TouchableOpacity>
+        </View>
         <View style={[CommonStyle.col1, CommonStyle.viewcenter]}>
-          <Text style={CommonStyle.headertext} numberOfLines={1}>{obj.title}</Text>
+          <Text style={CommonStyle.headertext} numberOfLines={1}>{screenTitle}</Text>
         </View>
         <View style={CommonStyle.col1}>
-          <TouchableOpacity style={CommonStyle.headerright} activeOpacity={0.8} onPress={this._pushroute}>
-          {userLogin}
-          </TouchableOpacity>
         </View>
       </View>
     );

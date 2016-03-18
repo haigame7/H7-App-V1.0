@@ -24,6 +24,7 @@ import api, {host, key} from './server';
 import Setpwd from './setpwd.js';
 import UserService from '../../network/userservice';
 import GlobalSetup from '../../constants/globalsetup';
+import HeaderPre from '../common/header';
 
 export default class extends Component {
   constructor(props) {
@@ -112,11 +113,20 @@ export default class extends Component {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         let message = '';
         if(response.MessageCode == '40001'){
-          message = '服务器请求异常';
+          message = '服务器请求异常,请稍后重试';
+          this.setState({
+            isToushable: true,
+          });
         }else if(response.MessageCode == '10003'){
           message = '手机号有误请重新输入';
+          this.setState({
+            isToushable: true,
+          });
         }else if(response.MessageCode == '10004'){
           message = '手机号已注册';
+          this.setState({
+            isToushable: true,
+          });
         }else if(response.MessageCode == '0'){
           message = '验证码已发送，请查看';
         }
@@ -167,7 +177,7 @@ export default class extends Component {
     }
     return(
       <View style={{ flex: 1 }}>
-      <Header initObj={{ title:'注册', backName:'返回', }}   navigator={this.props.navigator}></Header>
+      <HeaderPre screenTitle = '注册' navigator = { this.props.navigator } />
       <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
           <View activeOpacity = {1} style = {styles.logo}>
               <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>

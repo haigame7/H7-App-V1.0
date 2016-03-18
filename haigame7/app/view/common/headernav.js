@@ -57,7 +57,10 @@ module.exports = React.createClass({
       });
     }
   },
-
+  componentWillReceiveProps(nextProps) {
+    console.log('接受道新的了');
+  }
+,
   render: function(){
    var icon;
    if(this.state.icon_name == undefined && this.state.icon_text == undefined){

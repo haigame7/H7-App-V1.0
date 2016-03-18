@@ -1,4 +1,4 @@
-import React, { Component, View, Text, ScrollView } from 'react-native';
+import React, { Component, View, Text, ScrollView,AsyncStorage } from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
 var Headernav = require('./headernav');
@@ -8,6 +8,7 @@ var User  = require('../user.js');
 import Team from '../team.js';
 import Rank from '../rank.js';
 import Login from '../user/login';
+import GlobalVariable from '../../constants/globalvariable';
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
@@ -23,6 +24,13 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.toggle = false;
+    this.state = {
+      userdata: undefined
+    }
+  }
+
+  componentWillMount() {
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>this.setState({userdata:value}));
   }
 
   componentDidMount() {
@@ -57,6 +65,13 @@ export default class App extends Component {
   }
 
   render() {
+    // console.log(this.state.userdata == undefined);
+    let nextComponent ;
+    if( this.state.userdata == undefined) {
+      nextComponent = Login;
+    } else {
+      nextComponent = User;
+    }
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
         <Tab name="赛事">
@@ -66,7 +81,7 @@ export default class App extends Component {
           <Headernav
             screenTitle='赛事'
             iconName='user'
-            nextComponent={{name:'用户中心',component:Login}}
+            nextComponent={{name:'用户中心',component:nextComponent}}
             isPop={false}
             navigator={this.props.navigator} />
            <Match navigator={this.props.navigator}/>
@@ -80,7 +95,7 @@ export default class App extends Component {
            <Headernav
              screenTitle='约战'
              iconName='user'
-             nextComponent={{name:'用户中心',component:User}}
+             nextComponent={{name:'用户中心',component:nextComponent}}
              isPop={false}
              navigator={this.props.navigator} />
            <Fight/>
@@ -94,7 +109,7 @@ export default class App extends Component {
            <Headernav
              screenTitle='排行'
              iconName='user'
-             nextComponent={{name:'用户中心',component:User}}
+             nextComponent={{name:'用户中心',component:nextComponent}}
              isPop={false}
              navigator={this.props.navigator} />
            <Rank navigator={this.props.navigator}/>
@@ -108,7 +123,7 @@ export default class App extends Component {
             <Headernav
               screenTitle='组队'
               iconName='user'
-              nextComponent={{name:'用户中心',component:User}}
+              nextComponent={{name:'用户中心',component:nextComponent}}
               isPop={false}
               navigator={this.props.navigator} />
            <Team navigator={this.props.navigator}/>
