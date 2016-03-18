@@ -30,7 +30,7 @@ import UserService from '../../network/userservice';
 import GlobalVariable from '../../constants/globalvariable';
 import GlobalSetup from '../../constants/globalsetup';
 
-export default class extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,7 +45,7 @@ export default class extends Component {
     }
 
     componentWillMount() {
-      // console.log(this.props.navigator);
+      // console.log('登录页');
     }
 
     render() {

@@ -1,4 +1,4 @@
-import React, { Component, View, Text, ScrollView,AsyncStorage } from 'react-native';
+import React, { Component, View, Text, ScrollView,AsyncStorage ,TouchableOpacity} from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
 var Headernav = require('./headernav');
@@ -25,14 +25,24 @@ export default class App extends Component {
     super(props, context);
     this.toggle = false;
     this.state = {
-      userdata: undefined
+      userdata: undefined,
     }
   }
-
   componentWillMount() {
-    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>this.setState({userdata:value}));
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+      if( value == undefined) {
+        this.refs.headernav.updateComponent({name:'用户中心',component:Login});
+      }
+    });
   }
+componentWillReceiveProps(nextProps) {
 
+}
+shouldComponentUpdate(nextProps,nextState){
+  return true;
+}
+componentWillUpdate() {
+}
   componentDidMount() {
     // let toggle = "tab2";
     // setInterval(() => {
@@ -65,23 +75,17 @@ export default class App extends Component {
   }
 
   render() {
-    // console.log(this.state.userdata == undefined);
-    let nextComponent ;
-    if( this.state.userdata == undefined) {
-      nextComponent = Login;
-    } else {
-      nextComponent = User;
-    }
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
         <Tab name="赛事">
-          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
+          <IconWithBar label='赛事' onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
           <Headernav
+            ref="headernav"
             screenTitle='赛事'
             iconName='user'
-            nextComponent={{name:'用户中心',component:nextComponent}}
+            nextComponent={{name:'用户中心',component:User}}
             isPop={false}
             navigator={this.props.navigator} />
            <Match navigator={this.props.navigator}/>
@@ -95,10 +99,10 @@ export default class App extends Component {
            <Headernav
              screenTitle='约战'
              iconName='user'
-             nextComponent={{name:'用户中心',component:nextComponent}}
+             nextComponent={{name:'用户中心',component:User}}
              isPop={false}
              navigator={this.props.navigator} />
-           <Fight/>
+           <Fight navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
@@ -109,7 +113,7 @@ export default class App extends Component {
            <Headernav
              screenTitle='排行'
              iconName='user'
-             nextComponent={{name:'用户中心',component:nextComponent}}
+             nextComponent={{name:'用户中心',component:User}}
              isPop={false}
              navigator={this.props.navigator} />
            <Rank navigator={this.props.navigator}/>
@@ -123,7 +127,7 @@ export default class App extends Component {
             <Headernav
               screenTitle='组队'
               iconName='user'
-              nextComponent={{name:'用户中心',component:nextComponent}}
+              nextComponent={{name:'用户中心',component:User}}
               isPop={false}
               navigator={this.props.navigator} />
            <Team navigator={this.props.navigator}/>
