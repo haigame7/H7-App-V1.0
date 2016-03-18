@@ -7,6 +7,8 @@ import React, {
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 var Icon = require('react-native-vector-icons/FontAwesome') //不知道这个能不能直接用
+
+import commonstyle from '../../styles/commonstyle';
 export default class extends React.Component {
   constructor() {
     super();
@@ -30,18 +32,19 @@ export default class extends React.Component {
     console.log('加入战队去了');
   }
   render(){
-    let BContent = <Button onPress={this._closeModa.bind(this)} >X</Button>;
+    let BContent = <Button onPress={this._closeModa.bind(this)} ><Icon name="remove" size={20} color={'#FF0000'} /></Button>;
     return(
       <View style={styles.wrapper}>
        <Button onPress={this._openModa.bind(this)} style={styles.btn}>点击弹出Modal</Button>
-       <Modal isOpen={this.state.isOpen} onClosed={this._closeModa.bind(this)}style={[styles.modal, styles.modal4]} position={"center"} backdropContent={BContent}>
-          <View>
-            <Text style={styles.text_1}>亲爱的用户，你还没有建立或加入战队呢，赶快点击下面按钮，开启你的约战之旅吧！！！</Text>
-            <Text style={styles.text_2}>说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊</Text>
-            <View style={{flexDirection: 'row'}}>
-            <Button onPress={this._createTeam.bind(this)} style={styles.btn_create}>创建战队</Button>
-            <Button onPress={this._joinTeam.bind(this)} style={[styles.btn_join,{position: 'relative',left: 10}]}>加入战队</Button>
-            </View>
+       <Modal isOpen={this.state.isOpen} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalmiddle]} position={"center"}>
+          <View style={commonstyle.modalclose}>{BContent}</View>
+          <View style={commonstyle.modaltext}>
+            <Text style={commonstyle.cream}>亲爱的用户，你还没有建立或加入战队呢，赶快点击下面按钮，开启你的约战之旅吧！！！</Text>
+            <Text style={commonstyle.cream}>说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊</Text>
+          </View>
+          <View style={[commonstyle.row, commonstyle.modalbtn]}>
+          <View style={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]}><Button onPress={this._createTeam.bind(this)} style={commonstyle.black}>创建战队</Button></View>
+          <View style={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]}><Button onPress={this._joinTeam.bind(this)} style={commonstyle.white}>加入战队</Button></View>
           </View>
         </Modal>
       </View>
