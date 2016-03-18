@@ -160,6 +160,19 @@ var CommonStyle = StyleSheet.create({
     black: {
         color: '#282828',
     },
+    //字体大小
+    fontsize12: {
+        fontSize: 12,
+    },
+    fontsize14: {
+        fontSize: 14,
+    },
+    fontsize18: {
+        fontSize: 18,
+    },
+    fontsize22: {
+        fontSize: 22,
+    },
     //按钮
     icon: {
       height: 30,
