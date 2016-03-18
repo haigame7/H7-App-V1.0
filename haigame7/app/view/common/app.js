@@ -7,6 +7,7 @@ var Fight  = require('../fight.js');
 var User  = require('../user.js');
 import Team from '../team.js';
 import Rank from '../rank.js';
+import Login from '../user/login';
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
@@ -65,7 +66,7 @@ export default class App extends Component {
           <Headernav
             screenTitle='赛事'
             iconName='user'
-            nextComponent={{name:'用户中心',component:User}}
+            nextComponent={{name:'用户中心',component:Login}}
             isPop={false}
             navigator={this.props.navigator} />
            <Match navigator={this.props.navigator}/>

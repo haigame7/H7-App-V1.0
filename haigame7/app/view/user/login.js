@@ -45,6 +45,10 @@ export default class extends Component {
         };
     }
 
+    componentWillMount() {
+      // console.log(this.props.navigator);
+    }
+
     render() {
         let fields = [
             { ref: 'phone', placeholder: '手机号码', placeholderTextColor: 'white', keyboardType: 'numeric', secureTextEntry: false, style: [styles.logininputfont] },
@@ -54,7 +58,7 @@ export default class extends Component {
         ];
         return (
             <View style = {{ flex: 1 }}>
-            <Header initObj = {{ title: '用户登录', backName: '返回', }} navigator = { this.props.navigator } ></Header>
+            <Header screenTitle = '登录' navigator = { this.props.navigator } />
             <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
                 <View activeOpacity = {1} style = {styles.logo}>
                     <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>

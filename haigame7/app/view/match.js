@@ -20,6 +20,7 @@ import MyApply from './user/myapply_screen';
 import MyReceiveApply from './user/myreceiveapply_screen';
 import MySendApply from './user/mysendapply_screen';
 import ApplyJoin from './user/applyjoin_screen';
+import Login from './user/login';
 var MatchStyle = require('../styles/matchstyle');
 
 var Match = React.createClass({
@@ -35,7 +36,7 @@ var Match = React.createClass({
     if(nav) {
       nav.push({
         name: 'listview',
-        component: GiftedlistView,
+        component: Login,
         sceneConfig:Navigator.SceneConfigs.FloatFromBottom
       })
     }else{
