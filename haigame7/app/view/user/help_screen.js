@@ -44,7 +44,7 @@ export default class extends React.Component {
         <Header screenTitle='帮助与反馈' isPop={true} iconText='完成' callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <View style={styles.loginbg}>
           <View style={styles.textareabox}>
-            <TextInput style={styles.textareainput} multiline={true}placeholder='请简述您的意见...' placeholderTextColor='#C3C3C3' onChangeText={(text) => this.onChange(text)} default={this.state.text} />
+            <TextInput style={styles.textareainput} multiline={true} placeholder='请简述您的意见...' placeholderTextColor='#C3C3C3' onChangeText={(text) => this.onChange(text)} default={this.state.text} />
             <Text style={styles.textareanumber}>{this.state.textnumber}/2000</Text>
           </View>
         </View>
