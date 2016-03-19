@@ -155,125 +155,31 @@ var TeamStyle = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 5,
     },
-
-    //原
-    infosplit: {
-        position: 'absolute',
-        left: 0,
-        marginTop: Util.size.height / 9 - 1,
-        height: Util.pixel,
-        width: Util.size.width,
-        backgroundColor: 'rgb(50,50,50)',
-    },
-    centerbg: {
+    headbg: {
         flex: 1,
-        backgroundColor: 'rgb(0, 0, 0)',
-        height: Util.size.height,
+        height: 240,
         width: Util.size.width,
     },
-    teamrecruit: {
-        height: Util.size.height * 11 / 40,
+    headtextblock: {
+        marginTop: 5,
+        paddingLeft: 60,
+        paddingRight: 60,
+    },
+    headtextleft: {
+        justifyContent: 'center',
         flexDirection: 'row',
+        flex: 1,
     },
-    teamimage: {
-        width: 80,
-        height: 80,
-        margin: 10,
-        borderRadius: 40,
-    },
-    teamrecruitimage: {
-        width: 50,
-        height: 50,
-        margin: 10,
-        marginTop: 25,
-        borderRadius: 25,
-    },
-    teamheroimagecontainer: {
-        margin: 10,
-        top: Util.pixel * 10,
+    headtextright: {
+        justifyContent: 'center',
         flexDirection: 'row',
-
-        borderRadius: 5,
+        flex: 1,
     },
-    teamheroimage: {
-        width: 40,
-        height: 40,
-        borderWidth: 1,
-        marginRight: Util.pixel * 10,
-        borderColor: 'rgb(208, 46, 70)',
-        borderRadius: 5,
-    },
-    teamcontent: {
-        flexDirection: 'column',
-        width: Util.size.width / 2,
-    },
-    teamcontenttext: {
-        color: 'rgb(150,150,150)',
-        fontSize: 12,
-        top: Util.pixel * 30,
-        marginBottom: Util.pixel * 8,
-    },
-
-    teamrowtext: {
-        flexDirection: 'row',
-    },
-    teamsplit: {
-        position: 'absolute',
-        left: 0,
-        height: Util.pixel,
-        width: Util.size.width,
-        backgroundColor: 'rgb(50,50,50)',
-    },
-    teamangleright: {
-        top: Util.pixel * 45,
-        left: Util.pixel * 100,
-        color: 'rgb(150, 150, 150)',
-    },
-    teambuttoninvite: {
-        width: Util.size.width * 19 / 100,
-        height: Util.pixel * 65,
-        top: Util.pixel * 80,
-        left: Util.pixel * 10,
-        borderRadius: 5,
-        backgroundColor: 'rgb(208, 46, 70)',
-    },
-    teambuttoninvited: {
-        width: Util.size.width * 19 / 100,
-        height: Util.pixel * 65,
-        top: Util.pixel * 80,
-        left: Util.pixel * 10,
-        borderRadius: 5,
-        backgroundColor: 'rgb(150, 150, 150)',
-    },
-    teambuttonrecruit: {
-        width: Util.size.width * 19 / 100,
-        height: Util.pixel * 65,
-        left: Util.pixel * 50,
-        top: Util.pixel * 60,
-        borderRadius: 5,
-        backgroundColor: 'rgb(208, 46, 70)',
-    },
-    teambuttonrecruited: {
-        width: Util.size.width * 19 / 100,
-        height: Util.pixel * 65,
-        left: Util.pixel * 50,
-        top: Util.pixel * 60,
-        borderRadius: 5,
-        backgroundColor: 'rgb(150, 150, 150)',
-    },
-    btnfontinvite: {
-        textAlign: 'center',
-        top: Util.pixel * 16,
-        fontSize: 13,
-        color: '#fff',
-        fontWeight: 'bold'
-    },
-    btnfontinvited: {
-        textAlign: 'center',
-        top: Util.pixel * 16,
-        fontSize: 13,
-        color: '#000',
-        fontWeight: 'bold'
+    headtexline: {
+        width: 2,
+        height: 10,
+        margin: 5,
+        backgroundColor: '#484848',
     },
 });
 

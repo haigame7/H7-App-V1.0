@@ -21,8 +21,8 @@ var {
   ScrollView
   } = React;
 
-
-
+import commonstyle from '../../styles/commonstyle';
+import teamstyles from '../../styles/userstyle';
 
 export default class extends Component{
   constructor(props) {
@@ -36,30 +36,34 @@ export default class extends Component{
   render(){
     return (
       <View>
-      <View style={TeamInfoStyle.bgImageWrapper}>
-      <View style={TeamInfoStyle.centerbg}>
-      </View>
-      </View>
-      <Header screenTitle='战队信息'   navigator={this.props.navigator}/>
-      <Image source={require('../../images/loginbg.jpg')} style={TeamInfoStyle.centerheadbg} resizeMode={"cover"} >
-       <TouchableOpacity style={TeamInfoStyle.centertitle}>
-       <Image style={TeamInfoStyle.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-       </TouchableOpacity>
-       <View style={TeamInfoStyle.centertitle}>
-        <Text style={TeamInfoStyle.centername}>我的名字</Text>
-        <View style={[TeamInfoStyle.rowtext,{ top:Util.size.height*1/20}]}>
-        <Text style={[TeamInfoStyle.contenttext,{left:-10,color:'rgb(230, 193, 39)'}]}>{'战斗力'}</Text>
-        <Text style={[TeamInfoStyle.contenttext,{color:'rgb(208, 46, 70)'}]}>{'1234'}</Text>
-        <View style={TeamInfoStyle.contentsplit}/>
-        <Text style={[TeamInfoStyle.contenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金'}</Text>
-        <Text style={[TeamInfoStyle.contenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'1234'}</Text>
-        </View>
-         <Text style={TeamInfoStyle.centersign} >战队宣言:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+        <Header screenTitle='战队信息' navigator={this.props.navigator}/>
+        <ScrollView style={commonstyle.bodyer}>
+          <Image source={require('../../images/userbg.jpg')} style={teamstyles.headbg} resizeMode={"cover"} >
+            <TouchableOpacity style={teamstyles.blocktop} activeOpacity={0.8}>
+              <Image style={teamstyles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+              <View style={teamstyles.headportraitv}><Icon name="book" size={15} color={'#484848'} /><Text style={teamstyles.headportraitvfont}>未认证</Text></View>
+            </TouchableOpacity>
 
-       </View>
-     </Image>
+            <View style={teamstyles.blocktop}>
+              <Text style={[teamstyles.headname, commonstyle.white]}>我的名字</Text>
+              <View style={[commonstyle.row, teamstyles.headtextblock]}>
+                <View style={teamstyles.headtextleft}>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'1234'}</Text>
+                </View>
+                <View style={teamstyles.headtextline}></View>
+                <View style={teamstyles.headtextright}>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'1234'}</Text>
+                </View>
+              </View>
+              <TouchableOpacity style={teamstyles.headtext}>
+                <Text style={[commonstyle.cream, teamstyles.headtextfont]}>战队宣言:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+              </TouchableOpacity>
+            </View>
+          </Image>
 
-        <ScrollView style={TeamInfoStyle.centerfootbg}>
+        
         <View style={[TeamInfoStyle.rowtext,{height:40}]}>
         <Text style={TeamInfoStyle.centerlitext}>性别</Text>
           <Text style={[TeamInfoStyle.centerlitext,{left:Util.size.width/5}]}>男</Text>
