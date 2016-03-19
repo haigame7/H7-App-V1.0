@@ -16,6 +16,7 @@ import React, {
   ToastAndroid
 } from 'react-native';
 
+import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import registerstyles from '../../styles/registerstyle';
 import Header from '../common/headernav';
@@ -148,45 +149,39 @@ export default class extends Component {
   render() {
 
     let fields = [
-      {ref: 'phone', placeholder: '手机号',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
-      {ref: 'password', placeholder: '请您设置密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.inputText]},
-      {ref: 'passwordd', placeholder: '请再次确认密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.inputText]},
-      {ref: 'securitycode', placeholder: '验证码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
+      {ref: 'phone', placeholder: '手机号',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.logininputfont]},
+      {ref: 'password', placeholder: '请您设置密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.logininputfont]},
+      {ref: 'passwordd', placeholder: '请再次确认密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.logininputfont]},
+      {ref: 'securitycode', placeholder: '验证码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.logininputfont]}
     ]
-    var headerset;
+    var headerset, headtext;
     var footerset;
     if(this.state.reset){
       headerset =  <View><Header initObj={{title:'设置新密码',backName:'返回',}}  navigator={this.props.navigator}></Header><View activeOpacity={1} style={styles.titleContainer}></View></View>
+      headtext = <View style={styles.loginblock}></View>
     }else{
-        headerset =<View><Header initObj={{title:'设置氦7密码',backName:'返回',}}  navigator={this.props.navigator}></Header><View activeOpacity={1} style={styles.titleContainer}></View><Text style={styles.setpwdText}>{'设置氦7密码后，您可以用手机号和密码同时登陆氦7电脑版和手机版'}</Text></View>
+        headerset =<View><Header initObj={{title:'设置氦7密码',backName:'返回',}}  navigator={this.props.navigator}></Header><View activeOpacity={1} style={styles.titleContainer}></View></View>
+        headtext = <View style={styles.loginblock}><Text style={commonstyle.cream}>{'设置氦7密码后，您可以用手机号和密码同时登陆氦7电脑版和手机版'}</Text></View>
     }
     return(
       <View style={{ flex: 1 }}>
-        <View style={styles.bgImageWrapper}>
-         <Image source={require('../../images/loginbg.jpg')}  style={styles.loginbg}  />
-      </View>
-
-        {headerset}
-        <View key={'password'} style={styles.inputContainer}>
-          <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[1]})} onChangeText={(text) => this.state.data.password = text} />
-        </View>
-
-        <View key={'passwordd'} style={styles.inputContainerSecond}>
-          <TextInput {...fields[2]} onFocus={() => this.onFocus({...fields[2]})} onChangeText={(text) => this.state.data.passwordd = text} />
-        </View>
-        <View style={styles.switchBarContainer}>
-        <Text style={styles.switchBarText} >{'显示密码'}</Text>
-        <Switch
-            onValueChange={(value) =>this.showPwd(this.state.notshow)}
-            style={styles.switchBarButton}
-            value= {!this.state.notshow}
-            />
-        </View>
-        <View style={styles.submitText}>
-        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.register(this.state.reset)}>
-          <Text style={styles.buttonText} onPress={() => this.register(this.state.reset)}>{'完成'}</Text>
-        </TouchableHighlight>
-        </View>
+          {headerset}
+          <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
+          {headtext}
+          <View key={'password'} style={styles.logininput}>
+              <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[1]})} onChangeText={(text) => this.state.data.password = text} />
+          </View>
+          <View key={'passwordd'} style={styles.logininput}>
+              <TextInput {...fields[2]} onFocus={() => this.onFocus({...fields[2]})} onChangeText={(text) => this.state.data.passwordd = text} />
+          </View>
+          <View style={styles.switchblock}>
+              <Text style={styles.switchtext} >{'显示密码'}</Text>
+              <Switch onValueChange={(value) =>this.showPwd(this.state.notshow)} style={styles.switchbar} value= {!this.state.notshow}/>
+          </View>
+          <TouchableHighlight style={this.state.loading ? styles.btndisable : styles.btn} underlayColor={'#FF0000'} onPress={() => this.register(this.state.reset)}>
+              <Text style={styles.btnfont} onPress={() => this.register(this.state.reset)}>{'完成'}</Text>
+          </TouchableHighlight>
+          </Image>
       </View>
 
     );

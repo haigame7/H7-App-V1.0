@@ -25,13 +25,12 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Register from './registerscreen';
 import Forgetpwd from './forgetpwd';
-import Header from '../common/headernav';
 import HeaderPre from '../common/header';
 import UserService from '../../network/userservice';
 import GlobalVariable from '../../constants/globalvariable';
 import GlobalSetup from '../../constants/globalsetup';
 
-export default class extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,16 +44,20 @@ export default class extends Component {
         };
     }
 
+    componentWillMount() {
+      // console.log('登录页');
+    }
+
     render() {
         let fields = [
             { ref: 'phone', placeholder: '手机号码', placeholderTextColor: 'white', keyboardType: 'numeric', secureTextEntry: false, style: [styles.logininputfont] },
             { ref: 'password', placeholder: '请您设置密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
             { ref: 'passwordd', placeholder: '请再次确认密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
-            { ref: 'password', placeholder: '输入密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, style: [styles.logininputfont] },
+            { ref: 'password', placeholder: '输入密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, selectionColor: '#FF0000', style: [styles.logininputfont] },
         ];
         return (
             <View style = {{ flex: 1 }}>
-            <Header initObj = {{ title: '用户登录', backName: '返回', }} navigator = { this.props.navigator } ></Header>
+            <HeaderPre screenTitle = '登录' navigator = { this.props.navigator } />
             <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
                 <View activeOpacity = {1} style = {styles.logo}>
                     <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>
@@ -73,7 +76,7 @@ export default class extends Component {
                          <Text style = {[styles.linkright, commonstyle.blue]} > { '新用户注册' } </Text>
                      </TouchableOpacity>
                 </View>
-                <TouchableHighlight style = { styles.btn } underlayColor = {'#FF0000'} onPress = {() => this.onSubmit(fields) } >
+                <TouchableHighlight style = {this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor = {'#FF0000'} onPress = {() => this.onSubmit(fields) } >
                      <Text style = {styles.btnfont}> { this.state.loading ? '正在登录...' : '登录' } </Text>
                 </TouchableHighlight>
             </Image>

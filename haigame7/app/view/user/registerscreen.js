@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {
+  Modal,
   Component,
   ScrollView,
   Text,
@@ -15,7 +16,7 @@ import React, {
 } from 'react-native';
 var {CountDownText} = require('react-native-sk-countdown');
 
-
+import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import registerstyles from '../../styles/registerstyle';
 import Header from '../common/headernav';
@@ -23,6 +24,7 @@ import api, {host, key} from './server';
 import Setpwd from './setpwd.js';
 import UserService from '../../network/userservice';
 import GlobalSetup from '../../constants/globalsetup';
+import HeaderPre from '../common/header';
 
 export default class extends Component {
   constructor(props) {
@@ -111,11 +113,20 @@ export default class extends Component {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         let message = '';
         if(response.MessageCode == '40001'){
-          message = '服务器请求异常';
+          message = '服务器请求异常,请稍后重试';
+          this.setState({
+            isToushable: true,
+          });
         }else if(response.MessageCode == '10003'){
           message = '手机号有误请重新输入';
+          this.setState({
+            isToushable: true,
+          });
         }else if(response.MessageCode == '10004'){
           message = '手机号已注册';
+          this.setState({
+            isToushable: true,
+          });
         }else if(response.MessageCode == '0'){
           message = '验证码已发送，请查看';
         }
@@ -140,15 +151,15 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'phone', placeholder: '手机号', keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 手机号必填', style: [styles.inputText]},
-      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 验证码必填', style: [styles.inputText]}
+      {ref: 'phone', placeholder: '手机号', keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 手机号必填', style: [styles.logininputfont]},
+      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 验证码必填', style: [styles.logininputfont]}
     ]
     var codebtn;
     if (this.state.isToushable) {
-      codebtn = <TouchableOpacity style={this.state.loading ? styles.cetifyButtonDisabled : styles.certifyButton} underlayColor={'#2bbbad'} onPress={this._getVerifiCode.bind(this)}><Text style={styles.certifyButtonText}>{this.state.getCodeMsg}</Text></TouchableOpacity>;
+      codebtn = <TouchableOpacity style={this.state.loading ? styles.btndisable : styles.btncode} activeOpacity={0.8} onPress={this._getVerifiCode.bind(this)}><Text style={styles.btncodefont}>{this.state.getCodeMsg}</Text></TouchableOpacity>;
     } else {
-      codebtn = <View style={styles.certifyButton}><CountDownText
-        style={styles.certifyButtonText}
+      codebtn = <View style={[styles.btncode, styles.btndisable]}><CountDownText
+        style={styles.btncodefont}
         countType='seconds'
         auto={true}
         afterEnd={() => {
@@ -157,7 +168,7 @@ export default class extends Component {
             getCodeMsg: '获取验证码'
           });
         }}
-        timeLeft={5}
+        timeLeft={60}
         step={-1}
         startText='获取验证码'
         endText='获取验证码'
@@ -166,33 +177,23 @@ export default class extends Component {
     }
     return(
       <View style={{ flex: 1 }}>
-        <View style={styles.bgImageWrapper}>
-         <Image source={require('../../images/loginbg.jpg')} style={styles.loginbg} />
-      </View>
-      <Header initObj={{
-       title:'注册',
-        backName:'返回',
-       }}   navigator={this.props.navigator}></Header>
-
-       <View activeOpacity={1} style={styles.titleContainer}>
-
-       </View>
-        <View key={'messages'}>
-          {this.renderMessages()}
-        </View>
-        <View key={'phone'} style={styles.inputContainer}>
-          <TextInput {...fields[0]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phone = text} />
-        </View>
-
-        <View key={'securitycode'} style={styles.inputContainerSecond}>
-          <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.securitycode = text} />
-          {codebtn}
-        </View>
-        <View style={styles.submitText}>
-        <TouchableHighlight style={this.state.loading ? styles.buttonDisabled : styles.button} underlayColor={'#2bbbad'} onPress={() => this.gotoRoute('setpwd',fields)}>
-          <Text style={styles.buttonText} >{'下一步'}</Text>
-        </TouchableHighlight>
-        </View>
+      <HeaderPre screenTitle = '注册' navigator = { this.props.navigator } />
+      <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
+          <View activeOpacity = {1} style = {styles.logo}>
+              <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>
+          </View>
+          <View key={'messages'}>{this.renderMessages()}</View>
+          <View key={'phone'} style={styles.logininput}>
+              <TextInput {...fields[0]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phone = text} />
+          </View>
+          <View key={'securitycode'} style={styles.logininput}>
+              <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.securitycode = text} />
+              {codebtn}
+          </View>
+          <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRoute('setpwd',fields)}>
+              <Text style={styles.btnfont} >{'下一步'}</Text>
+          </TouchableHighlight>
+      </Image>
       </View>
 
     );

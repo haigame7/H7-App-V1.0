@@ -1,12 +1,15 @@
-import React, { Component, View, Text, ScrollView } from 'react-native';
+import React, { Component, View, Text, ScrollView,AsyncStorage ,TouchableOpacity} from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
-var Header = require('./header'); // 主屏
+var Headernav = require('./headernav');
 var Match  = require('../match.js');
-var Fight  = require('../fight.js');
-var Team  = require('../team.js');
-var Rank  = require('../rank.js');
+
 var User  = require('../user.js');
+import Team from '../team.js';
+import Rank from '../rank.js';
+import Fight from '../fight.js';
+import Login from '../user/login';
+import GlobalVariable from '../../constants/globalvariable';
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
@@ -22,8 +25,25 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.toggle = false;
+    this.state = {
+      userdata: undefined,
+    }
   }
+  componentWillMount() {
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+      if( value == undefined) {
+        this.refs.headernav.updateComponent({name:'用户中心',component:Login});
+      }
+    });
+  }
+componentWillReceiveProps(nextProps) {
 
+}
+shouldComponentUpdate(nextProps,nextState){
+  return true;
+}
+componentWillUpdate() {
+}
   componentDidMount() {
     // let toggle = "tab2";
     // setInterval(() => {
@@ -59,12 +79,17 @@ export default class App extends Component {
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
         <Tab name="赛事">
-          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
+          <IconWithBar label='赛事' onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-          <Header initObj={{title:'赛事',}}
-           navigator={this.props.navigator}></Header>
-           <Match/>
+          <Headernav
+            ref="headernav"
+            screenTitle='赛事'
+            iconName='user'
+            nextComponent={{name:'用户中心',component:User}}
+            isPop={false}
+            navigator={this.props.navigator} />
+           <Match navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
@@ -72,9 +97,13 @@ export default class App extends Component {
           <IconWithBar label="约战" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Fight} ontype={glypy.FightOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-          <Header initObj={{title:'约战',}}
-           navigator={this.props.navigator}></Header>
-           <Fight/>
+           <Headernav
+             screenTitle='约战'
+             iconName='user'
+             nextComponent={{name:'用户中心',component:User}}
+             isPop={false}
+             navigator={this.props.navigator} />
+           <Fight navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
@@ -82,9 +111,13 @@ export default class App extends Component {
           <IconWithBar label="排行" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Rank} ontype={glypy.RankOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-           <Header initObj={{title:'排行',}}
-           navigator={this.props.navigator}></Header>
-           <Rank/>
+           <Headernav
+             screenTitle='排行'
+             iconName='user'
+             nextComponent={{name:'用户中心',component:User}}
+             isPop={false}
+             navigator={this.props.navigator} />
+           <Rank navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>
@@ -92,9 +125,13 @@ export default class App extends Component {
           <IconWithBar label="组队" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
-           <Header initObj={{title:'组队',}}
-            navigator={this.props.navigator}></Header>
-           <Team/>
+            <Headernav
+              screenTitle='组队'
+              iconName='user'
+              nextComponent={{name:'用户中心',component:User}}
+              isPop={false}
+              navigator={this.props.navigator} />
+           <Team navigator={this.props.navigator}/>
           </View>
           </RawContent>
         </Tab>

@@ -16,7 +16,8 @@ var {
   ScrollView
   } = React;
 
- import styles from '../../styles/userstyle';
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/userstyle';
 
 
 export default class extends Component{
@@ -41,51 +42,45 @@ export default class extends Component{
 
     return (
       <View >
-      <View style={styles.bgImageWrapper}>
-      <View style={[styles.centerbg,{backgroundColor:'#000'}]}>
-      </View>
-      </View>
-      <Header initObj={{title:'我的资料',}}   navigator={this.props.navigator}></Header>
+        <Header screenTitle='系统设置' navigator={this.props.navigator}/>
 
-        <ScrollView style={styles.centerfootbg}>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:15,color:'rgb(120,120,120)'}]}>系统消息提示音</Text>
-            <Icon name="angle-right" size={25} s />
-            <Switch
-                onValueChange={(value) =>this.openalert(this.state.alertvoice)}
-                style={[styles.switchSetting]}
-                value= {this.state.alertvoice}
-                />
-              <View style={[styles.infosplit,{marginTop:45}]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:20,color:'rgb(120,120,120)'}]}>清空缓存</Text>
+        <ScrollView style={commonstyle.bodyer}>
+          <View style={styles.listview}>
+            <Text style={styles.listviewtextleft}>系统消息提示音</Text>
+            <View style={styles.listviewtextbox} >
+              <Switch onValueChange={(value) =>this.openalert(this.state.alertvoice)} style={[styles.switchSetting]} value= {this.state.alertvoice}/>
+            </View>
+          </View>
 
-          <Icon name="angle-right" size={25} style={[styles.infoangelright,{marginTop:15}]} />
-            <View style={[styles.infosplit,{marginTop:45}]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>更改密码</Text>
-          <Icon name="angle-right" size={25} style={styles.infoangelright} />
-            <View style={[styles.infosplit,{marginTop:60}]}></View>
-        </TouchableOpacity>
-          <View style={[styles.centersplitblock,{marginTop:10}]}></View>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,color:'rgb(120,120,120)'}]}>关于H7</Text>
-          <Icon name="angle-right" size={25} style={[styles.infoangelright,{marginTop:5}]} />
-            <View style={[styles.infosplit,{marginTop:40}]}></View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.centerlicontent} >
-          <Text  style={[styles.centerlitext,{marginLeft:10,marginTop:25,color:'rgb(120,120,120)'}]}>共享H7给朋友们</Text>
-          <Icon name="angle-right" size={25} style={styles.infoangelright} />
-            <View style={[styles.infosplit]}></View>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+            <Text style={styles.listviewtextleft}>清空缓存</Text>
+            <View style={styles.listviewtextbox} ></View>
+            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          </TouchableOpacity>
 
-        <TouchableHighlight style = {[styles.btn,{marginTop:40}] } underlayColor = {'#FF0000'}  >
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+            <Text style={styles.listviewtextleft}>更改密码</Text>
+            <View style={styles.listviewtextbox} ></View>
+            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          </TouchableOpacity>
+
+          <View style={styles.listbox}></View>
+
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+            <Text style={styles.listviewtextleft}>关于H7</Text>
+            <View style={styles.listviewtextbox} ></View>
+            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+            <Text style={styles.listviewtextleft}>共享H7给朋友们</Text>
+            <View style={styles.listviewtextbox} ></View>
+            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          </TouchableOpacity>
+
+          <TouchableHighlight style = {this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor = {'#FF0000'}  >
              <Text style = {styles.btnfont}> { '退出登录'}</Text>
-        </TouchableHighlight>
-
-
+          </TouchableHighlight>
         </ScrollView>
     </View>
     );

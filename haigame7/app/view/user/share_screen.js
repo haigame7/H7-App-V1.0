@@ -17,13 +17,19 @@ const fullImage = {uri: 'http://img1.imgtn.bdimg.com/it/u=2633980629,4278863756&
 export default class extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+        navigator: this.props.navigator,
+    }
 
   }
-
+  _callback() {
+    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
+    this.state.navigator.pop()
+  }
   render() {
     return(
       <View >
-        <Header initObj={{title:'分享',}} navigator={this.props.navigator}></Header>
+          <Header screenTitle='分享给朋友们' iconName='share' isPop={true} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
           <View>
             <Image style={styles.centerimage} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
 
