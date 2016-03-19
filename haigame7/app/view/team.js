@@ -9,7 +9,6 @@
  */
 var Loading = require('./common/loading');
 var FindTeam = require('./team/findteam');
-var Util = require('./common/util');
 var Icon = require('react-native-vector-icons/FontAwesome');
 
 import React, {
@@ -154,7 +153,7 @@ import TeamInfo from './team/teaminfo';
               <Text style={commonstyle.red}>{'12345'}</Text>
             </View>
             <Text style={commonstyle.cream}>{'本队需要辅助1名,擅长XX英雄,战队福利优厚，报名从速'}</Text>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} onPress={()=>this.gotoRoute('teamrecruit')} >
+            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.gotoRoute('teamrecruit')} >
               <Text style = {commonstyle.white}> {'发布招募'} </Text>
             </TouchableOpacity>
           </View>
