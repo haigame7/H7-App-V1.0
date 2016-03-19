@@ -25,13 +25,12 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Register from './registerscreen';
 import Forgetpwd from './forgetpwd';
-import Header from '../common/headernav';
 import HeaderPre from '../common/header';
 import UserService from '../../network/userservice';
 import GlobalVariable from '../../constants/globalvariable';
 import GlobalSetup from '../../constants/globalsetup';
 
-export default class extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,6 +44,10 @@ export default class extends Component {
         };
     }
 
+    componentWillMount() {
+      // console.log('登录页');
+    }
+
     render() {
         let fields = [
             { ref: 'phone', placeholder: '手机号码', placeholderTextColor: 'white', keyboardType: 'numeric', secureTextEntry: false, style: [styles.logininputfont] },
@@ -54,7 +57,7 @@ export default class extends Component {
         ];
         return (
             <View style = {{ flex: 1 }}>
-            <Header initObj = {{ title: '用户登录', backName: '返回', }} navigator = { this.props.navigator } ></Header>
+            <HeaderPre screenTitle = '登录' navigator = { this.props.navigator } />
             <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
                 <View activeOpacity = {1} style = {styles.logo}>
                     <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>

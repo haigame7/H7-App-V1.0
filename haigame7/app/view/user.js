@@ -25,7 +25,7 @@ import UserInfo from './user/userinfo';
 import Setting from './user/setting';
 import UserSign from './user/usersign';
 import UserCertify from './user/usercertify';
- import UserAsset from './user/userasset';
+import UserAsset from './user/userasset';
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
@@ -42,6 +42,9 @@ var User = React.createClass({
     return {
       _navigator: this.props.navigator
     };
+  },
+  componentWillMount() {
+    // console.log(this.props.navigator);
   },
   componentDidMount() {
     // console.log(this.state._navigator);

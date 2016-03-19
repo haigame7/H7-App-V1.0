@@ -15,7 +15,13 @@ var {
 
 var GiftedListView = require('react-native-gifted-listview');
 var GiftedSpinner = require('react-native-gifted-spinner');
-
+var Swipeout = require('react-native-swipeout');
+var swipeoutBtns = [
+  {
+    text: '删除',
+    backgroundColor: '#f61d4b'
+  }
+]
 var Example = React.createClass({
 
   /**
@@ -55,6 +61,7 @@ var Example = React.createClass({
    */
   _renderRowView(rowData) {
     return (
+      <Swipeout right={swipeoutBtns} close={true}>
       <TouchableHighlight
         style={customStyles.row}
         underlayColor='#c8c7cc'
@@ -62,6 +69,7 @@ var Example = React.createClass({
       >
         <Text>{rowData}</Text>
       </TouchableHighlight>
+    </Swipeout>
     );
   },
 

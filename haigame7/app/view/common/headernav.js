@@ -57,7 +57,18 @@ module.exports = React.createClass({
       });
     }
   },
+  componentWillReceiveProps(nextProps,nexState) {
+  }
+  ,
+  componentWillUnmount() {
+  },
 
+  updateComponent(newComponent){
+    console.log('更新Header导航组件');
+    this.setState({
+      next_component: newComponent
+    });
+  },
   render: function(){
    var icon;
    if(this.state.icon_name == undefined && this.state.icon_text == undefined){

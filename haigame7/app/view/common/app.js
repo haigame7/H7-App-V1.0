@@ -1,4 +1,4 @@
-import React, { Component, View, Text, ScrollView } from 'react-native';
+import React, { Component, View, Text, ScrollView,AsyncStorage ,TouchableOpacity} from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
 var Headernav = require('./headernav');
@@ -8,6 +8,8 @@ var User  = require('../user.js');
 import Team from '../team.js';
 import Rank from '../rank.js';
 import Fight from '../fight.js';
+import Login from '../user/login';
+import GlobalVariable from '../../constants/globalvariable';
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
@@ -23,8 +25,25 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.toggle = false;
+    this.state = {
+      userdata: undefined,
+    }
   }
+  componentWillMount() {
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+      if( value == undefined) {
+        this.refs.headernav.updateComponent({name:'用户中心',component:Login});
+      }
+    });
+  }
+componentWillReceiveProps(nextProps) {
 
+}
+shouldComponentUpdate(nextProps,nextState){
+  return true;
+}
+componentWillUpdate() {
+}
   componentDidMount() {
     // let toggle = "tab2";
     // setInterval(() => {
@@ -60,10 +79,11 @@ export default class App extends Component {
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
         <Tab name="赛事">
-          <IconWithBar label="赛事" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
+          <IconWithBar label='赛事' onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Match} ontype={glypy.MatchOn} from={'tabbaricon'}/>
           <RawContent>
           <View>
           <Headernav
+            ref="headernav"
             screenTitle='赛事'
             iconName='user'
             nextComponent={{name:'用户中心',component:User}}
