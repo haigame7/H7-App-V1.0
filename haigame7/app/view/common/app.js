@@ -2,9 +2,8 @@ import React, { Component, View, Text, ScrollView } from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 
 var Headernav = require('./headernav');
-var Match  = require('../match.js');
-
 var User  = require('../user.js');
+import Match from '../match.js';
 import Team from '../team.js';
 import Rank from '../rank.js';
 import Fight from '../fight.js';
