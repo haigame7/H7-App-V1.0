@@ -103,9 +103,6 @@ export default class extends Component {
         }else if(response.MessageCode == '0'){
           message = '验证码已发送，请查看';
         }
-       Alert.alert(
-        message ,
-      );
           //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
       } else {
         Alert.alert('请求错误');
@@ -127,22 +124,23 @@ export default class extends Component {
     if (this.state.isToushable) {
       codebtn = <TouchableOpacity style={this.state.loading ? styles.btndisable : styles.btncode} activeOpacity={0.8} onPress={this._getVerifiCode.bind(this)}><Text style={styles.btncodefont}>{this.state.getCodeMsg}</Text></TouchableOpacity>;
     } else {
-      codebtn = <View style={[styles.btncode, styles.btndisable]}><CountDownText
-        style={styles.btncodefont}
-        countType='seconds'
-        auto={true}
-        afterEnd={() => {
-          this.setState({
-            isToushable: true,
-            getCodeMsg: '获取验证码'
-          });
-        }}
-        timeLeft={60}
-        step={-1}
-        startText='获取验证码'
-        endText='获取验证码'
-        intervalText={(sec) => sec + '秒重新获取'}
-      /></View>;
+      codebtn = <View style={[styles.btncode, styles.btndisable]}>
+        <CountDownText
+          style={styles.btncodefont}
+          countType='seconds'
+          auto={true}
+          afterEnd={() => {
+            this.setState({
+              isToushable: true,
+              getCodeMsg: '获取验证码'
+            });
+          }}
+          timeLeft={60}
+          step={-1}
+          startText='获取验证码'
+          endText='获取验证码'
+          intervalText={(sec) => sec + '秒重新获取'}/>
+      </View>;
     }
     return(
       <View style={{ flex: 1 }}>
