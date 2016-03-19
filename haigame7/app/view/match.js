@@ -19,6 +19,7 @@ import React, {
 var Util = require('./common/util');
 var Icon = require('react-native-vector-icons/FontAwesome');
 var MatchStyle = require('../styles/matchstyle');
+var commonstyle = require('../styles/commonstyle');
 import MatchRule from './match/matchrule';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
@@ -61,10 +62,10 @@ rendermatchList(){
   if(this.state.navbar==0){
     return(
       <View style={[styles.matchlist]}>
-      <TouchableOpacity onPress={()=>this.gotoRoute('matchrule')}>
-      <Image style={[styles.matchimage,]} source={{uri:'http://a4.att.hudong.com/57/68/20300533970223133722680195303.jpg'}}  resizeMode={"stretch"} />
+      <TouchableOpacity  style={[styles.matchimagecontainer,]} onPress={()=>this.gotoRoute('matchrule')}>
+      <Image  style={[styles.matchimage,]}source={{uri:'http://a4.att.hudong.com/57/68/20300533970223133722680195303.jpg'}}  resizeMode={"stretch"} />
       </TouchableOpacity>
-       <View style={[styles.matchcontent]}>
+       <View style={[styles.matchcontentcontainer]}>
         <View style={[styles.matchrowcontent]}>
         <TouchableOpacity style={[styles.matchcontent]} onPress={this._openModa.bind(this)}>
         <Image style={[styles.matchteamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
@@ -108,16 +109,16 @@ render() {
     let matchlist = this.rendermatchList();
   return (
     <View style={styles.container}>
-        <View style={styles.nav}>
-          <TouchableOpacity style={styles.nav_item}  onPress = {() => this._switchNavbar(0)} >
-          <Text style={this.state.navbar==0?styles.nav_item_text_active:styles.nav_item_text}>比赛竞猜</Text>
-          <View style={this.state.navbar==0?styles.nav_item_line_active:styles.nav_item_line}></View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nav_item}  onPress = {() => this._switchNavbar(1)}>
-          <Text style={this.state.navbar==1?styles.nav_item_text_active:styles.nav_item_text}>押注竞猜</Text>
-          <View style={this.state.navbar==1?styles.nav_item_line_active:styles.nav_item_line}></View>
-          </TouchableOpacity>
-          </View>
+    <View style={styles.nav}>
+      <View style={styles.navtab}>
+        <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
+          <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>加入战队</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
+          <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>招募队员</Text>
+        </TouchableOpacity>
+      </View>
+      </View>
           <View style={[styles.centerbg]}>
           {matchlist}
           </View>
@@ -167,13 +168,11 @@ var styles = StyleSheet.create({
      width: Util.size.width,
  },
  matchlist:{
-   height:Util.size.height*13/84,
    flexDirection:'column',
  },
  matchteamimage:{
    width:Util.size.width/5,
    height:Util.size.width/5,
-   marginLeft:Util.size.width/10,
 
    borderWidth:1,
 
@@ -181,6 +180,11 @@ var styles = StyleSheet.create({
   borderRadius: 5,
  },
  matchimage:{
+   flex:1,
+   alignItems:'center',
+   justifyContent:'center',
+ },
+ matchimagecontainer:{
    width:Util.size.width,
    height:120,
  },
@@ -236,8 +240,15 @@ modalteamimage:{
     fontSize:16,
     lineHeight:20,
  },
- matchcontent:{
+ matchcontentcontainer:{
    flexDirection:'column',
+   flex: 1,
+   alignItems: 'center',
+   justifyContent: 'center',
+ },
+ matchcontent:{
+ marginLeft:15,
+marginRight:15
  },
  matchrowcontent:{
    flexDirection:'row',
@@ -247,7 +258,6 @@ modalteamimage:{
    color:'rgb(150,150,150)',
    top:Util.pixel*20,
     fontSize:15,
-      marginLeft:Util.size.width/10,
     fontWeight:'bold'
  },
  matchrowtext:{
@@ -261,63 +271,32 @@ modalteamimage:{
    backgroundColor:'rgb(50,50,50)',
  },
   nav:{
-  height:Util.size.height/14,
-   flexDirection:'row',
-   backgroundColor:'rgb(0, 0, 0)'
+  height: 40,
   },
-  sub_nav:{
-    position:'absolute',
-    flexDirection:'row',
-    left:0,
-    marginTop:Util.size.height/18,
-    width:Util.size.width,
-    height:Util.size.height/18,
+  navtab:{
+    flexDirection: 'row',
+    height: 40,
+    width: Util.size.width,
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#232220',
   },
-  nav_item:{
+  navbtn: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderBottomWidth: 2,
+      borderBottomColor: '#C3C3C3',
+  },
+  navbtnactive: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderBottomWidth: 2,
+      borderBottomColor: '#D31B25',
+  },
 
-  left:Util.size.width/5,
-  top:Util.pixel*25,
-  marginRight:Util.size.width*3/10,
-  },
-  sub_nav_item:{
-      flexDirection:'row',
-    left:Util.size.width/6,
-    top:Util.pixel*30,
-    marginRight:Util.size.width*1/5,
-  },
-  nav_item_line:{
-    position:'absolute',
-    left:-Util.size.width/6,
-    marginTop:Util.pixel*30,
-    height:Util.pixel*4,
-    width:Util.size.width*7/15,
-    backgroundColor:'rgb(120,120,120)',
-  },
-  nav_item_line_active:{
-    position:'absolute',
-    left:-Util.size.width/6,
-    marginTop:Util.pixel*30,
-    height:Util.pixel*4,
-    width:Util.size.width*7/15,
-    backgroundColor:'red',
-  },
-  nav_item_text:{
-   fontSize:15,
-   color:'rgb(150,150,150)'
- },
- nav_item_text_active:{
-  fontSize:15,
-  color:'red'
-},
-  sub_nav_item_text:{
-   fontSize:12,
-   color:'rgb(150,150,150)'
- },
- sub_nav_item_text_switch:{
-   fontSize:12,
-   left:-20,
-    color:'rgb(150,150,150)'
- },
+
  sub_nav_item_icon:{
    marginLeft:Util.pixel*6,
    color:'rgb(150,150,150)'

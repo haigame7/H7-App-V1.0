@@ -26,6 +26,10 @@ import Setting from './user/setting';
 import UserSign from './user/usersign';
 import UserCertify from './user/usercertify';
 import UserAsset from './user/userasset';
+import UserMatch from './user/usermatch';
+import UserFight from './user/userfight';
+import UserTask from './user/usertask';
+import UserGuess from './user/userguess'
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
@@ -128,8 +132,54 @@ var User = React.createClass({
        console.log('_navigator_navigator_navigator_navigator');
      }
    },
-
-
+  _pressMatch(){
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: 'usermatch',
+        component: UserMatch,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('_navigator_navigator_navigator_navigator');
+    }
+  },
+  _pressFight(){
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: 'userfight',
+        component: UserFight,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('_navigator_navigator_navigator_navigator');
+    }
+  },
+  _pressTask(){
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: 'usertask',
+        component: UserTask,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('_navigator_navigator_navigator_navigator');
+    }
+  },
+  _pressGuess(){
+    const nav = this.state._navigator;
+    if(nav) {
+      nav.push({
+        name: 'userguess',
+        component: UserGuess,
+        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+      })
+    }else{
+      console.log('_navigator_navigator_navigator_navigator');
+    }
+  },
   _toRegister() {
     const nav = this.state._navigator;
     if(nav) {
@@ -308,24 +358,24 @@ var User = React.createClass({
           <View style={[styles.listviewiconleft,{backgroundColor:'#00b4ff'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
-          <Text style={styles.listviewtext}>我的赛事</Text>
+          <Text style={styles.listviewtext} activeOpacity={0.8} onPress={this._pressMatch.bind(null,this)}>我的赛事</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressCertify.bind(null,this)}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressFight.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#ff7062'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的约战</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressSetting.bind(null,this)}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressGuess.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#30ccc2'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的竞猜</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressSetting.bind(null,this)}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._pressTask.bind(null,this)}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#c13380'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
