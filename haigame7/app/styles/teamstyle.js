@@ -46,7 +46,7 @@ var TeamStyle = StyleSheet.create({
         paddingRight: 10,
     },
     navsubblock: {
-        width: Util.size.width/2-11,
+        flex: 1,
         borderBottomWidth: 1,
         borderBottomColor: '#484848',
         alignItems: 'center',
