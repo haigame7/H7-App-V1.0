@@ -36,9 +36,9 @@ var CommonStyle = StyleSheet.create({
         marginRight: 15,
     },
     headertextright:{
-    fontSize:16,
-    color:'#fff',
-    right:0,
+        fontSize:16,
+        color:'#fff',
+        right:0,
     },
     bodyer: {
         height: (Platform.OS === 'ios') ? Util.size.height - 64 : Util.size.height - 48,
@@ -101,6 +101,43 @@ var CommonStyle = StyleSheet.create({
     absolute: {
         position: 'absolute',
     },
+    //模态框
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    modaltext: {
+        marginTop: 30,
+        padding: 10,
+    },
+    modalmiddle: {
+        height: 300,
+        width: Util.size.width - 40,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+    },
+    modalclose: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+        width: 30,
+        height: 30,
+    },
+    modalbtn: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 40,
+    },
+    modalbtnfont: {
+        width: Util.size.width/2-20,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
     //色彩
     white: {
         color: '#FFFFFF',
@@ -123,10 +160,29 @@ var CommonStyle = StyleSheet.create({
     black: {
         color: '#282828',
     },
+    //字体大小
+    fontsize12: {
+        fontSize: 12,
+    },
+    fontsize14: {
+        fontSize: 14,
+    },
+    fontsize18: {
+        fontSize: 18,
+    },
+    fontsize22: {
+        fontSize: 22,
+    },
     //按钮
     icon: {
       height: 30,
       width: 30,
+    },
+    btnredwhite: {
+        backgroundColor: '#D31B25',
+    },
+    btncreamblack: {
+        backgroundColor: '#C3C3C3',
     },
 });
 

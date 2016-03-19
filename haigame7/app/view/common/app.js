@@ -3,10 +3,11 @@ import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-nativ
 
 var Headernav = require('./headernav');
 var Match  = require('../match.js');
-var Fight  = require('../fight.js');
+
 var User  = require('../user.js');
 import Team from '../team.js';
 import Rank from '../rank.js';
+import Fight from '../fight.js';
 import Login from '../user/login';
 import GlobalVariable from '../../constants/globalvariable';
 const glypy = glypyMapMaker({

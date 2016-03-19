@@ -53,7 +53,7 @@ export default class Login extends Component {
             { ref: 'phone', placeholder: '手机号码', placeholderTextColor: 'white', keyboardType: 'numeric', secureTextEntry: false, style: [styles.logininputfont] },
             { ref: 'password', placeholder: '请您设置密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
             { ref: 'passwordd', placeholder: '请再次确认密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
-            { ref: 'password', placeholder: '输入密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, style: [styles.logininputfont] },
+            { ref: 'password', placeholder: '输入密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, selectionColor: '#FF0000', style: [styles.logininputfont] },
         ];
         return (
             <View style = {{ flex: 1 }}>
