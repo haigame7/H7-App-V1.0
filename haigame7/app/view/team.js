@@ -28,6 +28,10 @@ import styles from '../styles/teamstyle';
 import TeamRecruit from './team/teamrecruit';
 import PlayerInfo from './team/playerinfo';
 import TeamInfo from './team/teaminfo';
+import MyApply from './user/myapply_screen';
+import MyReceiveApply from './user/myreceiveapply_screen';
+import MySendApply from './user/mysendapply_screen';
+import ApplyJoin from './user/applyjoin_screen';
   export default class extends Component{
     constructor(props) {
       super(props);
@@ -53,6 +57,26 @@ import TeamInfo from './team/teaminfo';
         }else if (name == 'teaminfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
               this.props.navigator.push({ name: name, component: TeamInfo, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+          }
+        }
+        else if (name == 'myapply') {
+          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+              this.props.navigator.push({ name: name, component: MyApply, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+          }
+        }
+        else if (name == 'myreceiveapply') {
+          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+              this.props.navigator.push({ name: name, component: MyReceiveApply, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+          }
+        }
+        else if (name == 'mysendapply') {
+          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+              this.props.navigator.push({ name: name, component: MySendApply, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+          }
+        }
+        else if (name == 'applyjoin') {
+          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+              this.props.navigator.push({ name: name, component: ApplyJoin, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
     }
@@ -225,14 +249,14 @@ import TeamInfo from './team/teaminfo';
             </TouchableOpacity>
           </View>
           <View style={styles.navsub}>
-            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} >
+            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbarone=='我的申请'?'myapply':'mysendapply')}>
               <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbarone}</Text>
               <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
-            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbartwo=='我的受邀'?'myreceiveapply':'applyjoin')}>
               <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbartwo}</Text>
               <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
             </TouchableOpacity>
