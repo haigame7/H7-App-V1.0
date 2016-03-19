@@ -13,8 +13,14 @@ var userApi = {
   'LOGINUSER':apiSetup.MASTER_API_PATH + 'v1/User/Login?accesstoken=' + apiSetup.ACCESS_TOKEN,
 }
 
+const assertApi = {
+  'GETASSERTANDRANK' : apiSetup.MASTER_API_PATH +'v1/User/MyTotalAsset?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'FETCHASSERTLIST' : apiSetup.MASTER_API_PATH +'v1/User/MyAssetList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
+
 module.exports = {
   USER_API: userApi,
+  ASSERT_API: assertApi,
 }
 
 //这样写应该也行
