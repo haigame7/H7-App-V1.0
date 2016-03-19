@@ -22,7 +22,8 @@ import React,
 import styles from '../../styles/userstyle';
 import Recharge from './recharge';
 import AssertService from '../../network/assertservice'
-const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入1", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}]';
+// const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入1", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}]';
+  const jsonData = '[{}]'
   export default class extends Component{
     constructor(props) {
       super(props);
@@ -30,27 +31,44 @@ const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "conte
 
       this.state = {
           dataSource: ds.cloneWithRows(['row1','row2']),
+                  db: [],
               loaded: false,
         isRefreshing: false,
            footerMsg: "点击加载更多",
-                data: {
-                  dota2id:undefined,
-                  certifyid:'000000',
-                },
              content: undefined,
           totalAsset: 0,
               myRank: 0,
-            phoneNum: '15101075739',
+            phoneNum: this.props.phoneNum?this.props.phoneNum : '' ,
+         isFetchData: true,
+              keykey: 0,
       }
     }
 
-    componentDidMount() {
-      // this.makeData();
+    componentWillMount() {
       AssertService.getTotalAssertAndRank(this.state.phoneNum,(response) => {
         // console.log(response);
-        ToastAndroid.show(response[0].MessageCode.toString(),ToastAndroid.SHORT)
-
+        if (response[0].MessageCode == '0') {
+          this.setState({
+            myRank: response[1].MyRank,
+        totalAsset: response[1].TotalAsset
+          });
+        } else {
+          console.log('请求错误' + response[0].MessageCide);
+        }
       });
+
+      AssertService.fetchAssertList(this.state.phoneNum,(response) => {
+        console.log(response[1]);
+        let newData = response[1];
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(newData),
+          db:newData
+        });
+        // console.log(JSON.parse(newData));
+      });
+    }
+    componentDidMount() {
+      // this.makeData();
     		this.getData();
     }
     getData() {
@@ -81,25 +99,26 @@ const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "conte
       },1000);
     }
     _onLoadMore() {
+      console.log('8888888888');
       if (this.state.keykey > 3) {
         this.setState({
           footerMsg: "木有更多多数据了~~~~"
         });
       }else{
-        let _ds = JSON.parse(jsonData);
         this.setState({
           footerMsg: "正在加载....."
         });
-        let jsonstr='[{"assertType" : "收入123", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}]'
+        let jsonstr='[{"GainWay": "氦金充值", "VirtualMoney": "+200","GainTime": "2010/01/01"}]';
         let newData = JSON.parse(jsonstr)
-        let dd = _ds.push(newData)
+        let data = this.state.db.concat(newData)
         //这等到有api在搞吧
         setTimeout(()=>{
           this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(_ds),
+            dataSource: this.state.dataSource.cloneWithRows(data),
             loaded: true,
             footerMsg: "点击加载更多",
-            keykey: this.state.keykey += 1
+            keykey: this.state.keykey += 1,
+            db: data
           });
         },2000);
       }
@@ -108,10 +127,9 @@ const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "conte
       return(
         <View style={UserAssetStyle.assetListContainer}>
          <View style={UserAssetStyle.assetList} >
-         <Text style={UserAssetStyle.assetText}>{rowData.assertType}</Text>
-         <Text style={UserAssetStyle.assetText}>{rowData.getWay}</Text>
-         <Text style={UserAssetStyle.assetText}>{rowData.content}</Text>
-         <Text style={UserAssetStyle.assetText}>{rowData.time}</Text>
+         <Text style={UserAssetStyle.assetText}>{rowData.GainWay}</Text>
+         <Text style={UserAssetStyle.assetText}>{rowData.VirtualMoney}</Text>
+         <Text style={UserAssetStyle.assetText}>{rowData.GainTime}</Text>
          </View>
         </View>
       );
@@ -147,7 +165,7 @@ const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "conte
               <Icon name="upload" size={30} color={'#fff'} style={[{marginTop:-10,backgroundColor:'rgb(221, 49, 116)'}]} />
              <Text style={[{marginTop:5,color:'rgb(208, 46, 70)'}]}>总金额</Text>
              </View>
-             <Text style={[UserAssetStyle.centertabattr]}>8888</Text>
+             <Text style={[UserAssetStyle.centertabattr]}>{this.state.totalAsset}</Text>
 
            </View>
           <View style={[UserAssetStyle.centersplitvertical]} ></View>
@@ -156,7 +174,7 @@ const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "conte
            <Icon name="upload" size={30} color={'#fff'} style={[{marginTop:-10,backgroundColor:'rgb(221, 49, 116)'}]} />
           <Text style={[{marginTop:5,color:'rgb(208, 46, 70)'}]}>财富排行</Text>
           </View>
-             <Text style={[UserAssetStyle.centertabattr]}>8888</Text>
+             <Text style={[UserAssetStyle.centertabattr]}>{this.state.myRank}</Text>
 
            </TouchableOpacity>
            </View>

@@ -40,7 +40,8 @@ var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
     return {
-      _navigator: this.props.navigator
+      _navigator: this.props.navigator,
+      phoneNum: '15101075739',
     };
   },
   componentWillMount() {
@@ -85,7 +86,10 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: 'userasset',
-        component: UserAsset
+        component: UserAsset,
+        params: {
+          phoneNum: this.state.phoneNum
+        }
       })
     }else{
       console.log('_navigator_navigator_navigator_navigator');

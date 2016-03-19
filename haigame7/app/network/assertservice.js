@@ -12,5 +12,13 @@ export default {
       {'PhoneNumber':phone},
       callback
     );
-  }
+  },
+
+  fetchAssertList(phone,callback) {
+    FecthService.postFecth(
+      ApiConfig.ASSERT_API.FETCHASSERTLIST,
+      {'PhoneNumber':phone},
+      callback
+    );
+  },
 }
