@@ -12,9 +12,13 @@ var userApi = {
   'RESETPASSWORD':apiSetup.MASTER_API_PATH + 'v1/User/ResetPassWord?accesstoken=' + apiSetup.ACCESS_TOKEN,
   'LOGINUSER':apiSetup.MASTER_API_PATH + 'v1/User/Login?accesstoken=' + apiSetup.ACCESS_TOKEN,
 }
+var fightApi = {
+  'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
 
 module.exports = {
   USER_API: userApi,
+  FIGHT_API:fightApi,
 }
 
 //这样写应该也行

@@ -74,7 +74,7 @@ export default class extends Component{
      <Text style={[MakeChanllengeStyle.inputTitleText,{fontSize:14,textAlign:'center',marginLeft:0,color:'rgb(230, 193, 39)'}]}>
      {'您的压注金额需大于10氦金'}</Text>
         <TextInput  style={[MakeChanllengeStyle.inputText]} placeholder={'请输入压注金额'} placeholderTextColor={'rgb(120,120,120)'} onChangeText={(text) => this.state.data.money = text}  />
-        <TextInput  style={[MakeChanllengeStyle.inputText,{marginTop:10}]} placeholder={'请选择约战日期'}  placeholderTextColor={'rgb(120,120,120)'}  onChangeText={(text) => this.state.date = text} defaultValue={this.formatDate(this.state.date.toString())}  />
+        <TextInput  style={[MakeChanllengeStyle.inputText,{marginTop:10}]} editable={false} placeholder={'请选择约战日期'}  placeholderTextColor={'rgb(120,120,120)'}  onChangeText={(text) => this.state.date = text} defaultValue={this.formatDate(this.state.date.toString())}  />
         <TouchableOpacity activeOpacity={0.8} onPress={this.showDatePicker.bind(this)}>
             <Icon name="calendar" size={25}   style={MakeChanllengeStyle.iconright} />
        </TouchableOpacity>
