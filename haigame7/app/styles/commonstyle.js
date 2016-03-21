@@ -148,14 +148,23 @@ var CommonStyle = StyleSheet.create({
     gray: {
         color: '#484848',
     },
+    cyan: {
+        color: '#30CCC1'
+    },
     blue: {
         color: '#00B4FF',
     },
     yellow: {
         color: '#FFCA00',
     },
+    orange: {
+        color: '#FF6F64',
+    },
     red: {
         color: '#D31B25',
+    },
+    purple: {
+        color: '#C1337F',
     },
     black: {
         color: '#282828',
@@ -200,6 +209,22 @@ var CommonStyle = StyleSheet.create({
     btnbordergray: {
         borderWidth: 1,
         borderColor: '#484848',
+    },
+    btnborderblue: {
+        borderWidth: 1,
+        borderColor: '#00B4FF',
+    },
+    btnborderorange: {
+        borderWidth: 1,
+        borderColor: '#FF6F64',
+    },
+    btnbordercyan: {
+        borderWidth: 1,
+        borderColor: '#30CCC1',
+    },
+    btnborderpurple: {
+        borderWidth: 1,
+        borderColor: '#C1337F',
     },
     //刷新&加载
     refreshview: {
