@@ -22,6 +22,7 @@ var Icon = require('react-native-vector-icons/FontAwesome');
 var commonstyle = require('../../styles/commonstyle');
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+import FightDetail from './fightdetail';
 
 export default class extends Component{
   constructor(props) {
@@ -48,9 +49,9 @@ export default class extends Component{
    return;
    }
    gotoRoute(name) {
-    if (name == 'fightrule') {
+    if (name == 'fightdetail') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: fightRule, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: FightDetail, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
     } else if (name == 'playerinfo') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -61,13 +62,71 @@ renderfightList(){
   if(this.state.navbar==0){
     return(
       <View style={[styles.fightlist]}>
+       <View style={[styles.fightli]}>
+          <View style={[styles.fightlicontent]}>
+           <View style={[styles.flexcolumn]}>
+          <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+          </View>
+          <View style={styles.fightlistcenter}>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'VS'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
+            <View style={styles.fightstate}>
+             <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'对方未回应'}</Text>
+            </View>
+          </View>
+          <View style={[styles.flexcolumn]}>
+         <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+         </View>
+         </View>
+       </View>
 
+       <View style={[styles.fightli]}>
+          <View style={[styles.fightlicontent]}>
+           <View style={[styles.flexcolumn]}>
+          <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+          </View>
+          <View style={styles.fightlistcenter}>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'胜'}<Text>{'VS'}</Text>{'负'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
+            <View style={[styles.fightstate,{borderColor:'red'}]}>
+             <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'+100氦金'}</Text>
+            </View>
+          </View>
+          <View style={[styles.flexcolumn]}>
+         <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+         </View>
+         </View>
+       </View>
       </View>
     );
   }
   else{
     return(
-      <View></View>
+      <View style={[styles.fightlist]}>
+       <View style={[styles.fightli]}>
+          <View style={[styles.fightlicontent]}>
+           <View style={[styles.flexcolumn]}>
+          <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+          </View>
+          <View style={styles.fightlistcenter}>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'VS'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
+            <TouchableOpacity style={[styles.fightstate,{borderColor:'red'}]} onPress = {() => this.gotoRoute('fightdetail')} >
+             <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'确认是否应战'}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[styles.flexcolumn]}>
+         <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+         </View>
+         </View>
+       </View>
+      </View>
     );
   }
 }
@@ -98,13 +157,14 @@ var styles = StyleSheet.create({
     flex:1,
     marginTop:0
   },
-  infosplit:{
-    position:'absolute',
-    left:0,
-    marginTop:Util.size.height/9-1,
-    height:Util.pixel,
-    width:Util.size.width,
-    backgroundColor:'rgb(50,50,50)',
+
+  flexrow:{
+    flexDirection:'row',
+  },
+  flexcolumn:{
+    flexDirection:'column',
+    alignItems:'center',
+   justifyContent:'center',
   },
   centerbg: {
      flex:1,
@@ -113,57 +173,60 @@ var styles = StyleSheet.create({
      width: Util.size.width,
  },
  fightlist:{
-   flexDirection:'column',
- },
- fightteamimage:{
-   width:Util.size.width/5,
-   height:Util.size.width/5,
-
-   borderWidth:1,
-
-   borderColor:'rgb(208, 46, 70)',
-  borderRadius: 5,
- },
- fightimage:{
    flex:1,
+   paddingLeft:10,
+   paddingRight:10,
+ },
+ fightli:{
+ width: Util.size.width-20,
+ height:Util.size.height*1/5,
+ backgroundColor: '#232220',
+ borderBottomColor:'gray',
+ borderBottomWidth:1,
+ },
+ fightlititle:{
+   backgroundColor:'rgb(120,120,120)',
+   height:Util.pixel*50,
    alignItems:'center',
    justifyContent:'center',
  },
- fightimagecontainer:{
-   width:Util.size.width,
-   height:120,
+ fightlititletext:{
+   fontSize:14,
+ },
+ fightlicontent:{
+   paddingTop:20,
+   flexDirection:'row',
+   alignItems:'center',
+  justifyContent:'center',
+ },
+ fightlistimg: {
+     width: 70,
+     height: 70,
+     borderRadius: 35,
+     borderWidth: 2,
+     borderColor: 'rgba(255, 255, 255, 0.6)',
+     marginRight: 10,
+ },
+ fightlistcenter: {
+    width:Util.size.width/3,
+    alignItems:'center',
+   justifyContent:'center',
+ },
+ fightlisttext: {
+     marginTop: 5,
+     marginBottom: 5,
+ },
+ fightstate:{
+  borderWidth:1,
+  top:10,
+  height:28,
+  width:90,
+  borderColor:'gray',
+  borderRadius:2,
+  alignItems:'center',
+  justifyContent:'center',
  },
 
- fightcontentcontainer:{
-   flexDirection:'column',
-   flex: 1,
-   alignItems: 'center',
-   justifyContent: 'center',
- },
- fightcontent:{
- marginLeft:15,
-marginRight:15
- },
- fightrowcontent:{
-   flexDirection:'row',
-   marginBottom:Util.pixel*50,
- },
- fightcontenttext:{
-   color:'rgb(150,150,150)',
-   top:Util.pixel*20,
-    fontSize:15,
-    fontWeight:'bold'
- },
- fightrowtext:{
-   flexDirection:'row',
- },
- fightsplit:{
-   position:'absolute',
-   left:0,
-   height:Util.pixel,
-   width:Util.size.width,
-   backgroundColor:'rgb(50,50,50)',
- },
   nav:{
   height: 40,
   },
