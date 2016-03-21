@@ -147,12 +147,12 @@ export default class extends Component{
 
   fightrule(){
     return(
-      <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)}style={[styles.modal]} position={"center"} >
-        <View style={styles.modalttitle}>
-          <Text style={styles.modalttitletext}>氦7约战规则</Text>
+      <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalbig]} position={"top"} >
+        <View style={commonstyle.modaltitle}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}>氦7约战规则</Text>
         </View>
-        <ScrollView style={[styles.modalscrollcontainer,{borderRightColor:'red'}]}  showsVerticalScrollIndicator={true} >
-          <Text style={styles.scrolltext}>{'说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊\n'}
+        <ScrollView style={commonstyle.modalbody}  showsVerticalScrollIndicator={true} >
+          <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊\n'}
            {'说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊啊\n'}
            {'说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊啊\n'}
            {'说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊啊\n'}
@@ -170,9 +170,9 @@ export default class extends Component{
            {'说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊啊\n'}
           </Text>
         </ScrollView>
-        <View style={styles.modalbuttoncontainer}>
-          <Button style={styles.modalbutton} onPress={this._closeModa.bind(this)} >关闭</Button>
-          <Button style={styles.modalbutton} onPress={this._closeModa.bind(this)} >已阅读</Button>
+        <View style={[commonstyle.row, commonstyle.modalbtn]}>
+          <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
+          <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >已阅读</Button>
         </View>
       </Modal>
     );
