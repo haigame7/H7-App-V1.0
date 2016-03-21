@@ -61,7 +61,41 @@ rendermatchList(){
   if(this.state.navbar==0){
     return(
       <View style={[styles.matchlist]}>
+       <View style={[styles.matchli]}>
+          <View style={[styles.matchlititle]}><Text style={[styles.matchlititletext]}>{'什么什么鱼塘大赛'}</Text></View>
+          <View style={[styles.matchlicontent]}>
+           <View style={[styles.flexcolumn]}>
+          <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+          </View>
+          <View style={styles.matchlistcenter}>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'胜'}<Text>{'VS'}</Text>{'负'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
+          </View>
+          <View style={[styles.flexcolumn]}>
+         <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+         </View>
+         </View>
+       </View>
 
+       <View style={[styles.matchli]}>
+          <View style={[styles.matchlititle]}><Text style={[styles.matchlititletext]}>{'什么什么鱼塘大赛'}</Text></View>
+          <View style={[styles.matchlicontent]}>
+           <View style={[styles.flexcolumn]}>
+          <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+          </View>
+          <View style={styles.matchlistcenter}>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'胜'}<Text>{'VS'}</Text>{'负'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
+          </View>
+          <View style={[styles.flexcolumn]}>
+         <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+         </View>
+         </View>
+       </View>
       </View>
     );
   }
@@ -98,13 +132,13 @@ var styles = StyleSheet.create({
     flex:1,
     marginTop:0
   },
-  infosplit:{
-    position:'absolute',
-    left:0,
-    marginTop:Util.size.height/9-1,
-    height:Util.pixel,
-    width:Util.size.width,
-    backgroundColor:'rgb(50,50,50)',
+  flexrow:{
+    flexDirection:'row',
+  },
+  flexcolumn:{
+    flexDirection:'column',
+    alignItems:'center',
+   justifyContent:'center',
   },
   centerbg: {
      flex:1,
@@ -113,56 +147,49 @@ var styles = StyleSheet.create({
      width: Util.size.width,
  },
  matchlist:{
-   flexDirection:'column',
- },
- matchteamimage:{
-   width:Util.size.width/5,
-   height:Util.size.width/5,
-
-   borderWidth:1,
-
-   borderColor:'rgb(208, 46, 70)',
-  borderRadius: 5,
- },
- matchimage:{
    flex:1,
+   paddingLeft:10,
+   paddingRight:10,
+ },
+ matchli:{
+ width: Util.size.width-20,
+ marginTop:10,
+ height:Util.size.height*9/40,
+ backgroundColor: '#232220',
+ borderColor:'gray',
+ borderWidth:1,
+ },
+ matchlititle:{
+   backgroundColor:'rgb(120,120,120)',
+   height:Util.pixel*50,
    alignItems:'center',
    justifyContent:'center',
  },
- matchimagecontainer:{
-   width:Util.size.width,
-   height:120,
+ matchlititletext:{
+   fontSize:14,
  },
-
- matchcontentcontainer:{
-   flexDirection:'column',
-   flex: 1,
-   alignItems: 'center',
-   justifyContent: 'center',
- },
- matchcontent:{
- marginLeft:15,
-marginRight:15
- },
- matchrowcontent:{
+ matchlicontent:{
+   paddingTop:20,
    flexDirection:'row',
-   marginBottom:Util.pixel*50,
+   alignItems:'center',
+  justifyContent:'center',
  },
- matchcontenttext:{
-   color:'rgb(150,150,150)',
-   top:Util.pixel*20,
-    fontSize:15,
-    fontWeight:'bold'
+ matchlistimg: {
+     width: 70,
+     height: 70,
+     borderRadius: 35,
+     borderWidth: 2,
+     borderColor: 'rgba(255, 255, 255, 0.6)',
+     marginRight: 10,
  },
- matchrowtext:{
-   flexDirection:'row',
+ matchlistcenter: {
+    width:Util.size.width/3,
+    alignItems:'center',
+   justifyContent:'center',
  },
- matchsplit:{
-   position:'absolute',
-   left:0,
-   height:Util.pixel,
-   width:Util.size.width,
-   backgroundColor:'rgb(50,50,50)',
+ matchlisttext: {
+     marginTop: 5,
+     marginBottom: 5,
  },
   nav:{
   height: 40,
