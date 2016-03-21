@@ -123,8 +123,7 @@ module.exports = React.createClass({
     if (this.props.navigator != undefined){
       this.state.navigator.push({
         name: this.state.next_component.name,
-        component: this.state.next_component.component,
-        sceneConfig:Navigator.SceneConfigs.PushFromRight
+        component: this.state.next_component.component
       })
     } else {
       console.log('导航数据错误');

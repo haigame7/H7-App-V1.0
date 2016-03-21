@@ -73,7 +73,7 @@
      return (
        <View >
 
-       <Header initObj={{title:'充值'}}   navigator={this.props.navigator}></Header>
+       <Header screenTitle='充值' isPop={true}  navigator={this.props.navigator}/>
          <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
          <View key={'messages'}>
            {this.renderMessages()}

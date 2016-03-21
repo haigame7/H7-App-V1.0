@@ -101,8 +101,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: 'setting',
-        component: Setting,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: Setting
       })
     }else{
       console.log('_navigator_navigator_navigator_navigator');
@@ -113,8 +112,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: 'usersign',
-        component: UserSign,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: UserSign
       })
     }else{
       console.log('_navigator_navigator_navigator_navigator');
@@ -125,8 +123,7 @@ var User = React.createClass({
      if(nav) {
        nav.push({
          name: 'usercertify',
-         component: UserCertify,
-         sceneConfig:Navigator.SceneConfigs.FloatFromRight
+         component: UserCertify
        })
      }else{
        console.log('_navigator_navigator_navigator_navigator');
@@ -139,8 +136,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: '注册',
-        component: RegisterScreen,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: RegisterScreen
       })
     }else{
       console.log('导航设置错误');
@@ -151,8 +147,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: '信息',
-        component: MyMsg,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: MyMsg
       })
     }else{
       console.log('导航设置错误');
@@ -164,8 +159,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: '重置密码',
-        component: ReSetPwd,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: ReSetPwd
       })
     }else{
       console.log('导航设置错误');
@@ -178,7 +172,6 @@ var User = React.createClass({
       nav.push({
         name: '关于H7',
         component: About,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
       })
     }else{
       console.log('导航设置错误');
@@ -190,7 +183,7 @@ var User = React.createClass({
       nav.push({
         name: '分享',
         component: Share,
-        sceneConfig:Navigator.SceneConfigs.HorizontalSwipeJump
+        sceneConfig:Navigator.SceneConfigs.VerticalDownSwipeJump
       })
     }else{
       console.log('导航设置错误');
@@ -202,7 +195,6 @@ var User = React.createClass({
       nav.push({
         name: '帮助与反馈',
         component: Help,
-        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
       })
     }else{
       console.log('导航设置错误');

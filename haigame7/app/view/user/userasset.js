@@ -21,7 +21,8 @@ import React,
   } from 'react-native';
 import styles from '../../styles/userstyle';
 import Recharge from './recharge';
-import AssertService from '../../network/assertservice'
+import AssertService from '../../network/assertservice';
+import Spinner from 'react-native-loading-spinner-overlay';
 // const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入1", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}]';
   const jsonData = '[{}]'
   export default class extends Component{
@@ -32,7 +33,6 @@ import AssertService from '../../network/assertservice'
       this.state = {
           dataSource: ds.cloneWithRows(['row1','row2']),
                   db: [],
-              loaded: false,
         isRefreshing: false,
            footerMsg: "点击加载更多",
              content: undefined,
@@ -41,10 +41,14 @@ import AssertService from '../../network/assertservice'
             phoneNum: this.props.phoneNum?this.props.phoneNum : '' ,
          isFetchData: true,
               keykey: 0,
+              isOpen: true,
       }
     }
 
     componentWillMount() {
+
+    }
+    componentDidMount() {
       AssertService.getTotalAssertAndRank(this.state.phoneNum,(response) => {
         // console.log(response);
         if (response[0].MessageCode == '0') {
@@ -59,26 +63,26 @@ import AssertService from '../../network/assertservice'
 
       AssertService.fetchAssertList(this.state.phoneNum,(response) => {
         console.log(response[1]);
-        let newData = response[1];
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(newData),
-          db:newData
-        });
-        // console.log(JSON.parse(newData));
+        if (response[0].MessageCode == '0') {
+          let newData = response[1];
+            this.setState({
+              dataSource: this.state.dataSource.cloneWithRows(newData),
+              db:newData,
+          isOpen: false
+          });
+        } else {
+          console.log('请求错误' + response[0].MessageCide);
+        }
       });
-    }
-    componentDidMount() {
-      // this.makeData();
-    		this.getData();
     }
     getData() {
       // let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
 
-      let _ds = JSON.parse(jsonData);
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(_ds),
-        loaded: true
-      });
+      // let _ds = JSON.parse(jsonData);
+      // this.setState({
+      //   dataSource: this.state.dataSource.cloneWithRows(_ds),
+      //   loaded: true
+      // });
     }
 
     gotoRecharge(name) {
@@ -202,6 +206,7 @@ import AssertService from '../../network/assertservice'
               renderFooter={this._renderFooter.bind(this)}
             />
           </Image>
+          <Spinner visible={this.state.isOpen} />
         </View>
       );
     }
