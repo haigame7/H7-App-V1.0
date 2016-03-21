@@ -107,12 +107,37 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 5,
     },
+    modaltitle: {
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    modalbody: {
+        padding: 5,
+        marginTop: 5,
+        marginBottom: 40,
+        backgroundColor: '#000000',
+    },
     modaltext: {
         marginTop: 30,
         padding: 10,
     },
+    modalsmall: {
+        height: 150,
+        width: Util.size.width - 40,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+    },
     modalmiddle: {
         height: 300,
+        width: Util.size.width - 40,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+    },
+    modalbig: {
+        marginTop: 10,
+        height: (Platform.OS === 'ios') ? Util.size.height - 154 : Util.size.height - 138,
         width: Util.size.width - 40,
         backgroundColor: '#484848',
         justifyContent: 'flex-start',
