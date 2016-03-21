@@ -17,10 +17,14 @@ const assertApi = {
   'GETASSERTANDRANK' : apiSetup.MASTER_API_PATH +'v1/User/MyTotalAsset?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'FETCHASSERTLIST' : apiSetup.MASTER_API_PATH +'v1/User/MyAssetList?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
+const fightApi = {
+  'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
 
 module.exports = {
   USER_API: userApi,
   ASSERT_API: assertApi,
+  FIGHT_API:fightApi,
 }
 
 //这样写应该也行
