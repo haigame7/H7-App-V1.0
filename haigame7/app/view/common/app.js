@@ -33,7 +33,7 @@ export default class App extends Component {
   componentWillMount() {
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       if( value == undefined) {
-        this.refs.headernav.updateComponent({name:'用户中心',component:Login});
+        this.refs.headernav.updateComponent({name:'用户中心',component:User});
       }
     });
   }

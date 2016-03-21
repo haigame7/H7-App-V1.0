@@ -10,6 +10,8 @@ import React, {
   ScrollView
 } from 'react-native';
 import Header from '../common/headernav';
+
+const jsonData = '[{"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}]';
 export default class extends React.Component {
   constructor() {
     super();
