@@ -78,8 +78,8 @@ export default class extends React.Component {
 
   _renderSectionHeaderView(sectionData, sectionID) {
     return (
-      <View style={customStyles.header}>
-        <Text style={customStyles.headerTitle}>
+      <View style={commonstyle.refreshviewblock}>
+        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>
           {sectionID}
         </Text>
       </View>
@@ -89,16 +89,16 @@ export default class extends React.Component {
   _renderRefreshableWaitingView(refreshCallback) {
     if (Platform.OS !== 'android') {
       return (
-        <View style={customStyles.refreshableView}>
-          <Text style={customStyles.actionsLabel}>
+        <View style={commonstyle.refreshview}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}>
             ↓
           </Text>
         </View>
       );
     } else {
       return (
-        <TouchableHighlight underlayColor='#c8c7cc' onPress={refreshCallback} style={customStyles.refreshableView}>
-          <Text style={customStyles.actionsLabel}></Text>
+        <TouchableHighlight underlayColor='#000000' onPress={refreshCallback} style={commonstyle.refreshview}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}></Text>
         </TouchableHighlight>
       );
     }
@@ -107,15 +107,15 @@ export default class extends React.Component {
 
   _renderRefreshableWillRefreshView() {
     return (
-      <View style={customStyles.refreshableView}>
-        <Text style={customStyles.actionsLabel}></Text>
+      <View style={commonstyle.refreshview}>
+        <Text style={[commonstyle.gray, commonstyle.fontsize14]}></Text>
       </View>
     );
   }
 
   _renderRefreshableFetchingView() {
     return (
-      <View style={customStyles.refreshableView}>
+      <View style={commonstyle.refreshview}>
         <GiftedSpinner />
       </View>
     );
@@ -123,15 +123,15 @@ export default class extends React.Component {
 
   _renderPaginationWaitingView(paginateCallback) {
     return (
-      <TouchableHighlight underlayColor='#c8c7cc' onPress={paginateCallback} style={customStyles.paginationView}>
-        <Text style={[customStyles.actionsLabel, {fontSize: 13}]}>加载更多...</Text>
+      <TouchableHighlight underlayColor='#000000' onPress={paginateCallback} style={commonstyle.paginationview}>
+        <Text style={[commonstyle.gray, commonstyle.fontsize14]}>加载更多...</Text>
       </TouchableHighlight>
     );
   }
 
   _renderPaginationFetchigView() {
     return (
-      <View style={customStyles.paginationView}>
+      <View style={commonstyle.paginationview}>
         <GiftedSpinner />
       </View>
     );
@@ -139,8 +139,8 @@ export default class extends React.Component {
 
   _renderPaginationAllLoadedView() {
     return (
-      <View style={customStyles.paginationView}>
-        <Text style={customStyles.actionsLabel}>
+      <View style={commonstyle.paginationview}>
+        <Text style={[commonstyle.gray, commonstyle.fontsize14]}>
           ~
         </Text>
       </View>
@@ -149,12 +149,12 @@ export default class extends React.Component {
 
   _renderEmptyView(refreshCallback) {
     return (
-      <View style={customStyles.defaultView}>
-        <Text style={customStyles.defaultViewTitle}>
+      <View style={commonstyle.defaultview}>
+        <Text style={[commonstyle.gray, commonstyle.fontsize14]}>
           没有更多内容了...
         </Text>
 
-        <TouchableHighlight underlayColor='#c8c7cc' onPress={refreshCallback} >
+        <TouchableHighlight underlayColor='#000000' onPress={refreshCallback} >
           <Text></Text>
         </TouchableHighlight>
       </View>
@@ -163,7 +163,7 @@ export default class extends React.Component {
 
   render() {
     return(
-      <View style={screenStyles.container}>
+      <View style={styles.container}>
         <Header screenTitle='我的申请' isPop={true} navigator={this.props.navigator}/>
         <GiftedListView
           rowView={this._renderRowView}
@@ -190,95 +190,9 @@ export default class extends React.Component {
           withSections={true} // enable sections
           sectionHeaderView={this._renderSectionHeaderView}
 
-          PullToRefreshViewAndroidProps={{
-            colors: ['#fff'],
-            progressBackgroundColor: '#003e82',
-          }}
+          PullToRefreshViewAndroidProps={{ colors: ['#FFFFFF'], progressBackgroundColor: '#000000'}}
         />
       </View>
     );
   }
 }
-
-var customStyles = {
-  separator: {
-    height: 1,
-    backgroundColor: '#636363'
-  },
-  refreshableView: {
-    height: 30,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  actionsLabel: {
-    fontSize: 20,
-    color: '#007aff',
-  },
-  paginationView: {
-    height: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  defaultView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  defaultViewTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  row: {
-    padding: 10,
-    height: 130
-  },
-  header: {
-    backgroundColor: '#2E2E2E',
-    padding: 2,
-  },
-  headerTitle: {
-    color: '#636363',
-  },
-};
-
-var screenStyles = {
-  container: {
-    flex: 1,
-    backgroundColor:'rgb(0, 0, 0)',
-  },
-  navBar: {
-    height: 64,
-    backgroundColor: '#007aff',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  navBarTitle: {
-    color: '#fff',
-    fontSize: 16,
-    marginTop: 12,
-  },
-  ranklist:{
-    height:Util.size.height*13/84,
-    flexDirection:'row',
-  },
-  rankimage:{
-    width:80,
-    height:80,
-    margin:10,
-    borderRadius: 40,
-  },
-  rankcontent:{
-    flexDirection:'column',
-  },
-  rankcontenttext:{
-    color:'rgb(150,150,150)',
-    top:Util.pixel*40,
-    marginBottom:Util.pixel*15,
-  },
-  rankrowtext:{
-    flexDirection:'row',
-  },
-};
