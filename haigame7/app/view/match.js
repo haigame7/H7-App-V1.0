@@ -21,6 +21,7 @@ var Icon = require('react-native-vector-icons/FontAwesome');
 var MatchStyle = require('../styles/matchstyle');
 var commonstyle = require('../styles/commonstyle');
 import MatchRule from './match/matchrule';
+import MatchSchedule from './match/matchschedule';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 
@@ -53,8 +54,9 @@ export default class extends Component{
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
             this.props.navigator.push({ name: name, component: MatchRule, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
-    } else if (name == 'playerinfo') {
+    } else if (name == 'matchschedule') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+        this.props.navigator.push({ name: name, component: MatchSchedule, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
     }
     }
@@ -67,7 +69,7 @@ rendermatchList(){
       </TouchableOpacity>
        <View style={[styles.matchcontentcontainer]}>
         <View style={[styles.matchrowcontent]}>
-        <TouchableOpacity style={[styles.matchcontent]} onPress={this._openModa.bind(this)}>
+        <TouchableOpacity style={[styles.matchcontent]} onPress={()=>this.gotoRoute('matchschedule')}>
         <Image style={[styles.matchteamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
          <Text style={[styles.matchcontenttext,{}]}>{'犀利拍冬至'}</Text>
         </TouchableOpacity>
