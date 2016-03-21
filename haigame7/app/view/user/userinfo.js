@@ -70,6 +70,7 @@ var UserInfo = React.createClass({
        params: {
          screenTitle: property,
          setProperty(key,pro){
+           console.log('列表页设置相应属性:' + key);
            switch (key) {
              case '昵称':
                 _this.setState({
