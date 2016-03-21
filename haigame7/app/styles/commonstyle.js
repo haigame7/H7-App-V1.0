@@ -35,10 +35,10 @@ var CommonStyle = StyleSheet.create({
         height: 48,
         marginRight: 15,
     },
-    headertextright:{
-        fontSize:16,
-        color:'#fff',
-        right:0,
+    headertextright: {
+        fontSize: 16,
+        color: '#fff',
+        right: 0,
     },
     bodyer: {
         height: (Platform.OS === 'ios') ? Util.size.height - 64 : Util.size.height - 48,
@@ -132,7 +132,7 @@ var CommonStyle = StyleSheet.create({
         height: 40,
     },
     modalbtnfont: {
-        width: Util.size.width/2-20,
+        width: Util.size.width / 2 - 20,
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
@@ -175,8 +175,8 @@ var CommonStyle = StyleSheet.create({
     },
     //按钮
     icon: {
-      height: 30,
-      width: 30,
+        height: 30,
+        width: 30,
     },
     btnredwhite: {
         backgroundColor: '#D31B25',
@@ -200,6 +200,28 @@ var CommonStyle = StyleSheet.create({
     btnbordergray: {
         borderWidth: 1,
         borderColor: '#484848',
+    },
+    //刷新&加载
+    refreshview: {
+        height: 30,
+        backgroundColor: '#000000',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    refreshviewblock: {
+        backgroundColor: '#484848',
+        padding: 2,
+    },
+    paginationview: {
+        height: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    defaultview: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#000000',
     },
 });
 

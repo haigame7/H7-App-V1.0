@@ -3,6 +3,10 @@
 import { StyleSheet, Platform } from 'react-native';
 var Util = require('../view/common/util');
 export default StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor:'rgb(0, 0, 0)',
+    },
     //登陆界面
     loginbg: {
         flex: 1,
@@ -409,10 +413,6 @@ export default StyleSheet.create({
         marginTop: -3,
         alignSelf: 'center'
 
-    },
-    container: {
-        flex: 1,
-        alignItems: 'stretch',
     },
     instructions: {
         textAlign: 'center',
