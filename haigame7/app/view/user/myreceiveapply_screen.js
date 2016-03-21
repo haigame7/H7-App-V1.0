@@ -1,4 +1,10 @@
 'use strict';
+/**
+ * 我的受邀
+ *
+ * @return {[Team Component]}
+ * @author Drex
+ */
 import React, {
   ScrollView,
   StyleSheet,
@@ -15,6 +21,8 @@ import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import Util from '../common/util';
 
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/userstyle';
 export default class extends React.Component {
 
   constructor() {
@@ -46,28 +54,26 @@ export default class extends React.Component {
     // 注: Button这要是做不成圆角形式，请告知 会用TouchableHighlight重写
     //    只做出这三个按钮的样式即可
     return (
-      <TouchableHighlight
-        style={customStyles.row}
-        underlayColor='#c8c7cc'
-        onPress={null}
-      >
-      <View style={[screenStyles.ranklist]}>
-      <Image style={[screenStyles.rankimage]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-       <View style={[screenStyles.rankcontent]}>
-       <Text style={[screenStyles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
-        <View style={[screenStyles.rankrowtext]}>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
-        <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null}>
+        <View style={commonstyle.row}>
+          <Image style={styles.listblockimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <View style={commonstyle.col1}>
+            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'生命不息,电竞不止~~1231231231'}</Text>
+            <View style={styles.listblocktext}>
+              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:  '}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
+              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金:  '}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
+            </View>
+            <View style={styles.listblocktext}>
+              <Button containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button>
+              <Button containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button>
+              <Button containerStyle={[commonstyle.btnborderred, styles.listblockbutton]} style={[commonstyle.red, commonstyle.fontsize12]} activeOpacity={0.8}>已同意</Button>
+              <Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12] activeOpacity={0.8}}>已拒绝</Button>
+            </View>
+          </View>
         </View>
-        <View style={{flexDirection:'row',marginTop:20}}>
-        <Button style={{backgroundColor: "rgb(208, 46, 70)",width:50}}>同意</Button>
-        <Button style={{backgroundColor: "#5E5E5E",width:50,position: 'relative',left: 10}}>拒绝</Button>
-        <Button style={{backgroundColor: "#5E5E5E",width:60,position: 'relative',left: 20}}>已同意</Button>
-        </View>
-       </View>
-      </View>
       </TouchableHighlight>
     );
   }
@@ -113,14 +119,6 @@ export default class extends React.Component {
         <Text style={customStyles.actionsLabel}>
           ↻
         </Text>
-      </View>
-    );
-  }
-
-  _renderRefreshableFetchingView() {
-    return (
-      <View style={customStyles.refreshableView}>
-        <GiftedSpinner />
       </View>
     );
   }
@@ -204,7 +202,6 @@ export default class extends React.Component {
           refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
           refreshableViewHeight={50} // correct height is mandatory
           refreshableDistance={40} // the distance to trigger the pull-to-refresh - better to have it lower than refreshableViewHeight
-          refreshableFetchingView={this._renderRefreshableFetchingView}
           refreshableWillRefreshView={this._renderRefreshableWillRefreshView}
           refreshableWaitingView={this._renderRefreshableWaitingView}
 

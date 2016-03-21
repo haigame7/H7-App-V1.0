@@ -298,6 +298,43 @@ var TeamStyle = StyleSheet.create({
     btndisable: {
         backgroundColor: '#484848',
     },
+    //文本框
+    recruitbox: {
+        margin: 10,
+        width: Util.size.width - 20,
+        height: 80,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+        borderRadius: 5,
+    },
+    recruitinput: {
+        height: 50,
+        color: '#C3C3C3',
+        alignItems: 'flex-start',
+    },
+    recruitnumber: {
+        position: 'absolute',
+        right: 5,
+        bottom: 0,
+        color: '#C3C3C3',
+    },
+    recruitbtnblock: {
+        flexDirection: 'row',
+        marginTop: -10,
+        marginRight: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        width: Util.size.width - 20,
+        height: 40,
+        backgroundColor: '#484848',
+        borderRadius: 5,
+    },
+    recruitbtn: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+    },
 });
 
 module.exports = TeamStyle;

@@ -180,9 +180,26 @@ var CommonStyle = StyleSheet.create({
     },
     btnredwhite: {
         backgroundColor: '#D31B25',
+        borderWidth: 1,
+        borderColor: '#D31B25',
     },
     btncreamblack: {
         backgroundColor: '#C3C3C3',
+        borderWidth: 1,
+        borderColor: '#C3C3C3',
+    },
+    btngrayblack: {
+        backgroundColor: '#484848',
+        borderWidth: 1,
+        borderColor: '#484848',
+    },
+    btnborderred: {
+        borderWidth: 1,
+        borderColor: '#D31B25',
+    },
+    btnbordergray: {
+        borderWidth: 1,
+        borderColor: '#484848',
     },
 });
 

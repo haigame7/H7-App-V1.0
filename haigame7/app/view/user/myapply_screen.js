@@ -1,4 +1,10 @@
 'use strict';
+/**
+ * 我的申请
+ *
+ * @return {[Team Component]}
+ * @author Drex
+ */
 import React, {
   ScrollView,
   StyleSheet,
@@ -14,6 +20,8 @@ import GiftedListView from 'react-native-gifted-listview';
 import GiftedSpinner from 'react-native-gifted-spinner';
 import Util from '../common/util';
 
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/userstyle';
 export default class extends React.Component {
 
   constructor() {
@@ -43,29 +51,27 @@ export default class extends React.Component {
 
   _renderRowView(rowData) {
     return (
-      <TouchableHighlight
-        style={customStyles.row}
-        underlayColor='#c8c7cc'
-        onPress={null}
-      >
-      <View style={[screenStyles.ranklist]}>
-        <Image style={[screenStyles.rankimage]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-        <View style={[screenStyles.rankcontent]}>
-          <View style={{flexDirection:'row'}}>
-             <Text style={[screenStyles.rankcontenttext,{fontSize:15,color:'rgb(230, 193, 39)',fontWeight:'bold'}]}>{'犀利拍立冬至'}</Text>
-               <View style={{borderColor:'rgb(208, 46, 70)',marginTop: 20,marginLeft: 50,borderWidth:1,borderRadius: 5,height:30,width:60}}>
-                 <Text style={{color: 'rgb(230, 193, 39)',textAlign:'center'}}>等待回复</Text>
-               </View>
-          </View>
-          <Text style={[screenStyles.rankcontenttext,]}>{'生命不息,电竞不止~~1231231231'}</Text>
-          <View style={[screenStyles.rankrowtext]}>
-            <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)'}]}>{'战斗力:'}</Text>
-            <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
-            <Text style={[screenStyles.rankcontenttext,{color:'rgb(230, 193, 39)',marginLeft:10}]}>{'氦金:'}</Text>
-            <Text style={[screenStyles.rankcontenttext,{color:'rgb(208, 46, 70)',marginLeft:10}]}>{'12345'}</Text>
+      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null} >
+        <View style={commonstyle.row}>
+          <Image style={styles.listblockimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <View style={commonstyle.col1}>
+            <View style={commonstyle.row}>
+              <View style={commonstyle.col1}>
+                <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
+                <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'生命不息,电竞不止~~1231231231'}</Text>
+              </View>
+              <View style={[commonstyle.btnbordergray, styles.listblockbtn]}>
+                <Text style={commonstyle.gray}>等待回复</Text>
+              </View>
+            </View>
+            <View style={styles.listblocktext}>
+              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:  '}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
+              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金:  '}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
+            </View>
           </View>
         </View>
-      </View>
       </TouchableHighlight>
     );
   }
@@ -91,14 +97,8 @@ export default class extends React.Component {
       );
     } else {
       return (
-        <TouchableHighlight
-          underlayColor='#c8c7cc'
-          onPress={refreshCallback}
-          style={customStyles.refreshableView}
-        >
-          <Text style={customStyles.actionsLabel}>
-            ↻
-          </Text>
+        <TouchableHighlight underlayColor='#c8c7cc' onPress={refreshCallback} style={customStyles.refreshableView}>
+          <Text style={customStyles.actionsLabel}></Text>
         </TouchableHighlight>
       );
     }
@@ -108,9 +108,7 @@ export default class extends React.Component {
   _renderRefreshableWillRefreshView() {
     return (
       <View style={customStyles.refreshableView}>
-        <Text style={customStyles.actionsLabel}>
-          ↻
-        </Text>
+        <Text style={customStyles.actionsLabel}></Text>
       </View>
     );
   }
@@ -125,14 +123,8 @@ export default class extends React.Component {
 
   _renderPaginationWaitingView(paginateCallback) {
     return (
-      <TouchableHighlight
-        underlayColor='#c8c7cc'
-        onPress={paginateCallback}
-        style={customStyles.paginationView}
-      >
-        <Text style={[customStyles.actionsLabel, {fontSize: 13}]}>
-          Load more
-        </Text>
+      <TouchableHighlight underlayColor='#c8c7cc' onPress={paginateCallback} style={customStyles.paginationView}>
+        <Text style={[customStyles.actionsLabel, {fontSize: 13}]}>加载更多...</Text>
       </TouchableHighlight>
     );
   }
@@ -159,29 +151,16 @@ export default class extends React.Component {
     return (
       <View style={customStyles.defaultView}>
         <Text style={customStyles.defaultViewTitle}>
-          Sorry, there is no content to display
+          没有更多内容了...
         </Text>
 
-        <TouchableHighlight
-          underlayColor='#c8c7cc'
-          onPress={refreshCallback}
-        >
-          <Text>
-            ↻
-          </Text>
+        <TouchableHighlight underlayColor='#c8c7cc' onPress={refreshCallback} >
+          <Text></Text>
         </TouchableHighlight>
       </View>
     );
   }
 
-  /**
-   * Render a separator between rows
-   */
-  _renderSeparatorView() {
-    return (
-      <View style={customStyles.separator} />
-    );
-  }
   render() {
     return(
       <View style={screenStyles.container}>
@@ -207,8 +186,6 @@ export default class extends React.Component {
           refreshableWaitingView={this._renderRefreshableWaitingView}
 
           emptyView={this._renderEmptyView}
-
-          renderSeparator={this._renderSeparatorView}
 
           withSections={true} // enable sections
           sectionHeaderView={this._renderSectionHeaderView}
