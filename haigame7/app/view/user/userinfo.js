@@ -100,7 +100,7 @@ var UserInfo = React.createClass({
      });
    },
    _onPressHandle(){
-		this.refs.picker.toggle();
+		this.refs.sexPicker.toggle();
 	}
 ,_onPressHandle1(){
  // this.picker.toggle();
@@ -177,7 +177,7 @@ var UserInfo = React.createClass({
         </ScrollView>
 
         <Picker
-            ref={'picker'}
+            ref={'sexPicker'}
             style={{
                 height: 200
             }}

@@ -39,6 +39,7 @@ public class MainActivity extends ReactActivity {
         new MainReactPackage(),
         new RCTDateTimePickerPackage(MainActivity.this),
         new VectorIconsPackage()
+        new ImagePickerPackage()
       );
     }
 }
