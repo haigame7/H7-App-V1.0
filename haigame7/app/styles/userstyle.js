@@ -355,6 +355,30 @@ export default StyleSheet.create({
         borderColor: '#D31B25',
         borderRadius: 3,
     },
+    //消息
+    msglist: {
+        backgroundColor: '#000000',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    msgliststatus: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: '#D31B25',
+        marginTop: 5,
+        marginRight: 10,
+    },
+    msglistdata: {
+        width: 40,
+        marginLeft: 10,
+        alignItems: 'flex-end',
+    },
+    msglisticon: {
+        width: 10,
+        alignItems: 'flex-end',
+    },
     //原
     title: {
         color: '#FFFFFF',

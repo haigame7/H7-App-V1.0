@@ -293,7 +293,7 @@ var User = React.createClass({
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._pressUserInfo.bind(null,this)}>
             <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
+            <TouchableOpacity style={styles.headportraitv} activeOpacity={0.8} onPress={this._pressCertify.bind(null,this)}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></TouchableOpacity>
           </TouchableOpacity>
 
           <View style={styles.blocktop}>
