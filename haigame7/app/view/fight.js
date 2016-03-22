@@ -7,7 +7,6 @@
 var React = require('react-native');
 var Header = require('./common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/FontAwesome');
-var Util = require('./common/util');
 
 var Progress = require('react-native-progress');
 var {

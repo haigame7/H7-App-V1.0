@@ -17,7 +17,8 @@ var {
   ScrollView
   } = React;
 
-
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/fightstyle';
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -62,43 +63,42 @@ export default class extends Component{
 
   }
   render(){
-
     return (
       <View>
-      <View style={MakeChanllengeStyle.bgImageWrapper}>
-
+        <Headernav screenTitle='发起约战'  navigator={this.props.navigator}/>
+        <View style={commonstyle.bodyer}>
+          <View  style={styles.fightview}>
+            <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于10氦金'}</Text>
+            <View style={styles.fightviewinput}>
+              <TextInput style={commonstyle.cream} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.data.money = text}  />
+            </View>
+            <View style={styles.fightviewinput}>
+              <TextInput style={commonstyle.cream} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.date = text} defaultValue={this.formatDate(this.state.date.toString())}  />
+              <TouchableOpacity style={styles.fightviewinputicon} activeOpacity={0.8} onPress={this.showDatePicker.bind(this)}>
+                <Icon name="calendar" size={16}  color={'#484848'}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.fightviewtextarea}>
+              <TextInput style={[commonstyle.cream, {height: 100, borderColor: 'gray', borderWidth: 1,justifyContent: 'flex-start',}]}
+                multiline={true}
+                placeholder='嘲讽两句'
+                placeholderTextColor='rgb(180,180,180)'
+                {...this.props}
+                onChangeText={(text) => this.onChange(text)}
+                value={this.state.value}
+                maxLength={200}
+                ></TextInput>
+              <View style={styles.fightviewtextnum}><Text style={commonstyle.cream}>{this.state.textnumber}/200</Text></View>
+            </View>
+            <TouchableOpacity style = {styles.fightviewbtn}  >
+              <Text style = {commonstyle.white}> {'发送挑战'}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{top:Util.size.height/3}}>
+            <DateTimePicker  ref={(picker)=>{this.picker=picker}}/>
+          </View>
+        </View>
       </View>
-      <Headernav screenTitle='发起约战'  navigator={this.props.navigator}/>
-      <View style={[MakeChanllengeStyle.centerbg,{backgroundColor:'#000'}]}>
-      <View  style={MakeChanllengeStyle.inputContainer}>
-     <Text style={[MakeChanllengeStyle.inputTitleText,{fontSize:14,textAlign:'center',marginLeft:0,color:'rgb(230, 193, 39)'}]}>
-     {'您的压注金额需大于10氦金'}</Text>
-        <TextInput  style={[MakeChanllengeStyle.inputText]} placeholder={'请输入压注金额'} placeholderTextColor={'rgb(120,120,120)'} onChangeText={(text) => this.state.data.money = text}  />
-        <TextInput  style={[MakeChanllengeStyle.inputText,{marginTop:10}]} placeholder={'请选择约战日期'}  placeholderTextColor={'rgb(120,120,120)'}  onChangeText={(text) => this.state.date = text} defaultValue={this.formatDate(this.state.date.toString())}  />
-        <TouchableOpacity activeOpacity={0.8} onPress={this.showDatePicker.bind(this)}>
-            <Icon name="calendar" size={25}   style={MakeChanllengeStyle.iconright} />
-       </TouchableOpacity>
-        <TextInput
-     style={[MakeChanllengeStyle.centertextarea]}
-       multiline={true}
-       placeholder='嘲讽两句'
-       placeholderTextColor='rgb(180,180,180)'
-       {...this.props}
-       onChangeText={(text) => this.onChange(text)}
-       value={this.state.value}
-       maxLength={200}
-       ></TextInput>
-     <Text style={[MakeChanllengeStyle.centertextareacount]}>{this.state.textnumber}/200</Text>
-     <TouchableOpacity style = {MakeChanllengeStyle.teamrecruit}  >
-          <Text style = {MakeChanllengeStyle.teamrecruitfont}> {'发送挑战'}</Text>
-     </TouchableOpacity>
-
-     </View>
-       <View style={{top:Util.size.height/3}}>
-       <DateTimePicker  ref={(picker)=>{this.picker=picker}}/>
-      </View>
-     </View>
-    </View>
     );
   }
 }
