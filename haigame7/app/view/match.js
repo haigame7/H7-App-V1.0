@@ -8,6 +8,7 @@
 import React, {
     View,
     Text,
+    TextInput,
     Image,
     StyleSheet,
     Component,
@@ -30,9 +31,13 @@ export default class extends Component{
     super(props);
     this.state = {
       navbar: 0,
+      isOpen:false,
+      modalnum:0,
+      money:0,
       data:{
           subnavbar:1,
           subnavbarname:'热度',
+
       },
       }
     }
@@ -58,6 +63,120 @@ export default class extends Component{
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
         this.props.navigator.push({ name: name, component: MatchSchedule, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
+    }
+    }
+  rendermodaldetail(){
+     if(this.state.navbar==0){
+         return(
+           <Modal isOpen={this.state.isOpen}  swipeToClose={false}  onClosed={this._closeModa.bind(this)} style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
+              <View style={styles.modalttitle}>
+
+              <Image style={[styles.modalteamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+               <Text style={[styles.modalttitletext,{}]}>{'犀利拍冬至'}</Text>
+              <Text style={[styles.modalttitletext,{}]}>{'生命不息电竞不止,来吧加入我的战队'}</Text>
+                <Text style={[styles.modalttitletext,{color:'rgb(230, 193, 39)'}]}>{'主播名额'}<Text style={{color:'rgb(208, 46, 70)'}}>{'5/20'}</Text></Text>
+              </View>
+              <ScrollView style={styles.modalscrollcontainer} showsVerticalScrollIndicator={true} >
+                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
+                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
+                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
+                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
+                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
+                <Text style={[styles.scrolltext,{color:'rgb(208, 46, 70)',fontSize:12}]}>{'您已加入[xxxx],报名结束后为您生成信息,请关注'}</Text>
+              </ScrollView>
+              <View style={[commonstyle.row, commonstyle.modalbtn]}>
+              <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
+              <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >已阅读</Button>
+              </View>
+            </Modal>
+         );
+     }else{
+      return(
+        <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalbig]} position={"top"} >
+        <View style={[styles.modalheader]}>
+
+            <Text style={[commonstyle.cream, {fontSize:16}]}>{'您的选择：犀利拍立冬至 获胜'}</Text>
+            <View  style = {styles.modalinput }>
+                <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='rgb(120,120,120)' style={styles.modalinputfont}  onChangeText = {(text) => this.state.money = text }/>
+            </View>
+            <View style ={styles.modalgainmoney}>
+            <Text style={commonstyle.cream}>{'  可用氦金:  '}</Text>
+            <Text style={commonstyle.yellow}>{'1000'}</Text>
+
+            <Text style={commonstyle.cream}>{'  预估收益:  '}</Text>
+            <Text style={commonstyle.yellow}>{'1500'}</Text>
+            </View>
+        </View>
+          <View style={[commonstyle.row]}>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >取消关闭</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >确认下注</Button>
+          </View>
+          <View style={styles.modalfooter}>
+          <View style={[commonstyle.row, styles.modalheadtab]}>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+                <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'时间'}</Text>
+            </View>
+            <View style={styles.modalheadtabline} ></View>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+                <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'押注项'}</Text>
+            </View>
+            <View style={styles.modalheadtabline} ></View>
+            <View style={[commonstyle.col1, styles.modalheadtabli]} activeOpacity={0.8} >
+                <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'金额'}</Text>
+            </View>
+            <View style={styles.modalheadtabline} ></View>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+              <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'赔率'}</Text>
+            </View>
+            <View style={styles.modalheadtabline} ></View>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+              <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'预估收益'}</Text>
+            </View>
+          </View>
+          <View style={[commonstyle.row, styles.modalcontenttab]}>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
+            </View>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
+            </View>
+
+            <View style={[commonstyle.col1, styles.modalheadtabli]} activeOpacity={0.8} >
+                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
+            </View>
+
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
+            </View>
+
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
+            </View>
+          </View>
+          <View style={[commonstyle.row, styles.modalcontenttab]}>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
+            </View>
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
+            </View>
+
+            <View style={[commonstyle.col1, styles.modalheadtabli]} activeOpacity={0.8} >
+                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
+            </View>
+
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
+            </View>
+
+            <View style={[commonstyle.col1, styles.modalheadtabli]}>
+              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
+            </View>
+          </View>
+          {/*footer*/}
+          </View>
+        </Modal>
+      );
     }
     }
 rendermatchList(){
@@ -103,21 +222,60 @@ rendermatchList(){
   }
   else{
     return(
-      <View></View>
+   <View>
+      <View style={[styles.matchli]}>
+         <View style={[styles.matchlititle]}><Text style={[commonstyle.fontsize14,commonstyle.white]}>{'什么什么鱼塘大赛'}</Text></View>
+         <View style={[styles.matchlicontent]}>
+          <TouchableOpacity style={[styles.matchflexcolumn]} onPress={this._openModa.bind(this)}>
+         <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+           <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率 1 : 1.11'}</Text>
+         </TouchableOpacity>
+         <View style={styles.matchlistcenter}>
+           <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'VS'}</Text>
+           <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
+            <Text style={[commonstyle.yellow ]}>{'猜胜负'}</Text>
+         </View>
+         <TouchableOpacity style={[styles.matchflexcolumn]} onPress={this._openModa.bind(this)}>
+        <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+        <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
+         <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率 1 : 1.11'}</Text>
+        </TouchableOpacity>
+        </View>
+      </View>
+      <View style={[commonstyle.row, styles.headtab]}>
+        <View style={[commonstyle.col1, styles.headtabli]}>
+    <Icon name="user" size={20} style={[styles.headtabtitle, commonstyle.red]} />
+            <Text style={[styles.headtabnumber, commonstyle.cream]}>{'08:20:49'}</Text>
+        </View>
+        <View style={styles.headtabline} ></View>
+        <TouchableOpacity style={[commonstyle.col1, styles.headtabli]} activeOpacity={0.8} >
+   <Icon name="user" size={20} style={[styles.headtabtitle, commonstyle.red]} />
+            <Text style={[styles.headtabnumber, commonstyle.red]}>{'5000氦金'}</Text>
+        </TouchableOpacity>
+        <View style={styles.headtabline} ></View>
+        <View style={[commonstyle.col1, styles.headtabli]}>
+          <Icon name="user" size={20} style={[styles.headtabtitle, commonstyle.red]} />
+          <Text style={[styles.headtabnumber, commonstyle.red]}>{'333人押注'}</Text>
+        </View>
+      </View>
+
+  </View>
     );
   }
 }
 render() {
     let matchlist = this.rendermatchList();
+    let modal = this.rendermodaldetail();
   return (
     <View style={styles.container}>
     <View style={styles.nav}>
       <View style={styles.navtab}>
         <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
-          <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>加入战队</Text>
+          <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>比赛赛事</Text>
         </TouchableOpacity>
         <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-          <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>招募队员</Text>
+          <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>赛事竞猜</Text>
         </TouchableOpacity>
       </View>
       </View>
@@ -125,27 +283,7 @@ render() {
           {matchlist}
           </View>
           {/*modal*/}
-          <Modal isOpen={this.state.isOpen}  forceToFront={true} onClosed={this._closeModa.bind(this)}style={[styles.modal]}  >
-             <View style={styles.modalttitle}>
-
-             <Image style={[styles.modalteamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <Text style={[styles.modalttitletext,{}]}>{'犀利拍冬至'}</Text>
-             <Text style={[styles.modalttitletext,{}]}>{'生命不息电竞不止,来吧加入我的战队'}</Text>
-               <Text style={[styles.modalttitletext,{color:'rgb(230, 193, 39)'}]}>{'主播名额'}<Text style={{color:'rgb(208, 46, 70)'}}>{'5/20'}</Text></Text>
-             </View>
-             <ScrollView style={styles.modalscrollcontainer} showsVerticalScrollIndicator={true} >
-               <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-               <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-               <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-               <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-               <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-               <Text style={[styles.scrolltext,{color:'rgb(208, 46, 70)',fontSize:12, position:'absolute',top:Util.size.height*11/32,}]}>{'您已加入[xxxx],报名结束后为您生成信息,请关注'}</Text>
-             </ScrollView>
-             <View style={styles.modalbuttoncontainer}>
-               <Button style={styles.modalbutton} onPress={this._closeModa.bind(this)} >关闭</Button>
-                <Button style={styles.modalbutton} onPress={this._closeModa.bind(this)} >加入</Button>
-             </View>
-           </Modal>
+          {modal}
         </View>
     );
   }
@@ -163,6 +301,85 @@ var styles = StyleSheet.create({
     width:Util.size.width,
     backgroundColor:'rgb(50,50,50)',
   },
+  headtab: {
+      marginTop: 10,
+  },
+  headtabli: {
+      alignItems: 'center',
+      width: Util.size.width/3-1,
+      height: 40,
+  },
+  headtabtitle: {
+      alignItems: 'center',
+      height: 20,
+      marginBottom:3,
+  },
+  headtabnumber: {
+      alignItems: 'center',
+      height: 20,
+  },
+  modalfooter:{
+    backgroundColor:'#000',
+    width:Util.size.width-40,
+    height:Util.size.height/2,
+  },
+  modalheadtab: {
+      marginTop: 10,
+  },
+  modalcontenttab: {
+  borderBottomWidth:1,
+  marginTop:5,
+  top:-15,
+  height:25,
+  borderBottomColor:'rgb(50,50,50)',
+  },
+  modalheadtabli: {
+      alignItems: 'center',
+      height: 40,
+  },
+  modalheadtabtitle: {
+      alignItems: 'center',
+      height: 20,
+      marginBottom:3,
+  },
+  modalheadtabnumber: {
+      alignItems: 'center',
+      height: 20,
+  },
+  modalheadtabline: {
+
+
+      backgroundColor:'#FFFFFF',
+      width:Util.pixel,
+      height: 15,
+
+  },
+  modalheader:{
+    height:Util.size.height/4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  modalinput:{
+    height: 40,
+    width: Util.size.width - 72,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#D31B25',
+    borderRadius: 3,
+    marginTop: 20,
+    marginLeft: 36,
+    marginRight: 36,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  modalinputfont: {
+      color: '#FFFFFF',
+  },
+  modalgainmoney:{
+     flexDirection:'row',
+     paddingTop:15,
+  },
   centerbg: {
      flex:1,
      backgroundColor:'rgb(0, 0, 0)',
@@ -171,6 +388,47 @@ var styles = StyleSheet.create({
  },
  matchlist:{
    flexDirection:'column',
+ },
+ matchflexcolumn:{
+     flexDirection:'column',
+     alignItems:'center',
+    justifyContent:'center',
+   },
+ matchli:{
+ width: Util.size.width,
+ marginTop:10,
+ height:Util.size.height*11/40,
+ backgroundColor: '#232220',
+ },
+ matchlititle:{
+   top:Util.pixel*20,
+   height:Util.pixel*50,
+   alignItems:'center',
+   justifyContent:'center',
+ },
+
+ matchlicontent:{
+   paddingTop:20,
+   flexDirection:'row',
+   alignItems:'center',
+  justifyContent:'center',
+ },
+ matchlistimg: {
+     width: 70,
+     height: 70,
+     borderRadius: 35,
+     borderWidth: 2,
+     borderColor: 'rgba(255, 255, 255, 0.6)',
+     marginRight: 10,
+ },
+ matchlistcenter: {
+    width:Util.size.width/3,
+    alignItems:'center',
+   justifyContent:'center',
+ },
+ matchlisttext: {
+     marginTop: 5,
+     marginBottom: 5,
  },
  matchteamimage:{
    width:Util.size.width/5,
@@ -190,18 +448,9 @@ var styles = StyleSheet.create({
    width:Util.size.width,
    height:120,
  },
- modal: {
-   position:'absolute',
-   top:5,
-   height: Util.size.height-10,
-   width:Util.size.width-20,
-   borderRadius:5,
-   backgroundColor: "#292929",
- },
+
  modalttitle:{
    alignItems:'center',
-   height:Util.size.height*20/63,
-   top:Util.pixel*10,
  },
 modalttitletext:{
   color:'rgb(200,200,200)',
@@ -218,15 +467,9 @@ modalteamimage:{
  borderRadius: 5,
 },
  modalscrollcontainer:{
-  backgroundColor:'rgb(50,50,50)',
-   height:10,
- },
- modalbuttoncontainer:{
-   position:'absolute',
-   flexDirection:'row',
-   top:Util.size.height*11/16+20,
-   height:Util.pixel*50,
-   justifyContent:'center',
+   padding: 5,
+   marginBottom: 40,
+   marginTop:10,
  },
  modalbutton:{
    backgroundColor:'#D31B25',
