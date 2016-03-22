@@ -38,7 +38,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
              content: undefined,
           totalAsset: 0,
               myRank: 0,
-            phoneNum: this.props.phoneNum?this.props.phoneNum : '' ,
+            phoneNum: this.props.phoneNum?this.props.phoneNum : '15101075739' ,
          isFetchData: true,
               keykey: 0,
               isOpen: true,
@@ -50,29 +50,28 @@ import Spinner from 'react-native-loading-spinner-overlay';
     }
     componentDidMount() {
       AssertService.getTotalAssertAndRank(this.state.phoneNum,(response) => {
-        // console.log(response);
-        if (response[0].MessageCode == '0') {
-          this.setState({
-            myRank: response[1].MyRank,
-        totalAsset: response[1].TotalAsset
-          });
-        } else {
-          console.log('请求错误' + response[0].MessageCide);
-        }
+        console.log(response);
+      //   if (response[0].MessageCode == '0') {
+      //     this.setState({
+      //       myRank: response[1].MyRank,
+      //   totalAsset: response[1].TotalAsset,
+      //   isOpen: false
+      //     });
+      //   } else {
+      //     this.setState({isOpen: false})
+      //     console.log('请求错误' + response[0].MessageCide);
+      //   }
       });
 
       AssertService.fetchAssertList(this.state.phoneNum,(response) => {
-        console.log(response[1]);
-        if (response[0].MessageCode == '0') {
-          let newData = response[1];
-            this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(newData),
-              db:newData,
-          isOpen: false
-          });
-        } else {
-          console.log('请求错误' + response[0].MessageCide);
-        }
+        console.log(response);
+
+        // if (response.MessageCode == '0' || response[0].MessageCode == '0') {
+        // this.setState({isOpen: false})
+        // } else {
+        //   this.setState({isOpen: false})
+        //   console.log('请求错误');
+        // }
       });
     }
     getData() {

@@ -21,14 +21,13 @@ export default class extends Component {
     super(props)
     this.state = {
       UserWebNickName:'昵称',
-      UserWebPicture: '头像',
+      UserWebPicture: base64Icon,
       Sex: '性别',
       Address: '地区',
       Birthday: '生日',
       Hobby : '个性签名',
       PhoneNumber: '手机号',
       iconText: '完成',
-      avatarSource: base64Icon,
     }
   }
 
@@ -43,7 +42,6 @@ export default class extends Component {
   _callback() {
     let property = this.props.screenTitle;
     let value;
-    console.log('回调属性:' + property);
     switch (property) {
       case '昵称':
         value = this.state.UserWebNickName;
@@ -55,17 +53,16 @@ export default class extends Component {
         value = this.state.PhoneNumber;
       case '头像':
         this.selectPhotoTapped.bind(this)
-        console.log('弹出头像吧');
+        value = this.state.UserWebPicture;
       default:
         break;
     }
-    if (property != '头像'){
+    if (property != '头像' || this.state.iconText == '确定'){
       this.props.setProperty(property,value);
       if(this.props.navigator) {
          this.props.navigator.pop();
       }
     }
-
   }
   selectPhotoTapped() {
       let options = {
@@ -97,9 +94,9 @@ export default class extends Component {
           // You can display the image using either:
           let source = 'data:image/jpeg;base64,' + response.data;
           // let source = {uri: response.uri.replace('file://', ''), isStatic: true};
-          console.log(source);
           this.setState({
-            avatarSource: source
+            UserWebPicture: source,
+            iconText: '确定'
           });
         }
       });
@@ -150,8 +147,8 @@ export default class extends Component {
           childScreen = (
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles_1.avatar, styles_1.avatarContainer, {marginBottom: 20}]}>
-              { this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-                <Image style={styles_1.avatar} source={{uri:this.state.avatarSource}} />
+              { this.state.UserWebPicture === null ? <Text>Select a Photo</Text> :
+                <Image style={styles_1.avatar} source={{uri:this.state.UserWebPicture}} />
               }
               </View>
             </TouchableOpacity>
