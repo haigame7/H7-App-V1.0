@@ -148,7 +148,7 @@ class haigame7 extends Component {
         <Navigator
           initialRoute={{ name: defaultName,component: defaultComponent }}
           configureScene={(route) => {
-            return route.sceneConfig || Navigator.SceneConfigs.VerticalDownSwipeJump;
+            return route.sceneConfig || Navigator.SceneConfigs.HorizontalSwipeJump;
           }}
           renderScene={(route, navigator) => {
             let Component  = route.component;

@@ -90,6 +90,23 @@ export default{
       );
   },
 
+  /*更新用户信息*/
+  updateUserInfo(data,callback) {
+    FecthService.postFecth(
+      ApiConfig.USER_API.UPDATE_USER_INFO,
+      data,
+      callback
+    );
+  },
+
+  /*获取用户信息*/
+  getUserInfo(data,callback) {
+    FecthService.postFecth(
+      ApiConfig.USER_API.GET_USER_INFO,
+      data,
+      callback
+    );
+  },
   _urlForQueryAndPage(query: string, pageNumber: number): string {
     // var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     // if (query) {
