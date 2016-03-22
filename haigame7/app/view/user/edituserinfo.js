@@ -10,7 +10,7 @@ import React,
     ToastAndroid,
     TouchableOpacity,
     StyleSheet,
-    PixelRatio
+    PixelRatio,
   } from 'react-native';
 
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
@@ -68,15 +68,18 @@ export default class extends Component {
 
   }
   selectPhotoTapped() {
-      const options = {
-        title: 'Photo Picker',
-        quality: 0.5,
-        maxWidth: 300,
-        maxHeight: 300,
-        storageOptions: {
-          skipBackup: true
-        }
-      };
+      let options = {
+          title: '选择照片',
+          cancelButtonTitle: '取消',
+          takePhotoButtonTitle: '拍照',
+          chooseFromLibraryButtonTitle: '从相册选择',
+          quality: 0.5,
+          maxWidth: 300,
+          maxHeight: 300,
+          storageOptions: {
+            skipBackup: true
+          }
+        };
 
       ImagePickerManager.showImagePicker(options, (response) => {
         console.log('Response = ', response);
