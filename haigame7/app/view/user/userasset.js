@@ -1,10 +1,10 @@
 'use strict'
 
-  var React = require('react-native');
   var Header = require('../common/headernav'); // 主屏
   var Icon = require('react-native-vector-icons/FontAwesome');
   var Util = require('../common/util');
-  var {
+import React,
+  {
     View,
     Component,
     Text,
@@ -15,24 +15,70 @@
     Navigator,
     TouchableHighlight,
     StyleSheet,
-    ScrollView
-    } = React;
-
-   import styles from '../../styles/userstyle';
-   import Recharge from './recharge';
-
-
+    ListView,
+    RefreshControl,
+    ToastAndroid
+  } from 'react-native';
+import styles from '../../styles/userstyle';
+import Recharge from './recharge';
+import AssertService from '../../network/assertservice'
+// const jsonData = '[{"assertType" : "收入123", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}, {"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"},{"assertType" : "收入1", "getWay": "氦金充值", "content": "+200","time": "2010/01/01"}]';
+  const jsonData = '[{}]'
   export default class extends Component{
     constructor(props) {
       super(props);
+      let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2});
+
       this.state = {
-        data: {
-          dota2id:undefined,
-          certifyid:'000000',
-        },
-        content:undefined,
-        messages: []
+          dataSource: ds.cloneWithRows(['row1','row2']),
+                  db: [],
+              loaded: false,
+        isRefreshing: false,
+           footerMsg: "点击加载更多",
+             content: undefined,
+          totalAsset: 0,
+              myRank: 0,
+            phoneNum: this.props.phoneNum?this.props.phoneNum : '' ,
+         isFetchData: true,
+              keykey: 0,
       }
+    }
+
+    componentWillMount() {
+      AssertService.getTotalAssertAndRank(this.state.phoneNum,(response) => {
+        // console.log(response);
+        if (response[0].MessageCode == '0') {
+          this.setState({
+            myRank: response[1].MyRank,
+        totalAsset: response[1].TotalAsset
+          });
+        } else {
+          console.log('请求错误' + response[0].MessageCide);
+        }
+      });
+
+      AssertService.fetchAssertList(this.state.phoneNum,(response) => {
+        console.log(response[1]);
+        let newData = response[1];
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(newData),
+          db:newData
+        });
+        // console.log(JSON.parse(newData));
+      });
+    }
+    componentDidMount() {
+      // this.makeData();
+    		this.getData();
+    }
+    getData() {
+      // let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
+
+      let _ds = JSON.parse(jsonData);
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(_ds),
+        loaded: true
+      });
     }
 
     gotoRecharge(name) {
@@ -41,25 +87,85 @@
       }
       return;
     }
-
+    _onRefresh() {
+      this.setState({
+        isRefreshing: true
+      });
+      console.log("下拉刷新");
+      setTimeout(()=>{
+        this.setState({
+          isRefreshing: false
+        });
+      },1000);
+    }
+    _onLoadMore() {
+      console.log('8888888888');
+      if (this.state.keykey > 3) {
+        this.setState({
+          footerMsg: "木有更多多数据了~~~~"
+        });
+      }else{
+        this.setState({
+          footerMsg: "正在加载....."
+        });
+        let jsonstr='[{"GainWay": "氦金充值", "VirtualMoney": "+200","GainTime": "2010/01/01"}]';
+        let newData = JSON.parse(jsonstr)
+        let data = this.state.db.concat(newData)
+        //这等到有api在搞吧
+        setTimeout(()=>{
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(data),
+            loaded: true,
+            footerMsg: "点击加载更多",
+            keykey: this.state.keykey += 1,
+            db: data
+          });
+        },2000);
+      }
+    }
+    _renderRow(rowData, sectionID, rowID) {
+      return(
+        <View style={UserAssetStyle.assetListContainer}>
+         <View style={UserAssetStyle.assetList} >
+         <Text style={UserAssetStyle.assetText}>{rowData.GainWay}</Text>
+         <Text style={UserAssetStyle.assetText}>{rowData.VirtualMoney}</Text>
+         <Text style={UserAssetStyle.assetText}>{rowData.GainTime}</Text>
+         </View>
+        </View>
+      );
+    }
+    _renderFooter() {
+      return(
+        <View>
+          <TouchableOpacity
+            onPress={this._onLoadMore.bind(this)}
+            >
+            <View style={{alignSelf: 'center'}}>
+              <Text style={{color:'white'}}>
+                {this.state.footerMsg}
+              </Text></View>
+          </TouchableOpacity>
+        </View>
+      );
+    }
     render(){
 
       return (
-        <View >
-        <View style={styles.bgImageWrapper}>
-        <View style={styles.centerbg}>
-        </View>
-        </View>
-        <Header initObj={{title:'我的资产'}}   navigator={this.props.navigator}></Header>
-          <Image source = {require('../../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode = {"cover"}>
 
+        <View style={{flex:1}}>
+          <View style={styles.bgImageWrapper}>
+            <View style={styles.centerbg}>
+            </View>
+          </View>
+          <Header screenTitle='氦金' isPop={true}  navigator={this.props.navigator}/>
+          <Image source = {require('../../images/loginbg.jpg')} style={styles.centerheadbg} resizeMode = {"cover"}>
           <View style={[UserAssetStyle.centertab]}>
            <View>
               <View style={[UserAssetStyle.centertabname]}>
               <Icon name="upload" size={30} color={'#fff'} style={[{marginTop:-10,backgroundColor:'rgb(221, 49, 116)'}]} />
              <Text style={[{marginTop:5,color:'rgb(208, 46, 70)'}]}>总金额</Text>
              </View>
-             <Text style={[UserAssetStyle.centertabattr]}>8888</Text>
+             <Text style={[UserAssetStyle.centertabattr]}>{this.state.totalAsset}</Text>
 
            </View>
           <View style={[UserAssetStyle.centersplitvertical]} ></View>
@@ -68,7 +174,7 @@
            <Icon name="upload" size={30} color={'#fff'} style={[{marginTop:-10,backgroundColor:'rgb(221, 49, 116)'}]} />
           <Text style={[{marginTop:5,color:'rgb(208, 46, 70)'}]}>财富排行</Text>
           </View>
-             <Text style={[UserAssetStyle.centertabattr]}>8888</Text>
+             <Text style={[UserAssetStyle.centertabattr]}>{this.state.myRank}</Text>
 
            </TouchableOpacity>
            </View>
@@ -79,34 +185,24 @@
           </TouchableHighlight>
 
           </View>
+            <ListView
+              style={{marginTop:-160}}
+              dataSource={this.state.dataSource}
+              // refreshControl={
+              //     <RefreshControl
+              //       refreshing={this.state.isRefreshing}
+              //       onRefresh={this._onRefresh.bind(this)}
+              //       tintColor="#ff0000"
+              //       title="Loading..."
+              //       colors={['#ff0000', '#00ff00', '#0000ff']}
+              //       progressBackgroundColor="#ffff00"
+              //     />
+              //   }
+              renderRow= {this._renderRow.bind(this)}
+              renderFooter={this._renderFooter.bind(this)}
+            />
           </Image>
-          <View style={UserAssetStyle.assetListContainer}>
-           <View style={UserAssetStyle.assetList} >
-           <Text style={UserAssetStyle.assetText}>{'收入'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'充值氦金'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'+200'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'2016/02/23'}</Text>
-           </View>
-           <View style={UserAssetStyle.assetList}>
-           <Text style={UserAssetStyle.assetText}>{'收入'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'充值氦金'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'+200'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'2016/02/23'}</Text>
-           </View>
-           <View style={UserAssetStyle.assetList}>
-           <Text style={UserAssetStyle.assetText}>{'收入'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'充值氦金'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'+200'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'2016/02/23'}</Text>
-           </View>
-           <View style={UserAssetStyle.assetList}>
-           <Text style={UserAssetStyle.assetText}>{'收入'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'充值氦金'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'+200'}</Text>
-           <Text style={UserAssetStyle.assetText}>{'2016/02/23'}</Text>
-           </View>
-          </View>
-      </View>
+        </View>
       );
     }
   }

@@ -22,6 +22,7 @@ var Icon = require('react-native-vector-icons/FontAwesome');
 var commonstyle = require('../../styles/commonstyle');
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+import MatchRule from './matchrule';
 
 export default class extends Component{
   constructor(props) {
@@ -57,41 +58,41 @@ export default class extends Component{
       }
     }
     }
-rendermatchList(){
+renderscheduleList(){
   if(this.state.navbar==0){
     return(
-      <View style={[styles.matchlist]}>
-       <View style={[styles.matchli]}>
-          <View style={[styles.matchlititle]}><Text style={[styles.matchlititletext]}>{'什么什么鱼塘大赛'}</Text></View>
-          <View style={[styles.matchlicontent]}>
+      <View style={[styles.schedulelist]}>
+       <View style={[styles.scheduleli]}>
+          <View style={[styles.schedulelititle]}><Text style={[styles.schedulelititletext]}>{'什么什么鱼塘大赛'}</Text></View>
+          <View style={[styles.schedulelicontent]}>
            <View style={[styles.flexcolumn]}>
-          <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
           <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
           </View>
-          <View style={styles.matchlistcenter}>
+          <View style={styles.schedulelistcenter}>
             <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'胜'}<Text>{'VS'}</Text>{'负'}</Text>
             <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
           </View>
           <View style={[styles.flexcolumn]}>
-         <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
          </View>
          </View>
        </View>
 
-       <View style={[styles.matchli]}>
-          <View style={[styles.matchlititle]}><Text style={[styles.matchlititletext]}>{'什么什么鱼塘大赛'}</Text></View>
-          <View style={[styles.matchlicontent]}>
+       <View style={[styles.scheduleli]}>
+          <View style={[styles.schedulelititle]}><Text style={[styles.schedulelititletext]}>{'什么什么鱼塘大赛'}</Text></View>
+          <View style={[styles.schedulelicontent]}>
            <View style={[styles.flexcolumn]}>
-          <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
           <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
           </View>
-          <View style={styles.matchlistcenter}>
+          <View style={styles.schedulelistcenter}>
             <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'胜'}<Text>{'VS'}</Text>{'负'}</Text>
             <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
           </View>
           <View style={[styles.flexcolumn]}>
-         <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+         <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
          </View>
          </View>
@@ -106,22 +107,25 @@ rendermatchList(){
   }
 }
 render() {
-    let matchlist = this.rendermatchList();
+    let schedulelist = this.renderscheduleList();
   return (
     <View style={styles.container}>
-     <Header screenTitle="我的赛事"   navigator={this.props.navigator}></Header>
+     <Header screenTitle="Dota2争霸赛赛程"   iconText='我的赛程' callback={this.gotoRoute.bind(this,'matchrule')} navigator={this.props.navigator}></Header>
     <View style={styles.nav}>
       <View style={styles.navtab}>
         <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
-          <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>已结束的比赛</Text>
+          <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>05/12</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-          <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>未进行的比赛</Text>
+        <TouchableOpacity style={this.state.navbar==1?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
+          <Text style={this.state.navbar==1?commonstyle.red:commonstyle.white}>05/13</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={this.state.navbar==2?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(2)}>
+          <Text style={this.state.navbar==2?commonstyle.red:commonstyle.white}>05/14</Text>
         </TouchableOpacity>
       </View>
       </View>
           <View style={[styles.centerbg]}>
-          {matchlist}
+          {schedulelist}
           </View>
         </View>
     );
@@ -146,12 +150,12 @@ var styles = StyleSheet.create({
      height: Util.size.height,
      width: Util.size.width,
  },
- matchlist:{
+ schedulelist:{
    flex:1,
    paddingLeft:10,
    paddingRight:10,
  },
- matchli:{
+ scheduleli:{
  width: Util.size.width-20,
  marginTop:10,
  height:Util.size.height*9/40,
@@ -159,22 +163,22 @@ var styles = StyleSheet.create({
  borderColor:'gray',
  borderWidth:1,
  },
- matchlititle:{
+ schedulelititle:{
    backgroundColor:'rgb(120,120,120)',
    height:Util.pixel*50,
    alignItems:'center',
    justifyContent:'center',
  },
- matchlititletext:{
+ schedulelititletext:{
    fontSize:14,
  },
- matchlicontent:{
+ schedulelicontent:{
    paddingTop:20,
    flexDirection:'row',
    alignItems:'center',
   justifyContent:'center',
  },
- matchlistimg: {
+ schedulelistimg: {
      width: 70,
      height: 70,
      borderRadius: 35,
@@ -182,12 +186,12 @@ var styles = StyleSheet.create({
      borderColor: 'rgba(255, 255, 255, 0.6)',
      marginRight: 10,
  },
- matchlistcenter: {
+ schedulelistcenter: {
     width:Util.size.width/3,
     alignItems:'center',
    justifyContent:'center',
  },
- matchlisttext: {
+ schedulelisttext: {
      marginTop: 5,
      marginBottom: 5,
  },

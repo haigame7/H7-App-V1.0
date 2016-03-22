@@ -3,6 +3,10 @@
 import { StyleSheet, Platform } from 'react-native';
 var Util = require('../view/common/util');
 export default StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor:'rgb(0, 0, 0)',
+    },
     //登陆界面
     loginbg: {
         flex: 1,
@@ -299,6 +303,58 @@ export default StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
     },
+    //申请&受邀
+    listblock: {
+        marginLeft: 10,
+        marginRight: 10,
+        paddingTop: 7,
+        paddingBottom: 7,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    listblockimg: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.6)',
+        marginRight: 10,
+    },
+    listblockbtn: {
+        width: 75,
+        height: 30,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 10,
+    },
+    listblockbutton: {
+        width: 75,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 10,
+        borderRadius: 5,
+    },
+    listblocktext: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginTop: 5,
+    },
+    listblocktextleft: {
+        width: 50,
+        marginRight: 10,
+        marginTop: 5,
+    },
+    listblocktexthero: {
+        width: 40,
+        height: 40,
+        margin: 5,
+        borderWidth: 1,
+        borderColor: '#D31B25',
+        borderRadius: 3,
+    },
     //原
     title: {
         color: '#FFFFFF',
@@ -357,10 +413,6 @@ export default StyleSheet.create({
         marginTop: -3,
         alignSelf: 'center'
 
-    },
-    container: {
-        flex: 1,
-        alignItems: 'stretch',
     },
     instructions: {
         textAlign: 'center',

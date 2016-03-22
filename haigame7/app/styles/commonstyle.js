@@ -35,10 +35,10 @@ var CommonStyle = StyleSheet.create({
         height: 48,
         marginRight: 15,
     },
-    headertextright:{
-        fontSize:16,
-        color:'#fff',
-        right:0,
+    headertextright: {
+        fontSize: 16,
+        color: '#fff',
+        right: 0,
     },
     bodyer: {
         height: (Platform.OS === 'ios') ? Util.size.height - 64 : Util.size.height - 48,
@@ -107,12 +107,37 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 5,
     },
+    modaltitle: {
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    modalbody: {
+        padding: 5,
+        marginTop: 5,
+        marginBottom: 40,
+        backgroundColor: '#000000',
+    },
     modaltext: {
         marginTop: 30,
         padding: 10,
     },
+    modalsmall: {
+        height: 150,
+        width: Util.size.width - 40,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+    },
     modalmiddle: {
         height: 300,
+        width: Util.size.width - 40,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+    },
+    modalbig: {
+        marginTop: 10,
+        height: (Platform.OS === 'ios') ? Util.size.height - 154 : Util.size.height - 138,
         width: Util.size.width - 40,
         backgroundColor: '#484848',
         justifyContent: 'flex-start',
@@ -132,7 +157,7 @@ var CommonStyle = StyleSheet.create({
         height: 40,
     },
     modalbtnfont: {
-        width: Util.size.width/2-20,
+        width: Util.size.width / 2 - 20,
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
@@ -148,14 +173,23 @@ var CommonStyle = StyleSheet.create({
     gray: {
         color: '#484848',
     },
+    cyan: {
+        color: '#30CCC1'
+    },
     blue: {
         color: '#00B4FF',
     },
     yellow: {
         color: '#FFCA00',
     },
+    orange: {
+        color: '#FF6F64',
+    },
     red: {
         color: '#D31B25',
+    },
+    purple: {
+        color: '#C1337F',
     },
     black: {
         color: '#282828',
@@ -175,14 +209,69 @@ var CommonStyle = StyleSheet.create({
     },
     //按钮
     icon: {
-      height: 30,
-      width: 30,
+        height: 30,
+        width: 30,
     },
     btnredwhite: {
         backgroundColor: '#D31B25',
+        borderWidth: 1,
+        borderColor: '#D31B25',
     },
     btncreamblack: {
         backgroundColor: '#C3C3C3',
+        borderWidth: 1,
+        borderColor: '#C3C3C3',
+    },
+    btngrayblack: {
+        backgroundColor: '#484848',
+        borderWidth: 1,
+        borderColor: '#484848',
+    },
+    btnborderred: {
+        borderWidth: 1,
+        borderColor: '#D31B25',
+    },
+    btnbordergray: {
+        borderWidth: 1,
+        borderColor: '#484848',
+    },
+    btnborderblue: {
+        borderWidth: 1,
+        borderColor: '#00B4FF',
+    },
+    btnborderorange: {
+        borderWidth: 1,
+        borderColor: '#FF6F64',
+    },
+    btnbordercyan: {
+        borderWidth: 1,
+        borderColor: '#30CCC1',
+    },
+    btnborderpurple: {
+        borderWidth: 1,
+        borderColor: '#C1337F',
+    },
+    //刷新&加载
+    refreshview: {
+        height: 30,
+        backgroundColor: '#000000',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    refreshviewblock: {
+        backgroundColor: '#484848',
+        padding: 2,
+    },
+    paginationview: {
+        height: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    defaultview: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#000000',
     },
 });
 
