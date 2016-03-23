@@ -39,8 +39,8 @@ module.exports = React.createClass({
       navigator: undefined,
    icon_onPress: null,
  next_component: null,
-          isPop: this.props.isPop == undefined ? true : this.props.isPop
-
+          isPop: this.props.isPop == undefined ? true : this.props.isPop,
+       userdata: this.props.userdata
     }
   },
   componentWillMount() {
@@ -56,6 +56,8 @@ module.exports = React.createClass({
         icon_onPress: this.props.callback
       });
     }
+    // console.log('*************************');
+    console.log(this.props);
   },
   componentWillReceiveProps(nextProps,nexState) {
   }
@@ -67,6 +69,12 @@ module.exports = React.createClass({
     console.log('更新Header导航组件');
     this.setState({
       next_component: newComponent
+    });
+  },
+  updateTitle(title){
+    console.log('更新title导航组件');
+    this.setState({
+      current_title: title
     });
   },
   render: function(){

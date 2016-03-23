@@ -39,20 +39,18 @@ import HintCreatTeamScreen from './user/hint_createteam_screen';
 import UserService from '../network/userservice';
 import Spinner from 'react-native-loading-spinner-overlay';
 //试试ES6的类属性
-let userdata = {
-  'PhoneNumber': '15101075739',
-  'UserWebNickName': '昵称'
-}
+
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
     return {
       _navigator: this.props.navigator,
-      userData: userdata,
+      userData: this.props.userdata,
       isOpen: true
     };
   },
   componentWillMount() {
+    console.log(this.props);
     // console.log(this.props.navigator);
     // let userInstance = new User();
   },

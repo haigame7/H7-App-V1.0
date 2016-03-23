@@ -20,19 +20,32 @@ const glypy = glypyMapMaker({
   RankOn: 'e621',
   Rank: 'e622'
 });
-
+let userdata = {
+  'PhoneNumber': '15101075739',
+  'UserWebNickName': 'UserWebNickName',
+  'UserWebPicture': 'UserWebPicture',
+  'Sex': 'Sex',
+  'Address': 'Address',
+  'Birthday': 'Birthday',
+  'Hobby': 'Hobby'
+}
 export default class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.toggle = false;
     this.state = {
-      userdata: undefined,
+      userdata: userdata,
     }
   }
   componentWillMount() {
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       if( value == undefined) {
-        this.refs.headernav.updateComponent({name:'用户中心',component:User});
+        this.refs.header_match.updateComponent({name:'登陆',component:Login});
+        this.refs.header_fight.updateComponent({name:'登陆',component:Login});
+        this.refs.header_rank.updateComponent({name:'登陆',component:Login});
+        this.refs.header_team.updateComponent({name:'登陆',component:Login});
+      } else {
+        userdata = value;
       }
     });
   }
@@ -83,11 +96,12 @@ componentWillUpdate() {
           <RawContent>
           <View>
           <Headernav
-            ref="headernav"
+            ref="header_match"
             screenTitle='赛事'
             iconName='user'
             nextComponent={{name:'用户中心',component:User}}
             isPop={false}
+            {...this.state}
             navigator={this.props.navigator} />
            <Match navigator={this.props.navigator}/>
           </View>
@@ -98,6 +112,7 @@ componentWillUpdate() {
           <RawContent>
           <View>
            <Headernav
+             ref="header_fight"
              screenTitle='约战'
              iconName='user'
              nextComponent={{name:'用户中心',component:User}}
@@ -112,6 +127,7 @@ componentWillUpdate() {
           <RawContent>
           <View>
            <Headernav
+             ref="header_rank"
              screenTitle='排行'
              iconName='user'
              nextComponent={{name:'用户中心',component:User}}
@@ -126,6 +142,7 @@ componentWillUpdate() {
           <RawContent>
           <View>
             <Headernav
+              ref="header_team"
               screenTitle='组队'
               iconName='user'
               nextComponent={{name:'用户中心',component:User}}

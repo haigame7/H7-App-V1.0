@@ -46,16 +46,16 @@ export default class extends Component {
     }
   }
 componentDidMount() {
+  console.log('我去你妹');
   fetch('https://raw.githubusercontent.com/beefe/react-native-picker/master/demo/area.json').then(res => {
-    // console.log(res);
+    console.log(res);
     res.json().then(data => {
-      console.log(data);
       this.setState({
         pickerData: this.createAreaData(data)
       });
     });
   }, err => {
-    Alert.alert('err')
+    console.log(err);
   });
 }
   createAreaData(area){
