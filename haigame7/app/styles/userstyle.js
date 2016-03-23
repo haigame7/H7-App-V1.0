@@ -81,6 +81,13 @@ export default StyleSheet.create({
 
     },
     //输入框
+    loginlabel: {
+        width: Util.size.width - 72,
+        marginTop: 10,
+        marginBottom: -10,
+        marginLeft: 36,
+        marginRight: 36,
+    },
     logininput: {
         height: 40,
         width: Util.size.width - 72,
@@ -97,9 +104,15 @@ export default StyleSheet.create({
     logininputfont: {
         color: '#FFFFFF',
     },
+    logininputright: {
+        position: 'absolute',
+        width: 30,
+        height: 30,
+        top: 3,
+        right: 5,
+    },
     //链接组
     linkblock: {
-        height:20,
         width: Util.size.width - 72,
         marginTop: 10,
         marginLeft: 36,
@@ -378,6 +391,43 @@ export default StyleSheet.create({
     msglisticon: {
         width: 10,
         alignItems: 'flex-end',
+    },
+    //资产
+    assetbg: {
+        height: 160,
+        width: Util.size.width,
+    },
+    assetblock: {
+        marginTop: 30,
+    },
+    assetlabel: {
+        alignItems: 'center',
+    },
+    assetlistblock: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    assetlist: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    rechargeview: {
+        width: Util.size.width - 72,
+        marginTop: 10,
+        marginLeft: 36,
+        marginRight: 36,
+    },
+    recharge: {
+        height: 30,
+        width: (Util.size.width-72)/3,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    rechargeline: {
+        width: 10,
     },
     //原
     title: {

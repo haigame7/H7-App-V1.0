@@ -42,6 +42,7 @@ var CommonStyle = StyleSheet.create({
     },
     bodyer: {
         height: (Platform.OS === 'ios') ? Util.size.height - 64 : Util.size.height - 48,
+        width: Util.size.width,
         backgroundColor: '#000000',
     },
     footer: {
@@ -226,6 +227,11 @@ var CommonStyle = StyleSheet.create({
         backgroundColor: '#484848',
         borderWidth: 1,
         borderColor: '#484848',
+    },
+    btnwhitered: {
+        backgroundColor: '#FFFFFF',
+        borderWidth: 1,
+        borderColor: '#D31B25',
     },
     btnborderred: {
         borderWidth: 1,
