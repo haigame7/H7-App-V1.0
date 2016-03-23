@@ -14,6 +14,7 @@ import React, {
     ScrollView,
     StyleSheet,
     Component,
+    ListView,
     TouchableOpacity,
     TouchableHighlight,
     } from 'react-native';
@@ -25,11 +26,17 @@ import styles from '../styles/rankstyle';
 import UserRankList from './rank/userranklist';
 //引用团队排行组件
 import TeamRankList from './rank/teamranklist';
+
 var NAVBAR_DATA={first:"荣耀团队",second:"名人堂"};
 var NAVSUBBAR_TEAM={first:"热度",second:"战斗力",third:"氦金"};
 var NAVSUBBAR_USER={first:"大神系数",second:"战斗力",third:"氦金"};
 //思路：1.分出两个组件：个人排行和团队排行
 //2.
+var API_KEY = '7waqfqbprs7pajbz28mqf6vz';
+var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
+var PAGE_SIZE = 2;
+var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE;
+var REQUEST_URL = API_URL + PARAMS;
 
 export default class extends Component{
   constructor(props) {
@@ -37,7 +44,27 @@ export default class extends Component{
     this.state = {
       navbar: 0,
       data:{subnavbar:1,},
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      loaded: false,
       }
+    }
+
+    componentDidMount() {
+        this.fetchData();
+      }
+
+    fetchData() {
+      fetch(REQUEST_URL)
+        .then((response) => response.json())
+        .then((responseData) => {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+            loaded: true,
+          });
+        })
+        .done();
     }
 
   _switchNavbar(nav){
@@ -64,19 +91,35 @@ export default class extends Component{
     }
   }
 
-  renderrankList(){
+  renderRankList(){
     if(this.state.navbar==0){
       //返回团队组件
-      return(<TeamRankList/>);
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderTeamRankList}
+      />
     }
-    else{
-      //返回个人排行组件
-      return(<UserRankList/>);
-    }
+    return(
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderUserRankList}
+      />
+    );
+
+  }
+
+  renderUserRankList(user){
+      //返回个人组件
+      return(<UserRankList movie={user}/>);
+  }
+
+  renderTeamRankList(team){
+      //返回团队组件
+      return(<TeamRankList movie={team}/>);
   }
 
   render() {
-    let ranklist = this.renderrankList();
+    let ranklist = this.renderRankList();
     let navdata=NAVBAR_DATA;
     let navsubdata=this.renderSubData();
     return (
