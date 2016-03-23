@@ -59,6 +59,7 @@ var User = React.createClass({
   componentDidMount() {
     // console.log(this.state.userData.PhoneNumber);
     UserService.getUserInfo({'PhoneNumber': this.state.userData.PhoneNumber},(response) => {
+      console.log(response);
       if (response[0].MessageCode == '0') {
         userdata.UserWebNickName = response[1].UserWebNickName
         this.setState({
@@ -66,7 +67,7 @@ var User = React.createClass({
           isOpen: false
         })
       } else {
-        console.log('请求错误');
+        // console.log('请求错误');
         this.setState({
           isOpen: false
         })

@@ -47,9 +47,9 @@ export default class extends Component {
   }
 componentDidMount() {
   fetch('https://raw.githubusercontent.com/beefe/react-native-picker/master/demo/area.json').then(res => {
-    console.log(res);
+    // console.log(res);
     res.json().then(data => {
-      Alert.alert('123')
+      console.log(data);
       this.setState({
         pickerData: this.createAreaData(data)
       });
