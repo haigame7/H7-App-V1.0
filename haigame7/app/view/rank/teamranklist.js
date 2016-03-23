@@ -23,6 +23,11 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/rankstyle';
 
 var TeamRankList = React.createClass({
+  getInitialState() {
+    return {
+      team: this.props.team,
+    }
+  },
   render: function() {
     //返回团队排行组件
     return(
