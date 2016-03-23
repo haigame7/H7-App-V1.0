@@ -14,6 +14,8 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/fightstyle';
 import Header from '../common/headernav';
+import FightService from '../../network/fightservice';
+import GlobalVariable from '../../constants/globalvariable'
 var Swipeout = require('react-native-swipeout');
 var Icon = require('react-native-vector-icons/FontAwesome');
 
@@ -24,35 +26,49 @@ var swipeoutBtns = [
     backgroundColor: '#D31B25'
   }
 ]
-const jsonData = '[{"title" : "[犀利拍立冬至]", "content": "[神马神马132]", "time": "2010/01/01","money":"100","sendP": "naive","isRead": "false"}, {"title" : "[犀利拍立冬至]", "content": "[神马神马132]", "time": "2010/01/01","money":"100","sendP": "naive","isRead": "false"},{"title" : "[犀利拍立冬至]", "content": "[神马神马132]", "time": "2010/01/01","money":"100","sendP": "naive","isRead": "false"},{"title" : "[犀利拍立冬至]", "content": "[神马神马132]", "time": "2010/01/01","money":"100","sendP": "naive","isRead": "false"}, {"title" : "[犀利拍立冬至]", "content": "[神马神马132]", "time": "2010/01/01","money":"100","sendP": "naive","isRead": "false"},{"title" : "[犀利拍立冬至]", "content": "[神马神马132]", "time": "2010/01/01","money":"100","sendP": "naive","isRead": "false"}]';
 export default class extends React.Component {
   constructor(props){
     super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(['row1','row2']),
-      pressTest: 0,
+      initData:{
+        startpage:GlobalVariable.PAGE_INFO.StartPage,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount,
+      },
+      db:[],
       loaded: false,
-      updatePressed: false,
       onpress: undefined,
       isRefreshing: false,
       dataCount:0,
       keykey:0,
       footerMsg: "点击加载更多"
     }
+
   }
   componentDidMount() {
     // this.makeData();
-    this.getData();
+      this.getData();
   }
 
   getData() {
-    // let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
-    let _ds = JSON.parse(jsonData);
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(_ds),
-      loaded: true
+    {/*获取约战数据*/}
+    FightService.getAllFightInfo(this.state.initData,(response) => {
+      if (response[0].MessageCode == '0') {
+        let newData = response[1];
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(newData),
+          db:newData,
+        });
+        this.setState({
+          loaded: true
+        });
+      } else {
+        console.log('请求错误' + response[0].MessageCide);
+      }
     });
+
+
   }
 
   render() {
@@ -88,17 +104,8 @@ export default class extends React.Component {
         <Header screenTitle='约战动态'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <ListView
+            removeClippedSubviews={false}
             dataSource={this.state.dataSource}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.isRefreshing}
-                onRefresh={this._onRefresh.bind(this)}
-                tintColor="#ff0000"
-                title="Loading..."
-                colors={['#ff0000', '#00ff00', '#0000ff']}
-                progressBackgroundColor="#ffff00"
-              />
-            }
             renderRow= {this._renderRow.bind(this)}
             renderFooter={this._renderFooter.bind(this)}
           />
@@ -107,27 +114,40 @@ export default class extends React.Component {
     );
   }
   _onLoadMore() {
-    if (this.state.keykey > 3) {
+
+    if (this.state.keykey > 0) {
       this.setState({
         footerMsg: "木有更多多数据了~~~~"
       });
     }else{
-      let _ds = JSON.parse(jsonData);
+      let _ds = this.state.db;
+      let _params = this.state.initData;
+      _params.startpage = _params.startpage+1;
       this.setState({
         footerMsg: "正在加载....."
       });
-      let jsonstr='[{"title" : "[犀利拍立冬至]", "content": "[神马神马132]", "time": "2010/01/01","money":"100","sendP": "naive","isRead": "false"}]'
-      let newData = JSON.parse(jsonstr)
-      for(var item in newData){
-        _ds.push(newData[item])
-      }
+      {/*加载下一页*/}
+      FightService.getAllFightInfo(_params,(response) => {
+        if (response[0].MessageCode == '0') {
+          let nextData = response[1];
+          if(nextData.length<5){
+            this.setState({
+              keykey:1,
+            });
+          }
+          for(var item in nextData){
+            _ds.push(nextData[item])
+          }
+        } else {
+          console.log('请求错误' + response[0].MessageCide);
+        }
+      });
       //这等到有api在搞吧
       setTimeout(()=>{
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(_ds),
           loaded: true,
           footerMsg: "点击加载更多",
-          keykey: this.state.keykey += 1
         });
       },1000);
     }
@@ -142,18 +162,30 @@ export default class extends React.Component {
     );
   }
   _renderRow(rowData, sectionID, rowID) {
+    let desData = this.parseDescript(rowData.Description);
     return(
-      <Swipeout right={swipeoutBtns} close={true}>
         <TouchableOpacity style={styles.textlist} activeOpacity={0.8} underlayColor="#000000" id={rowID}>
-          <Text style={commonstyle.cream}>{'战队  '}<Text style={commonstyle.red}>{rowData.title}</Text>{'  向战队  '}<Text style={commonstyle.yellow}>{rowData.content}</Text>{'  发出约战'}</Text>
+       <Text style={commonstyle.cream}>{'战队  '}<Text style={commonstyle.red}>{desData.teampre}</Text>{desData.teamprecontent}<Text style={commonstyle.yellow}>{desData.teamnext}</Text>{desData.teamnextcontent}</Text>
           <View style={styles.userlistteambox}>
             <Icon name='times-circle-o' size={13} style={styles.textlisticon} color={'#484848'} />
-            <Text style={[commonstyle.gray, styles.textlistfont]}>{rowData.time}</Text>
+            <Text style={[commonstyle.gray, styles.textlistfont]}>{rowData.FightTime}</Text>
             <Icon name='money' size={13} style={styles.textlisticon} color={'#484848'} />
-            <Text style={commonstyle.gray}>{rowData.money}{'氦金'}</Text>
+            <Text style={commonstyle.gray}>{rowData.FightAsset}{'氦金'}</Text>
           </View>
         </TouchableOpacity>
-      </Swipeout>
     );
+  }
+  parseDescript(descript){
+  {/*将数据分割*/}
+  var data =  descript.split('【');
+  var dataOne = data[1].split('】');
+  var dataTwo = data[2].split('】');
+  var desData = {
+    teampre:dataOne[0],
+    teamprecontent:dataOne[1],
+    teamnext:dataTwo[0],
+    teamnextcontent:dataTwo[1],
+  }
+  return desData;
   }
 }
