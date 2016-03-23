@@ -57,12 +57,11 @@ import Spinner from 'react-native-loading-spinner-overlay';
         totalAsset: response[1].TotalAsset
           });
         } else {
-          console.log('请求错误' + response[0].MessageCide);
+          console.log('请求错误' + response[0].Message);
         }
       });
 
       AssertService.fetchAssertList(this.state.phoneNum,(response) => {
-        console.log(response[1]);
         if (response[0].MessageCode == '0') {
           let newData = response[1];
             this.setState({
@@ -71,7 +70,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
           isOpen: false
           });
         } else {
-          console.log('请求错误' + response[0].MessageCide);
+          console.log('请求错误' + response[0].Message);
         }
       });
     }
