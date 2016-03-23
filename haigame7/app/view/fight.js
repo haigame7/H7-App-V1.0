@@ -44,8 +44,8 @@ export default class extends Component{
       invite:0,
       login:0,
       userteamdata:{
-        phone:'13439215648',
-        teamname:'还没有登录或创建战队',
+        phone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
+        teamname:'',
         odd:0,
         asset:0,
         teamlogo:'',
@@ -68,6 +68,8 @@ export default class extends Component{
   }
   gotoRoute(name){
     if (name == 'makechanllenge') {
+       {/*先判断登录*/}
+       if(this.state.phoneNum=='')
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
             this.props.navigator.push({ name: name, component: MakeChanllenge, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
@@ -86,16 +88,39 @@ export default class extends Component{
           Alert.alert('服务器请求异常');
         }else if(response.MessageCode == '40002'){
           Alert.alert('token过期');
-        }else if(response[0].MessageCode == '40003'){
-          Alert.alert('没有token');
-        }else if(response[0].message=='10001'){
-          Alert.alert('请先登录');
+        }else if(response[0].MessageCode == '20003'){
+          this.setState({
+            userteamdata:{
+            teamname:'还没有创建战队',
+            odd:0,
+            asset:0,
+            teamlogo:'',
+            fightscore:0,
+            losecount:0,
+            wincount:0,
+            followcount:0,
+            totalcount:0,
+          },
+          });
+        }else if(response[0].MessageCode=='10001'){
+          this.setState({
+           userteamdata:{
+            teamname:'还没有登录',
+            odd:0,
+            asset:0,
+            teamlogo:'',
+            fightscore:0,
+            losecount:0,
+            wincount:0,
+            followcount:0,
+            totalcount:0,
+          },
+          });
         }
         else if(response[0].MessageCode == '0'){
           var oddsdata =  this.initUserTeamOdd(response[1].WinCount,response[1].LoseCount,response[1].FollowCount);
           this.setState({
             userteamdata:{
-              phone:'13439843883',
               teamname:response[1].TeamName,
               odd:oddsdata.odd,
               asset:response[1].Asset,
@@ -105,7 +130,8 @@ export default class extends Component{
               losecount:oddsdata.losecount,
               followcount:oddsdata.followcount,
               totalcount:oddsdata.totalcount,
-            }
+            },
+            login:1,
           });
         }
       }
@@ -180,10 +206,10 @@ export default class extends Component{
   renderuserdefaulteam(){
     return(
       <View style={styles.teamlist}>
-        <Image style={styles.teamlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+        <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo}} />
         <View style={commonstyle.col1}>
           <View style={commonstyle.row}>
-            <View style={commonstyle.col1}><Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text></View>
+            <View style={commonstyle.col1}><Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.userteamdata.teamname}</Text></View>
             <TouchableOpacity style={[commonstyle.row, styles.teamlistright]} onPress={this._openModa.bind(this)}>
               <Text style={[commonstyle.blue, commonstyle.fontsize12]}>{'约战规则 '}</Text>
               <Icon name='angle-right' size={16}  color={'#00B4FF'}/>
@@ -192,33 +218,33 @@ export default class extends Component{
 
           <View style={styles.userlistteambox}>
             <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
-            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  12345  '}</Text>
+            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '+this.state.userteamdata.fightscore+'  '}</Text>
             <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
-            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  12345  '}</Text>
+            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '+this.state.userteamdata.asset+'  '}</Text>
           </View>
 
           <View style={styles.userlistteambox}>
             <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{this.state.userteamdata.odd}{'%'}</Text>
-            <Progress.Bar progress={0.5} width={120} color={'#F39533'} unfilledColor={'#484848'} style={styles.userlistprogress} />
+            <Progress.Bar progress={this.state.userteamdata.odd/100} width={120} color={'#F39533'} unfilledColor={'#484848'} style={styles.userlistprogress} />
           </View>
 
           <View style={styles.userlistteambox}>
             <View style={[commonstyle.btnborderblue, styles.userlisttexticon]}>
               <Text style={[commonstyle.blue, commonstyle.fontsize12]}>{'战'}</Text>
             </View>
-            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  1000  '}</Text>
+            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+this.state.userteamdata.totalcount+'  '}</Text>
             <View style={[commonstyle.btnborderorange, styles.userlisttexticon]}>
               <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
             </View>
-            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  1000  '}</Text>
+            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+this.state.userteamdata.wincount+'  '}</Text>
             <View style={[commonstyle.btnbordercyan, styles.userlisttexticon]}>
               <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
             </View>
-            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  1000  '}</Text>
+            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+this.state.userteamdata.losecount+'  '}</Text>
             <View style={[commonstyle.btnborderpurple, styles.userlisttexticon]}>
               <Text style={[commonstyle.purple, commonstyle.fontsize12]}>{'拒'}</Text>
             </View>
-            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  1000  '}</Text>
+            <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+this.state.userteamdata.followcount+'  '}</Text>
           </View>
         </View>
       </View>
@@ -277,7 +303,7 @@ export default class extends Component{
     let fightrule = this.fightrule();
     let userdefaulteam = this.renderuserdefaulteam();
     let fightlist = this.renderfightlist();
-    if(this.state.login==1){
+    if(this.state.login==0){
       return (
         <View style={styles.container}>
           <View style={styles.nav}>
