@@ -25,8 +25,7 @@ import styles from '../../styles/rankstyle';
 var UserRankList = React.createClass({
   getInitialState() {
     return {
-      movie: this.props.movie,
-
+      user: this.props.user,
     }
   },
   render: function() {
@@ -34,15 +33,15 @@ var UserRankList = React.createClass({
     return(
       <View>
         <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
-          <Image style={styles.ranklistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={styles.ranklistimg} source={{uri:this.state.user.UserPicture}} />
           <View style={styles.ranklistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.state.movie.title}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{'生命不息,电竞不止~~1231231231'}</Text>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.state.user.NickName}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{this.state.user.Hobby}</Text>
             <View style={styles.ranklistrow}>
               <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
+              <Text style={commonstyle.red}>{this.state.user.GamePower}</Text>
               <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
+              <Text style={commonstyle.red}>{this.state.user.Asset}</Text>
             </View>
           </View>
         </TouchableOpacity>
