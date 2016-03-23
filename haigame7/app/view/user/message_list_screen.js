@@ -11,22 +11,17 @@ import React, {
   RefreshControl
 } from 'react-native';
 
-import styles from '../../styles/msg_list_style';
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/userstyle';
 import ShowMsg from './message_show_screen';
 import Header from '../common/headernav';
 var Swipeout = require('react-native-swipeout');
-//https://gist.github.com/iahu/0e524f4612a8925f2f9c
-//http://bbs.reactnative.cn/topic/52/listview-datasource-clonewithrows-%E7%9A%84%E5%8F%82%E6%95%B0%E9%97%AE%E9%A2%98/2
+var Icon = require('react-native-vector-icons/FontAwesome');
 
-var README_URL = 'https://coding.net/u/levi/p/imouto-host/git/raw/master/README.md';
-var MAP = {'Acrylated':'AcrylicHosts','Hosts-ä': 'Hosts-a'};
-var BASE_URL = 'https://coding.net/u/levi/p/imouto-host/git/raw/master/';
-var GOOGLE_HOSTS_URL = 'https://raw.githubusercontent.com/txthinking/google-hosts/master/hosts';
-// Buttons
 var swipeoutBtns = [
   {
     text: '删除',
-    backgroundColor: '#f61d4b'
+    backgroundColor: '#D31B25'
   }
 ]
 const jsonData = '[{"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}]';
@@ -37,8 +32,8 @@ export default class extends React.Component {
     this.state = {
       dataSource: ds.cloneWithRows(['row1','row2']),
       pressTest: 0,
-			loaded: false,
-			updatePressed: false,
+      loaded: false,
+      updatePressed: false,
       onpress: this._onItemPress.bind(this),
       isRefreshing: false,
       dataCount:0,
@@ -48,7 +43,7 @@ export default class extends React.Component {
   }
   componentDidMount() {
     // this.makeData();
-  		this.getData();
+    this.getData();
 
   }
 
@@ -95,12 +90,12 @@ export default class extends React.Component {
 
   renderLoadingView() {
     return (
-	      <View style={styles.loading}>
-	        <Text>
-	          Loading ...
-	        </Text>
-	      </View>
-	    );
+      <View style={commonstyle.loading}>
+        <Text>
+          Loading ...
+        </Text>
+      </View>
+    );
   }
 _onRefresh() {
   this.setState({
@@ -117,23 +112,21 @@ _onRefresh() {
     return(
       <View style={styles.container}>
         <Header screenTitle='我的信息{33}' isPop={true} navigator={this.props.navigator}/>
-          <ListView
-    					style={styles.listGroup}
-    					dataSource={this.state.dataSource}
-              refreshControl={
-                  <RefreshControl
-                    refreshing={this.state.isRefreshing}
-                    onRefresh={this._onRefresh.bind(this)}
-                    tintColor="#ff0000"
-                    title="Loading..."
-                    colors={['#ff0000', '#00ff00', '#0000ff']}
-                    progressBackgroundColor="#ffff00"
-                  />
-                }
-    					renderRow= {this._renderRow.bind(this)}
-              renderFooter={this._renderFooter.bind(this)}
-              />
-        </View>
+        <ListView style={commonstyle.bodyer}
+          dataSource={this.state.dataSource}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.isRefreshing}
+              onRefresh={this._onRefresh.bind(this)}
+              tintColor="#ff0000"
+              title="Loading..."
+              colors={['#ff0000', '#00ff00', '#0000ff']}
+              progressBackgroundColor="#ffff00"/>
+          }
+          renderRow= {this._renderRow.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
+      </View>
     );
   }
   _onLoadMore() {
@@ -164,31 +157,27 @@ _onRefresh() {
 
   _renderFooter() {
     return(
-      <View>
-        <TouchableOpacity
-          onPress={this._onLoadMore.bind(this)}
-          >
-          <View style={{alignSelf: 'center'}}>
-            <Text>
-              {this.state.footerMsg}
-            </Text></View>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={commonstyle.paginationview} underlayColor='#000000' activeOpacity={0.8} onPress={this._onLoadMore.bind(this)}>
+        <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerMsg}</Text>
+      </TouchableOpacity>
     );
   }
   _renderRow(rowData, sectionID, rowID) {
     return(
       <Swipeout right={swipeoutBtns} close={true}>
-        <TouchableOpacity onPress={this.state.onpress} underlayColor="#06f">
-          <View style={styles.listItem} id={rowID}>
-    				<View style={styles.itemContent}>
-    				<Text style={styles.itemTitle}>发件人{rowData.title}{rowData.desc}</Text>
-    				<Text>标题标题标题标题：{rowData.title}</Text>
-    				</View>
-    				<View>
-              <Text>{rowData.content}</Text>
+        <TouchableOpacity style={[commonstyle.row, styles.msglist]} activeOpacity={0.8} onPress={this.state.onpress} underlayColor="#000000" id={rowID}>
+          <View style={styles.msgliststatus}></View>
+          <View style={commonstyle.col1}>
+            <View style={commonstyle.row}>
+              <View style={commonstyle.col1}><Text style={commonstyle.yellow}>发件人{rowData.title}{rowData.desc}</Text></View>
+              <View style={styles.msglistdata}><Text style={commonstyle.gray}>14:21</Text></View>
             </View>
-    			</View>
+            <View style={commonstyle.row}>
+              <View style={commonstyle.col1}><Text style={commonstyle.cream}>标题{rowData.title}</Text></View>
+              <View style={styles.msglisticon}><Icon name="angle-right" size={15} color={'#484848'} /></View>
+            </View>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12]}>内容：{rowData.desc}</Text>
+          </View>
         </TouchableOpacity>
       </Swipeout>
     );

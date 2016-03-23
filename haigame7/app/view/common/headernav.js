@@ -74,7 +74,7 @@ module.exports = React.createClass({
    if(this.state.icon_name == undefined && this.state.icon_text == undefined){
      icon = <View></View>;
    }else if( this.state.icon_text != undefined){
-     icon = <Text style={CommonStyle.headertextright}>{this.state.icon_text}</Text>;
+     icon = <Text style={CommonStyle.headertextright}>{this.props.iconText}</Text>;
    }
    else{
      icon = <Icon name={this.state.icon_name} size={this.state.icon_size} color={this.state.icon_color} />;
@@ -123,8 +123,7 @@ module.exports = React.createClass({
     if (this.props.navigator != undefined){
       this.state.navigator.push({
         name: this.state.next_component.name,
-        component: this.state.next_component.component,
-        sceneConfig:Navigator.SceneConfigs.PushFromRight
+        component: this.state.next_component.component
       })
     } else {
       console.log('导航数据错误');

@@ -40,19 +40,42 @@ import About from './user/about_screen';
 import Share from './user/share_screen';
 import Help from './user/help_screen';
 import HintCreatTeamScreen from './user/hint_createteam_screen';
+import UserService from '../network/userservice';
+import Spinner from 'react-native-loading-spinner-overlay';
+//试试ES6的类属性
+let userdata = {
+  'PhoneNumber': '15101075739',
+  'UserWebNickName': '昵称'
+}
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
     return {
       _navigator: this.props.navigator,
-      phoneNum: '15101075739',
+      userData: userdata,
+      isOpen: true
     };
   },
   componentWillMount() {
     // console.log(this.props.navigator);
+    // let userInstance = new User();
   },
   componentDidMount() {
-    // console.log(this.state._navigator);
+    // console.log(this.state.userData.PhoneNumber);
+    UserService.getUserInfo({'PhoneNumber': this.state.userData.PhoneNumber},(response) => {
+      if (response[0].MessageCode == '0') {
+        userdata.UserWebNickName = response[1].UserWebNickName
+        this.setState({
+          userData: userdata,
+          isOpen: false
+        })
+      } else {
+        console.log('请求错误');
+        this.setState({
+          isOpen: false
+        })
+      }
+    });
   },
 
   _pressButton() {
@@ -105,8 +128,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: 'setting',
-        component: Setting,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: Setting
       })
     }else{
       console.log('_navigator_navigator_navigator_navigator');
@@ -117,8 +139,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: 'usersign',
-        component: UserSign,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: UserSign
       })
     }else{
       console.log('_navigator_navigator_navigator_navigator');
@@ -129,8 +150,7 @@ var User = React.createClass({
      if(nav) {
        nav.push({
          name: 'usercertify',
-         component: UserCertify,
-         sceneConfig:Navigator.SceneConfigs.FloatFromRight
+         component: UserCertify
        })
      }else{
        console.log('_navigator_navigator_navigator_navigator');
@@ -189,8 +209,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: '注册',
-        component: RegisterScreen,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: RegisterScreen
       })
     }else{
       console.log('导航设置错误');
@@ -201,8 +220,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: '信息',
-        component: MyMsg,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: MyMsg
       })
     }else{
       console.log('导航设置错误');
@@ -214,8 +232,7 @@ var User = React.createClass({
     if(nav) {
       nav.push({
         name: '重置密码',
-        component: ReSetPwd,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
+        component: ReSetPwd
       })
     }else{
       console.log('导航设置错误');
@@ -228,7 +245,6 @@ var User = React.createClass({
       nav.push({
         name: '关于H7',
         component: About,
-        sceneConfig:Navigator.SceneConfigs.FloatFromRight
       })
     }else{
       console.log('导航设置错误');
@@ -240,7 +256,7 @@ var User = React.createClass({
       nav.push({
         name: '分享',
         component: Share,
-        sceneConfig:Navigator.SceneConfigs.HorizontalSwipeJump
+        sceneConfig:Navigator.SceneConfigs.VerticalDownSwipeJump
       })
     }else{
       console.log('导航设置错误');
@@ -252,7 +268,6 @@ var User = React.createClass({
       nav.push({
         name: '帮助与反馈',
         component: Help,
-        sceneConfig:Navigator.SceneConfigs.FloatFromBottom
       })
     }else{
       console.log('导航设置错误');
@@ -278,11 +293,11 @@ var User = React.createClass({
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._pressUserInfo.bind(null,this)}>
             <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
+            <TouchableOpacity style={styles.headportraitv} activeOpacity={0.8} onPress={this._pressCertify.bind(null,this)}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></TouchableOpacity>
           </TouchableOpacity>
 
           <View style={styles.blocktop}>
-            <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
+            <Text style={[styles.headname, commonstyle.white]}>{this.state.userData.UserWebNickName}</Text>
             <TouchableOpacity style={styles.headtext} onPress={this._pressSign.bind(null,this)}>
               <Text style={[commonstyle.cream, styles.headtextfont]}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
             </TouchableOpacity>
@@ -399,7 +414,9 @@ var User = React.createClass({
 
         <View style={styles.listbox}></View>
         <View style={styles.listbox}></View>
+        <Spinner visible={this.state.isOpen} />
       </ScrollView>
+
     </View>
     );
   }

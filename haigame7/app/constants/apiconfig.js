@@ -11,6 +11,8 @@ var userApi = {
   'REGISTERUSER':apiSetup.MASTER_API_PATH + 'v1/User/Register?accesstoken=' + apiSetup.ACCESS_TOKEN,
   'RESETPASSWORD':apiSetup.MASTER_API_PATH + 'v1/User/ResetPassWord?accesstoken=' + apiSetup.ACCESS_TOKEN,
   'LOGINUSER':apiSetup.MASTER_API_PATH + 'v1/User/Login?accesstoken=' + apiSetup.ACCESS_TOKEN,
+  'UPDATE_USER_INFO':apiSetup.MASTER_API_PATH + 'v1/User/UpdateUserInfo?accesstoken=' + apiSetup.ACCESS_TOKEN,
+  'GET_USER_INFO':apiSetup.MASTER_API_PATH + 'v1/User/UserInfo?accesstoken=' + apiSetup.ACCESS_TOKEN,
 }
 
 const assertApi = {
@@ -19,6 +21,8 @@ const assertApi = {
 }
 const fightApi = {
   'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'GETALLFIGHTINFO':apiSetup.MASTER_API_PATH + 'v1/Fight/AllFightList?accesstoken='+apiSetup.ACCESS_TOKEN,
+  'MAKECHANLLENGE':apiSetup.MASTER_API_PATH + 'v1/Fight/MakeChallenge?accesstoken='+apiSetup.ACCESS_TOKEN,
 }
 
 module.exports = {

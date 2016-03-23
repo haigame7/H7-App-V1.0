@@ -117,7 +117,7 @@ var CommonStyle = StyleSheet.create({
         padding: 5,
         marginTop: 5,
         marginBottom: 40,
-        backgroundColor: '#000000',
+        backgroundColor: '#1A1917',
     },
     modaltext: {
         marginTop: 30,
@@ -252,6 +252,13 @@ var CommonStyle = StyleSheet.create({
         borderColor: '#C1337F',
     },
     //刷新&加载
+    loading: {
+        height: 36,
+        flex: 1,
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        justifyContent: 'center'
+    },
     refreshview: {
         height: 30,
         backgroundColor: '#000000',
