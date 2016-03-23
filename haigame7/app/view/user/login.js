@@ -45,7 +45,7 @@ export default class Login extends Component {
     }
 
     componentWillMount() {
-      // console.log('登录页');
+
     }
 
     render() {
@@ -141,6 +141,7 @@ export default class Login extends Component {
             //     //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
             // }
             if (response[0].MessageCode == '0') {
+              this.props.updateUserData(response[1])
               AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(this.state.data));
               setTimeout(() => {
                   this.props.navigator.pop();

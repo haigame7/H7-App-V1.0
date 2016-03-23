@@ -21,6 +21,7 @@ import MyReceiveApply from './user/myreceiveapply_screen';
 import MySendApply from './user/mysendapply_screen';
 import ApplyJoin from './user/applyjoin_screen';
 import Login from './user/login';
+import First from './common/FirstPageComponent'
 var MatchStyle = require('../styles/matchstyle');
 
 var Match = React.createClass({
@@ -30,7 +31,11 @@ var Match = React.createClass({
       _navigator: this.props.navigator
     };
   },
-
+  componentWillMount() {
+    // console.log('match');
+    // console.log(this.props);
+    // let userInstance = new User();
+  },
   _pressButton() {
     const nav = this.props.navigator;
     if(nav) {
@@ -59,7 +64,8 @@ var Match = React.createClass({
     if(nav) {
       nav.push({
         name: 'listview',
-        component: MyReceiveApply
+        component: MyReceiveApply,
+        params: {...this.props}
       })
     }else{
       console.log('导航设置错误');
@@ -70,7 +76,7 @@ var Match = React.createClass({
     if(nav) {
       nav.push({
         name: 'listview',
-        component: MySendApply
+        component: First
       })
     }else{
       console.log('导航设置错误');

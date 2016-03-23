@@ -29,24 +29,17 @@ export default class extends Component {
     this.state = {
       date: new Date(),
       modalVisible:false,
-      UserWebNickName:'昵称',
-      UserWebPicture: '头像',
-      Sex: '性别',
-      Address: '地区',
-      Birthday: '生日',
-      Hobby : '个性签名',
-      PhoneNumber: '手机号',
+      userData: this.props.userdata,
       pickerData: [{
 				'北京': {
 					'北京': ['朝阳区']
 				}
 			}],
 			selectedValue: ['北京', '北京', '朝阳区'],
-      avatarSource:{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}
+      avatarSource: {uri:this.props.userdata.UserWebPicture}
     }
   }
 componentDidMount() {
-  console.log('我去你妹');
   fetch('https://raw.githubusercontent.com/beefe/react-native-picker/master/demo/area.json').then(res => {
     console.log(res);
     res.json().then(data => {
@@ -106,6 +99,11 @@ componentDidMount() {
     console.log('整体保存吧,图片已这里直接村base64存上去');
   }
 
+  /**
+   * 更新属性
+   * @param  {[type]} property [description]
+   * @return {[type]}          [description]
+   */
   _editInfo(property) {
     var _this = this;
     this.props.navigator.push({
@@ -181,9 +179,9 @@ _onPressHandle_2(){
      <Header screenTitle='我的资料'  navigator={this.props.navigator} iconText='保存' callback={this._callback}/>
      <ScrollView style={commonstyle.bodyer}>
        <View style={[styles.listview, {height: 100,}]}>
-         <Text style={[styles.listviewtextleft, {marginTop: 35,}]}>{this.state.UserWebPicture}</Text>
+         <Text style={[styles.listviewtextleft, {marginTop: 35,}]}>{this.state.userData.UserWebPicture}</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'头像')}>
-           <Image style={styles.listviewtextimg} source={this.state.avatarSource} />
+           <Image style={styles.listviewtextimg} source={{uri:this.state.userData.UserWebPicture}} />
          </TouchableOpacity>
          <Icon name="angle-right" size={30} color={'#484848'} style={[styles.listviewiconright, {marginTop: 30,}]} />
        </View>
@@ -191,7 +189,7 @@ _onPressHandle_2(){
        <View style={styles.listview} >
          <Text  style={styles.listviewtextleft}>昵称</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'昵称')}>
-           <Text style={styles.listviewtextright}>{this.state.UserWebNickName}</Text>
+           <Text style={styles.listviewtextright}>{this.state.userData.UserWebNickName}</Text>
          </TouchableOpacity>
          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
        </View>
@@ -199,7 +197,7 @@ _onPressHandle_2(){
        <View style={styles.listview} >
          <Text  style={styles.listviewtextleft}>性别</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._onPressHandle.bind(this)} >
-           <Text style={styles.listviewtextright}>{parseInt(this.state.Sex) ? '男' : '女'} </Text>
+           <Text style={styles.listviewtextright}>{parseInt(this.state.userData.Sex) ? '男' : '女'} </Text>
          </TouchableOpacity>
          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
        </View>
@@ -215,7 +213,7 @@ _onPressHandle_2(){
        <View style={styles.listview} >
          <Text  style={styles.listviewtextleft}>生日</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._onPressHandle_2.bind(this)} >
-           <Text style={styles.listviewtextright}>{this.state.Birthday}</Text>
+           <Text style={styles.listviewtextright}>{this.state.userData.Birthday}</Text>
          </TouchableOpacity>
          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
        </View>
@@ -223,7 +221,7 @@ _onPressHandle_2(){
        <View style={styles.listview} >
          <Text  style={styles.listviewtextleft}>手机号</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'手机号')}>
-         <Text style={styles.listviewtextright}>{this.state.PhoneNumber}</Text>
+         <Text style={styles.listviewtextright}>{this.state.userData.PhoneNumber}</Text>
          </TouchableOpacity>
          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
        </View>
@@ -231,7 +229,7 @@ _onPressHandle_2(){
        <View style={styles.listview} >
          <Text  style={styles.listviewtextleft}>个性签名</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'个性签名')}>
-           <Text style={styles.listviewtextright}>{this.state.Hobby}</Text>
+           <Text style={styles.listviewtextright}>{this.state.userData.Hobby}</Text>
          </TouchableOpacity>
          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
        </View>
