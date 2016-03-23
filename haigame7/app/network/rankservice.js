@@ -6,36 +6,39 @@ import ApiConfig from '../constants/apiconfig';
 export default{
 
   /* 获取个人排行 */
-  resetPassword(data,callback) {
+  rankUser(data,callback) {
     /**
-     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
-     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {[type]}   ApiConfig.RANK_API.USERRANK [api path]
+     * @param  {[type]}                [params]
      * @param  {Function} callback
-     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     * @return response                        [回调方法]
      */
       FecthService.postFecth(
-        ApiConfig.USER_API.RESETPASSWORD,
+        ApiConfig.RANK_API.USERRANK,
         {
-          'PhoneNumber':data.phone,
-          'PassWord':data.password,
-          'VerifyCode':data.securitycode
+          'RankType':data.ranktype,
+          'RankSort':data.ranksort,
+          'StartPage':data.startpage,
+          'PageCount':data.pagecount
         },
         callback
       );
   },
   /* 获取团队排行 */
-  loginByInfo(data,callback) {
+  rankTeam(data,callback) {
     /**
-     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
-     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {[type]}   ApiConfig.RANK_API.TEAMRANK [api path]
+     * @param  {[type]}               [params]
      * @param  {Function} callback
-     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     * @return response content                        [回调方法]
      */
       FecthService.postFecth(
-        ApiConfig.USER_API.LOGINUSER,
+        ApiConfig.RANK_API.TEAMRANK,
         {
-          'PhoneNumber':data.phone,
-          'PassWord':data.password,
+          'RankType':data.ranktype,
+          'RankSort':data.ranksort,
+          'StartPage':data.startpage,
+          'PageCount':data.pagecount
         },
         callback
       );

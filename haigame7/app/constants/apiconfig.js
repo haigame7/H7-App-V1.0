@@ -21,14 +21,20 @@ const assertApi = {
 }
 const fightApi = {
   'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'GETFIGHTTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/TeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'GETALLFIGHTINFO':apiSetup.MASTER_API_PATH + 'v1/Fight/AllFightList?accesstoken='+apiSetup.ACCESS_TOKEN,
   'MAKECHANLLENGE':apiSetup.MASTER_API_PATH + 'v1/Fight/MakeChallenge?accesstoken='+apiSetup.ACCESS_TOKEN,
+}
+const rankApi = {
+  'USERRANK':apiSetup.MASTER_API_PATH +'/v1/Rank/UserRank?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'TEAMRANK':apiSetup.MASTER_API_PATH + 'v1/Rank/TeamRank?accesstoken='+apiSetup.ACCESS_TOKEN,
 }
 
 module.exports = {
   USER_API: userApi,
   ASSERT_API: assertApi,
   FIGHT_API:fightApi,
+  RANK_API:rankApi,
 }
 
 //这样写应该也行

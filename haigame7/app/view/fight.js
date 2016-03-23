@@ -20,6 +20,7 @@ var {
   TouchableHighlight,
   ToastAndroid,
   Navigator,
+  ListView,
   Alert,
   ScrollView
   } = React;
@@ -30,22 +31,28 @@ import MakeChanllenge from './fight/makechanllenge';
 import FightState from './fight/fightstate';
 import FightService from '../network/fightservice';
 import GlobalSetup from '../constants/globalsetup';
-
+import GlobalVariable from '../constants/globalvariable';
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/fightstyle';
 export default class extends Component{
   constructor(props) {
     super(props);
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      navbar: 0,
-      subnavbar:1,
+      dataSource: ds.cloneWithRows(['row1','row2']),
+      teamlist:[],
+      teamlistRequestData:{
+          createUserID:'0',
+          type:'createdate',
+          sort:'desc',
+          startpage:GlobalVariable.PAGE_INFO.StartPage,
+          pagecount:GlobalVariable.PAGE_INFO.PageCount,
+      },
       isOpen: false,
-      isDisabled: false,
-      invite:0,
       login:0,
+      userteamname:'',
       userteamdata:{
         phone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
-        teamname:'',
         odd:0,
         asset:0,
         teamlogo:'',
@@ -56,6 +63,9 @@ export default class extends Component{
         totalcount:0,
       },
     }
+  }
+
+  componentDidMount() {
     this.initData();
   }
   _openModa() {
@@ -69,7 +79,6 @@ export default class extends Component{
   gotoRoute(name){
     if (name == 'makechanllenge') {
        {/*先判断登录*/}
-       if(this.state.phoneNum=='')
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
             this.props.navigator.push({ name: name, component: MakeChanllenge, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
@@ -79,7 +88,20 @@ export default class extends Component{
       }
     }
   }
-
+  getTeamList(data){
+    FightService.getFightTeamList(data,(response) => {
+      console.log(response);
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Alert.alert('服务器请求异常');
+        }else if(response.MessageCode == '40002'){
+          Alert.alert('token过期');
+        }
+      }else{
+          Alert.alert('请求错误');
+      }
+    });
+      }
   initData(){
     {/*请求我的战队信息*/}
     FightService.getUserDefaultTeam(this.state.userteamdata,(response) => {
@@ -90,38 +112,20 @@ export default class extends Component{
           Alert.alert('token过期');
         }else if(response[0].MessageCode == '20003'){
           this.setState({
-            userteamdata:{
-            teamname:'还没有创建战队',
-            odd:0,
-            asset:0,
-            teamlogo:'',
-            fightscore:0,
-            losecount:0,
-            wincount:0,
-            followcount:0,
-            totalcount:0,
-          },
+            userteamname:'还没有创建战队',
           });
+          this.getTeamList(this.state.teamlistRequestData);
         }else if(response[0].MessageCode=='10001'){
           this.setState({
-           userteamdata:{
-            teamname:'还没有登录',
-            odd:0,
-            asset:0,
-            teamlogo:'',
-            fightscore:0,
-            losecount:0,
-            wincount:0,
-            followcount:0,
-            totalcount:0,
-          },
+           userteamname:'还没有登录',
           });
+          this.getTeamList(this.state.teamlistRequestData);
         }
         else if(response[0].MessageCode == '0'){
           var oddsdata =  this.initUserTeamOdd(response[1].WinCount,response[1].LoseCount,response[1].FollowCount);
           this.setState({
+            userteamname:response[1].TeamName,
             userteamdata:{
-              teamname:response[1].TeamName,
               odd:oddsdata.odd,
               asset:response[1].Asset,
               teamlogo:response[1].TeamLogo,
@@ -132,7 +136,15 @@ export default class extends Component{
               totalcount:oddsdata.totalcount,
             },
             login:1,
+            teamlistRequestData:{
+                createUserID:response[1].Creater,
+                type:'teamfightscore',
+                sort:'desc',
+                startpage:GlobalVariable.PAGE_INFO.StartPage,
+                pagecount:GlobalVariable.PAGE_INFO.PageCount,
+            },
           });
+          this.getTeamList(this.state.teamlistRequestData);
         }
       }
       else {
@@ -209,7 +221,7 @@ export default class extends Component{
         <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo}} />
         <View style={commonstyle.col1}>
           <View style={commonstyle.row}>
-            <View style={commonstyle.col1}><Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.userteamdata.teamname}</Text></View>
+            <View style={commonstyle.col1}><Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.userteamname}</Text></View>
             <TouchableOpacity style={[commonstyle.row, styles.teamlistright]} onPress={this._openModa.bind(this)}>
               <Text style={[commonstyle.blue, commonstyle.fontsize12]}>{'约战规则 '}</Text>
               <Icon name='angle-right' size={16}  color={'#00B4FF'}/>
