@@ -14,7 +14,8 @@ var {
   Modal,
   Dimensions,
   StyleSheet,
-  Component
+  Component,
+  Alert
   } = React;
 
 import commonstyle from '../../styles/commonstyle';
@@ -46,13 +47,15 @@ export default class extends Component {
   }
 componentDidMount() {
   fetch('https://raw.githubusercontent.com/beefe/react-native-picker/master/demo/area.json').then(res => {
+    console.log(res);
     res.json().then(data => {
+      Alert.alert('123')
       this.setState({
         pickerData: this.createAreaData(data)
       });
     });
   }, err => {
-    console.log(err);
+    Alert.alert('err')
   });
 }
   createAreaData(area){
