@@ -104,7 +104,6 @@ export default class extends React.Component {
         <Header screenTitle='约战动态'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <ListView
-            removeClippedSubviews={false}
             dataSource={this.state.dataSource}
             renderRow= {this._renderRow.bind(this)}
             renderFooter={this._renderFooter.bind(this)}
