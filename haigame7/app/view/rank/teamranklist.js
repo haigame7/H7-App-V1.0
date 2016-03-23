@@ -33,71 +33,15 @@ var TeamRankList = React.createClass({
     return(
       <View>
         <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
-          <Image style={styles.ranklistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={styles.ranklistimg} source={{uri:this.state.team.TeamPicture}} />
           <View style={styles.ranklistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{'生命不息,电竞不止~~1231231231'}</Text>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.state.team.TeamName}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{this.state.team.TeamDescription}</Text>
             <View style={styles.ranklistrow}>
               <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
+              <Text style={commonstyle.red}>{this.state.team.FightScore}</Text>
               <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
-          <Image style={styles.ranklistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={styles.ranklistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{'生命不息,电竞不止~~1231231231'}</Text>
-            <View style={styles.ranklistrow}>
-              <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-              <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
-          <Image style={styles.ranklistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={styles.ranklistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{'生命不息,电竞不止~~1231231231'}</Text>
-            <View style={styles.ranklistrow}>
-              <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-              <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
-          <Image style={styles.ranklistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={styles.ranklistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{'生命不息,电竞不止~~1231231231'}</Text>
-            <View style={styles.ranklistrow}>
-              <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-              <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
-          <Image style={styles.ranklistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={styles.ranklistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{'生命不息,电竞不止~~1231231231'}</Text>
-            <View style={styles.ranklistrow}>
-              <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
-              <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
+              <Text style={commonstyle.red}>{this.state.team.Asset}</Text>
             </View>
           </View>
         </TouchableOpacity>
