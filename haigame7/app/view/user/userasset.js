@@ -17,7 +17,8 @@ import React,
     StyleSheet,
     ListView,
     RefreshControl,
-    ToastAndroid
+    ToastAndroid,
+    Alert
   } from 'react-native';
 import styles from '../../styles/userstyle';
 import Recharge from './recharge';
@@ -38,7 +39,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
              content: undefined,
           totalAsset: 0,
               myRank: 0,
-            phoneNum: this.props.phoneNum?this.props.phoneNum : '' ,
+            phoneNum: this.props.phoneNum?this.props.phoneNum : '15101075739' ,
          isFetchData: true,
               keykey: 0,
               isOpen: true,
@@ -54,11 +55,16 @@ import Spinner from 'react-native-loading-spinner-overlay';
         if (response[0].MessageCode == '0') {
           this.setState({
             myRank: response[1].MyRank,
-        totalAsset: response[1].TotalAsset
+        totalAsset: response[1].TotalAsset,
+            isOpen: false
           });
         } else {
           console.log('请求错误' + response[0].Message);
+          this.setState({
+            isOpen: false
+          });
         }
+        // this.setState({isOpen: false})
       });
 
       AssertService.fetchAssertList(this.state.phoneNum,(response) => {
@@ -71,6 +77,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
           });
         } else {
           console.log('请求错误' + response[0].Message);
+          this.setState({isOpen: false})
         }
       });
     }

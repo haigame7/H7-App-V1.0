@@ -36,19 +36,42 @@ import About from './user/about_screen';
 import Share from './user/share_screen';
 import Help from './user/help_screen';
 import HintCreatTeamScreen from './user/hint_createteam_screen';
+import UserService from '../network/userservice';
+import Spinner from 'react-native-loading-spinner-overlay';
+//试试ES6的类属性
+let userdata = {
+  'PhoneNumber': '15101075739',
+  'UserWebNickName': '昵称'
+}
 var User = React.createClass({
   getInitialState() {
     console.log('UserScreen Init Data');
     return {
       _navigator: this.props.navigator,
-      phoneNum: '15101075739',
+      userData: userdata,
+      isOpen: true
     };
   },
   componentWillMount() {
     // console.log(this.props.navigator);
+    // let userInstance = new User();
   },
   componentDidMount() {
-    // console.log(this.state._navigator);
+    // console.log(this.state.userData.PhoneNumber);
+    UserService.getUserInfo({'PhoneNumber': this.state.userData.PhoneNumber},(response) => {
+      if (response[0].MessageCode == '0') {
+        userdata.UserWebNickName = response[1].UserWebNickName
+        this.setState({
+          userData: userdata,
+          isOpen: false
+        })
+      } else {
+        console.log('请求错误');
+        this.setState({
+          isOpen: false
+        })
+      }
+    });
   },
 
   _pressButton() {
@@ -224,7 +247,7 @@ var User = React.createClass({
           </TouchableOpacity>
 
           <View style={styles.blocktop}>
-            <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
+            <Text style={[styles.headname, commonstyle.white]}>{this.state.userData.UserWebNickName}</Text>
             <TouchableOpacity style={styles.headtext} onPress={this._pressSign.bind(null,this)}>
               <Text style={[commonstyle.cream, styles.headtextfont]}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
             </TouchableOpacity>
@@ -341,7 +364,9 @@ var User = React.createClass({
 
         <View style={styles.listbox}></View>
         <View style={styles.listbox}></View>
+        <Spinner visible={this.state.isOpen} />
       </ScrollView>
+
     </View>
     );
   }
