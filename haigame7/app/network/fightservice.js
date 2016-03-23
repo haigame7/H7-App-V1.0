@@ -22,7 +22,7 @@ export default{
       );
   },
   /* 获取团队排行 */
-  loginByInfo(data,callback) {
+  getAllFightInfo(data,callback) {
     /**
      * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
      * @param  {[type]}   {'PhoneNumber':phone}             [params]
@@ -30,10 +30,10 @@ export default{
      * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
      */
       FecthService.postFecth(
-        ApiConfig.USER_API.LOGINUSER,
+        ApiConfig.FIGHT_API.GETALLFIGHTINFO,
         {
-          'PhoneNumber':data.phone,
-          'PassWord':data.password,
+          'StartPage':data.startpage,
+          'PageCount':data.pagecount,
         },
         callback
       );
