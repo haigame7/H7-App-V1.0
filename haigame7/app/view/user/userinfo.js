@@ -23,6 +23,7 @@ import styles from '../../styles/userstyle';
 import EditScreen from './edituserinfo';
 import Picker from 'react-native-picker';
 import UserService from '../../network/userservice';
+import AreaData from '../../components/common/area.json';
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -30,25 +31,13 @@ export default class extends Component {
       date: new Date(),
       modalVisible:false,
       userData: this.props.userdata,
-      pickerData: [{
-				'北京': {
-					'北京': ['朝阳区']
-				}
-			}],
+      pickerData: {'北京':{'北京':['朝阳区']}},
 			selectedValue: ['北京', '北京', '朝阳区'],
       avatarSource: {uri:this.props.userdata.UserWebPicture}
     }
   }
 componentDidMount() {
-  fetch('https://raw.githubusercontent.com/beefe/react-native-picker/master/demo/area.json').then(res => {
-    res.json().then(data => {
-      this.setState({
-        pickerData: this.createAreaData(data)
-      });
-    });
-  }, err => {
-    console.log(err);
-  });
+  this.setState({pickerData: this.createAreaData(AreaData)})
 }
   createAreaData(area){
   	let data = {};
@@ -64,7 +53,7 @@ componentDidMount() {
   			data[ProvinceName][cityName] = area;
   		}
   	}
-    
+
   	return data;
   }
   createDateData(){
@@ -162,10 +151,12 @@ _onPressHandle_2(){
    })
  }
  _addrDone(pickedValue){
-   let addr  = pickedValue[1] + '-' + pickedValue[2];
-   this.setState({
-     Address: addr
-   })
+   let addr;
+   if (pickedValue[0] == pickedValue[1]) {
+     addr = pickedValue[1] + '-' + pickedValue[2];
+   } else {
+     addr = pickedValue[0] + '-' + pickedValue[1];
+   }
  }
  _dateDone(pickedValue){
   //  console.log(pickedValue);
