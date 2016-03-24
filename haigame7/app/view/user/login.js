@@ -45,7 +45,7 @@ export default class Login extends Component {
     }
 
     componentWillMount() {
-      // console.log('登录页');
+
     }
 
     render() {
@@ -112,33 +112,48 @@ export default class Login extends Component {
 
         UserService.loginByInfo(this.state.data, (response) => {
             //return:{MessageCode: 0, Message: ""}
-            if (response !== GlobalSetup.REQUEST_SUCCESS) {
-                let message = '';
-                this.setState({ loading: false });
-                if (response.MessageCode == '40001') {
-                    message = '服务器请求异常';
-                } else if (response.MessageCode == '10001') {
-                    message = '该手机号不存在';
-                } else if (response.MessageCode == '10002') {
-                    message = '密码错误';
-                } else if (response.MessageCode == '0') {
-                    message = '登录成功';
-                }
-                Alert.alert(
-                    message,
-                );
-
-                //保存用户信息
-                if (message == '登录成功') {
-                    AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(this.state.data));
-                    setTimeout(() => {
-                        this.props.navigator.pop();
-                    }, 2000);
-                }
-                //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+            // if (response !== GlobalSetup.REQUEST_SUCCESS) {
+            //     let message = '';
+            //     this.setState({ loading: false });
+            //     if (response.MessageCode == '40001') {
+            //         message = '服务器请求异常';
+            //     } else if (response.MessageCode == '10001') {
+            //         message = '该手机号不存在';
+            //     } else if (response.MessageCode == '10002') {
+            //         message = '密码错误';
+            //     } else if (response.MessageCode == '0') {
+            //         message = '登录成功';
+            //     }
+            //     Alert.alert(
+            //         message,
+            //     );
+            //
+            //     //保存用户信息
+            //     if (message == '登录成功') {
+            //         AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(this.state.data));
+            //         setTimeout(() => {
+            //             this.props.navigator.pop();
+            //         }, 2000);
+            //     }
+            //     //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+            // } else {
+            //     Alert.alert('请求错误');
+            //     //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+            // }
+            if (response[0].MessageCode == '0') {
+              this.props.updateUserData(response[1])
+              AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(this.state.data));
+              setTimeout(() => {
+                  this.props.navigator.pop();
+              }, 2000);
             } else {
-                Alert.alert('请求错误');
-                //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+              console.log('请求错误' + response[0].Message);
+              Alert.alert(
+                  response[0].Message
+              );
+              this.setState({
+                loading: false,
+              })
             }
         })
     }

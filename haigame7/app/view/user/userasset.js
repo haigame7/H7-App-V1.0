@@ -2,22 +2,24 @@
 
 var Header = require('../common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/FontAwesome');
-import React,{
-  View,
-  Component,
-  Text,
-  TextArea,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  Navigator,
-  TouchableHighlight,
-  StyleSheet,
-  ListView,
-  RefreshControl,
-  ToastAndroid
-} from 'react-native';
-
+var Util = require('../common/util');
+import React,
+  {
+    View,
+    Component,
+    Text,
+    TextArea,
+    TextInput,
+    Image,
+    TouchableOpacity,
+    Navigator,
+    TouchableHighlight,
+    StyleSheet,
+    ListView,
+    RefreshControl,
+    ToastAndroid,
+    Alert
+  } from 'react-native';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Recharge from './recharge';
@@ -50,28 +52,34 @@ import Spinner from 'react-native-loading-spinner-overlay';
     }
     componentDidMount() {
       AssertService.getTotalAssertAndRank(this.state.phoneNum,(response) => {
-        console.log(response);
-      //   if (response[0].MessageCode == '0') {
-      //     this.setState({
-      //       myRank: response[1].MyRank,
-      //   totalAsset: response[1].TotalAsset,
-      //   isOpen: false
-      //     });
-      //   } else {
-      //     this.setState({isOpen: false})
-      //     console.log('请求错误' + response[0].MessageCide);
-      //   }
+        // console.log(response);
+        if (response[0].MessageCode == '0') {
+          this.setState({
+            myRank: response[1].MyRank,
+        totalAsset: response[1].TotalAsset,
+            isOpen: false
+          });
+        } else {
+          console.log('请求错误' + response[0].Message);
+          this.setState({
+            isOpen: false
+          });
+        }
+        // this.setState({isOpen: false})
       });
 
       AssertService.fetchAssertList(this.state.phoneNum,(response) => {
-        console.log(response);
-
-        // if (response.MessageCode == '0' || response[0].MessageCode == '0') {
-        // this.setState({isOpen: false})
-        // } else {
-        //   this.setState({isOpen: false})
-        //   console.log('请求错误');
-        // }
+        if (response[0].MessageCode == '0') {
+          let newData = response[1];
+            this.setState({
+              dataSource: this.state.dataSource.cloneWithRows(newData),
+              db:newData,
+          isOpen: false
+          });
+        } else {
+          console.log('请求错误' + response[0].Message);
+          this.setState({isOpen: false})
+        }
       });
     }
     getData() {

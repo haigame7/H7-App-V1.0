@@ -42,6 +42,26 @@ export default{
       );
   },
   /* 获取团队排行 */
+  makeChanllenge(data,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.FIGHT_API.MAKECHANLLENGE,
+        {
+          'UserID':data.userid,
+          'STeamID':data.steamid,
+          'ETeamID':data.eteamid,
+          'Money':data.money,
+          'FightTime':data.fighttime,
+        },
+        callback
+      );
+  },
+  /* 获取团队排行 */
   getAllFightInfo(data,callback) {
     /**
      * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
