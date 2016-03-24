@@ -20,13 +20,7 @@ export default class extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      UserWebNickName:'昵称',
-      UserWebPicture: base64Icon,
-      Sex: '性别',
-      Address: '地区',
-      Birthday: '生日',
-      Hobby : '个性签名',
-      PhoneNumber: '手机号',
+      userdata: this.props.userdata,
       iconText: '完成',
     }
   }
@@ -44,16 +38,16 @@ export default class extends Component {
     let value;
     switch (property) {
       case '昵称':
-        value = this.state.UserWebNickName;
+        value = this.state.userdata.UserWebNickName;
         break;
       case '个性签名':
-        value = this.state.Hobby;
+        value = this.state.userdata.Hobby;
         break;
       case '手机号':
-        value = this.state.PhoneNumber;
+        value = this.state.userdata.PhoneNumber;
       case '头像':
         this.selectPhotoTapped.bind(this)
-        value = this.state.UserWebPicture;
+        value = this.state.userdata.UserWebPicture;
       default:
         break;
     }
@@ -116,7 +110,7 @@ export default class extends Component {
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                 onChangeText={(text) => this.setState({UserWebNickName: text})}
-                defaultvalue={this.state.UserWebNickName}
+                defaultvalue={this.state.userdata.UserWebNickName}
               />
             </View>
           )
@@ -127,7 +121,7 @@ export default class extends Component {
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                 onChangeText={(text) => this.setState({Hobby: text})}
-                defaultvalue={this.state.Hobby}
+                defaultvalue={this.state.userdata.Hobby}
               />
             </View>
           )
@@ -138,7 +132,7 @@ export default class extends Component {
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                 onChangeText={(text) => this.setState({PhoneNumber: text})}
-                defaultvalue={this.state.PhoneNumber}
+                defaultvalue={this.state.userdata.PhoneNumber}
               />
             </View>
           )
@@ -148,7 +142,7 @@ export default class extends Component {
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={[styles_1.avatar, styles_1.avatarContainer, {marginBottom: 20}]}>
               { this.state.UserWebPicture === null ? <Text>Select a Photo</Text> :
-                <Image style={styles_1.avatar} source={{uri:this.state.UserWebPicture}} />
+                <Image style={styles_1.avatar} source={{uri:this.state.userdata.UserWebPicture}} />
               }
               </View>
             </TouchableOpacity>

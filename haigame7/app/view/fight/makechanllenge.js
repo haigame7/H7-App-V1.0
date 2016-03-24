@@ -7,6 +7,7 @@ var Util = require('../common/util');
 var DateTimePicker = require('@remobile/react-native-datetime-picker');
 var {
   View,
+  Alert,
   Component,
   Text,
   TextArea,
@@ -19,44 +20,98 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/fightstyle';
+import FightService from '../../network/fightservice';
+import GlobalSetup from '../../constants/globalsetup';
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
       content:undefined,
       textnumber:0,
-      date:'',
-      data:{
-        money:undefined,
-        date:undefined,
-      },
+      teamasset:0,
+      userid:0,
+      steamid:0,
+      eteamid:0,
+      money:-1,
+      fighttime:'',
       messages: []
     }
   }
+  componentDidMount() {
+    this.setState({
+      teamasset:this.props.teamasset,
+      userid:this.props.userid,
+      steamid:this.props.steamid,
+      eteamid:this.props.eteamid,
+    });
+  }
+
   onChange(text){
     this.setState(
       {
+        content:text,
         textnumber:text.length
       }
     );
-    console.log(text.length);
+    console.log(text);
+  }
+  makechanllenge(){
+
+    let datetomorrow = new Date().getTime()+1000*60*60*24;
+    let datenextweek = new Date().getTime()+1000*60*60*24*7;
+    let datefight = new Date(this.state.fighttime).getTime();
+    if(this.state.fighttime==''){
+        Alert.alert('请输入日期');
+    }
+    else if(this.state.money>this.state.teamasset){
+          Alert.alert('战队资产不够');
+    }else if(this.state.money<10){
+        Alert.alert('请输入大于10氦金的正整数');
+    }else if(datefight<datetomorrow){
+        Alert.alert('约战日期应在一天以后');
+    }else if(datefight>datenextweek){
+        Alert.alert('约战日期应在一周内');
+    }
+      else{
+      let requestData={
+        userid:this.state.userid,
+        steamid:this.state.steamid,
+        eteamid:this.state.eteamid,
+        money:parseInt(this.state.money),
+        fighttime:this.state.fighttime,
+      };
+      FightService.makeChanllenge(requestData,(response) => {
+       if (response !== GlobalSetup.REQUEST_SUCCESS) {
+         if (response[0].MessageCode == '0') {
+          Alert.alert(response[0].Message+'!');
+         } else {
+           console.log('请求错误' + response[0].MessageCode);
+         }
+      }else {
+          Alert.alert('请求错误');
+          //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+      }
+      });
+    }
+
   }
   showDatePicker(){
       var date = this.state.date;
       this.picker.showDatePicker(date, (d)=>{
-          this.setState({date:d});
+          this.setState({fighttime:d});
       });
   }
   showTimePicker(){
       var date = this.state.date;
       this.picker.showTimePicker(date, (d)=>{
-          this.setState({date:d});
+          this.setState({fighttime:d});
       });
   }
   formatDate(strTime){
     if(strTime!=''){
       var date = new Date(strTime);
-      return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+      var format = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+      return format;
     }else{
       return '';
     }
@@ -70,10 +125,10 @@ export default class extends Component{
           <View  style={styles.fightview}>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于10氦金'}</Text>
             <View style={styles.fightviewinput}>
-              <TextInput style={commonstyle.cream} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.data.money = text}  />
+              <TextInput style={commonstyle.cream} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
             </View>
             <View style={styles.fightviewinput}>
-              <TextInput style={commonstyle.cream} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.date = text} defaultValue={this.formatDate(this.state.date.toString())}  />
+              <TextInput style={commonstyle.cream} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.fighttime = text} defaultValue={this.formatDate(this.state.fighttime.toString())}  />
               <TouchableOpacity style={styles.fightviewinputicon} activeOpacity={0.8} onPress={this.showDatePicker.bind(this)}>
                 <Icon name="calendar" size={16}  color={'#484848'}/>
               </TouchableOpacity>
@@ -90,7 +145,7 @@ export default class extends Component{
                 ></TextInput>
               <View style={styles.fightviewtextnum}><Text style={commonstyle.cream}>{this.state.textnumber}/200</Text></View>
             </View>
-            <TouchableOpacity style = {styles.fightviewbtn}  >
+            <TouchableOpacity style = {styles.fightviewbtn} onPress={()=>this.makechanllenge()}  >
               <Text style = {commonstyle.white}> {'发送挑战'}</Text>
             </TouchableOpacity>
           </View>

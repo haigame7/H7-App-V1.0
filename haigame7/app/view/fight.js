@@ -52,6 +52,7 @@ export default class extends Component{
       login:0,
       footerMsg: "点击加载更多",
       userteamname:'',
+      userteamid:0,
       userteamdata:{
         phone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
         odd:0,
@@ -77,14 +78,24 @@ export default class extends Component{
     console.log('******');
      this.setState({isOpen: false});
   }
-  gotoRoute(name){
+  gotoRoute(name,userteamid,fightteamid){
     if (name == 'makechanllenge') {
        {/*先判断登录*/}
        if(this.state.login==0){
          Alert.alert(this.state.userteamname);
        }else{
          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-             this.props.navigator.push({ name: name, component: MakeChanllenge, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+             this.props.navigator.push({
+               name: name,
+               params:{
+                 userid:this.state.teamlistRequestData.createUserID,
+                 steamid:userteamid,
+                 eteamid:fightteamid,
+                 teamasset:this.state.userteamdata.asset,
+               },
+               component: MakeChanllenge,
+               sceneConfig: Navigator.SceneConfigs.FloatFromBottom
+             });
          }
        }
     } else if (name == 'fightstate') {
@@ -130,6 +141,7 @@ export default class extends Component{
           var oddsdata =  this.initTeamOdd(response[1].WinCount,response[1].LoseCount,response[1].FollowCount);
           this.setState({
             userteamname:response[1].TeamName,
+            userteamid:response[1].TeamID,
             userteamdata:{
               phone:this.state.userteamdata.phone,
               odd:oddsdata.odd,
@@ -286,7 +298,7 @@ export default class extends Component{
                 <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '+rowData.Asset+'  '}</Text>
               </View>
             </View>
-            <TouchableOpacity style={[commonstyle.btnredwhite, styles.teamlistbtn]} onPress={()=>this.gotoRoute('makechanllenge')}>
+            <TouchableOpacity style={[commonstyle.btnredwhite, styles.teamlistbtn]} onPress={()=>this.gotoRoute('makechanllenge',this.state.userteamid,rowData.TeamID)}>
               <Text style={[commonstyle.white, commonstyle.fontsize12]}>{'发起约战 '}</Text>
             </TouchableOpacity>
           </View>
@@ -388,7 +400,7 @@ export default class extends Component{
 
               <View style={styles.navsubline}></View>
 
-              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('fightstate')}>
+              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('fightstate',this.state.userteamid,0)}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'约战动态'}</Text>
                 <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
               </TouchableOpacity>

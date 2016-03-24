@@ -64,7 +64,7 @@ export default class extends React.Component {
           loaded: true
         });
       } else {
-        console.log('请求错误' + response[0].MessageCide);
+        console.log('请求错误' + response[0].MessageCode);
       }
     });
 
