@@ -31,6 +31,11 @@ export default class extends React.Component {
       statuText: '等待回复',
     }
   }
+  componentWillMount() {
+    // console.log('myreceiveapply_screen');
+    // console.log(this.props);
+    // let userInstance = new User();
+  }
   _onFetch(page = 1, callback, options) {
     setTimeout(() => {
       var header = ' 2016 / 03 / 0'+page;

@@ -39,11 +39,12 @@ module.exports = React.createClass({
       navigator: undefined,
    icon_onPress: null,
  next_component: null,
-          isPop: this.props.isPop == undefined ? true : this.props.isPop
-
+          isPop: this.props.isPop == undefined ? true : this.props.isPop,
     }
   },
   componentWillMount() {
+  },
+  componentDidMount(){
     if (this.state.icon_name != undefined){
       this.setState({
         navigator: this.props.navigator,
@@ -58,13 +59,16 @@ module.exports = React.createClass({
     }
   },
   componentWillReceiveProps(nextProps,nexState) {
+    console.log('导航更新');
+  },
+  componentWillMount() {
+    // let userInstance = new User();
   }
   ,
   componentWillUnmount() {
   },
 
   updateComponent(newComponent){
-    console.log('更新Header导航组件');
     this.setState({
       next_component: newComponent
     });
@@ -106,7 +110,7 @@ module.exports = React.createClass({
            <Text style={CommonStyle.headertext} numberOfLines={1}>{this.state.current_title}</Text>
          </View>
          <View style={CommonStyle.col1}>
-         <TouchableOpacity style={CommonStyle.headerright} activeOpacity={0.8} onPress={this.state.icon_onPress}>
+         <TouchableOpacity style={CommonStyle.headerright} activeOpacity={0.8} onPress={this._pushroute}>
            {icon}
          </TouchableOpacity>
          </View>
@@ -120,10 +124,11 @@ module.exports = React.createClass({
     this.props.navigator.pop();
   },
   _pushroute:function(){
-    if (this.props.navigator != undefined){
+    if (this.state.navigator != undefined){
       this.state.navigator.push({
         name: this.state.next_component.name,
-        component: this.state.next_component.component
+        component: this.state.next_component.component,
+        params: {...this.props}
       })
     } else {
       console.log('导航数据错误');

@@ -52,7 +52,7 @@ export default{
       FecthService.postFecth(
         ApiConfig.FIGHT_API.MAKECHANLLENGE,
         {
-          'UserID':data.userid
+          'UserID':data.userid,
           'STeamID':data.steamid,
           'ETeamID':data.eteamid,
           'Money':data.money,

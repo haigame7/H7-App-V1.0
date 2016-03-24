@@ -19,7 +19,9 @@ export default class SecondPageComponent extends React.Component {
       id : null
     };
   }
-
+  componentWillReceiveProps(nextProps) {
+    console.log('im here 2');
+  }
   componentWillMount() {
         //这里获取从FirstPageComponent传递过来的参数: id
         this.setState({

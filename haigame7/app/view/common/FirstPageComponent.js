@@ -24,7 +24,8 @@ export default class FirstPageComponent extends React.Component {
       user: null,
     };
   }
-
+  componentWillReceiveProps(nextProps) {
+  }
   //在初始化渲染执行之前立刻调用
   // componentWillMount() {
   //   console.log("渲染之前 componentWillMount");
@@ -64,7 +65,6 @@ export default class FirstPageComponent extends React.Component {
   }
 
   render() {
-    console.log('1 开始渲染 render');
     if( this.state.user ) {
       return(
               <View>
@@ -75,6 +75,8 @@ export default class FirstPageComponent extends React.Component {
       console.log('@@@@@@@@@@@@@');
       return (
         <View>
+          <View><Text>点我跳转</Text></View>
+          <View><Text>点我跳转</Text></View>
           <TouchableOpacity onPress={this._pressButton.bind(this)}>
             <Text>点我跳转</Text>
           </TouchableOpacity>
