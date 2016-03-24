@@ -64,6 +64,7 @@ componentDidMount() {
   			data[ProvinceName][cityName] = area;
   		}
   	}
+    
   	return data;
   }
   createDateData(){
