@@ -43,8 +43,8 @@ export default class extends React.Component {
             <Text style={commonstyle.cream}>说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊</Text>
           </View>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
-          <View style={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]}><Button onPress={this._createTeam.bind(this)} style={commonstyle.black}>创建战队</Button></View>
-          <View style={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]}><Button onPress={this._joinTeam.bind(this)} style={commonstyle.white}>加入战队</Button></View>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} activeOpacity={0.8} onPress={this._createTeam.bind(this)} style={commonstyle.black}>创建战队</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} activeOpacity={0.8} onPress={this._joinTeam.bind(this)} style={commonstyle.white}>加入战队</Button>
           </View>
         </Modal>
       </View>

@@ -3,6 +3,10 @@
 import { StyleSheet, Platform } from 'react-native';
 var Util = require('../view/common/util');
 export default StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor:'rgb(0, 0, 0)',
+    },
     //登陆界面
     loginbg: {
         flex: 1,
@@ -77,6 +81,13 @@ export default StyleSheet.create({
 
     },
     //输入框
+    loginlabel: {
+        width: Util.size.width - 72,
+        marginTop: 10,
+        marginBottom: -10,
+        marginLeft: 36,
+        marginRight: 36,
+    },
     logininput: {
         height: 40,
         width: Util.size.width - 72,
@@ -93,9 +104,15 @@ export default StyleSheet.create({
     logininputfont: {
         color: '#FFFFFF',
     },
+    logininputright: {
+        position: 'absolute',
+        width: 30,
+        height: 30,
+        top: 3,
+        right: 5,
+    },
     //链接组
     linkblock: {
-        height:20,
         width: Util.size.width - 72,
         marginTop: 10,
         marginLeft: 36,
@@ -299,6 +316,119 @@ export default StyleSheet.create({
         marginLeft: 5,
         marginRight: 5,
     },
+    //申请&受邀
+    listblock: {
+        marginLeft: 10,
+        marginRight: 10,
+        paddingTop: 7,
+        paddingBottom: 7,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    listblockimg: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.6)',
+        marginRight: 10,
+    },
+    listblockbtn: {
+        width: 75,
+        height: 30,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 10,
+    },
+    listblockbutton: {
+        width: 75,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 10,
+        borderRadius: 5,
+    },
+    listblocktext: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginTop: 5,
+    },
+    listblocktextleft: {
+        width: 50,
+        marginRight: 10,
+        marginTop: 5,
+    },
+    listblocktexthero: {
+        width: 40,
+        height: 40,
+        margin: 5,
+        borderWidth: 1,
+        borderColor: '#D31B25',
+        borderRadius: 3,
+    },
+    //消息
+    msglist: {
+        backgroundColor: '#000000',
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    msgliststatus: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: '#D31B25',
+        marginTop: 5,
+        marginRight: 10,
+    },
+    msglistdata: {
+        width: 40,
+        marginLeft: 10,
+        alignItems: 'flex-end',
+    },
+    msglisticon: {
+        width: 10,
+        alignItems: 'flex-end',
+    },
+    //资产
+    assetbg: {
+        height: 160,
+        width: Util.size.width,
+    },
+    assetblock: {
+        marginTop: 30,
+    },
+    assetlabel: {
+        alignItems: 'center',
+    },
+    assetlistblock: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    assetlist: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    rechargeview: {
+        width: Util.size.width - 72,
+        marginTop: 10,
+        marginLeft: 36,
+        marginRight: 36,
+    },
+    recharge: {
+        height: 30,
+        width: (Util.size.width-72)/3,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    rechargeline: {
+        width: 10,
+    },
     //原
     title: {
         color: '#FFFFFF',
@@ -357,10 +487,6 @@ export default StyleSheet.create({
         marginTop: -3,
         alignSelf: 'center'
 
-    },
-    container: {
-        flex: 1,
-        alignItems: 'stretch',
     },
     instructions: {
         textAlign: 'center',
