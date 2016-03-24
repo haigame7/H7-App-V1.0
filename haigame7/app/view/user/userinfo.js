@@ -41,8 +41,6 @@ export default class extends Component {
   }
 componentDidMount() {
   fetch('https://raw.githubusercontent.com/beefe/react-native-picker/master/demo/area.json').then(res => {
-    console.log(res);
-    console.log('wokao');
     res.json().then(data => {
       this.setState({
         pickerData: this.createAreaData(data)
@@ -111,6 +109,7 @@ componentDidMount() {
       name: 'edituserinfo',
       component: EditScreen,
       params: {
+        userdata: this.state.userData,
         screenTitle: property,
         setProperty(key,pro){
           console.log('列表页设置相应属性:' + key);
@@ -168,7 +167,7 @@ _onPressHandle_2(){
    })
  }
  _dateDone(pickedValue){
-   console.log(pickedValue);
+  //  console.log(pickedValue);
    let date = pickedValue[0] + '-' + pickedValue[1] + '-' + pickedValue[2];
    this.setState({
      Birthday: date
@@ -177,10 +176,10 @@ _onPressHandle_2(){
  render() {
    return(
      <View >
-     <Header screenTitle='我的资料'  navigator={this.props.navigator} iconText='保存' callback={this._callback}/>
+     <Header screenTitle='我的资料'  navigator={this.props.navigator}/>
      <ScrollView style={commonstyle.bodyer}>
        <View style={[styles.listview, {height: 100,}]}>
-         <Text style={[styles.listviewtextleft, {marginTop: 35,}]}>{this.state.userData.UserWebPicture}</Text>
+         <Text style={[styles.listviewtextleft, {marginTop: 35,}]}>头像</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'头像')}>
            <Image style={styles.listviewtextimg} source={{uri:this.state.userData.UserWebPicture}} />
          </TouchableOpacity>
