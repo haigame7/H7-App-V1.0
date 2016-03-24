@@ -6,18 +6,17 @@
  */
 
 import React, {
-    View,
-    Text,
-    TextInput,
-    Image,
-    StyleSheet,
-    Component,
-    TouchableOpacity,
-    Navigator,
-    ScrollView,
-    TouchableHighlight,
-    } from 'react-native';
-var Util = require('./common/util');
+  View,
+  Text,
+  TextInput,
+  Image,
+  StyleSheet,
+  Component,
+  TouchableOpacity,
+  Navigator,
+  ScrollView,
+  TouchableHighlight,
+} from 'react-native';
 var Icon = require('react-native-vector-icons/FontAwesome');
 var commonstyle = require('../styles/commonstyle');
 var styles = require('../styles/matchstyle');
@@ -66,113 +65,108 @@ export default class extends Component{
     }
     }
   rendermodaldetail(){
-     if(this.state.navbar==0){
-         return(
-           <Modal isOpen={this.state.isOpen}  swipeToClose={false}  onClosed={this._closeModa.bind(this)} style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
-              <View style={styles.modalttitle}>
-
-              <Image style={[styles.modalteamimage,]} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-               <Text style={[styles.modalttitletext,{}]}>{'犀利拍冬至'}</Text>
-              <Text style={[styles.modalttitletext,{}]}>{'生命不息电竞不止,来吧加入我的战队'}</Text>
-                <Text style={[styles.modalttitletext,{color:'rgb(230, 193, 39)'}]}>{'主播名额'}<Text style={{color:'rgb(208, 46, 70)'}}>{'5/20'}</Text></Text>
-              </View>
-              <ScrollView style={styles.modalscrollcontainer} showsVerticalScrollIndicator={true} >
-                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-                <Text style={styles.scrolltext}>{'ID:  '} <Text>{'12312423'}</Text></Text>
-                <Text style={[styles.scrolltext,{color:'rgb(208, 46, 70)',fontSize:12}]}>{'您已加入[xxxx],报名结束后为您生成信息,请关注'}</Text>
-              </ScrollView>
-              <View style={[commonstyle.row, commonstyle.modalbtn]}>
-              <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
-              <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >已阅读</Button>
-              </View>
-            </Modal>
-         );
-     }else{
+    if(this.state.navbar==0){
       return(
-        <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalbig]} position={"top"} >
-        <View style={[styles.modalheader]}>
-
-            <Text style={[commonstyle.cream, {fontSize:16}]}>{'您的选择：犀利拍立冬至 获胜'}</Text>
+        <Modal isOpen={this.state.isOpen}  swipeToClose={false}  onClosed={this._closeModa.bind(this)} style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
+          <View style={styles.modalheader}>
+            <Image style={styles.modalimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.modalfont]}>{'犀利拍冬至'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.modalfont]}>{'生命不息电竞不止,来吧加入我的战队'}</Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'主播名额  '}<Text style={commonstyle.red}>{'5/20'}</Text></Text>
+          </View>
+          <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
+            <View style={commonstyle.viewleft}>
+              <Text style={commonstyle.cream}>{'ID:      '} <Text style={commonstyle.white}>{'12312423'}</Text></Text>
+              <Text style={commonstyle.cream}>{'性别:  '} <Text style={commonstyle.white}>{'12312423'}</Text></Text>
+              <Text style={commonstyle.cream}>{'年龄:  '} <Text style={commonstyle.white}>{'12312423'}</Text></Text>
+              <Text style={commonstyle.cream}>{'介绍:  '} <Text style={commonstyle.white}>{'12312423ssssssssssssssssssssssssssssssssssssssss'}</Text></Text>
+            </View>
+          </ScrollView>
+          <View style={[commonstyle.row, commonstyle.modalbtn]}>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >已阅读</Button>
+          </View>
+        </Modal>
+      );
+    }else{
+      return(
+        <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalbig, styles.modalbgopacity]} position={"top"} >
+          <View style={[styles.modalheader]}>
+            <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：犀利拍立冬至 获胜'}</Text>
             <View  style = {styles.modalinput }>
-                <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='rgb(120,120,120)' style={styles.modalinputfont}  onChangeText = {(text) => this.state.money = text }/>
+              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' style={styles.modalinputfont}  onChangeText = {(text) => this.state.money = text }/>
             </View>
-            <View style ={styles.modalgainmoney}>
-            <Text style={commonstyle.cream}>{'  可用氦金:  '}</Text>
-            <Text style={commonstyle.yellow}>{'1000'}</Text>
+            <View style ={commonstyle.row}>
+              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{'1000'}</Text></Text></View>
+              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  预估收益:  '}<Text style={commonstyle.yellow}>{'1500'}</Text></Text></View>
+            </View>
+          </View>
 
-            <Text style={commonstyle.cream}>{'  预估收益:  '}</Text>
-            <Text style={commonstyle.yellow}>{'1500'}</Text>
-            </View>
-        </View>
-          <View style={[commonstyle.row]}>
+          <View style={commonstyle.row}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >取消关闭</Button>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >确认下注</Button>
           </View>
+
           <View style={styles.modalfooter}>
-          <View style={[commonstyle.row, styles.modalheadtab]}>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-                <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'时间'}</Text>
-            </View>
-            <View style={styles.modalheadtabline} ></View>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-                <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'押注项'}</Text>
-            </View>
-            <View style={styles.modalheadtabline} ></View>
-            <View style={[commonstyle.col1, styles.modalheadtabli]} activeOpacity={0.8} >
-                <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'金额'}</Text>
-            </View>
-            <View style={styles.modalheadtabline} ></View>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-              <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'赔率'}</Text>
-            </View>
-            <View style={styles.modalheadtabline} ></View>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-              <Text style={[styles.modalheadtabnumber, commonstyle.red,commonstyle.fontsize12]}>{'预估收益'}</Text>
-            </View>
-          </View>
-          <View style={[commonstyle.row, styles.modalcontenttab]}>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
-            </View>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
+            <View style={[commonstyle.row, styles.modaltabhead]}>
+              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                <Text style={[commonstyle.red,commonstyle.fontsize12]}>{'时间'}</Text>
+              </View>
+              <View style={styles.modaltabline} ></View>
+              <View style={[commonstyle.col2, commonstyle.viewcenter]}>
+                <Text style={[commonstyle.red,commonstyle.fontsize12]}>{'押注项'}</Text>
+              </View>
+              <View style={styles.modaltabline} ></View>
+              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                <Text style={[commonstyle.red,commonstyle.fontsize12]}>{'金额'}</Text>
+              </View>
+              <View style={styles.modaltabline} ></View>
+              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                <Text style={[commonstyle.red,commonstyle.fontsize12]}>{'赔率'}</Text>
+              </View>
+              <View style={styles.modaltabline} ></View>
+              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                <Text style={[commonstyle.red,commonstyle.fontsize12]}>{'预估收益'}</Text>
+              </View>
             </View>
 
-            <View style={[commonstyle.col1, styles.modalheadtabli]} activeOpacity={0.8} >
-                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
-            </View>
+            <View style={styles.modaltabcontent}>
+              <View style={[commonstyle.row, styles.modaltablist]}>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
+                </View>
+                <View style={[commonstyle.col2, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
+                </View>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
+                </View>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
+                </View>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
+                </View>
+              </View>
 
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
+              <View style={[commonstyle.row, styles.modaltablist]}>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
+                </View>
+                <View style={[commonstyle.col2, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
+                </View>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
+                </View>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
+                </View>
+                <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+                  <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
+                </View>
+              </View>
             </View>
-
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
-            </View>
-          </View>
-          <View style={[commonstyle.row, styles.modalcontenttab]}>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
-            </View>
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
-            </View>
-
-            <View style={[commonstyle.col1, styles.modalheadtabli]} activeOpacity={0.8} >
-                <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
-            </View>
-
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
-            </View>
-
-            <View style={[commonstyle.col1, styles.modalheadtabli]}>
-              <Text style={[styles.modalheadtabnumber, commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
-            </View>
-          </View>
           {/*footer*/}
           </View>
         </Modal>

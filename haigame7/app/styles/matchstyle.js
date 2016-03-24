@@ -57,8 +57,8 @@ var MatchStyle = StyleSheet.create({
         marginRight: 30,
     },
     anchorlistimg: {
-        width: (Util.size.width-120)/3,
-        height: (Util.size.width-120)/3,
+        width: (Util.size.width - 120) / 3,
+        height: (Util.size.width - 120) / 3,
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#D31B25',
@@ -83,9 +83,9 @@ var MatchStyle = StyleSheet.create({
         marginBottom: 10,
     },
     matchlistimg: {
-        width: (Util.size.width-120)/3,
-        height: (Util.size.width-120)/3,
-        borderRadius: (Util.size.width-120)/6,
+        width: (Util.size.width - 120) / 3,
+        height: (Util.size.width - 120) / 3,
+        borderRadius: (Util.size.width - 120) / 6,
         borderWidth: 3,
         borderColor: '#FFFFFF',
         marginBottom: 5,
@@ -115,44 +115,34 @@ var MatchStyle = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
     },
-    modalfooter: {
-        backgroundColor: '#000',
-        width: Util.size.width - 40,
-        height: Util.size.height / 2,
-    },
-    modalheadtab: {
-        marginTop: 10,
-    },
-    modalcontenttab: {
-        borderBottomWidth: 1,
-        marginTop: 5,
-        top: -15,
-        height: 25,
-        borderBottomColor: 'rgb(50,50,50)',
-    },
-    modalheadtabli: {
-        alignItems: 'center',
-        height: 40,
-    },
-    modalheadtabtitle: {
-        alignItems: 'center',
-        height: 20,
-        marginBottom: 3,
-    },
-    modalheadtabnumber: {
-        alignItems: 'center',
-        height: 20,
-    },
-    modalheadtabline: {
-        backgroundColor: '#FFFFFF',
-        width: Util.pixel,
-        height: 15,
+
+    //modal
+    modalbgopacity: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
     modalheader: {
-        height: Util.size.height / 4,
-        justifyContent: 'center',
+        width: Util.size.width - 40,
         alignItems: 'center',
         borderRadius: 5,
+        backgroundColor: '#282828',
+        paddingBottom: 10,
+    },
+    modalimg: {
+        width: Util.size.width / 4,
+        height: Util.size.width / 4,
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: '#D31B25',
+        borderRadius: 5,
+    },
+    modalfont: {
+        marginTop: 5,
+    },
+    modaltext: {
+        marginTop: 10,
+    },
+    modalscrollview: {
+        padding: 20,
     },
     modalinput: {
         height: 40,
@@ -162,7 +152,7 @@ var MatchStyle = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#D31B25',
         borderRadius: 3,
-        marginTop: 20,
+        marginTop: 10,
         marginLeft: 36,
         marginRight: 36,
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
@@ -170,38 +160,144 @@ var MatchStyle = StyleSheet.create({
     modalinputfont: {
         color: '#FFFFFF',
     },
-    modalgainmoney: {
+    modalfooter: {
+        width: Util.size.width - 40,
+    },
+    modaltabhead: {
+        marginTop: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+        backgroundColor: '#000000',
+    },
+    modaltabline: {
+        backgroundColor: '#C3C3C3',
+        width: 1,
+        height: 10,
+        marginTop: 5,
+    },
+    modaltabcontent: {
+        paddingLeft: 5,
+        paddingRight: 5,
+    },
+    modaltablist: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+
+    //赛程
+    carouselview: {
+        width: Util.size.width,
+        backgroundColor: '#000000',
+    },
+    carousellistblock: {
         flexDirection: 'row',
-        paddingTop: 15,
+        paddingTop: 10,
+        paddingBottom: 10,
     },
-    modalttitle: {
-        alignItems: 'center',
+    carousellist: {
+        marginLeft: 15,
+        marginRight: 15
     },
-    modalttitletext: {
-        color: 'rgb(200,200,200)',
-        fontSize: 16,
-        top: Util.pixel * 20,
-        textAlign: 'center',
-    },
-    modalteamimage: {
-        width: Util.size.width / 4,
-        height: Util.size.width / 4,
-        top: Util.pixel * 20,
+    carousellistimg: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
         borderWidth: 1,
         borderColor: 'rgb(208, 46, 70)',
         borderRadius: 5,
+        marginBottom: 5,
     },
-    modalscrollcontainer: {
-        padding: 5,
-        marginBottom: 40,
-        marginTop: 10,
+    //对战
+    schedulelistblock: {
+        flex: 1,
+        paddingLeft: 10,
+        paddingRight: 10,
+        backgroundColor: '#000000',
     },
-    modalbutton: {
-        backgroundColor: '#D31B25',
-        width: Util.size.width / 2 - 10,
+    schedulelist: {
+        width: Util.size.width - 20,
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomColor: 'gray',
+        borderBottomWidth: 1,
+    },
+    schedulelistimg: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderRadius: Util.size.width / 10,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.6)',
+        marginBottom: 5,
+    },
+    schedulelisttexticon: {
+        width: (Util.size.width - 20)/9,
+        height: (Util.size.width - 20)/9,
+        borderRadius: (Util.size.width - 20)/18,
+        marginTop: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    schedulelistcenter: {
+        top: 20,
+    },
+    schedulelistvs: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgb(120,120,120)',
+        marginLeft: 5,
+        marginBottom: 5,
+        marginRight: 5,
+    },
+    schedulelistbtn: {
+        height: 30,
+        width: (Util.size.width - 20)/3 - 20,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 30,
+        marginLeft: 10,
+        marginRight: 10,
+    },
+
+    //原
+    flexrow: {
+        flexDirection: 'row',
+    },
+    flexcolumn: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    centerbg: {
+        flex: 1,
+        backgroundColor: 'rgb(0, 0, 0)',
+        height: Util.size.height,
+        width: Util.size.width,
+    },
+    schedulelititle: {
+        backgroundColor: 'rgb(120,120,120)',
+        height: Util.pixel * 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    schedulelititletext: {
+        fontSize: 14,
+    },
+    schedulestate: {
+        borderWidth: 1,
+        top: 5,
+        height: 28,
+        width: 90,
+        borderColor: 'gray',
         borderRadius: 2,
-        textAlign: 'center',
-        height: Util.pixel * 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    schedulelicontent: {
+        paddingTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 
