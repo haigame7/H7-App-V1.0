@@ -46,7 +46,7 @@ var TeamStyle = StyleSheet.create({
         paddingRight: 10,
     },
     navsubblock: {
-        width: Util.size.width/2-11,
+        flex: 1,
         borderBottomWidth: 1,
         borderBottomColor: '#484848',
         alignItems: 'center',
@@ -155,10 +155,40 @@ var TeamStyle = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 5,
     },
+    //战队信息
     headbg: {
         flex: 1,
-        height: 240,
+        height: 220,
         width: Util.size.width,
+    },
+    headportrait: {
+        width: 100,
+        height: 100,
+        borderWidth: 4,
+        borderRadius: 50,
+        borderColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    headportraitv: {
+        position: 'absolute',
+        flexDirection: 'row',
+        left: Util.size.width/2 + 20,
+        bottom: 0,
+        width: 50,
+    },
+    headportraitvfont: {
+        color: '#FFFFFF',
+        fontSize: 10,
+    },
+    headname: {
+        fontSize: 18,
+    },
+    headtext: {
+        marginTop: 5,
+        paddingLeft: 60,
+        paddingRight: 60,
+    },
+    headtextfont: {
+        textAlign: 'center',
     },
     headtextblock: {
         marginTop: 5,
@@ -175,11 +205,135 @@ var TeamStyle = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
     },
-    headtexline: {
-        width: 2,
+    headtextline: {
+        width: 1,
         height: 10,
         margin: 5,
         backgroundColor: '#484848',
+    },
+    //属性
+    listblock: {
+        paddingLeft: 10,
+        paddingRight: 10,
+        backgroundColor: '#000000',
+    },
+    listview: {
+        flexDirection: 'row',
+        paddingTop: 7,
+        paddingBottom: 7,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    listviewleft: {
+        width: 60,
+        marginRight: 10,
+    },
+    listviewright: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    listviewteam: {
+
+    },
+    listviewteamleader: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 0, 0, 0.4)',
+        marginRight: 10,
+    },
+    listviewteamblock: {
+        flexDirection: 'row',
+        marginTop: 10,
+    },
+    listviewteamimg: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.4)',
+        marginRight: 10,
+    },
+    listviewhero: {
+        flexDirection: 'row',
+    },
+    listviewheroimg: {
+        width: 44,
+        height: 44,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 0, 0, 0.4)',
+        marginRight: 10,
+    },
+    //区域块
+    blocktop: {
+        marginTop: 10,
+        alignItems: 'center',
+    },
+    blockbottom: {
+        marginBottom: 10,
+        alignItems: 'center',
+    },
+    nobottom: {
+        borderBottomWidth: 0,
+    },
+    //按钮
+    btn: {
+        height:40,
+        width: Util.size.width - 72,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 0,
+        borderRadius: 2,
+        backgroundColor: '#D31B25',
+        marginTop: 20,
+        marginLeft: 36,
+        marginRight: 36,
+    },
+    btnfont: {
+        fontSize: 20,
+        color: '#FFFFFF',
+    },
+    btndisable: {
+        backgroundColor: '#484848',
+    },
+    //文本框
+    recruitbox: {
+        margin: 10,
+        width: Util.size.width - 20,
+        height: 80,
+        backgroundColor: '#484848',
+        justifyContent: 'flex-start',
+        borderRadius: 5,
+    },
+    recruitinput: {
+        height: 50,
+        color: '#C3C3C3',
+        alignItems: 'flex-start',
+    },
+    recruitnumber: {
+        position: 'absolute',
+        right: 5,
+        bottom: 0,
+        color: '#C3C3C3',
+    },
+    recruitbtnblock: {
+        flexDirection: 'row',
+        marginTop: -10,
+        marginRight: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        width: Util.size.width - 20,
+        height: 40,
+        backgroundColor: '#484848',
+        borderRadius: 5,
+    },
+    recruitbtn: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
     },
 });
 

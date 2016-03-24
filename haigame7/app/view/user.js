@@ -26,6 +26,10 @@ import Setting from './user/setting';
 import UserSign from './user/usersign';
 import UserCertify from './user/usercertify';
 import UserAsset from './user/userasset';
+import UserMatch from './user/usermatch';
+import UserFight from './user/userfight';
+import UserTask from './user/usertask';
+import UserGuess from './user/userguess'
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
 import ZHRB from '../../temp/zhrb';
@@ -46,14 +50,12 @@ var User = React.createClass({
     return {
       _navigator: this.props.navigator,
       userData: this.props.userdata,
-      isOpen: true
+      isOpen: false
     };
   },
   componentWillMount() {
   },
   componentDidMount() {
-    // console.log(this.state.userData.PhoneNumber);
-    this.setState({isOpen: false})
   },
   _toNextScreen(params){
     this.state._navigator.push({
@@ -155,10 +157,10 @@ var User = React.createClass({
           <View style={[styles.listviewiconleft,{backgroundColor:'#00b4ff'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
-          <Text style={styles.listviewtext}>我的赛事</Text>
+          <Text style={styles.listviewtext}>注册</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的约战","component":UserCertify})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的赛事","component":UserCertify})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#ff7062'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
@@ -166,6 +168,7 @@ var User = React.createClass({
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的竞猜","component":Setting})}>
+
           <View style={[styles.listviewiconleft,{backgroundColor:'#30ccc2'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
