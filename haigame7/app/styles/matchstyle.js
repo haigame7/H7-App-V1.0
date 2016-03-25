@@ -211,16 +211,21 @@ var MatchStyle = StyleSheet.create({
     //对战
     schedulelistblock: {
         flex: 1,
-        paddingLeft: 10,
-        paddingRight: 10,
         backgroundColor: '#000000',
+        marginTop: 10,
     },
     schedulelist: {
         width: Util.size.width - 20,
         paddingTop: 10,
         paddingBottom: 10,
-        borderBottomColor: 'gray',
-        borderBottomWidth: 1,
+        borderColor: '#484848',
+        borderWidth: 1,
+    },
+    schedulelisttitle: {
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#484848',
     },
     schedulelistimg: {
         width: Util.size.width / 5,
@@ -231,9 +236,9 @@ var MatchStyle = StyleSheet.create({
         marginBottom: 5,
     },
     schedulelisttexticon: {
-        width: (Util.size.width - 20)/9,
-        height: (Util.size.width - 20)/9,
-        borderRadius: (Util.size.width - 20)/18,
+        width: (Util.size.width - 20) / 9,
+        height: (Util.size.width - 20) / 9,
+        borderRadius: (Util.size.width - 20) / 18,
         marginTop: 5,
         alignItems: 'center',
         justifyContent: 'center',
@@ -248,9 +253,14 @@ var MatchStyle = StyleSheet.create({
         marginBottom: 5,
         marginRight: 5,
     },
+    schedulelisttime:{
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     schedulelistbtn: {
         height: 30,
-        width: (Util.size.width - 20)/3 - 20,
+        width: (Util.size.width - 20) / 3 - 20,
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
@@ -269,35 +279,10 @@ var MatchStyle = StyleSheet.create({
         justifyContent: 'center',
     },
     centerbg: {
-        flex: 1,
-        backgroundColor: 'rgb(0, 0, 0)',
-        height: Util.size.height,
         width: Util.size.width,
-    },
-    schedulelititle: {
-        backgroundColor: 'rgb(120,120,120)',
-        height: Util.pixel * 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    schedulelititletext: {
-        fontSize: 14,
-    },
-    schedulestate: {
-        borderWidth: 1,
-        top: 5,
-        height: 28,
-        width: 90,
-        borderColor: 'gray',
-        borderRadius: 2,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    schedulelicontent: {
-        paddingTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+        backgroundColor: '#000000',
     },
 });
 
