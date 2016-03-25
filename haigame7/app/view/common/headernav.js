@@ -43,6 +43,7 @@ module.exports = React.createClass({
     }
   },
   componentWillMount() {
+
   },
   componentDidMount(){
     if (this.state.icon_name != undefined){
@@ -58,13 +59,9 @@ module.exports = React.createClass({
       });
     }
   },
-  componentWillReceiveProps(nextProps,nexState) {
-    console.log('导航更新');
+  componentWillReceiveProps(nextProps,nextState) {
   },
-  componentWillMount() {
-    // let userInstance = new User();
-  }
-  ,
+
   componentWillUnmount() {
   },
 

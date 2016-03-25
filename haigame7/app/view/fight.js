@@ -224,7 +224,7 @@ export default class extends Component{
   renderuserdefaulteam(){
     return(
       <View style={styles.teamlist}>
-        <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo}} />
+        <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
         <View style={commonstyle.col1}>
           <View style={commonstyle.row}>
             <View style={commonstyle.col1}><Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.userteamname}</Text></View>
