@@ -9,11 +9,12 @@ import React, {
   ToastAndroid,
   TouchableOpacity
 } from 'react-native';
-import Button from 'react-native-button';
+
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/teamstyle';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from '../common/headernav';
-import TeamHeader from './teamheader_screen';
-import Modal from 'react-native-modalbox';
-import UserHeader from '../user/userheader_screen';
+
 export default class extends React.Component {
   /**
    * @param role 队长 captain | 队员：teamuser | 非本队成员: user
@@ -22,12 +23,12 @@ export default class extends React.Component {
   constructor() {
     super();
     this.state = {
-        navigator: undefined,
-             role: 'user',
-         iconText: '添加战队',
-  defaultTeamLogo: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
-           isOpen: false,
-       isDisabled: false,
+      navigator: undefined,
+      role: 'user',
+      iconText: '添加战队',
+      defaultTeamLogo: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
+      isOpen: false,
+      isDisabled: false,
     }
   }
   componentWillMount(){
@@ -39,176 +40,119 @@ export default class extends React.Component {
           iconText: undefined,
         });
       }
-
   }
-
-_callback() {
-  ToastAndroid.show("回调方法",ToastAndroid.SHORT)
-  this.state.navigator.pop()
-}
-_openModa() {
-  this.setState({isOpen: true});
-}
-_closeModa() {
-  console.log('******');
-   this.setState({isOpen: false});
-}
-render() {
-  let myHero = (
-    <View>
-      <View style={{flexDirection: 'row'}}>
-        <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-        <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-        <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-        <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-        <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+  _callback() {
+    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
+    this.state.navigator.pop()
+  }
+  _openModa() {
+    this.setState({isOpen: true});
+  }
+  _closeModa() {
+    console.log('******');
+     this.setState({isOpen: false});
+  }
+  render() {
+    let myHero = (
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+        </View>
       </View>
-    </View>
-    )
-  let BContent = <Button onPress={this._closeModa.bind(this)} >X</Button>;
-  let teamUser = (
-    <View>
-      <TouchableOpacity onPress={this._openModa.bind(this)}>
-        <View>
+      )
+    let teamUser = (
+      <View>
+        <TouchableOpacity onPress={this._openModa.bind(this)}>
+          <View>
+            <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
+          </View>
+        </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
+          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
+          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
+          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
           <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
         </View>
-      </TouchableOpacity>
-      <View style={{flexDirection: 'row'}}>
-        <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-        <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-        <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-        <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-        <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
       </View>
-    </View>
-    )
-  return(
-    <View>
-    <Header screenTitle='战队信息' isPop={true} iconText={this.state.iconText} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
-    <Modal isOpen={this.state.isOpen} onClosed={this._closeModa.bind(this)}style={[styles.modal, styles.modal4]} position={"center"} backdropContent={BContent}>
-       <View>
-         <View>
-           <UserHeader navigator={this.props.navigator}/>
-         </View>
-         <View>
-           <ScrollView>
-             <View style={{flexDirection: 'row'}}>
-               <Text>性别</Text><Text>男</Text>
-             </View>
-             <View style={{flexDirection: 'row'}}>
-               <Text>地区</Text><Text>北京-西城</Text>
-             </View>
-             <View style={{flexDirection: 'row'}}>
-               <Text>擅长位置</Text><Text>变声凹凸曼</Text>
-             </View>
-             <View style={{flexDirection: 'row'}}>
-               <Text>注册时间</Text><Text>2019/01/01</Text>
-             </View>
-             <View style={{flexDirection: 'row'}}>
-               <Text>擅长英雄</Text>
-               {myHero}
-             </View>
-           </ScrollView>
-         </View>
-       </View>
-     </Modal>
+      )
+    return(
       <View>
-        <TeamHeader navigator={this.props.navigator} />
-      </View>
-      <View>
-        <ScrollView>
-          <View style={{flexDirection: 'row'}}>
-            <Text>战队战绩</Text><Text>参赛场次 <Text>20场</Text> 胜率 <Text>20场</Text></Text>
+        <Header screenTitle='战队信息' isPop={true} iconText={this.state.iconText} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
+        <ScrollView style={commonstyle.bodyer}>
+          <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
+            <View style={styles.blocktop}>
+              <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+              <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /></View>
+            </View>
+
+            <View style={styles.blocktop}>
+              <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
+              <View style={[commonstyle.row, styles.headtextblock]}>
+                <View style={styles.headtextleft}>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                </View>
+                <View style={styles.headtextline}></View>
+                <View style={styles.headtextright}>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                </View>
+              </View>
+              <View style={styles.headtext}>
+                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>战队宣言:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+              </View>
+            </View>
+          </Image>
+
+          <View style={styles.listblock}>
+            <View style={styles.listview}>
+              <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队战绩</Text></View>
+              <View style={styles.listviewright}>
+                <Text style={commonstyle.cream}>参赛场次  </Text>
+                <Text style={commonstyle.yellow}>20场</Text>
+                <Text style={commonstyle.cream}>  胜率  </Text>
+                <Text style={commonstyle.red}>79%</Text>
+              </View>
+            </View>
+            <View style={styles.listview}>
+              <View style={styles.listviewleft}><Text style={commonstyle.gray}>成立日期</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>2016/02/15</Text></View>
+            </View>
+            <View style={styles.listview}>
+              <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>本队需要辅助一名，擅长XX英雄，战队福利优厚，报名从速...</Text></View>
+            </View>
+            <View style={[styles.listview, styles.nobottom]}>
+              <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
+              <View style={styles.listviewright}>
+                <TouchableOpacity style={styles.listviewteamedit} activeOpacity={0.8}><Icon name="book" size={20} color={'#fff'} /></TouchableOpacity>
+                <View style={styles.listviewteam}>
+                  <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+                  <View style={styles.listviewteamblock}>
+                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
           </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text>成立日期</Text><Text>2016/02/15</Text>
+          <View style={styles.listviewbtnblock}>
+            <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} activeOpacity={0.8}>
+              <Text style = {commonstyle.black}> {'招募队员'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} activeOpacity={0.8}>
+              <Text style = {commonstyle.white}> {'解散战队'}</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text>招募信息</Text><Text>本队需要萌妹子本队需要萌妹子本队需要萌妹子本队需要萌妹子本队需要萌妹子</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text>战队成员</Text>
-            {teamUser}
-          </View>
-          <Text>备注：战队成员第一个可以按，就是现实有问题。。。</Text>
         </ScrollView>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
-}
-
-var styles = StyleSheet.create({
-  text_1: {
-    color: "#838B8B",
-    fontSize: 20
-  },
-  text_2: {
-    color: "#7A7A7A",
-    fontSize: 15
-  },
-
-  btn_create: {
-    backgroundColor: "#3B5998",
-    color: "white",
-    width: 150,
-    height: 30,
-    marginLeft:0
-  }
-  ,btn_join: {
-    backgroundColor: "#3B5998",
-    color: "white",
-    width: 150,
-    height: 30,
-  }
-
-,
-  wrapper: {
-    paddingTop: 50,
-    flex: 1
-  },
-
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
-  modal2: {
-    height: 230,
-    backgroundColor: "#3B5998"
-  },
-
-  modal3: {
-    height: 300,
-    width: 300
-  },
-
-  modal4: {
-    height: 300,
-    backgroundColor: "#292929",
-    marginRight:10,
-  },
-
-  btn: {
-    margin: 10,
-    backgroundColor: "#3B5998",
-    color: "white",
-    padding: 10
-  },
-
-  btnModal: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: 50,
-    height: 50,
-    backgroundColor: "transparent"
-  },
-
-  text: {
-    color: "black",
-    fontSize: 22
-  }
-
-});
