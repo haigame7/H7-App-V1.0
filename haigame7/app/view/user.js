@@ -15,7 +15,8 @@ var {
   TouchableOpacity,
   ToastAndroid,
   Navigator,
-  ScrollView
+  ScrollView,
+  AsyncStorage
   } = React;
 
 
@@ -42,6 +43,7 @@ import Help from './user/help_screen';
 import HintCreatTeamScreen from './user/hint_createteam_screen';
 import UserService from '../network/userservice';
 import Spinner from 'react-native-loading-spinner-overlay';
+import GlobalVariable from '../constants/globalvariable';
 //试试ES6的类属性
 
 var User = React.createClass({
@@ -49,11 +51,21 @@ var User = React.createClass({
     console.log('UserScreen Init Data');
     return {
       _navigator: this.props.navigator,
-      userData: this.props.userdata,
+      userData: this.props.userData,
       isOpen: false
     };
   },
+  componentWillReceiveProps(nextProps,nextState) {
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+      let jsondata = JSON.parse(value);
+      this.setState({userData: jsondata})
+    });
+  },
   componentWillMount() {
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+      let jsondata = JSON.parse(value);
+      this.setState({userData: jsondata})
+    });
   },
   componentDidMount() {
   },
@@ -72,7 +84,7 @@ var User = React.createClass({
       <ScrollView style={commonstyle.bodyer}>
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserInfo","component":UserInfo})}>
-            <Image style={styles.headportrait} source={{uri:this.state.userData.UserWebPicture}} />
+            <Image style={styles.headportrait} source={{uri:this.state.userData.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
             <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
           </TouchableOpacity>
 

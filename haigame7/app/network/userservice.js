@@ -100,10 +100,12 @@ export default{
   },
 
   /*获取用户信息*/
-  getUserInfo(data,callback) {
+  getUserInfo(phoneNumber,callback) {
     FecthService.postFecth(
       ApiConfig.USER_API.GET_USER_INFO,
-      data,
+      {
+        'PhoneNumber':phoneNumber
+      },
       callback
     );
   },
