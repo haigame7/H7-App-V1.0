@@ -40,6 +40,7 @@ var MatchStyle = StyleSheet.create({
     },
     scrollview: {
         padding: 0,
+        backgroundColor: '#000000',
     },
     matchbanner: {
         width: Util.size.width,
@@ -218,8 +219,8 @@ var MatchStyle = StyleSheet.create({
         width: Util.size.width - 20,
         paddingTop: 10,
         paddingBottom: 10,
-        borderColor: '#484848',
-        borderWidth: 1,
+        borderBottomColor: '#484848',
+        borderBottomWidth: 1,
     },
     schedulelisttitle: {
         height: 30,

@@ -62,7 +62,7 @@ export default class extends Component{
     if(this.state.navbar==0){
       return(
         <View>
-          <View style={[styles.schedulelistblock]}>
+          <View style={[styles.schedulelistblock, commonstyle.btnbordergray]}>
             <View style={styles.schedulelisttitle}><Text style={commonstyle.black}>什么什么鱼汤大赛</Text></View>
             <View style={[commonstyle.row, styles.schedulelist]}>
               <View style={[commonstyle.col1, commonstyle.viewcenter]}>
@@ -89,7 +89,7 @@ export default class extends Component{
               </View>
             </View>
           </View>
-          <View style={[styles.schedulelistblock]}>
+          <View style={[styles.schedulelistblock, commonstyle.btnbordergray]}>
             <View style={styles.schedulelisttitle}><Text style={commonstyle.black}>什么什么鱼汤大赛</Text></View>
             <View style={[commonstyle.row, styles.schedulelist]}>
               <View style={[commonstyle.col1, commonstyle.viewcenter]}>
@@ -122,7 +122,7 @@ export default class extends Component{
     else{
       return(
         <View>
-          <View style={[styles.schedulelistblock]}>
+          <View style={[styles.schedulelistblock, commonstyle.btnbordergray]}>
             <View style={styles.schedulelisttitle}><Text style={commonstyle.black}>什么什么鱼汤大赛</Text></View>
             <View style={[commonstyle.row, styles.schedulelist]}>
               <View style={[commonstyle.col1, commonstyle.viewcenter]}>
