@@ -11,6 +11,8 @@ import React, {
   TextInput,
   Image,
   StyleSheet,
+  ListView,
+  Alert,
   Component,
   TouchableOpacity,
   Navigator,
@@ -22,38 +24,141 @@ var commonstyle = require('../styles/commonstyle');
 var styles = require('../styles/matchstyle');
 import MatchRule from './match/matchrule';
 import MatchSchedule from './match/matchschedule';
+import MatchService from '../network/matchservice';
+import FightService from '../network/fightservice';
+import GlobalSetup from '../constants/globalsetup';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 
 export default class extends Component{
   constructor(props) {
     super(props);
+      var databobo = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      var dataguess = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       navbar: 0,
+      databoboSource: databobo.cloneWithRows(['row1']),
+      dataguessSource:dataguess.cloneWithRows(['row1']),
+      bobolist:[],
+      guesslist:[],
       isOpen:false,
-      modalnum:0,
+      userteamid:0,
+      joincount:-1,
+      userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
       money:0,
-      data:{
-          subnavbar:1,
-          subnavbarname:'热度',
-
+      matchdata:{
+        matchID:0,
+        matchname:'',
+        showpicture:'',
+        introduce:'',
       },
+      modaData:"",
       }
+
     }
-    _openModa() {
-      this.setState({isOpen: true});
+    componentWillMount() {
+    this.initData();
+    }
+    initData(){
+      {/*请求我的战队信息*/}
+      FightService.getUserDefaultTeam({phone:this.state.userphone},(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Alert.alert('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          this.setState({
+            userteamid:response[1].TeamID,
+          });
+        }
+       }else{
+           Alert.alert('请求错误');
+       }
+     });
+      MatchService.getMatchList((response) => {
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+          if(response[0].MessageCode == '40001'){
+            Alert.alert('服务器请求异常');
+          }else if(response[0].MessageCode == '0'){
+            this.setState({
+              matchdata:{
+                matchID:response[1][0].MatchID,
+                matchname:response[1][0].MatchName,
+                showpicture:response[1][0].ShowPicture,
+                introduce:response[1][0].Introduce,
+              },
+            });
+             this.getBoBoList(this.state.matchdata);
+           }
+         }
+          else{
+              Alert.alert('请求错误');
+            }
+      });
+    }
+    getBoBoList(matchdata){
+      MatchService.getBoBoList(matchdata,(response) => {
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+          if(response[0].MessageCode == '40001'){
+            Alert.alert('服务器请求异常');
+          }else if(response[0].MessageCode == '0'){
+            let newData = response[1];
+            this.setState({
+              databoboSource: this.state.databoboSource.cloneWithRows(newData),
+              bobolist:newData,
+            });
+           }
+         }
+          else{
+              Alert.alert('请求错误');
+            }
+      });
+    }
+    _openModa(rowData) {
+      MatchService.getBoBoCount(rowData,(response) => {
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+          if(response[0].MessageCode == '40001'){
+            Alert.alert('服务器请求异常');
+          }else if(response[0].MessageCode == '0'){
+            this.setState({
+              joincount:response[1].JoinCount,
+              isOpen: true,
+              modaData:rowData
+            });
+           }
+         }
+          else{
+              Alert.alert('请求错误');
+            }
+      });
     }
     _closeModa() {
-      console.log('******');
        this.setState({isOpen: false});
     }
+    _joinMatch(params){
+      MatchService.joinMatch(params,(response) => {
+        console.log(response);
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+          if(response[0].MessageCode == '40001'){
+            Alert.alert('服务器请求异常');
+          }else if(response[0].MessageCode == '0'){
+            Alert.alert('报名成功');
+            this.setState({isOpen: false});
+         }
+       }
+        else{
+              Alert.alert('请求错误');
+          }
+      });
+    }
+
+
   _switchNavbar(nav){
    this.setState({
    navbar:nav,
    });
    return;
    }
-   gotoRoute(name) {
+   gotoRoute(name,params) {
     if (name == 'matchrule') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
             this.props.navigator.push({ name: name, component: MatchRule, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
@@ -66,25 +171,27 @@ export default class extends Component{
     }
   rendermodaldetail(){
     if(this.state.navbar==0){
+      {/*获得已报名战队数*/}
+
       return(
-        <Modal isOpen={this.state.isOpen}  swipeToClose={false}  onClosed={this._closeModa.bind(this)} style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
+        <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
           <View style={styles.modalheader}>
-            <Image style={styles.modalimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.modalfont]}>{'犀利拍冬至'}</Text>
+            <Image style={styles.modalimg} source={{uri:this.state.modaData.UserPicture}} />
+            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.modalfont]}>{this.state.modaData.Name}</Text>
             <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.modalfont]}>{'生命不息电竞不止,来吧加入我的战队'}</Text>
-            <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'主播名额  '}<Text style={commonstyle.red}>{'5/20'}</Text></Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'主播名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
             <View style={commonstyle.viewleft}>
               <Text style={commonstyle.cream}>{'ID:      '} <Text style={commonstyle.white}>{'12312423'}</Text></Text>
-              <Text style={commonstyle.cream}>{'性别:  '} <Text style={commonstyle.white}>{'12312423'}</Text></Text>
-              <Text style={commonstyle.cream}>{'年龄:  '} <Text style={commonstyle.white}>{'12312423'}</Text></Text>
-              <Text style={commonstyle.cream}>{'介绍:  '} <Text style={commonstyle.white}>{'12312423ssssssssssssssssssssssssssssssssssssssss'}</Text></Text>
+              <Text style={commonstyle.cream}>{'性别:  '} <Text style={commonstyle.white}>{this.state.modaData.Sex}</Text></Text>
+              <Text style={commonstyle.cream}>{'年龄:  '} <Text style={commonstyle.white}>{this.state.modaData.Age}</Text></Text>
+              <Text style={commonstyle.cream}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
           </ScrollView>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >已阅读</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userteamid,'phone':this.state.userphone,})} >加入战队</Button>
           </View>
         </Modal>
       );
@@ -171,47 +278,36 @@ export default class extends Component{
           </View>
         </Modal>
       );
+     }
     }
-    }
+_renderRow(rowData, sectionID, rowID){
+     return(
+       <View style={[commonstyle.row, styles.anchorlistblock]}>
+         <View style={styles.anchorlistline}></View>
+         <TouchableOpacity style={commonstyle.col1} onPress={this._openModa.bind(this,rowData)}>
+           <Image style={styles.anchorlistimg} source={{uri:rowData.UserPicture}} />
+           <Text style={commonstyle.gray}>{rowData.Name}</Text>
+         </TouchableOpacity>
+       </View>
+     );
+
+
+}
+_renderFooter(){
+
+}
 rendermatchList(){
   if(this.state.navbar==0){
     return(
       <View>
-      <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule')}>
+      <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
         <Image  style={styles.matchbannerimg}source={{uri:'http://a4.att.hudong.com/57/68/20300533970223133722680195303.jpg'}}  resizeMode={"stretch"} />
       </TouchableOpacity>
-      <View style={[commonstyle.row, styles.anchorlistblock]}>
-        <TouchableOpacity style={commonstyle.col1} onPress={()=>this.gotoRoute('matchschedule')}>
-          <Image style={styles.anchorlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={commonstyle.gray}>{'犀利拍冬至'}</Text>
-        </TouchableOpacity>
-        <View style={styles.anchorlistline}></View>
-        <TouchableOpacity style={commonstyle.col1} onPress={this._openModa.bind(this)}>
-          <Image style={styles.anchorlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={commonstyle.gray}>{'犀利拍冬至'}</Text>
-        </TouchableOpacity>
-        <View style={styles.anchorlistline}></View>
-        <TouchableOpacity style={commonstyle.col1} onPress={this._openModa.bind(this)}>
-          <Image style={styles.anchorlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={commonstyle.gray}>{'犀利拍冬至'}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={[commonstyle.row, styles.anchorlistblock]}>
-        <TouchableOpacity style={commonstyle.col1} onPress={()=>this.gotoRoute('matchschedule')}>
-          <Image style={styles.anchorlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={commonstyle.gray}>{'犀利拍冬至'}</Text>
-        </TouchableOpacity>
-        <View style={styles.anchorlistline}></View>
-        <TouchableOpacity style={commonstyle.col1} onPress={this._openModa.bind(this)}>
-          <Image style={styles.anchorlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={commonstyle.gray}>{'犀利拍冬至'}</Text>
-        </TouchableOpacity>
-        <View style={styles.anchorlistline}></View>
-        <TouchableOpacity style={commonstyle.col1} onPress={this._openModa.bind(this)}>
-          <Image style={styles.anchorlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={commonstyle.gray}>{'犀利拍冬至'}</Text>
-        </TouchableOpacity>
-      </View>
+      <ListView
+        dataSource={this.state.databoboSource}
+        renderRow={this._renderRow.bind(this)}
+        renderFooter={this._renderFooter.bind(this)}
+      />
       </View>
     );
   }
@@ -324,6 +420,7 @@ render() {
         </View>
       </View>
       <ScrollView style={styles.scrollview}>
+
         {matchlist}
       </ScrollView>
       {/*modal*/}
