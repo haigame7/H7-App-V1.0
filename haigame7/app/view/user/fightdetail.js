@@ -27,23 +27,27 @@ export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      navbar: 0,
-      data:{
-          subnavbar:1,
-          subnavbarname:'热度',
-      },
-      }
+     steamname:'',
+     eteamname:'',
+     money:0,
+     }
     }
-
+  componentDidMount(){
+    this.setState({
+      steamname:this.props.steamname,
+      eteamname:this.props.eteamname,
+      money:this.props.money,
+    });
+  }
 
 renderfightdetailList(){
     return(
      <View>
      <View style={[fightdetailStyles.centertextarea]}>
      <Icon name="bell" size={60}  style={[commonstyle.red]}/>
-     <Text style={[commonstyle.white,fightdetailStyles.fightdetailtext]}>{'[犀利拍立冬至] 战队'}</Text>
-      <Text style={[commonstyle.white,fightdetailStyles.fightdetailtext]}>{'向你的战队 [一路发发发] 发起挑战'}</Text>
-       <Text style={[commonstyle.red,commonstyle.fontsize14,fightdetailStyles.fightdetailtext]}>{'压注金额500氦金'}</Text>
+     <Text style={[commonstyle.white,fightdetailStyles.fightdetailtext]}>{'['+this.state.steamname+'] 战队'}</Text>
+      <Text style={[commonstyle.white,fightdetailStyles.fightdetailtext]}>{'向你的战队 ['+this.state.eteamname+'] 发起挑战'}</Text>
+       <Text style={[commonstyle.red,commonstyle.fontsize14,fightdetailStyles.fightdetailtext]}>{'压注金额'+this.state.money+'氦金'}</Text>
        <Text style={[commonstyle.yellow,fightdetailStyles.fightdetailtext]}>{' 是否接受挑战？'}</Text>
      </View>
     <View style={{flexDirection:'row'}}>
