@@ -37,6 +37,11 @@ const matchApi = {
   'JOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/JoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYJOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/MyJoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
+const guessApi={
+  'GETGUESSLIST':apiSetup.MASTER_API_PATH + 'v1/Guess/GuessList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'DOGUESSBET':apiSetup.MASTER_API_PATH + 'v1/Guess/Bet?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MYGUESSLIST':apiSetup.MASTER_API_PATH + 'v1/Guess/MyGuessList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
 
 module.exports = {
   USER_API: userApi,
@@ -44,6 +49,7 @@ module.exports = {
   FIGHT_API:fightApi,
   RANK_API:rankApi,
   MATCH_API:matchApi,
+  GUESS_API:guessApi,
 }
 
 //这样写应该也行
