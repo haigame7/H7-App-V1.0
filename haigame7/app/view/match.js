@@ -44,6 +44,8 @@ export default class extends Component{
       isOpen:false,
       userteamid:0,
       joincount:-1,
+      jointeam:'',
+      jointime:'',
       userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
       money:0,
       matchdata:{
@@ -119,13 +121,28 @@ export default class extends Component{
           if(response[0].MessageCode == '40001'){
             Alert.alert('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
-            this.setState({
-              joincount:response[1].JoinCount,
-              isOpen: true,
-              modaData:rowData
+            MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userteamid},(response2) => {
+            if (response2 !== GlobalSetup.REQUEST_SUCCESS) {
+                if(response2[0].MessageCode == '50001'){
+                  this.setState({
+                  joincount:response[1].JoinCount,
+                  isOpen: true,
+                  modaData:rowData
+                  });
+                }
+              else if(response2[0].MessageCode == '0'){
+                this.setState({
+                 joincount:response[1].JoinCount,
+                 isOpen: true,
+                 modaData:rowData,
+                 jointeam:response2[1].Name,
+                 jointime:response2[1].ApplyTime
             });
+            }
            }
+         });
          }
+       }
           else{
               Alert.alert('请求错误');
             }
@@ -135,20 +152,23 @@ export default class extends Component{
        this.setState({isOpen: false});
     }
     _joinMatch(params){
-      MatchService.joinMatch(params,(response) => {
-        console.log(response);
-        if (response !== GlobalSetup.REQUEST_SUCCESS) {
-          if(response[0].MessageCode == '40001'){
-            Alert.alert('服务器请求异常');
-          }else if(response[0].MessageCode == '0'){
-            Alert.alert('报名成功');
-            this.setState({isOpen: false});
+      if(params.jointeam!==''){
+        Alert.alert('您已报名'+params.jointeam+'!');
+      }else{
+        MatchService.joinMatch(params,(response) => {
+          if (response !== GlobalSetup.REQUEST_SUCCESS) {
+            if(response[0].MessageCode == '40001'){
+              Alert.alert('服务器请求异常');
+            }else if(response[0].MessageCode == '0'){
+              Alert.alert('报名成功');
+              this.setState({isOpen: false});
+           }
          }
-       }
-        else{
-              Alert.alert('请求错误');
-          }
-      });
+          else{
+                Alert.alert('请求错误');
+            }
+        });
+      }
     }
 
 
@@ -172,6 +192,7 @@ export default class extends Component{
   rendermodaldetail(){
     if(this.state.navbar==0){
       {/*获得已报名战队数*/}
+      let joinView =this.state.jointeam==''?<View></View>:<View><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛事信息,请关注'}</Text></View>
 
       return(
         <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
@@ -188,10 +209,11 @@ export default class extends Component{
               <Text style={commonstyle.cream}>{'年龄:  '} <Text style={commonstyle.white}>{this.state.modaData.Age}</Text></Text>
               <Text style={commonstyle.cream}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
+            {joinView}
           </ScrollView>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userteamid,'phone':this.state.userphone,})} >加入战队</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam})} >加入战队</Button>
           </View>
         </Modal>
       );

@@ -57,7 +57,7 @@ export default{
         ApiConfig.MATCH_API.GETBOBOCOUNT,
         {
           'MatchID':data.MatchID,
-          'BoboID':data.BoboID
+          'BoboID':data.BoBoID
         },
         callback
       );
