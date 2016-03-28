@@ -6,7 +6,7 @@
  */
 var React = require('react-native');
 var Header = require('./common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 import Colors from '../components/common/colors';
 var {
   View,
@@ -80,12 +80,12 @@ var User = React.createClass({
   render: function () {
     return (
       <View >
-      <Header screenTitle='个人中心'  iconName='folder'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}/>
+      <Header screenTitle='个人中心'  iconName='email'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}/>
       <ScrollView style={commonstyle.bodyer}>
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserInfo","component":UserInfo})}>
             <Image style={styles.headportrait} source={{uri:this.state.userData.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
+            <TouchableOpacity style={styles.headportraitv} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserCertify","component":UserCertify})}><Icon name="certified" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></TouchableOpacity>
           </TouchableOpacity>
 
           <View style={styles.blocktop}>
@@ -115,94 +115,94 @@ var User = React.createClass({
 
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"信息","component":MyMsg,"sceneConfig":Navigator.SceneConfigs.FloatFromBottom})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="edit" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的消息</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"重置密码","component":ReSetPwd})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="edit" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>重置密码密码</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"关于H7","component":About})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="edit" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>关于H7</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"分享","component":Share})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="edit" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>分享</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"帮助与反馈","component":Help})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="edit" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>帮助与反馈</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"提示创建战队","component":HintCreatTeamScreen})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="edit" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>提示创建战队</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
 
         <View style={styles.listbox}></View>
 
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的战队","component":MyMsg})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="team" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的战队</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"注册","component":RegisterScreen})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#00b4ff'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="cup" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>注册</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的约战","component":UserFight})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的赛事","component":UserCertify})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#ff7062'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="medal" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的约战</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的竞猜","component":UserGuess})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的竞猜","component":Setting})}>
 
           <View style={[styles.listviewiconleft,{backgroundColor:'#30ccc2'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="dollar" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的竞猜</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的任务","component":Setting})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#c13380'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="file" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的任务</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
 
         <View style={styles.listbox}></View>
 
         <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"设置","component":Setting})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#3543e7'}]}>
-            <Icon name="book" size={20} color={'#fff'} />
+            <Icon name="site" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>设置</Text>
-          <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
 
         <View style={styles.listbox}></View>

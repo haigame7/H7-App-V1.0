@@ -1,5 +1,5 @@
 var React = require('react-native');
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var Util = require('./util');
 
 var CommonStyle = require('../../styles/commonstyle');
@@ -32,7 +32,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       icon_name: this.props.iconName,
-      icon_size: 30,
+      icon_size: 24,
      icon_color: '#fff',
       icon_text: this.props.iconText,
   current_title: this.props.screenTitle,
@@ -84,7 +84,7 @@ module.exports = React.createClass({
      return (
        <View style={[CommonStyle.header, CommonStyle.row]}>
          <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerleft]} onPress={this._pop}>
-           <Icon name="angle-left" size={30} color="#FFF" />
+           <Icon name="angle-left" size={20} color="#FFF" />
          </TouchableOpacity>
          <View style={[CommonStyle.col1, CommonStyle.headertext]}>
            <Text style={CommonStyle.headertextfont} numberOfLines={1}>{this.state.current_title}</Text>
@@ -97,7 +97,7 @@ module.exports = React.createClass({
    } else {
      return (
        <View style={[CommonStyle.header, CommonStyle.row]}>
-         <View style={CommonStyle.col1}>
+         <View style={[CommonStyle.col1, CommonStyle.headerleft]}>
          </View>
          <View style={[CommonStyle.col1, CommonStyle.headertext]}>
            <Text style={CommonStyle.headertextfont} numberOfLines={1}>{this.state.current_title}</Text>
