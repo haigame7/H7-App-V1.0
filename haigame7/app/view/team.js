@@ -185,7 +185,7 @@ import ApplyJoin from './user/applyjoin_screen';
 
         <TouchableOpacity style={styles.userlist}  activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo')}>
           <Image style={styles.userlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={styles.userlistcenter} >
+          <View style={commonstyle.col1} >
             <Text style={commonstyle.white} onPress={()=>this.gotoRoute('playerinfo')}>{'犀利拍立冬至'}</Text>
             <View style={styles.userlistteambox}>
               <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
@@ -209,7 +209,7 @@ import ApplyJoin from './user/applyjoin_screen';
 
         <TouchableOpacity style={styles.userlist} activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo')}>
           <Image style={styles.userlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={styles.userlistcenter} >
+          <View style={commonstyle.col1} >
             <Text style={commonstyle.white} onPress={()=>this.gotoRoute('playerinfo')}>{'犀利拍立冬至'}</Text>
             <View style={styles.userlistteambox}>
               <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>

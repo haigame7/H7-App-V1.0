@@ -83,19 +83,15 @@ module.exports = React.createClass({
    if(this.state.isPop){
      return (
        <View style={[CommonStyle.header, CommonStyle.row]}>
-         <View style={CommonStyle.col1}>
-           <TouchableOpacity style={CommonStyle.headerleft} onPress={this._pop}>
-             <Icon name="angle-left" size={30} color="#FFF" />
-           </TouchableOpacity>
+         <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerleft]} onPress={this._pop}>
+           <Icon name="angle-left" size={30} color="#FFF" />
+         </TouchableOpacity>
+         <View style={[CommonStyle.col1, CommonStyle.headertext]}>
+           <Text style={CommonStyle.headertextfont} numberOfLines={1}>{this.state.current_title}</Text>
          </View>
-         <View style={[CommonStyle.col1, CommonStyle.viewcenter]}>
-           <Text style={CommonStyle.headertext} numberOfLines={1}>{this.state.current_title}</Text>
-         </View>
-         <View style={CommonStyle.col1}>
-         <TouchableOpacity style={CommonStyle.headerright} activeOpacity={0.8} onPress={this.state.icon_onPress}>
+         <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerright]} activeOpacity={0.8} onPress={this.state.icon_onPress}>
            {icon}
          </TouchableOpacity>
-         </View>
        </View>
      );
    } else {
@@ -103,14 +99,12 @@ module.exports = React.createClass({
        <View style={[CommonStyle.header, CommonStyle.row]}>
          <View style={CommonStyle.col1}>
          </View>
-         <View style={[CommonStyle.col1, CommonStyle.viewcenter]}>
-           <Text style={CommonStyle.headertext} numberOfLines={1}>{this.state.current_title}</Text>
+         <View style={[CommonStyle.col1, CommonStyle.headertext]}>
+           <Text style={CommonStyle.headertextfont} numberOfLines={1}>{this.state.current_title}</Text>
          </View>
-         <View style={CommonStyle.col1}>
-         <TouchableOpacity style={CommonStyle.headerright} activeOpacity={0.8} onPress={this._pushroute}>
+         <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerright]} activeOpacity={0.8} onPress={this._pushroute}>
            {icon}
          </TouchableOpacity>
-         </View>
        </View>
      );
    }

@@ -91,6 +91,10 @@ var MatchStyle = StyleSheet.create({
         borderColor: '#FFFFFF',
         marginBottom: 5,
     },
+    matchlistname: {
+        marginTop: 5,
+        marginBottom: 5,
+    },
     matchlistvs: {
         marginTop: 30,
         marginBottom: 10,
@@ -159,6 +163,8 @@ var MatchStyle = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
     modalinputfont: {
+        height: 40,
+        left: 5,
         color: '#FFFFFF',
     },
     modalfooter: {

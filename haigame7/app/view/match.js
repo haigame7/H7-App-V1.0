@@ -219,7 +219,7 @@ export default class extends Component{
          {/*更新请求*/}
          setTimeout(()=>{
          this.getGuessList();
-         this.setState({isOpen: false});      
+         this.setState({isOpen: false});
         },1000);
        }
         else{
@@ -368,7 +368,7 @@ _renderGuessRow(rowData){
         <View style={commonstyle.row}>
           <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.ETeamID,guessname:rowData.ETeamName,guessodd:rowData.ETeamOdds})}>
             <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{rowData.ETeamName}</Text>
+            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.ETeamName}</Text>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.ETeamOdds}</Text>
           </TouchableOpacity>
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
@@ -378,7 +378,7 @@ _renderGuessRow(rowData){
           </View>
           <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.STeamID,guessname:rowData.STeamName,guessodd:rowData.STeamOdds})}>
             <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{rowData.STeamName}</Text>
+            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.STeamName}</Text>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.STeamOdds}</Text>
           </TouchableOpacity>
         </View>
