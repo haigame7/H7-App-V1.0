@@ -111,7 +111,7 @@ export default class extends Component{
   renderscheduleList(){
     if(this.state.navbar==0){
       return(
-        <View style={[styles.schedulelistblock]}>
+        <View>
           <View style={[commonstyle.row, styles.schedulelist]}>
             <View style={[commonstyle.col1, commonstyle.viewcenter]}>
               <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
@@ -143,7 +143,7 @@ export default class extends Component{
     }
     else{
       return(
-        <View style={[styles.schedulelistblock]}>
+        <View>
           <View style={[commonstyle.row, styles.schedulelist]}>
             <View style={[commonstyle.col1, commonstyle.viewcenter]}>
               <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
@@ -192,9 +192,9 @@ export default class extends Component{
             </TouchableOpacity>
           </View>
         </View>
-        <View style={[styles.centerbg]}>
+        <ScrollView style={styles.centerbg}>
           {schedulelist}
-        </View>
+        </ScrollView>
       </View>
     );
   }

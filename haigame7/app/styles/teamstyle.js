@@ -247,6 +247,16 @@ var TeamStyle = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 10,
     },
+    listviewteamlink: {
+        width: 44,
+        height: 44,
+        marginRight: 10,
+    },
+    listviewteamedit: {
+        position: 'absolute',
+        right: 5,
+        top: 5,
+    },
     listviewteamimg: {
         width: 44,
         height: 44,
@@ -265,6 +275,15 @@ var TeamStyle = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'rgba(255, 0, 0, 0.4)',
         marginRight: 10,
+    },
+    listviewbtnblock: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginRight: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        width: Util.size.width - 20,
+        height: 40,
     },
     //区域块
     blocktop: {
@@ -334,6 +353,41 @@ var TeamStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
+    },
+    //添加
+    teamcreate: {
+        marginTop: 20,
+        marginLeft: 36,
+        marginRight: 36,
+        width: Util.size.width - 72,
+        alignItems: 'center',
+    },
+    teamcreateimg: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        backgroundColor: '#C3C3C3',
+        borderBottomWidth: 2,
+        borderBottomColor: 'rgba(255, 255, 255, 0.8)',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    teamcreateportrait: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        marginTop: 2,
+    },
+    teamcreateinput: {
+        height: 40,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    teamcreateinputfont: {
+        textAlign: 'center',
     },
 });
 

@@ -33,12 +33,26 @@ const rankApi = {
   'USERRANK':apiSetup.MASTER_API_PATH +'/v1/Rank/UserRank?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'TEAMRANK':apiSetup.MASTER_API_PATH + 'v1/Rank/TeamRank?accesstoken='+apiSetup.ACCESS_TOKEN,
 }
+const matchApi = {
+  'GETMATCHLIST':apiSetup.MASTER_API_PATH + 'v1/Match/MatchList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'GETBOBOLIST':apiSetup.MASTER_API_PATH +'v1/Match/BoBoList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'GETBOBOCOUNT':apiSetup.MASTER_API_PATH +'v1/Match/BoBoCount?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'JOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/JoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MYJOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/MyJoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
+const guessApi={
+  'GETGUESSLIST':apiSetup.MASTER_API_PATH + 'v1/Guess/GuessList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'DOGUESSBET':apiSetup.MASTER_API_PATH + 'v1/Guess/Bet?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MYGUESSLIST':apiSetup.MASTER_API_PATH + 'v1/Guess/MyGuessList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
 
 module.exports = {
   USER_API: userApi,
   ASSERT_API: assertApi,
   FIGHT_API:fightApi,
   RANK_API:rankApi,
+  MATCH_API:matchApi,
+  GUESS_API:guessApi,
 }
 
 //这样写应该也行

@@ -102,6 +102,9 @@ export default StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
     logininputfont: {
+        height: 40,
+        left: 5,
+        width: Util.size.width - 72,
         color: '#FFFFFF',
     },
     logininputright: {
@@ -188,6 +191,7 @@ export default StyleSheet.create({
         justifyContent: 'flex-start',
     },
     textareainput: {
+        left: 5,
         height: 50,
         color: '#C3C3C3',
         alignItems: 'flex-start',
@@ -219,6 +223,7 @@ export default StyleSheet.create({
         marginRight: 10,
     },
     listviewiconright: {
+        top: 5,
         width:15,
         height: 30,
         marginLeft: 10,
@@ -269,6 +274,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     listviewinputfont: {
+        height: 30,
+        left: 5,
         color: '#484848',
     },
     //模态框

@@ -160,6 +160,10 @@ var FightStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    fightviewinputfont: {
+        height: 30,
+        left: 5,
+    },
     fightviewtextarea: {
         marginTop: 10,
         width: Util.size.width - 72,
