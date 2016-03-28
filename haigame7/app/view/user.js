@@ -7,6 +7,7 @@
 var React = require('react-native');
 var Header = require('./common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/FontAwesome');
+import Colors from '../components/common/colors';
 var {
   View,
   Text,
@@ -164,21 +165,21 @@ var User = React.createClass({
           <Text style={styles.listviewtext}>我的战队</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的赛事","component":UserMatch })}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"注册","component":RegisterScreen})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#00b4ff'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
-          <Text style={styles.listviewtext}>我的赛事</Text>
+          <Text style={styles.listviewtext}>注册</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的约战","component":UserFight})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的赛事","component":UserCertify})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#ff7062'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的约战</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的竞猜","component":UserGuess})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的竞猜","component":Setting})}>
 
           <View style={[styles.listviewiconleft,{backgroundColor:'#30ccc2'}]}>
             <Icon name="book" size={20} color={'#fff'} />
@@ -186,7 +187,7 @@ var User = React.createClass({
           <Text style={styles.listviewtext}>我的竞猜</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的任务","component":UserTask})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的任务","component":Setting})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#c13380'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>

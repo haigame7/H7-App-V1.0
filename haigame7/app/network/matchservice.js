@@ -32,21 +32,6 @@ export default{
       );
   },
   /*获取约战列表*/
-  getBoBoList(data,callback){
-    /**
-     * @param  {[type]}   {'MatchID':matchid}             [params]
-     * @param  {Function} callback
-     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
-     */
-      FecthService.postFecth(
-        ApiConfig.MATCH_API.GETBOBOLIST,
-        {
-          'MatchID':data.matchID,
-        },
-        callback
-      );
-  },
-  /*获取约战列表*/
   getBoBoCount(data,callback){
     /**
      * @param  {[type]}   {'MatchID':matchid}             [params]
