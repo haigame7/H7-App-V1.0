@@ -28,6 +28,7 @@ import MatchService from '../network/matchservice';
 import GuessService from '../network/guessservice';
 import FightService from '../network/fightservice';
 import GlobalSetup from '../constants/globalsetup';
+import GlobalVariable from '../constants/globalvariable';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 
@@ -186,7 +187,7 @@ export default class extends Component{
       });
     }
     _openGuessModa(rowData) {
-      GuessService.myGuessList(rowData,(response) => {
+      GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount},(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
             Alert.alert('服务器请求异常');
@@ -416,19 +417,19 @@ rendermyguessList(rowData){
         <View style={styles.modaltabcontent}>
                   <View style={[commonstyle.row, styles.modaltablist]}>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.GuessTime.substring(2,10)}</Text>
                     </View>
                     <View style={[commonstyle.col2, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.BetTeamName}</Text>
                     </View>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.BetMoney}</Text>
                     </View>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.Odds}</Text>
                     </View>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.BetMoney*rowData.Odds}</Text>
                     </View>
                 </View>
        </View>

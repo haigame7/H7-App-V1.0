@@ -172,14 +172,14 @@ var User = React.createClass({
           <Text style={styles.listviewtext}>注册</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的赛事","component":UserCertify})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的约战","component":UserFight})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#ff7062'}]}>
             <Icon name="book" size={20} color={'#fff'} />
           </View>
           <Text style={styles.listviewtext}>我的约战</Text>
           <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的竞猜","component":Setting})}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"我的竞猜","component":UserGuess})}>
 
           <View style={[styles.listviewiconleft,{backgroundColor:'#30ccc2'}]}>
             <Icon name="book" size={20} color={'#fff'} />
