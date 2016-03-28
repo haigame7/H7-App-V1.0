@@ -125,7 +125,7 @@ export default class extends Component{
           <View  style={styles.fightview}>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于10氦金'}</Text>
             <View style={styles.fightviewinput}>
-              <TextInput style={commonstyle.cream} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
+              <TextInput style={[commonstyle.cream, styles.fightviewinputfont]} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
             </View>
             <View style={styles.fightviewinput}>
               <TextInput style={commonstyle.cream} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.fighttime = text} defaultValue={this.formatDate(this.state.fighttime.toString())}  />

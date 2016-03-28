@@ -18,14 +18,18 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         height: 48,
-        marginLeft: 15,
+        marginLeft: (Platform.OS === 'ios') ? 0 : 15,
     },
     headertext: {
+        top: (Platform.OS === 'ios') ? 15 : 0,
+        justifyContent: 'center',
+        height: 25,
+    },
+    headertextfont: {
         textAlign: 'center',
         justifyContent: 'center',
         color: '#fff',
         height: 25,
-        width: Util.size.width - 90,
         fontSize: 18,
         fontWeight: 'bold',
     },
@@ -33,12 +37,12 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
         height: 48,
-        marginRight: 15,
+        marginRight: (Platform.OS === 'ios') ? 0 : 15,
     },
     headertextright: {
-        fontSize: 16,
+        fontSize: 14,
         color: '#fff',
-        right: 0,
+        right: 10,
     },
     bodyer: {
         height: (Platform.OS === 'ios') ? Util.size.height - 64 : Util.size.height - 48,
@@ -167,33 +171,43 @@ var CommonStyle = StyleSheet.create({
     //色彩
     white: {
         color: '#FFFFFF',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     cream: {
         color: '#C3C3C3',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     gray: {
         color: '#484848',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     cyan: {
-        color: '#30CCC1'
+        color: '#30CCC1',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     blue: {
         color: '#00B4FF',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     yellow: {
         color: '#FFCA00',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     orange: {
         color: '#FF6F64',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     red: {
         color: '#D31B25',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     purple: {
         color: '#C1337F',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     black: {
         color: '#282828',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     //字体大小
     fontsize12: {

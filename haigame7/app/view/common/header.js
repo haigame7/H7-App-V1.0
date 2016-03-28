@@ -35,13 +35,11 @@ module.exports = React.createClass({
     }
     return (
       <View style={[CommonStyle.header, CommonStyle.row]}>
-        <View style={CommonStyle.col1}>
-        <TouchableOpacity style={CommonStyle.headerleft} onPress={this._pop}>
+        <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerleft]} onPress={this._pop}>
           <Icon name="angle-left" size={30} color="#FFF" />
         </TouchableOpacity>
-        </View>
-        <View style={[CommonStyle.col1, CommonStyle.viewcenter]}>
-          <Text style={CommonStyle.headertext} numberOfLines={1}>{screenTitle}</Text>
+        <View style={[CommonStyle.col1, CommonStyle.headertext]}>
+          <Text style={CommonStyle.headertextfont} numberOfLines={1}>{screenTitle}</Text>
         </View>
         <View style={CommonStyle.col1}>
         </View>
