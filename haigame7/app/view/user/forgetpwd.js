@@ -92,21 +92,29 @@ export default class extends Component {
     });
     UserService.getVerifiCode2(this.state.data.phone,(response) => {
       //return:{MessageCode: 0, Message: ""}
-      if (response !== GlobalSetup.REQUEST_SUCCESS) {
-        let message = '';
-        if(response.MessageCode == '40001'){
-          message = '服务器请求异常';
-        }else if(response.MessageCode == '10001'){
-          message = '手机号有误请重新输入';
-        }else if(response.MessageCode == '10003'){
-          message = '验证码获取失败';
-        }else if(response.MessageCode == '0'){
-          message = '验证码已发送，请查看';
-        }
-          //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+      // if (response !== GlobalSetup.REQUEST_SUCCESS) {
+      //   let message = '';
+      //   if(response.MessageCode == '40001'){
+      //     message = '服务器请求异常';
+      //   }else if(response.MessageCode == '10001'){
+      //     message = '手机号有误请重新输入';
+      //   }else if(response.MessageCode == '10003'){
+      //     message = '验证码获取失败';
+      //   }else if(response.MessageCode == '0'){
+      //     message = '验证码已发送，请查看';
+      //   }
+      //     //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+      // } else {
+      //   Alert.alert('请求错误');
+      //   //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+      //   this.setState({
+      //     isToushable: true,
+      //   });
+      // }
+      if (response[0].MessageCode == '0') {
+        Alert.alert('验证码已发送!');
       } else {
-        Alert.alert('请求错误');
-        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+        Alert.alert(response[0].Message)
         this.setState({
           isToushable: true,
         });
@@ -144,7 +152,7 @@ export default class extends Component {
     }
     return(
       <View style={{ flex: 1 }}>
-          <Header initObj={{ title:'密码找回', backName:'返回',}}   navigator={this.props.navigator}></Header>
+          <Header screenTitle = '密码找回' navigator = { this.props.navigator } />
           <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
           <View key={'messages'}>{this.renderMessages()}</View>
 

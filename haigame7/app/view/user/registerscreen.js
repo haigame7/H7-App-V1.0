@@ -105,42 +105,51 @@ export default class extends Component {
       //ToastAndroid.show('请填写手机号先',ToastAndroid.SHORT);
       return;
     }
-    this.setState({
-      isToushable: false,
-    });
     UserService.getVerifiCode(this.state.data.phone,(response) => {
       //return:{MessageCode: 0, Message: ""}
-      if (response !== GlobalSetup.REQUEST_SUCCESS) {
-        let message = '';
-        if(response.MessageCode == '40001'){
-          message = '服务器请求异常,请稍后重试';
-          this.setState({
-            isToushable: true,
-          });
-        }else if(response.MessageCode == '10003'){
-          message = '手机号有误请重新输入';
-          this.setState({
-            isToushable: true,
-          });
-        }else if(response.MessageCode == '10004'){
-          message = '手机号已注册';
-          this.setState({
-            isToushable: true,
-          });
-        }else if(response.MessageCode == '0'){
-          message = '验证码已发送，请查看';
-        }
-       Alert.alert(
-        message ,
-      );
-          //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
-      } else {
-        Alert.alert('请求错误');
-        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
-        this.setState({
-          isToushable: true,
-        });
-      }
+      // if (response !== GlobalSetup.REQUEST_SUCCESS) {
+      //   let message = '';
+      //   if(response.MessageCode == '40001'){
+      //     message = '服务器请求异常,请稍后重试';
+      //     this.setState({
+      //       isToushable: true,
+      //     });
+      //   }else if(response.MessageCode == '10003'){
+      //     message = '手机号有误请重新输入';
+      //     this.setState({
+      //       isToushable: true,
+      //     });
+      //   }else if(response.MessageCode == '10004'){
+      //     message = '手机号已注册';
+      //     this.setState({
+      //       isToushable: true,
+      //     });
+      //   }else if(response.MessageCode == '0'){
+      //     message = '验证码已发送，请查看';
+      //   }
+      //  Alert.alert(
+      //   message ,
+      // );
+      //     //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+      // } else {
+      //   Alert.alert('请求错误');
+      //   //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+      //   this.setState({
+      //     isToushable: true,
+      //   });
+      // }
+
+    if (response[0].MessageCode == '0') {
+      this.setState({
+        isToushable: false,
+      });
+      Alert.alert("获取成功!")
+    } else {
+      Alert.alert(response[0].Message)
+      this.setState({
+        isToushable: true,
+      });
+    }
     })
 
   }
@@ -151,8 +160,8 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'phone', placeholder: '手机号', keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 手机号必填', style: [styles.logininputfont]},
-      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'default',placeholderTextColor: 'white', color:'white', secureTextEntry: false, message: '* 验证码必填', style: [styles.logininputfont]}
+      {ref: 'phone', placeholder: '手机号', keyboardType: 'numeric',placeholderTextColor: 'white', message: '* 手机号必填', style: [styles.logininputfont]},
+      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'numeric',placeholderTextColor: 'white', message: '* 验证码必填', style: [styles.logininputfont]}
     ]
     var codebtn;
     if (this.state.isToushable) {

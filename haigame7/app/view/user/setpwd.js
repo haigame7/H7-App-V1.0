@@ -42,10 +42,8 @@ export default class extends Component {
   };
 
   componentDidMount() {
-    this.setState({reset:this.props.reset});
-              //这里获取从FirstPageComponent传递过来的参数: id
-
-
+    // this.setState({reset:this.props.reset});
+    //这里获取从FirstPageComponent传递过来的参数: id
   }
 
   onFocus(argument) {
@@ -77,69 +75,95 @@ export default class extends Component {
     if(isreset){
       UserService.resetPassword(this.state.data,(response) => {
         //return:{MessageCode: 0, Message: ""}
-        if (response !== GlobalSetup.REQUEST_SUCCESS) {
-          let message = '';
-          if(response.MessageCode == '40001'){
-            message = '服务器请求异常';
-          }else if(response.MessageCode == '10001'){
-            message = '手机号不存在';
-          }else if(response.MessageCode == '10005'){
-            message = '验证码输入有误';
-          }else if(response.MessageCode == '10006'){
-            message = '验证码过期';
-          }else if(response.MessageCode == '0'){
-            message = '重置成功';
-          }
-           Alert.alert(
-            message ,
-          );
-          if(message=='重置成功'){
-            //重置完自动登录
-             AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
-            //跳转到个人中心
-            setTimeout(() => {
-              var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
-               this.props.navigator.jumpTo(route);
-            }, 2000);
-          }
-            //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+        // if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        //   let message = '';
+        //   if(response.MessageCode == '40001'){
+        //     message = '服务器请求异常';
+        //   }else if(response.MessageCode == '10001'){
+        //     message = '手机号不存在';
+        //   }else if(response.MessageCode == '10005'){
+        //     message = '验证码输入有误';
+        //   }else if(response.MessageCode == '10006'){
+        //     message = '验证码过期';
+        //   }else if(response.MessageCode == '0'){
+        //     message = '重置成功';
+        //   }
+        //    Alert.alert(
+        //     message ,
+        //   );
+        //   if(message=='重置成功'){
+        //     //重置完自动登录
+        //      AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
+        //     //跳转到个人中心
+        //     setTimeout(() => {
+        //       var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
+        //        this.props.navigator.jumpTo(route);
+        //     }, 2000);
+        //   }
+        //     //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+        // } else {
+        //   Alert.alert('请求错误');
+        //   //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+        // }
+
+        if (response[0].MessageCode == '0') {
+          AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
+          setTimeout(() => {
+            var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
+            this.props.navigator.jumpTo(route);
+          }, 2000);
+          Alert.alert("重置成功!");
         } else {
-          Alert.alert('请求错误');
-          //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+          Alert.alert(
+              response[0].Message
+          );
         }
      })
    }else{
       UserService.registerByInfo(this.state.data,(response) => {
         //return:{MessageCode: 0, Message: ""}
-        if (response !== GlobalSetup.REQUEST_SUCCESS) {
-          let message = '';
-          if(response.MessageCode == '40001'){
-            message = '服务器请求异常';
-          }else if(response.MessageCode == '10004'){
-            message = '该手机号已注册';
-          }else if(response.MessageCode == '10005'){
-            message = '验证码输入有误';
-          }else if(response.MessageCode == '10006'){
-            message = '验证码过期';
-          }else if(response.MessageCode == '0'){
-            message = '注册成功';
-          }
-           Alert.alert(
-            message ,
-          );
-          if(message=='注册成功'){
-            //注册完自动登录
-             AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
-            //跳转到个人中心
-            setTimeout(() => {
-              var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
-               this.props.navigator.jumpTo(route);
-            }, 2000);
-          }
-            //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+        // if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        //   let message = '';
+        //   if(response.MessageCode == '40001'){
+        //     message = '服务器请求异常';
+        //   }else if(response.MessageCode == '10004'){
+        //     message = '该手机号已注册';
+        //   }else if(response.MessageCode == '10005'){
+        //     message = '验证码输入有误';
+        //   }else if(response.MessageCode == '10006'){
+        //     message = '验证码过期';
+        //   }else if(response.MessageCode == '0'){
+        //     message = '注册成功';
+        //   }
+        //    Alert.alert(
+        //     message ,
+        //   );
+        //   if(message=='注册成功'){
+        //     //注册完自动登录
+        //      AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
+        //     //跳转到个人中心
+        //     setTimeout(() => {
+        //       var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
+        //        this.props.navigator.jumpTo(route);
+        //     }, 2000);
+        //   }
+        //     //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
+        // } else {
+        //   Alert.alert('请求错误');
+        //   //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+        // }
+
+        if (response[0].MessageCode == '0') {
+          AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
+          setTimeout(() => {
+            var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-4];
+            this.props.navigator.jumpTo(route);
+          }, 2000);
+          Alert.alert('注册成功!')
         } else {
-          Alert.alert('请求错误');
-          //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+          Alert.alert(
+              response[0].Message
+          );
         }
       })
     }
@@ -156,11 +180,11 @@ export default class extends Component {
     ]
     var headerset, headtext;
     var footerset;
-    if(this.state.reset){
-      headerset =  <View><Header initObj={{title:'设置新密码',backName:'返回',}}  navigator={this.props.navigator}></Header><View activeOpacity={1} style={styles.titleContainer}></View></View>
+    if(this.props.reset){
+      headerset =  <View><Header screenTitle = '重置密码' navigator = { this.props.navigator } /><View activeOpacity={1} style={styles.titleContainer}></View></View>
       headtext = <View style={styles.loginblock}></View>
     }else{
-        headerset =<View><Header initObj={{title:'设置氦7密码',backName:'返回',}}  navigator={this.props.navigator}></Header><View activeOpacity={1} style={styles.titleContainer}></View></View>
+        headerset =<View><Header screenTitle = '设置密码' navigator = { this.props.navigator } /><View activeOpacity={1} style={styles.titleContainer}></View></View>
         headtext = <View style={styles.loginblock}><Text style={commonstyle.cream}>{'设置氦7密码后，您可以用手机号和密码同时登陆氦7电脑版和手机版'}</Text></View>
     }
     return(
@@ -178,8 +202,8 @@ export default class extends Component {
               <Text style={styles.switchtext} >{'显示密码'}</Text>
               <Switch onValueChange={(value) =>this.showPwd(this.state.notshow)} style={styles.switchbar} value= {!this.state.notshow}/>
           </View>
-          <TouchableHighlight style={this.state.loading ? styles.btndisable : styles.btn} underlayColor={'#FF0000'} onPress={() => this.register(this.state.reset)}>
-              <Text style={styles.btnfont} onPress={() => this.register(this.state.reset)}>{'完成'}</Text>
+          <TouchableHighlight style={this.state.loading ? styles.btndisable : styles.btn} underlayColor={'#FF0000'} onPress={() => this.register(this.props.reset)}>
+              <Text style={styles.btnfont}>{'完成'}</Text>
           </TouchableHighlight>
           </Image>
       </View>

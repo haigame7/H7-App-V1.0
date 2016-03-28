@@ -10,6 +10,7 @@ import React, {
     Text,
     Image,
     StyleSheet,
+    ListView,
     Component,
     TouchableOpacity,
     Navigator,
@@ -22,18 +23,75 @@ var Icon = require('react-native-vector-icons/FontAwesome');
 var commonstyle = require('../../styles/commonstyle');
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
-import FightDetail from './fightdetail';
+
+import UserFightList from '../fight/userfightdate';
+import Loading from '../common/loading';
+import FightService from '../../network/fightservice';
+import GlobalSetup from '../../constants/globalsetup';
+import GlobalVariable from '../../constants/globalvariable';
 
 export default class extends Component{
   constructor(props) {
     super(props);
+      var datasend = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      var datareceive = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      navbar: 0,
-      data:{
-          subnavbar:1,
-          subnavbarname:'热度',
+      datasendSource: datasend.cloneWithRows(['row1','row2']),
+      datareceiveSource:datareceive.cloneWithRows(['row1','row2']),
+      paraSend:{
+          phone:this.props.phone?this.props.phone : '13466500850',
+          fighttype:GlobalVariable.FIGHT_INFO.FightSend,
+          startpage:GlobalVariable.PAGE_INFO.StartPage,
+          pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
       },
+      paraReceive:{
+          phone:this.props.phone?this.props.phone : '13466500850',
+          fighttype:GlobalVariable.FIGHT_INFO.FightReceive,
+          startpage:GlobalVariable.PAGE_INFO.StartPage,
+          pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+      },
+      dataReceive:[],
+      dataSend:[],
+      footerOneMsg: "点击加载更多",
+      footerTwoMsg: "点击加载更多",
+      navbar:0,
+      keyone:0,
       }
+    }
+    //加载完组件后操作
+    componentDidMount() {
+        this.fetchSendData();
+        this.fetchReceiveData();
+    }
+    //获取发出约战数据
+    fetchSendData() {
+      FightService.getUserFight(this.state.paraSend,(response) => {
+        if (response[0].MessageCode == '0') {
+          let newData = response[1];
+          this.setState({
+            datasendSource: this.state.datasendSource.cloneWithRows(newData),
+            dataSend:newData,
+          });
+        }
+        else {
+          console.log('请求错误' + response[0].MessageCode);
+        }
+      });
+    }
+    //获取接受约战数据
+    fetchReceiveData() {
+      FightService.getUserFight(this.state.paraReceive,(response) => {
+        if (response[0].MessageCode == '0') {
+          let newData = response[1];
+          this.setState({
+            datareceiveSource: this.state.datareceiveSource.cloneWithRows(newData),
+            dataReceive:newData,
+          });
+        }
+        else {
+          console.log('请求错误' + response[0].MessageCode);
+        }
+      });
     }
     _openModa() {
       this.setState({isOpen: true});
@@ -59,79 +117,114 @@ export default class extends Component{
     }
     }
 renderfightList(){
+
   if(this.state.navbar==0){
     return(
-      <View style={[styles.fightlist]}>
-       <View style={[styles.fightli]}>
-          <View style={[styles.fightlicontent]}>
-           <View style={[styles.flexcolumn]}>
-          <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
-          </View>
-          <View style={styles.fightlistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'VS'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
-            <View style={styles.fightstate}>
-             <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'对方未回应'}</Text>
-            </View>
-          </View>
-          <View style={[styles.flexcolumn]}>
-         <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
-         </View>
-         </View>
-       </View>
-
-       <View style={[styles.fightli]}>
-          <View style={[styles.fightlicontent]}>
-           <View style={[styles.flexcolumn]}>
-          <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
-          </View>
-          <View style={styles.fightlistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'胜'}<Text>{'VS'}</Text>{'负'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
-            <View style={[styles.fightstate,{borderColor:'red'}]}>
-             <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'+100氦金'}</Text>
-            </View>
-          </View>
-          <View style={[styles.flexcolumn]}>
-         <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
-         </View>
-         </View>
-       </View>
-      </View>
+      <ListView
+        dataSource={this.state.datasendSource}
+        renderRow={this._renderRow.bind(this)}
+        renderFooter={this._renderFooter.bind(this)}
+      />
     );
   }
   else{
     return(
-      <View style={[styles.fightlist]}>
-       <View style={[styles.fightli]}>
-          <View style={[styles.fightlicontent]}>
-           <View style={[styles.flexcolumn]}>
-          <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
-          </View>
-          <View style={styles.fightlistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{'VS'}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{'2015/05/04'}</Text>
-            <TouchableOpacity style={[styles.fightstate,{borderColor:'red'}]} onPress = {() => this.gotoRoute('fightdetail')} >
-             <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'确认是否应战'}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.flexcolumn]}>
-         <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-         <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{'犀利拍立冬至'}</Text>
-         </View>
-         </View>
-       </View>
-      </View>
+      <ListView
+        dataSource={this.state.datareceiveSource}
+        renderRow={this._renderRow.bind(this)}
+        renderFooter={this._renderFooter.bind(this)}
+      />
+
     );
   }
 }
+_renderRow(rowData){
+  return(
+    <UserFightList rowData={rowData} navigator={this.props.navigator}  />
+  );
+}
+_renderFooter(){
+  if(this.state.navbar==0){
+  return(
+    <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraSend,this.state.dataSend)}>
+      <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerOneMsg}</Text>
+    </TouchableHighlight>
+  );
+  }
+  else{
+    return(
+      <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraReceive,this.state.dataReceive)}>
+        <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerTwoMsg}</Text>
+      </TouchableHighlight>
+    );
+  }
+}
+_onLoadMore(param,data) {
+
+  console.log(data);
+  if (this.state.keyone > 0 &&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend) {
+    this.setState({
+      footerOneMsg: "木有更多多数据了~~~~"
+    });
+  }else if(this.state.keytwo>0 &&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
+    this.setState({
+      footerTwoMsg: "木有更多多数据了~~~~"
+    });
+  }
+  else{
+    let _ds = data;
+    let _params = param;
+    _params.startpage = _params.startpage+1;
+    if(param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
+      this.setState({
+        footerOneMsg: "正在加载.....",
+      });
+    }else if(param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
+      this.setState({
+        footerTwoMsg: "正在加载....."
+      });
+    }
+    {/*加载下一页*/}
+    FightService.getUserFight(_params,(response) => {
+      if (response[0].MessageCode == '0') {
+        let nextData = response[1];
+        if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
+          this.setState({
+            keyone:1,
+          });
+        }else if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
+          this.setState({
+            keytwo:1,
+          });
+        }
+        for(var item in nextData){
+          _ds.push(nextData[item])
+        }
+      } else {
+        console.log('请求错误' + response[0].MessageCode);
+      }
+    });
+    //这等到有api在搞吧
+    setTimeout(()=>{
+      if(param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
+        this.setState({
+          datasendSource: this.state.datasendSource.cloneWithRows(_ds),
+          loaded: true,
+          footerOneMsg: "点击加载更多",
+        });
+      }else if(param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
+        this.setState({
+          datareceiveSource: this.state.datareceiveSource.cloneWithRows(_ds),
+          loaded: true,
+          footerTwoMsg: "点击加载更多",
+        });
+      }
+    },1000);
+  }
+
+}
 render() {
-    let fightlist = this.renderfightList();
+  let fightlist =  this.renderfightList();
   return (
     <View style={styles.container}>
      <Header screenTitle="我的约战"   navigator={this.props.navigator}></Header>
@@ -146,7 +239,9 @@ render() {
       </View>
       </View>
           <View style={[styles.centerbg]}>
+          <ScrollView style={styles.scrollview}>
           {fightlist}
+          </ScrollView>
           </View>
         </View>
     );
@@ -161,11 +256,7 @@ var styles = StyleSheet.create({
   flexrow:{
     flexDirection:'row',
   },
-  flexcolumn:{
-    flexDirection:'column',
-    alignItems:'center',
-   justifyContent:'center',
-  },
+
   centerbg: {
      flex:1,
      backgroundColor:'rgb(0, 0, 0)',
@@ -199,33 +290,8 @@ var styles = StyleSheet.create({
    alignItems:'center',
   justifyContent:'center',
  },
- fightlistimg: {
-     width: 70,
-     height: 70,
-     borderRadius: 35,
-     borderWidth: 2,
-     borderColor: 'rgba(255, 255, 255, 0.6)',
-     marginRight: 10,
- },
- fightlistcenter: {
-    width:Util.size.width/3,
-    alignItems:'center',
-   justifyContent:'center',
- },
- fightlisttext: {
-     marginTop: 5,
-     marginBottom: 5,
- },
- fightstate:{
-  borderWidth:1,
-  top:10,
-  height:28,
-  width:90,
-  borderColor:'gray',
-  borderRadius:2,
-  alignItems:'center',
-  justifyContent:'center',
- },
+
+
 
   nav:{
   height: 40,
