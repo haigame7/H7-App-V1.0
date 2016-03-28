@@ -59,6 +59,10 @@ export default class extends Component {
   }
   componentWillReceiveProps(nextProps,nextState) {
   }
+
+  componentWillUnmount() {
+    this.timer && clearTimeout(this.timer);
+  }
   _createAreaData(area){
   	let data = {};
   	let len = area.length;
@@ -139,7 +143,7 @@ export default class extends Component {
         userdata: this.state.userData,
         screenTitle: property,
         setProperty(key,pro){
-          console.log('列表页设置相应属性:' + key);
+          // console.log('列表页设置相应属性:' + key);
           switch (key) {
             case '昵称':
               UserService.updateUserInfo({"PhoneNumber":_this.state.userData.PhoneNumber,'UserWebNickName':pro},(response) => {
@@ -154,7 +158,7 @@ export default class extends Component {
               break;
             case '个性签名':
             UserService.updateUserInfo({"PhoneNumber":_this.state.userData.PhoneNumber,'Hobby':pro},(response) => {
-              console.log(pro);
+              // console.log(pro);
               if(response[0].MessageCode == '0') {
                 udata['Hobby'] = pro
                 AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(udata));
@@ -183,7 +187,9 @@ export default class extends Component {
           _this.setState({
             userData: udata
           })
-          _this.props._callback('UserInfo');
+          _this.timer = setTimeout(()=>{
+            _this.props._callback('UserInfo');
+          },1000);
         }
       }
     });

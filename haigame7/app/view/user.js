@@ -46,6 +46,8 @@ import UserService from '../network/userservice';
 import AssertService from '../network/assertservice';
 import Spinner from 'react-native-loading-spinner-overlay';
 import GlobalVariable from '../constants/globalvariable';
+
+import Toast from '@remobile/react-native-toast';
 //试试ES6的类属性
 
 var User = React.createClass({
@@ -103,17 +105,25 @@ var User = React.createClass({
   componentDidMount() {
   },
   _toNextScreen(params){
+    // Toast.show("this is a message")
+    let _this = this;
     this.state._navigator.push({
       name: params.name,
       component: params.component,
       sceneConfig:params.sceneConfig || undefined,
-      params: {...this.props,...this.state,_callback(key,params){
+      params: {
+        ...this.props,
+        hjData: this.state.hjData,
+        fightData: this.state.fightData,
+        _callback(key,params){
         switch (key) {
           case 'UserInfo':
-              console.log('用户信息回掉');
               AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
                 let jsondata = JSON.parse(value);
-                this.setState({userData: jsondata})
+                console.log(jsondata);
+                _this.setState({userData: jsondata})
+                console.log('这里重新赋值了');
+                // console.log(_this.state.userData.Hobby);
               });
             break;
           case 'Usercertify':
@@ -126,6 +136,7 @@ var User = React.createClass({
     })
   },
   render: function () {
+    console.log('***********');
     return (
       <View >
       <Header screenTitle='个人中心'  iconName='email'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}/>

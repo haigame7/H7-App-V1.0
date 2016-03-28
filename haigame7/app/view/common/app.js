@@ -1,6 +1,6 @@
 import React, { Component, View, Text, ScrollView,AsyncStorage ,TouchableOpacity} from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
-
+import Toast from '@remobile/react-native-toast';
 var Headernav = require('./headernav');
 
 
@@ -65,6 +65,7 @@ export default class App extends Component {
   componentWillUpdate() {
   }
   componentDidMount() {
+    // Toast.show("this is a message")
   }
 
   tabbarToggle() {
