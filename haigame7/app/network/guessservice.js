@@ -46,6 +46,9 @@ export default{
         ApiConfig.GUESS_API.MYGUESSLIST,
         {
           'UserID':data.userID,
+          'GuessID':data.guessID,
+          'StartPage':data.startpage,
+          'PageCount':data.pagecount,
         },
         callback
       );

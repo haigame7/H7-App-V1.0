@@ -30,6 +30,7 @@ import FightService from '../network/fightservice';
 import GlobalSetup from '../constants/globalsetup';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+import GlobalVariable from '../constants/globalvariable';
 
 export default class extends Component{
   constructor(props) {
@@ -186,7 +187,7 @@ export default class extends Component{
       });
     }
     _openGuessModa(rowData) {
-      GuessService.myGuessList(rowData,(response) => {
+      GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount},(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
             Alert.alert('服务器请求异常');
@@ -219,7 +220,7 @@ export default class extends Component{
          {/*更新请求*/}
          setTimeout(()=>{
          this.getGuessList();
-         this.setState({isOpen: false});      
+         this.setState({isOpen: false});
         },1000);
        }
         else{
@@ -367,7 +368,7 @@ _renderGuessRow(rowData){
         <View style={[commonstyle.viewcenter, styles.matchlisttitle]}><Text style={[commonstyle.fontsize14,commonstyle.white]}>{rowData.GuessName}</Text></View>
         <View style={commonstyle.row}>
           <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.ETeamID,guessname:rowData.ETeamName,guessodd:rowData.ETeamOdds})}>
-            <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+            <Image style={styles.matchlistimg} source={{uri:rowData.ETeamLogo}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{rowData.ETeamName}</Text>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.ETeamOdds}</Text>
           </TouchableOpacity>
@@ -377,7 +378,7 @@ _renderGuessRow(rowData){
             <Text style={[commonstyle.yellow ]}>{rowData.GuessType}</Text>
           </View>
           <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.STeamID,guessname:rowData.STeamName,guessodd:rowData.STeamOdds})}>
-            <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+            <Image style={styles.matchlistimg} source={{uri:rowData.STeamLogo}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14,{marginTop:5}]}>{rowData.STeamName}</Text>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.STeamOdds}</Text>
           </TouchableOpacity>
@@ -387,7 +388,7 @@ _renderGuessRow(rowData){
       <View style={[commonstyle.row, styles.matchlisttab]}>
         <View style={[commonstyle.col1, commonstyle.viewcenter]}>
           <Icon name="user" size={20} color={'#D31B25'}/>
-          <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'08:20:49'}</Text>
+          <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{rowData.MatchTime}</Text>
         </View>
         <View style={styles.matchlisttabline}></View>
         <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} activeOpacity={0.8} >
@@ -416,19 +417,19 @@ rendermyguessList(rowData){
         <View style={styles.modaltabcontent}>
                   <View style={[commonstyle.row, styles.modaltablist]}>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'19:04'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.GuessTime.substring(2,10)}</Text>
                     </View>
                     <View style={[commonstyle.col2, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'犀利拍立冬至'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.BetTeamName}</Text>
                     </View>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'100'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.BetMoney}</Text>
                     </View>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'1:1.1'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.Odds}</Text>
                     </View>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{'150'}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{(rowData.BetMoney*rowData.Odds)}</Text>
                     </View>
                 </View>
        </View>
