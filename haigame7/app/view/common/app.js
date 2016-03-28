@@ -45,7 +45,7 @@ export default class App extends Component {
     //   let data = JSON.parse(value);
     //   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
 
-      if( value != undefined) {
+      if( value == undefined) {
         this.refs.header_match.updateComponent({name:'登陆1',component:Login});
         this.refs.header_fight.updateComponent({name:'登陆2',component:Login});
         this.refs.header_rank.updateComponent({name:'登陆3',component:Login});

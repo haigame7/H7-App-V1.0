@@ -107,10 +107,10 @@ export default{
     fetch(url)
     .then((response) => response.json())
     .then((responseText) =>{
-      return responseText;
+      callback(responseText)
     })
     .catch((error) => {
-      console.log(JSON.parse(error));
+      console.log(error);
       throw new Error(error);
     })
     .done()

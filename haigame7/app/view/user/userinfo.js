@@ -183,6 +183,7 @@ export default class extends Component {
           _this.setState({
             userData: udata
           })
+          _this.props._callback('UserInfo');
         }
       }
     });

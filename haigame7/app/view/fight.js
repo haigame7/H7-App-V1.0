@@ -122,7 +122,7 @@ export default class extends Component{
   }
   getTeamList(data){
     FightService.getFightTeamList(data,(response) => {
-      console.log(response);
+      // console.log(response);
       if (response[0].MessageCode == '0') {
         let newData = response[1];
         this.setState({
