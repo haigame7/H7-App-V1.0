@@ -24,7 +24,7 @@ import api, {host, key} from './server';
 import Setpwd from './setpwd.js';
 import UserService from '../../network/userservice';
 import GlobalSetup from '../../constants/globalsetup';
-import HeaderPre from '../common/header';
+import HeaderPre from '../common/headernav';
 
 export default class extends Component {
   constructor(props) {
