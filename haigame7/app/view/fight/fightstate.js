@@ -166,7 +166,7 @@ export default class extends React.Component {
         <TouchableOpacity style={styles.textlist} activeOpacity={0.8} underlayColor="#000000" id={rowID}>
        <Text style={commonstyle.cream}>{'战队  '}<Text style={commonstyle.red}>{desData.teampre}</Text>{desData.teamprecontent}<Text style={commonstyle.yellow}>{desData.teamnext}</Text>{desData.teamnextcontent}</Text>
           <View style={styles.userlistteambox}>
-            <Icon name='times-circle-o' size={13} style={styles.textlisticon} color={'#484848'} />
+            <Icon name='time' size={13} style={styles.textlisticon} color={'#484848'} />
             <Text style={[commonstyle.gray, styles.textlistfont]}>{rowData.FightTime}</Text>
             <Icon name='money' size={13} style={styles.textlisticon} color={'#484848'} />
             <Text style={commonstyle.gray}>{rowData.FightAsset}{'氦金'}</Text>
