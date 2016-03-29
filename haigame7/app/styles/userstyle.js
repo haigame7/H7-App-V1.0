@@ -5,7 +5,7 @@ var Util = require('../view/common/util');
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'rgb(0, 0, 0)',
+        backgroundColor: 'rgb(0, 0, 0)',
     },
     //登陆界面
     loginbg: {
@@ -37,7 +37,7 @@ export default StyleSheet.create({
     headportraitv: {
         position: 'absolute',
         flexDirection: 'row',
-        left: Util.size.width/2 + 20,
+        left: Util.size.width / 2 + 20,
         bottom: 0,
         width: 50,
     },
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     },
     headtabli: {
         alignItems: 'center',
-        width: Util.size.width/3-1,
+        width: Util.size.width / 3 - 1,
         height: 40,
     },
     headtabtitle: {
@@ -73,10 +73,10 @@ export default StyleSheet.create({
         height: 20,
     },
     headtabline: {
-        marginTop:10,
-        marginBottom:10,
-        backgroundColor:'#FFFFFF',
-        width:Util.pixel,
+        marginTop: 10,
+        marginBottom: 10,
+        backgroundColor: '#FFFFFF',
+        width: Util.pixel,
         height: 20,
 
     },
@@ -122,18 +122,18 @@ export default StyleSheet.create({
         marginRight: 36,
     },
     link: {
-      height: 20,
-      justifyContent: 'center',
+        height: 20,
+        justifyContent: 'center',
     },
     linkleft: {
-      textAlign: 'left',
+        textAlign: 'left',
     },
     linkright: {
-      textAlign: 'right',
+        textAlign: 'right',
     },
     //按钮
     btn: {
-        height:40,
+        height: 40,
         width: Util.size.width - 72,
         alignItems: 'center',
         justifyContent: 'center',
@@ -155,7 +155,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         paddingLeft: 10,
         paddingRight: 10,
-        height:32,
+        height: 32,
         borderWidth: 0,
         borderRadius: 2,
         backgroundColor: '#FFCA00',
@@ -224,7 +224,7 @@ export default StyleSheet.create({
     },
     listviewiconright: {
         top: 5,
-        width:15,
+        width: 15,
         height: 30,
         marginLeft: 10,
     },
@@ -280,7 +280,7 @@ export default StyleSheet.create({
     },
     //模态框
     pickerview: {
-        backgroundColor:'#FFFFFF',
+        backgroundColor: '#FFFFFF',
     },
     //滑块
     switchblock: {
@@ -311,7 +311,7 @@ export default StyleSheet.create({
     },
     aboutbtn: {
         flex: 1,
-        width: Util.size.width/2-10,
+        width: Util.size.width / 2 - 10,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
@@ -420,6 +420,10 @@ export default StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#484848',
     },
+    assettext: {
+        left: 5,
+        top:10,
+    },
     rechargeview: {
         width: Util.size.width - 72,
         marginTop: 10,
@@ -428,13 +432,34 @@ export default StyleSheet.create({
     },
     recharge: {
         height: 30,
-        width: (Util.size.width-72)/3,
+        width: (Util.size.width - 72) / 3,
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
     },
     rechargeline: {
         width: 10,
+    },
+    //编辑资料
+    avatarblock: {
+        width: Util.size.width,
+        height: Util.size.width,
+        marginTop: 50,
+    },
+    avatar: {
+        width: Util.size.width,
+        height: Util.size.width,
+    },
+    infoinput: {
+        width: Util.size.width - 40,
+        height: 30,
+        marginLeft: 20,
+        marginRight: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    infoinputfont: {
+        height: 40,
     },
     //原
     title: {
@@ -572,104 +597,104 @@ export default StyleSheet.create({
         marginRight: 40
     },
     centerbg: {
-       flex:1,
-       backgroundColor:'rgb(0, 0, 0)',
-       height: Util.size.height,
-       width: Util.size.width,
-   },
-   centerheadbg: {
-       flex:1,
-      height: Util.size.height*4/11,
-       width: Util.size.width,
-   },
-   centerfootbg:{
-     height: Util.size.height*7/11,
-     width: Util.size.width,
-   },
-   centertitle:{
-     justifyContent: 'center',
-     alignItems: 'center',
-   },
-   centertab:{
-     flexDirection:'row',
-     top:Util.size.height*1/15,
-   },
-   centertabname:{
-     color:'rgb(230, 193, 39)',
-     marginLeft:Util.size.width*1/9,
-     marginRight:Util.size.width*1/9,
-   },
-   centertabattr:{
-     color:'red',
-     fontSize:16,
-     marginTop:5,
-     marginLeft:Util.size.width*1/9,
-     marginRight:Util.size.width*1/9,
-   },
-   centerimage:{
-    width:100,
-    height:100,
-    borderRadius: 50,
-    top:Util.size.height*1/40-5
-   },
-   centername:{
-     color:'#fff',
-     fontSize:18,
-     top:Util.size.height*1/25
-   },
-   centersign:{
-     color:'rgb(120,120,120)',
-     width:Util.size.width-80,
-     marginLeft:40,
-     marginRight:40,
-     textAlign:'center',
-     top:Util.size.height*1/20
+        flex: 1,
+        backgroundColor: 'rgb(0, 0, 0)',
+        height: Util.size.height,
+        width: Util.size.width,
+    },
+    centerheadbg: {
+        flex: 1,
+        height: Util.size.height * 4 / 11,
+        width: Util.size.width,
+    },
+    centerfootbg: {
+        height: Util.size.height * 7 / 11,
+        width: Util.size.width,
+    },
+    centertitle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    centertab: {
+        flexDirection: 'row',
+        top: Util.size.height * 1 / 15,
+    },
+    centertabname: {
+        color: 'rgb(230, 193, 39)',
+        marginLeft: Util.size.width * 1 / 9,
+        marginRight: Util.size.width * 1 / 9,
+    },
+    centertabattr: {
+        color: 'red',
+        fontSize: 16,
+        marginTop: 5,
+        marginLeft: Util.size.width * 1 / 9,
+        marginRight: Util.size.width * 1 / 9,
+    },
+    centerimage: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        top: Util.size.height * 1 / 40 - 5
+    },
+    centername: {
+        color: '#fff',
+        fontSize: 18,
+        top: Util.size.height * 1 / 25
+    },
+    centersign: {
+        color: 'rgb(120,120,120)',
+        width: Util.size.width - 80,
+        marginLeft: 40,
+        marginRight: 40,
+        textAlign: 'center',
+        top: Util.size.height * 1 / 20
 
-   },
-   centerlitext:{
-     marginTop:10,
-     color:'#fff',
-   },
-   centerliicon:{
-     margin:5,
-     height:30,
-     borderRadius:5,
-     width:30,
-   },
-   centerangelright:{
-     marginTop:10,
-     marginLeft: Util.size.width*7/11,
-     color:'rgb(90,90,90)',
-   },
-   centersplit: {
-     position:'absolute',
-     left: 40,
-     marginTop:40,
-     backgroundColor:'rgb(50,50,50)',
-     width:Util.size.width*9/11,
-     height: Util.pixel,
-   },
-   centersplitvertical:{
-     marginTop:20,
-     backgroundColor:'rgb(255,255,255)',
-     width:Util.pixel,
+    },
+    centerlitext: {
+        marginTop: 10,
+        color: '#fff',
+    },
+    centerliicon: {
+        margin: 5,
+        height: 30,
+        borderRadius: 5,
+        width: 30,
+    },
+    centerangelright: {
+        marginTop: 10,
+        marginLeft: Util.size.width * 7 / 11,
+        color: 'rgb(90,90,90)',
+    },
+    centersplit: {
+        position: 'absolute',
+        left: 40,
+        marginTop: 40,
+        backgroundColor: 'rgb(50,50,50)',
+        width: Util.size.width * 9 / 11,
+        height: Util.pixel,
+    },
+    centersplitvertical: {
+        marginTop: 20,
+        backgroundColor: 'rgb(255,255,255)',
+        width: Util.pixel,
 
-     height:Util.size.width*1/20,
-     marginBottom:20,
+        height: Util.size.width * 1 / 20,
+        marginBottom: 20,
 
-   },
-   centersplitblock: {
-     justifyContent: 'center',
-     alignItems: 'center',
-     backgroundColor:'rgb(70,70,70)',
-     height: 20
-   },
-   centerlicontent:{
-     flexDirection:'row',
-   },
-  setpwdText:{
-    marginLeft:40,
-    width:Util.size.width-60,
-    color:'rgb(121, 121, 121)',
-  },
+    },
+    centersplitblock: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgb(70,70,70)',
+        height: 20
+    },
+    centerlicontent: {
+        flexDirection: 'row',
+    },
+    setpwdText: {
+        marginLeft: 40,
+        width: Util.size.width - 60,
+        color: 'rgb(121, 121, 121)',
+    },
 });
