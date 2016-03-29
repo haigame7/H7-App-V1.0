@@ -12,7 +12,6 @@ import React, {
   Image,
   StyleSheet,
   ListView,
-  Alert,
   Component,
   TouchableOpacity,
   Navigator,
@@ -29,7 +28,9 @@ import GuessService from '../network/guessservice';
 import FightService from '../network/fightservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modalbox';
+import Toast from '@remobile/react-native-toast';
 import Button from 'react-native-button';
 
 export default class extends Component{
@@ -40,12 +41,13 @@ export default class extends Component{
       var datamyguess = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       navbar: 0,
-      databoboSource: databobo.cloneWithRows(['row1']),
-      dataguessSource:dataguess.cloneWithRows(['row1']),
-      datamyguessSource:datamyguess.cloneWithRows(['row1']),
+      databoboSource: databobo.cloneWithRows([]),
+      dataguessSource:dataguess.cloneWithRows([]),
+      datamyguessSource:datamyguess.cloneWithRows([]),
       bobolist:[],
       guesslist:[],
       isOpen:false,
+      loaded:false,
       joincount:-1,
       jointeam:'',
       jointime:'',
@@ -67,14 +69,18 @@ export default class extends Component{
 
     }
     componentWillMount() {
+    this.setState({loaded: true})
     this.initData();
+    }
+    componentDidMount(){
+
     }
     initData(){
       {/*请求我的战队信息*/}
       FightService.getUserDefaultTeam({phone:this.state.userphone},(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
-          Alert.alert('服务器请求异常');
+          Toast.show('服务器请求异常');
         }else if(response[0].MessageCode == '0'){
           this.setState({
            userdata:{
@@ -85,7 +91,7 @@ export default class extends Component{
           });
         }
        }else{
-           Alert.alert('请求错误');
+           Toast.show('请求错误');
        }
      });
      this.getMatchList();
@@ -96,7 +102,7 @@ export default class extends Component{
        MatchService.getMatchList((response) => {
          if (response !== GlobalSetup.REQUEST_SUCCESS) {
            if(response[0].MessageCode == '40001'){
-             Alert.alert('服务器请求异常');
+             Toast.show('服务器请求异常');
            }else if(response[0].MessageCode == '0'){
              this.setState({
                matchdata:{
@@ -105,12 +111,13 @@ export default class extends Component{
                  showpicture:response[1][0].ShowPicture,
                  introduce:response[1][0].Introduce,
                },
+
              });
               this.getBoBoList(this.state.matchdata);
             }
           }
            else{
-               Alert.alert('请求错误');
+               Toast.show('请求错误');
              }
        });
     }
@@ -119,7 +126,7 @@ export default class extends Component{
        GuessService.getGuessList((response) => {
          if (response !== GlobalSetup.REQUEST_SUCCESS) {
            if(response[0].MessageCode == '40001'){
-             Alert.alert('服务器请求异常');
+             Toast.show('服务器请求异常');
            }else if(response[0].MessageCode == '0'){
               let newData = response[1];
              this.setState({
@@ -130,7 +137,7 @@ export default class extends Component{
             }
           }
            else{
-               Alert.alert('请求错误');
+               Toast.show('请求错误');
              }
        });
     }
@@ -139,17 +146,18 @@ export default class extends Component{
       MatchService.getBoBoList(matchdata,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
-            Alert.alert('服务器请求异常');
+            Toast.show('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
             let newData = response[1];
             this.setState({
               databoboSource: this.state.databoboSource.cloneWithRows(newData),
               bobolist:newData,
+              loaded:false,
             });
            }
          }
           else{
-              Alert.alert('请求错误');
+              Toast.show('请求错误');
             }
       });
     }
@@ -157,7 +165,7 @@ export default class extends Component{
       MatchService.getBoBoCount(rowData,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
-            Alert.alert('服务器请求异常');
+            Toast.show('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
             MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userdata.userteamid},(response2) => {
             if (response2 !== GlobalSetup.REQUEST_SUCCESS) {
@@ -182,7 +190,7 @@ export default class extends Component{
          }
        }
           else{
-              Alert.alert('请求错误');
+              Toast.show('请求错误');
             }
       });
     }
@@ -190,7 +198,7 @@ export default class extends Component{
       GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount},(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
-            Alert.alert('服务器请求异常');
+            Toast.show('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
             let newData = response[1];
             this.setState({
@@ -201,7 +209,7 @@ export default class extends Component{
            }
          }
           else{
-              Alert.alert('请求错误');
+              Toast.show('请求错误');
             }
       });
     }
@@ -209,13 +217,12 @@ export default class extends Component{
        this.setState({isOpen: false});
     }
     _doBet(params){
-      console.log(params);
       GuessService.doGuessBet(params,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
-            Alert.alert('服务器请求异常');
+            Toast.show('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
-            Alert.alert('下注成功');
+           Toast.showLongCenter('下注成功');
          }
          {/*更新请求*/}
          setTimeout(()=>{
@@ -224,25 +231,25 @@ export default class extends Component{
         },1000);
        }
         else{
-              Alert.alert('请求错误');
+              Toast.show('请求错误');
           }
       });
     }
     _joinMatch(params){
       if(params.jointeam!==''){
-        Alert.alert('您已报名'+params.jointeam+'!');
+        Toast.showLongCenter('您已报名'+params.jointeam+'!');
       }else{
         MatchService.joinMatch(params,(response) => {
           if (response !== GlobalSetup.REQUEST_SUCCESS) {
             if(response[0].MessageCode == '40001'){
-              Alert.alert('服务器请求异常');
+                Toast.show('服务器请求异常');
             }else if(response[0].MessageCode == '0'){
-              Alert.alert('报名成功');
+             Toast.showLongCenter('报名成功');
               this.setState({isOpen: false});
            }
          }
           else{
-                Alert.alert('请求错误');
+                Toast.show('请求错误');
             }
         });
       }
@@ -478,9 +485,11 @@ render() {
       <ScrollView style={styles.scrollview}>
 
         {matchlist}
+
       </ScrollView>
       {/*modal*/}
       {modal}
+      <Spinner visible={this.state.loaded} />
     </View>
   );
   }
