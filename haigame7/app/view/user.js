@@ -66,44 +66,55 @@ var User = React.createClass({
     //   let jsondata = JSON.parse(value);
     //   this.setState({userData: jsondata})
     // });
+    // Toast.show("this is a message")
   },
   componentWillMount() {
     this.setState({isOpen: true})
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       let jsondata = JSON.parse(value);
       this.setState({userData: jsondata})
-      UserService.getUserGameInfo(jsondata.PhoneNumber,(response) =>　{
-        if (response[0].MessageCode == '0' || response[0].MessageCode == '10008') {
-          if(response[0].MessageCode == '10008') {
-            // console.log(response[0].Message);
-            this.setState({fightData: {"UserID":64,"GameID":"173032376","GamePower":"无数据","CertifyState":1,"CertifyName":"氦七G9SJkIJQ8l+uZP4BJEVZ+aHEtLY="}})
-          } else {
-            let data = {"UserID":response[1].UserID,"GameID":response[1].GameID,"GamePower":response[1].GamePower,"CertifyState":response[1].CertifyState,"CertifyName":response[1].CertifyName};
-            this.setState({fighData: data})
-          }
-        } else {
-          console.log('获取用户数据失败' + response[0].Message);
-          Alert.alert(response[0].Message);
-        }
-      })
+      this.getUserGameInfo(jsondata.PhoneNumber)
+      this.getTotalAssertAndRank(jsondata.PhoneNumber)
 
-      AssertService.getTotalAssertAndRank(jsondata.PhoneNumber,(response) => {
-        console.log(response);
-        if (response[0].MessageCode == '0') {
-          let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
-          this.setState({
-            hjData: data,
-            isOpen: false
-          });
-        } else {
-          console.log('请求错误' + response[0].Message);
-          this.setState({isOpen: false});
-        }
-      });
     });
   },
   componentDidMount() {
   },
+  getUserGameInfo(phoneNum) {
+    UserService.getUserGameInfo(phoneNum,(response) =>　{
+      console.log('1');
+      console.log(response);
+      console.log('2');
+      if (response[0].MessageCode == '0' || response[0].MessageCode == '10008') {
+        if(response[0].MessageCode == '10008') {
+          // console.log(response[0].Message);
+          this.setState({fightData: {"UserID":64,"GameID":"173032376","GamePower":"无数据","CertifyState":1,"CertifyName":"氦七G9SJkIJQ8l+uZP4BJEVZ+aHEtLY="}})
+        } else {
+          let data = {"UserID":response[1].UserID,"GameID":response[1].GameID,"GamePower":response[1].GamePower,"CertifyState":response[1].CertifyState,"CertifyName":response[1].CertifyName};
+          this.setState({fighData: data})
+        }
+      } else {
+        console.log('获取用户数据失败' + response[0].Message);
+        Alert.alert(response[0].Message);
+      }
+    })
+  },
+  getTotalAssertAndRank(phoneNum) {
+    AssertService.getTotalAssertAndRank(phoneNum,(response) => {
+      console.log(response);
+      if (response[0].MessageCode == '0') {
+        let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
+        this.setState({
+          hjData: data,
+          isOpen: false
+        });
+      } else {
+        console.log('请求错误' + response[0].Message);
+        this.setState({isOpen: false});
+      }
+    })
+  },
+
   _toNextScreen(params){
     // Toast.show("this is a message")
     let _this = this;
@@ -128,6 +139,7 @@ var User = React.createClass({
             break;
           case 'Usercertify':
               console.log('认证回调');
+              _this.getUserGameInfo(_this.state.userData.PhoneNumber)
             break;
           default:
 
@@ -136,7 +148,6 @@ var User = React.createClass({
     })
   },
   render: function () {
-    console.log('***********');
     return (
       <View >
       <Header screenTitle='个人中心'  iconName='email'   nextComponent={{name:'ZHRB',component:ZHRB}} navigator={this.props.navigator}/>

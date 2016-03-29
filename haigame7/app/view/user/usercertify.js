@@ -35,7 +35,7 @@ export default class extends Component{
 }
 
 componentWillMount() {
-  if (this.state.fightData.CertifyState != '1') {
+  if (this.state.fightData.CertifyState == '1') {
     let data = {'dota2id':this.state.fightData.GameID,'certifyid':this.state.fightData.CertifyName}
     this.setState({
       btn_msg: '重新认证',
@@ -95,6 +95,30 @@ render(){
     {ref: 'dota2id', placeholder: '000000', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '数字ID必填', style: [styles.logininputfont]},
     {ref: 'certifyid', editable: false, style: [styles.logininputfont]}
   ]
+  let btn;
+    if (this.state.fightData.CertifyState == '0') {
+      btn =
+      (
+        <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
+          <Text style={styles.btnfont} >0</Text>
+        </TouchableHighlight>
+      )
+    } else if(this.state.fightData.CertifyState == '1') {
+      btn =
+      (
+        <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
+          <Text style={styles.btnfont} >1</Text>
+        </TouchableHighlight>
+      )
+    } else {
+      btn =
+      (
+        <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'}>
+          <Text style={styles.btnfont} >2</Text>
+        </TouchableHighlight>
+      )
+    }
+
   return (
     <View >
       <Header screenTitle='账号认证' navigator={this.props.navigator}/>
@@ -120,10 +144,10 @@ render(){
         </TouchableHighlight>
       </View>
 
-      <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
-        <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
-      </TouchableHighlight>
-
+      {btn}
+      <View style={styles.linkblock}>
+      <Text style={commonstyle.cream}>认证结果：{this.state.fightData.CertifyState}</Text>
+      </View>
       <View style={styles.linkblock}>
         <Text style={commonstyle.cream}>{'规则文字内容:\n'}</Text>
         <Text style={commonstyle.cream}>{'1、请在输入框内输入您的DOTA数字ID;\n2、输入数字ID后，请点击”认证“按钮;\n3、点击”认证“按钮后，会在ID生成框内自动生成一个名字ID\n4、用户需在DOTA2客户端内，将自己的DOTA2ID，修改成由氦7平台提供的ID；\n5、修改完成后，我们将在3个工作日内，完成审核工作确认无误后，予以认证'}</Text>
