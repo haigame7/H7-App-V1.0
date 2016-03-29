@@ -17,6 +17,28 @@ var FightStyle = StyleSheet.create({
     nav: {
         height: 30,
     },
+    navtab: {
+        flexDirection: 'row',
+        height: 40,
+        width: Util.size.width,
+        paddingLeft: 10,
+        paddingRight: 10,
+        backgroundColor: '#232220',
+    },
+    navbtn: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomWidth: 2,
+        borderBottomColor: '#C3C3C3',
+    },
+    navbtnactive: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomWidth: 2,
+        borderBottomColor: '#D31B25',
+    },
     navsub: {
         flexDirection: 'row',
         height: 30,
@@ -198,6 +220,31 @@ var FightStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    //约战列表
+    fightlist: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    fightlistimg: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.6)',
+    },
+    fightlistdate: {
+        marginTop:10,
+        marginBottom: 5,
+    },
+    fightlistbtn: {
+        width: 70,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+    },
     textlist: {
         padding: 10,
         backgroundColor: '#000000',
@@ -210,6 +257,36 @@ var FightStyle = StyleSheet.create({
     },
     textlistfont: {
         marginRight: 10,
+    },
+    //约战详情
+    fightdetail: {
+        width: Util.size.width - 20,
+        backgroundColor: '#232323',
+        justifyContent:'center',
+        alignItems:'center',
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        paddingTop: 30,
+    },
+    fightdetailtext: {
+        marginTop: 10,
+    },
+    detailbtnblock: {
+        flexDirection: 'row',
+        marginTop: 20,
+        marginRight: 10,
+        marginLeft: 10,
+        width: Util.size.width - 20,
+        height: 40,
+        backgroundColor: '#484848',
+        borderRadius: 5,
+    },
+    detailbtn: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
     },
 });
 

@@ -130,7 +130,7 @@ export default class extends Component{
             <View style={styles.fightviewinput}>
               <TextInput style={commonstyle.cream} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.fighttime = text} defaultValue={this.formatDate(this.state.fighttime.toString())}  />
               <TouchableOpacity style={styles.fightviewinputicon} activeOpacity={0.8} onPress={this.showDatePicker.bind(this)}>
-                <Icon name="calendar" size={16}  color={'#484848'}/>
+                <Icon name="date" size={16}  color={'#484848'}/>
               </TouchableOpacity>
             </View>
             <View style={styles.fightviewtextarea}>

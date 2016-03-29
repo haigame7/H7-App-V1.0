@@ -1,18 +1,20 @@
 'use strict'
 
 import React,
-  {
-    View,
-    Component,
-    Text,
-    TextInput,
-    Image,
-    ToastAndroid,
-    TouchableOpacity,
-    StyleSheet,
-    PixelRatio,
-  } from 'react-native';
+{
+  View,
+  Component,
+  Text,
+  TextInput,
+  Image,
+  ToastAndroid,
+  TouchableOpacity,
+  StyleSheet,
+  PixelRatio,
+} from 'react-native';
 
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/userstyle';
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var Header = require('../common/headernav');export default class extends Component {
   constructor(props) {
@@ -108,43 +110,31 @@ var Header = require('../common/headernav');export default class extends Compone
     switch (this.props.screenTitle) {
       case '昵称':
           childScreen = (
-            <View>
-              <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => this.setState({value: text})}
-                defaultvalue={this.state.userdata.UserWebNickName}
-              />
+            <View style={styles.infoinput}>
+              <TextInput style={[commonstyle.cream, styles.infoinputfont]} onChangeText={(text) => this.setState({value: text})} defaultvalue={this.state.userdata.UserWebNickName}/>
             </View>
           )
         break;
       case '个性签名':
           childScreen = (
-            <View>
-              <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => this.setState({value: text})}
-                defaultvalue={this.state.userdata.Hobby}
-              />
+            <View style={styles.infoinput}>
+              <TextInput style={[commonstyle.cream, styles.infoinputfont]} onChangeText={(text) => this.setState({value: text})} defaultvalue={this.state.userdata.Hobby}/>
             </View>
           )
         break;
       case '手机号':
           childScreen = (
-            <View>
-              <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => this.setState({value: text})}
-                defaultvalue={this.state.userdata.PhoneNumber}
-              />
+            <View style={styles.infoinput}>
+              <TextInput style={[commonstyle.cream, styles.infoinputfont]} onChangeText={(text) => this.setState({value: text})} defaultvalue={this.state.userdata.PhoneNumber}/>
             </View>
           )
         break;
       case '头像':
           childScreen = (
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-              <View style={[styles_1.avatar, styles_1.avatarContainer, {marginBottom: 20}]}>
+              <View style={styles.avatarblock}>
               { this.state.UserWebPicture === null ? <Text>Select a Photo</Text> :
-                <Image style={styles_1.avatar} source={{uri:this.state.userdata.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+                <Image style={styles.avatar} source={{uri:this.state.userdata.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
               }
               </View>
             </TouchableOpacity>
@@ -156,27 +146,8 @@ var Header = require('../common/headernav');export default class extends Compone
     return(
       <View>
         <Header screenTitle={this.props.screenTitle}  iconText={this.state.iconText} navigator={this.props.navigator} callback={this._callback.bind(this)}/>
-        {childScreen}
+        <View style={commonstyle.bodyer}>{childScreen}</View>
       </View>
     );
   }
 }
-const styles_1 = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  avatarContainer: {
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  avatar: {
-    borderRadius: 75,
-    width: 150,
-    height: 150
-  }
-});
