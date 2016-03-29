@@ -15,6 +15,7 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Header from '../common/headernav'; //导航有问题
+import Help from './help_screen';
 var Icon = require('react-native-vector-icons/Iconfont');
 export default class extends React.Component {
   constructor(props){
@@ -34,7 +35,18 @@ export default class extends React.Component {
   _userAgreement() {
     ToastAndroid.show('用户协议',ToastAndroid.SHORT);
   }
-
+  _toNextScreen(params){
+     // Toast.show("this is a message")
+     let _this = this;
+     this.props.navigator.push({
+       name: params.name,
+       component: params.component,
+       sceneConfig:params.sceneConfig || undefined,
+       params: {
+         ...this.props,
+       }
+     })
+   }
   render() {
     return(
       <View >
@@ -54,7 +66,7 @@ export default class extends React.Component {
             </View>
 
             <View style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]}></View>
-            <TouchableOpacity style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]} activeOpacity={0.8}  onPress={this._help.bind(null,this)}>
+            <TouchableOpacity style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]} activeOpacity={0.8}  onPress={this._toNextScreen.bind(this,{"name":"帮助与反馈","component":Help})}>
               <Text style={styles.listviewtextleft}>帮助与反馈</Text>
               <View style={styles.listviewtextbox} ></View>
               <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
