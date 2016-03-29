@@ -167,32 +167,33 @@ export default class extends Component{
           if(response[0].MessageCode == '40001'){
             Toast.show('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
-            MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userdata.userteamid},(response2) => {
-            if (response2 !== GlobalSetup.REQUEST_SUCCESS) {
-                if(response2[0].MessageCode == '50001'){
-                  this.setState({
-                  joincount:response[1].JoinCount,
-                  isOpen: true,
-                  modaData:rowData
-                  });
-                }
-              else if(response2[0].MessageCode == '0'){
-                this.setState({
-                 joincount:response[1].JoinCount,
-                 isOpen: true,
-                 modaData:rowData,
-                 jointeam:response2[1].Name,
-                 jointime:response2[1].ApplyTime
+            this.setState({
+               joincount:response[1].JoinCount,
             });
-            }
-           }
-         });
          }
        }
           else{
               Toast.show('请求错误');
             }
       });
+      MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userdata.userteamid},(response2) => {
+      if (response2 !== GlobalSetup.REQUEST_SUCCESS) {
+          if(response2[0].MessageCode == '50001'){
+            this.setState({
+            isOpen: true,
+            modaData:rowData
+            });
+          }
+        else if(response2[0].MessageCode == '0'){
+          this.setState({  
+           isOpen: true,
+           modaData:rowData,
+           jointeam:response2[1].Name,
+           jointime:response2[1].ApplyTime
+      });
+      }
+     }
+   });
     }
     _openGuessModa(rowData) {
       GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount},(response) => {
