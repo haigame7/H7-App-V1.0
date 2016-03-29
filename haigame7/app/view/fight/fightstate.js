@@ -17,7 +17,7 @@ import Header from '../common/headernav';
 import FightService from '../../network/fightservice';
 import GlobalVariable from '../../constants/globalvariable'
 var Swipeout = require('react-native-swipeout');
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 
 // Buttons
 var swipeoutBtns = [

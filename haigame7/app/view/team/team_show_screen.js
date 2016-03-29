@@ -12,7 +12,7 @@ import React, {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Iconfont';
 import Header from '../common/headernav';
 
 export default class extends React.Component {

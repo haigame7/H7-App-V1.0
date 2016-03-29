@@ -15,7 +15,7 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Header from '../common/headernav'; //导航有问题
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 export default class extends React.Component {
   constructor(props){
     super(props);

@@ -13,7 +13,7 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 import Button from 'react-native-button';
 import Header from '../common/headernav';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Iconfont';
 
 export default class extends React.Component {
   /**

@@ -19,7 +19,7 @@ import React, {
   ScrollView,
   TouchableHighlight,
 } from 'react-native';
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var commonstyle = require('../styles/commonstyle');
 var styles = require('../styles/matchstyle');
 import MatchRule from './match/matchrule';
