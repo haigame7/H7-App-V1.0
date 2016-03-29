@@ -19,7 +19,7 @@ import React, {
     Navigator,
     Image
 } from 'react-native';
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';

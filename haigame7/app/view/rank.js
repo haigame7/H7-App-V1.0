@@ -4,7 +4,7 @@
  * @return {[rank Component]}
  * @author aran.hu
  */
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 import RankService from '../network/rankservice';
 import GlobalSetup from '../constants/globalsetup';
 

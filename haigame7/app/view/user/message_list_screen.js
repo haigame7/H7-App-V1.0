@@ -16,7 +16,7 @@ import styles from '../../styles/userstyle';
 import ShowMsg from './message_show_screen';
 import Header from '../common/headernav';
 var Swipeout = require('react-native-swipeout');
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 
 var swipeoutBtns = [
   {

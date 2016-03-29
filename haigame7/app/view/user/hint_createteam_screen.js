@@ -6,7 +6,7 @@ import React, {
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
-var Icon = require('react-native-vector-icons/FontAwesome') //不知道这个能不能直接用
+var Icon = require('react-native-vector-icons/Iconfont');
 
 import commonstyle from '../../styles/commonstyle';
 export default class extends React.Component {
