@@ -34,28 +34,24 @@ import UserGuess from './user/userguess';
 import Usercertify from './user/usercertify'
 import Login from './user/login';
 import RegisterScreen from './user/registerscreen';
-import MyTeam from './team/team_show_screen';
-import CreateTeam from './team/team_create_screen';
+import Gwdemo from '../../temp/gwdemo';
 import MyMsg from './user/message_list_screen';
+import HintCreatTeamScreen from './user/hint_createteam_screen';
 import UserService from '../network/userservice';
-import TeamService from '../network/teamservice';
 import AssertService from '../network/assertservice';
 import Spinner from 'react-native-loading-spinner-overlay';
 import GlobalVariable from '../constants/globalvariable';
 
 import Toast from '@remobile/react-native-toast';
-import Modal from 'react-native-modalbox';
-import Button from 'react-native-button';
 //试试ES6的类属性
 
 var User = React.createClass({
   getInitialState() {
+    console.log('UserScreen Init Data');
     return {
       _navigator: this.props.navigator,
         userData: this.props.userData,
           isOpen: false,
-          modalOpen:false,
-          teamData:{},
           hjData: {'totalAsset': 888,'myRank': 1},
         fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":1,"CertifyName":""}
     };
@@ -65,69 +61,56 @@ var User = React.createClass({
     //   let jsondata = JSON.parse(value);
     //   this.setState({userData: jsondata})
     // });
+    // Toast.show("this is a message")
   },
   componentWillMount() {
     this.setState({isOpen: true})
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       let jsondata = JSON.parse(value);
       this.setState({userData: jsondata})
-      UserService.getUserGameInfo(jsondata.PhoneNumber,(response) =>　{
-        if (response[0].MessageCode == '0' || response[0].MessageCode == '10008') {
-          if(response[0].MessageCode == '10008') {
-            this.setState({fightData: {"UserID":64,"GameID":"173032376","GamePower":"无数据","CertifyState":1,"CertifyName":"氦七G9SJkIJQ8l+uZP4BJEVZ+aHEtLY="}})
-          } else {
-            let data = {"UserID":response[1].UserID,"GameID":response[1].GameID,"GamePower":response[1].GamePower,"CertifyState":response[1].CertifyState,"CertifyName":response[1].CertifyName};
-            this.setState({fighData: data})
-          }
-        } else {
-          console.log('获取用户数据失败' + response[0].Message);
-          Alert.alert(response[0].Message);
-        }
-      });
-      TeamService.getUserDefaultTeam(jsondata.PhoneNumber,(response) => {
-        if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
-                this.setState({teamData: response[1]});
-        }else{
-          console.log('请求错误' + response[0].Message);
-        }
-      });
-      AssertService.getTotalAssertAndRank(jsondata.PhoneNumber,(response) => {
-        if (response[0].MessageCode == '0') {
-          let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
-          this.setState({
-            hjData: data,
-            isOpen: false
-          });
-        } else {
-          console.log('请求错误' + response[0].Message);
-          this.setState({isOpen: false});
-        }
-      });
+      this.getUserGameInfo(jsondata.PhoneNumber)
+      this.getTotalAssertAndRank(jsondata.PhoneNumber)
+
     });
   },
   componentDidMount() {
   },
-  _userTeam(params){
-    if(params.Role==null){
-        this.setState({modalOpen: true});
-    }else{
-      this._toNextScreen({"name":"我的战队","component":MyTeam});
-    }
+  getUserGameInfo(phoneNum) {
+    UserService.getUserGameInfo(phoneNum,(response) =>　{
+      if (response[0].MessageCode == '0' || response[0].MessageCode == '10008') {
+        if(response[0].MessageCode == '10008') {
+          // console.log(response[0].Message);
+          this.setState({fightData: {"UserID":64,"GameID":"173032376","GamePower":"无数据","CertifyState":1,"CertifyName":"氦七G9SJkIJQ8l+uZP4BJEVZ+aHEtLY="}})
+        } else {
+          let data = {"UserID":response[1].UserID,"GameID":response[1].GameID,"GamePower":response[1].GamePower,"CertifyState":response[1].CertifyState,"CertifyName":response[1].CertifyName};
+          // console.log(data);
+          this.setState({fightData: data})
+        }
+      } else {
+        console.log('获取用户数据失败' + response[0].Message);
+        Alert.alert(response[0].Message);
+      }
+    })
   },
-  _closeModa() {
-     this.setState({modalOpen: false});
+  getTotalAssertAndRank(phoneNum) {
+    AssertService.getTotalAssertAndRank(phoneNum,(response) => {
+      // console.log(response);
+      if (response[0].MessageCode == '0') {
+        let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
+        this.setState({
+          hjData: data,
+          isOpen: false
+        });
+      } else {
+        console.log('请求错误' + response[0].Message);
+        this.setState({isOpen: false});
+      }
+    })
   },
-  _createTeam(){
-    this._toNextScreen({"name":"创建战队","component":CreateTeam});
-  },
-  _joinTeam(){
-    if(this.props.gotoRef){
-      this.props.gotoRef("组队");
-    }
-   this.props.navigator.pop();
-  },
+
   _toNextScreen(params){
     // Toast.show("this is a message")
+    // console.log(this.state.fightData);
     let _this = this;
     this.state._navigator.push({
       name: params.name,
@@ -136,21 +119,18 @@ var User = React.createClass({
       params: {
         ...this.props,
         hjData: this.state.hjData,
-        teamData:this.state.teamData,
         fightData: this.state.fightData,
         _callback(key,params){
         switch (key) {
           case 'UserInfo':
               AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
                 let jsondata = JSON.parse(value);
-                console.log(jsondata);
                 _this.setState({userData: jsondata})
-                console.log('这里重新赋值了');
-                // console.log(_this.state.userData.Hobby);
               });
             break;
           case 'Usercertify':
               console.log('认证回调');
+              _this.getUserGameInfo(_this.state.userData.PhoneNumber)
             break;
           default:
 
@@ -161,7 +141,7 @@ var User = React.createClass({
   render: function () {
     return (
       <View >
-      <Header  nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} navigator={this.props.navigator}/>
+      <Header screenTitle='个人中心'  iconName='email'   nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} navigator={this.props.navigator}/>
       <ScrollView style={commonstyle.bodyer}>
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserInfo","component":UserInfo})}>
@@ -180,7 +160,7 @@ var User = React.createClass({
             <View style={[commonstyle.col1, styles.headtabli]}>
               <TouchableOpacity style={[commonstyle.col1, styles.headtabli]} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"Usercertify","component":Usercertify})}>
                 <Text style={[styles.headtabtitle, commonstyle.yellow]}>战斗力</Text>
-                <Text style={[styles.headtabnumber, commonstyle.cream]}>{this.state.fightData.GamePower}</Text>
+                <Text style={[styles.headtabnumber, commonstyle.cream]}>{this.state.fightData.GamePower | 0}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.headtabline} ></View>
@@ -196,7 +176,7 @@ var User = React.createClass({
           </View>
         </Image>
 
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._userTeam.bind(this,this.state.teamData)}>
+        <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"提示创建战队","component":HintCreatTeamScreen})}>
           <View style={[styles.listviewiconleft,{backgroundColor:'#f39533'}]}>
             <Icon name="team" size={20} color={'#fff'} />
           </View>
@@ -245,17 +225,7 @@ var User = React.createClass({
 
         <Spinner visible={this.state.isOpen} />
       </ScrollView>
-      <Modal isOpen={this.state.modalOpen}  style={[commonstyle.modal, commonstyle.modalmiddle]} position={"center"}>
-         <View style={commonstyle.modalclose}><Button onPress={this._closeModa} ><Icon name="error" size={20} color={'#FF0000'} /></Button></View>
-         <View style={commonstyle.modaltext}>
-           <Text style={commonstyle.cream}>亲爱的用户，你还没有建立或加入战队呢，赶快点击下面按钮，开启你的约战之旅吧！！！</Text>
-           <Text style={commonstyle.cream}>说明：今天天天气好晴朗啊啊啊 啊啊啊啊 啊啊啊</Text>
-         </View>
-         <View style={[commonstyle.row, commonstyle.modalbtn]}>
-           <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} activeOpacity={0.8}  onPress={this._createTeam} style={commonstyle.black}>创建战队</Button>
-           <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} activeOpacity={0.8}  onPress={this._joinTeam} style={commonstyle.white}>加入战队</Button>
-         </View>
-       </Modal>
+
     </View>
     );
   }
