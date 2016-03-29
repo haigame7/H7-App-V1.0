@@ -19,7 +19,7 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
-
+import WebService from '../../network/fetchservice';
 
 export default class extends Component{
   constructor(props) {
@@ -67,6 +67,31 @@ export default class extends Component{
     return;
   }
 
+  doRecharge() {
+    let url = 'http://wx.haigame7.com/Weixin/JsApiPay';
+    let data ={
+      'UserID':'63',
+      'TotalFee': 1,
+      'tradeType': 'APP'
+    }
+    // WebService.postFecth(url,data,(response) => {
+    //   console.log(response);
+    // })
+    // "Content-Type": "application/x-www-form-urlencoded"
+    fetch(url, {
+      	method: "POST",
+      	headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      	},
+      	body: "UserID=63&TotalFee=1&tradeType=APP"
+      }).then(function(res) {
+      	console.log(res);
+      }, function(e) {
+        console.log('error');
+      	console.log(e);
+      });
+  }
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     return (
@@ -110,9 +135,12 @@ export default class extends Component{
               <Text style={this.state.data.money==5000?commonstyle.red:commonstyle.gray} >{'5000氦金'}</Text>
             </TouchableHighlight>
           </View>
-          
+
           <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
             <Text style={styles.btnfont} >{'确认充值'}</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.doRecharge()}>
+            <Text style={styles.btnfont} >{'测试统一下单'}</Text>
           </TouchableHighlight>
         </View>
       </View>

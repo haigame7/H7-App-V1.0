@@ -21,7 +21,6 @@ var CommonStyle = StyleSheet.create({
         marginLeft: (Platform.OS === 'ios') ? 0 : 15,
     },
     headertext: {
-        top: (Platform.OS === 'ios') ? 20 : 0,
         justifyContent: 'center',
         height:  (Platform.OS === 'ios') ? 44 : 48,
     },

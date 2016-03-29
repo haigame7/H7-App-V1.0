@@ -38,8 +38,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
         isRefreshing: false,
         footerMsg: "点击加载更多",
         content: undefined,
-        totalAsset: 8888,
-        myRank: 8888,
+        hjData: this.props.hjData,
         phoneNum: this.props.phoneNum?this.props.phoneNum : '15101075739' ,
         isFetchData: true,
         keykey: 0,
@@ -48,27 +47,10 @@ import Spinner from 'react-native-loading-spinner-overlay';
     }
 
     componentWillMount() {
-
     }
     componentDidMount() {
-      AssertService.getTotalAssertAndRank(this.state.phoneNum,(response) => {
-        // console.log(response);
-        if (response[0].MessageCode == '0') {
-          this.setState({
-            myRank: response[1].MyRank,
-        totalAsset: response[1].TotalAsset,
-            isOpen: false
-          });
-        } else {
-          console.log('请求错误' + response[0].Message);
-          this.setState({
-            isOpen: false
-          });
-        }
-        // this.setState({isOpen: false})
-      });
-
       AssertService.fetchAssertList(this.state.phoneNum,(response) => {
+        console.log(response[0].MessageCode);
         if (response[0].MessageCode == '0') {
           let newData = response[1];
             this.setState({
@@ -82,9 +64,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
         }
       });
     }
+    /**测试数据 **/
     getData() {
       // let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
-
       // let _ds = JSON.parse(jsonData);
       // this.setState({
       //   dataSource: this.state.dataSource.cloneWithRows(_ds),
@@ -110,7 +92,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
       },1000);
     }
     _onLoadMore() {
-      console.log('8888888888');
       if (this.state.keykey > 3) {
         this.setState({
           footerMsg: "木有更多多数据了~~~~"
@@ -168,7 +149,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
                   <Icon name="upload" size={25} color={'#D31B25'}/>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>总金额</Text>
                 </View>
-                <Text style={[commonstyle.yellow, commonstyle.fontsize22]}>{this.state.totalAsset}</Text>
+                <Text style={[commonstyle.yellow, commonstyle.fontsize22]}>{this.state.hjData.totalAsset}</Text>
               </View>
 
               <View style={styles.headtabline}></View>
@@ -178,7 +159,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
                   <Icon name="upload" size={25} color={'#D31B25'}/>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>财富排行</Text>
                 </View>
-                <Text style={[commonstyle.yellow, commonstyle.fontsize22]}>{this.state.myRank}</Text>
+                <Text style={[commonstyle.yellow, commonstyle.fontsize22]}>{this.state.hjData.myRank}</Text>
               </TouchableOpacity>
             </View>
 
