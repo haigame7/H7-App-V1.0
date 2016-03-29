@@ -2,7 +2,7 @@ var React = require('react-native');
 var Util = require('./util');
 var User = require('../user');
 import Login from '../user/login';
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var CommonStyle = require('../../styles/commonstyle');
 import GlobalVariable from '../../constants/globalvariable';
 
