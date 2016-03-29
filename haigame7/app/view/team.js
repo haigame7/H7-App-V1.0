@@ -8,7 +8,6 @@
  * @author aran.hu
  */
 var Loading = require('./common/loading');
-var FindTeam = require('./team/findteam');
 var Icon = require('react-native-vector-icons/Iconfont');
 
 import React, {

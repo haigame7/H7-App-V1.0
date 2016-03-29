@@ -30,11 +30,13 @@ export default class extends React.Component {
       isOpen: false,
       isDisabled: false,
     }
+
   }
   componentWillMount(){
       this.setState({
         navigator: this.props.navigator,
       });
+  console.log(this.props.teamData);
       if (this.state.role != 'captain') {
         this.setState({
           iconText: undefined,

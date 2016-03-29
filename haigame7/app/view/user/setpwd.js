@@ -23,6 +23,7 @@ import Header from '../common/headernav';
 import User from '../user.js';
 import UserService from '../../network/userservice';
 import GlobalSetup from '../../constants/globalsetup';
+import GlobalVariable from '../../constants/globalvariable'
 
 export default class extends Component {
   constructor(props) {

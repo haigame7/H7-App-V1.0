@@ -53,7 +53,6 @@ export default class App extends Component {
       } else {
         let jsondata = JSON.parse(value);
         this.setState({userData: jsondata})
-        console.log('加载数据');
       }
     });
   }
@@ -65,7 +64,10 @@ export default class App extends Component {
   componentWillUpdate() {
   }
   componentDidMount() {
-    // Toast.show("this is a message")
+
+  }
+  gotoRef(toggle){
+      this.refs['myTabbar'].gotoTab(toggle);
   }
 
   tabbarToggle() {
@@ -73,12 +75,6 @@ export default class App extends Component {
     this.toggle = !this.toggle;
   }
 
-  // updateUserData(userdata) {
-  //   console.log('更新');
-  //   // this.setState({
-  //   //   userdata: userdata
-  //   // })
-  // }
   render() {
     return (
       <Tabbar ref="myTabbar" barColor={'rgb(0, 0, 0)'}>
@@ -91,6 +87,7 @@ export default class App extends Component {
             screenTitle='赛事'
             iconName='user'
             nextComponent={{name:'用户中心',component:User}}
+            gotoRef={this.gotoRef.bind(this)}
             isPop={false}
             navigator={this.props.navigator} {...this.state}/>
            <Match navigator={this.props.navigator} {...this.state}/>
@@ -106,6 +103,7 @@ export default class App extends Component {
              screenTitle='约战'
              iconName='user'
              nextComponent={{name:'用户中心',component:User}}
+             gotoRef={this.gotoRef.bind(this)}
              isPop={false}
              navigator={this.props.navigator} {...this.state}/>
            <Fight navigator={this.props.navigator}/>
@@ -121,6 +119,7 @@ export default class App extends Component {
              screenTitle='排行'
              iconName='user'
              nextComponent={{name:'用户中心',component:User}}
+             gotoRef={this.gotoRef.bind(this)}
              isPop={false}
              navigator={this.props.navigator} {...this.state}/>
            <Rank navigator={this.props.navigator}/>
