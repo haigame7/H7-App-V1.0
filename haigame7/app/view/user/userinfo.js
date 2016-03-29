@@ -26,6 +26,7 @@ import Picker from 'react-native-picker';
 import UserService from '../../network/userservice';
 import AreaData from '../../components/common/area.json';
 import GlobalVariable from '../../constants/globalvariable';
+import Toast from '@remobile/react-native-toast';
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -124,16 +125,16 @@ export default class extends Component {
   	return date;
   }
 
-  _callback() {
-    console.log('整体保存吧,图片已这里直接村base64存上去');
-  }
-
   /**
    * 更新属性
    * @param  {[type]} property [description]
    * @return {[type]}          [description]
    */
   _editInfo(property) {
+    if(property == '手机号') {
+      Toast.show("手机号暂不可更改")
+      return
+    }
     let _this = this;
     let udata = _this.state.userData
     this.props.navigator.push({
@@ -304,7 +305,7 @@ _onPressHandle_2(){
 
        <View style={styles.listview} >
          <Text  style={styles.listviewtextleft}>手机号</Text>
-         <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8}>
+         <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'手机号')}>
          <Text style={styles.listviewtextright}>{this.state.userData.PhoneNumber}</Text>
          </TouchableOpacity>
          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
