@@ -55,13 +55,13 @@ export default class extends Component{
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
             <Text style={styles.listviewtextleft}>清空缓存</Text>
             <View style={styles.listviewtextbox} ></View>
-            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
             <Text style={styles.listviewtextleft}>更改密码</Text>
             <View style={styles.listviewtextbox} ></View>
-            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
           <View style={styles.listbox}></View>
@@ -69,13 +69,13 @@ export default class extends Component{
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
             <Text style={styles.listviewtextleft}>关于H7</Text>
             <View style={styles.listviewtextbox} ></View>
-            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
             <Text style={styles.listviewtextleft}>共享H7给朋友们</Text>
             <View style={styles.listviewtextbox} ></View>
-            <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
           <TouchableHighlight style = {this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor = {'#FF0000'}  >

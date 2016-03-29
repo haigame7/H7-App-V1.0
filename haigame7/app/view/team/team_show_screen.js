@@ -87,7 +87,7 @@ export default class extends React.Component {
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /></View>
+              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} /></View>
             </View>
 
             <View style={styles.blocktop}>
@@ -130,7 +130,7 @@ export default class extends React.Component {
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
               <View style={styles.listviewright}>
-                <TouchableOpacity style={styles.listviewteamedit} activeOpacity={0.8}><Icon name="book" size={20} color={'#fff'} /></TouchableOpacity>
+                <TouchableOpacity style={styles.listviewteamedit} activeOpacity={0.8}><Icon name="edit" size={20} color={'#fff'} /></TouchableOpacity>
                 <View style={styles.listviewteam}>
                   <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
                   <View style={styles.listviewteamblock}>

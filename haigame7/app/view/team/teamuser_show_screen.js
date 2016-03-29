@@ -41,7 +41,7 @@ export default class extends React.Component {
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /></View>
+              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} /></View>
             </View>
 
             <View style={styles.blocktop}>
