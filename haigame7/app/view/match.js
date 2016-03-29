@@ -395,12 +395,12 @@ _renderGuessRow(rowData){
 
       <View style={[commonstyle.row, styles.matchlisttab]}>
         <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-          <Icon name="user" size={20} color={'#D31B25'}/>
+          <Icon name="time" size={20} color={'#D31B25'}/>
           <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'08:20:49'}</Text>
         </View>
         <View style={styles.matchlisttabline}></View>
         <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} activeOpacity={0.8} >
-          <Icon name="user" size={20} color={'#D31B25'}/>
+          <Icon name="fire" size={20} color={'#D31B25'}/>
           <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.AllMoney}{'氦金'}</Text>
         </TouchableOpacity>
         <View style={styles.matchlisttabline} ></View>
