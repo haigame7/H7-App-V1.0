@@ -163,7 +163,7 @@ render(){
         <Text style={commonstyle.cream}>{'自动生成的氦7ID为'}</Text>
       </View>
       <View key={'certifyid'} style={styles.logininput}>
-        <TextInput {...fields[1]}>{this.state.data.certifyid}</TextInput>
+        <TextInput {...fields[1]} defaultValue={this.state.data.certifyid}/>
         <TouchableHighlight style={styles.logininputright} underlayColor={'#000000'} onPress={()=>console.log('copy certify')}>
           <Icon name="copy" size={30} color={'#C3C3C3'} />
         </TouchableHighlight>

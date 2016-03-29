@@ -45,7 +45,13 @@ const guessApi={
   'DOGUESSBET':apiSetup.MASTER_API_PATH + 'v1/Guess/Bet?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYGUESSLIST':apiSetup.MASTER_API_PATH + 'v1/Guess/MyGuessList?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
-
+const teamApi={
+  'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'GETTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/TeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'CREATETEAM':apiSetup.MASTER_API_PATH +'/v1/Team/Create?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'ApplyTeamList':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyTeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'TeamRecruitList':apiSetup.MASTER_API_PATH +'/v1/Team/TeamRecruitList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
 module.exports = {
   USER_API: userApi,
   ASSERT_API: assertApi,
@@ -53,6 +59,7 @@ module.exports = {
   RANK_API:rankApi,
   MATCH_API:matchApi,
   GUESS_API:guessApi,
+  TEAM_API:teamApi,
 }
 
 //这样写应该也行

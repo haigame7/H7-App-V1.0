@@ -18,7 +18,9 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
-
+import ReSetPwd from './reset_pwd_screen';
+import About from './about_screen';
+import Share from './share_screen';
 
 export default class extends Component{
   constructor(props) {
@@ -37,6 +39,18 @@ export default class extends Component{
    }
   return this.state.notshow;
 }
+ _toNextScreen(params){
+    // Toast.show("this is a message")
+    let _this = this;
+    this.props.navigator.push({
+      name: params.name,
+      component: params.component,
+      sceneConfig:params.sceneConfig || undefined,
+      params: {
+        ...this.props,
+      }
+    })
+  }
 
   render(){
 
@@ -58,7 +72,7 @@ export default class extends Component{
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"重置密码","component":ReSetPwd})}>
             <Text style={styles.listviewtextleft}>更改密码</Text>
             <View style={styles.listviewtextbox} ></View>
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
@@ -66,13 +80,13 @@ export default class extends Component{
 
           <View style={styles.listbox}></View>
 
-          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8}  onPress={this._toNextScreen.bind(this,{"name":"关于H7","component":About})}>
             <Text style={styles.listviewtextleft}>关于H7</Text>
             <View style={styles.listviewtextbox} ></View>
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"分享","component":Share})}>
             <Text style={styles.listviewtextleft}>共享H7给朋友们</Text>
             <View style={styles.listviewtextbox} ></View>
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
