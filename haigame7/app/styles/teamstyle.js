@@ -389,6 +389,40 @@ var TeamStyle = StyleSheet.create({
     teamcreateinputfont: {
         textAlign: 'center',
     },
+    teammanage: {
+        margin: 10, 
+    },
+    teammanagelader: {
+        alignItems: 'center',
+    },
+    teammanageuser: {
+        marginTop: 10,
+    },
+    teammanageimg: {
+        width: (Util.size.width - 20)/4 - 20,
+        height: (Util.size.width - 20)/4 - 20,
+        borderRadius: ((Util.size.width - 20)/4 - 20)/2,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.6)',
+    },
+    teammanageline: {
+        height: 20,
+        backgroundColor: '#484848',
+    },
+    teammanagelist: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#484848',
+    },
+    teammanagelistimg: {
+        width: (Util.size.width - 20)/4 - 20,
+        height: (Util.size.width - 20)/4 - 20,
+        borderRadius: 5,
+        borderWidth: 2,
+        borderColor: '#D31B25',
+        marginRight: 10,
+    },
 });
 
 module.exports = TeamStyle;
