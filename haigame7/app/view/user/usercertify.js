@@ -10,11 +10,14 @@ var {
   TextInput,
   Image,
   TouchableHighlight,
-  StyleSheet
+  StyleSheet,
+  Alert,
+  ToastAndroid
 } = React;
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
+import UserService from '../../network/userservice';
 
 export default class extends Component{
   constructor(props) {
@@ -25,8 +28,23 @@ export default class extends Component{
       certifyid:'000000',
     },
     content:undefined,
-    messages: []
+    messages: [],
+     btn_msg: '认证',
+   fightData: this.props.fightData
   }
+}
+
+componentWillMount() {
+  if (this.state.fightData.CertifyState != '1') {
+    let data = {'dota2id':this.state.fightData.GameID,'certifyid':this.state.fightData.CertifyName}
+    this.setState({
+      btn_msg: '重新认证',
+      dota2id: data
+    })
+  }
+}
+componentWillUnmount() {
+  this.timer && clearTimeout(this.timer);
 }
 renderMessages() {
   if (this.state.messages.length > 0) {
@@ -47,6 +65,27 @@ gotoCertify(numberID,argument) {
   if(this.state.messages.length>0){
     console.log('message wrong'+this.state.messages.length);
     return;
+  }
+  if (this.state.btn_msg == '认证') {
+    UserService.certifyGameID({'PhoneNumber':this.props.userData.PhoneNumber,'GameID': this.state.data.dota2id},(response) => {
+        console.log(response);
+        if (response[0].MessageCode == '0') {
+          let data = this.state.data;
+          data['certifyid'] = response[0].Message;
+          this.setState({data: data,btn_msg: '重新认证'})
+          ToastAndroid.show('申请已经发出,请等待',ToastAndroid.SHORT);
+          this.props._callback('Usercertify');
+          this.timer = setTimeout(()=>{
+            this.props.navigator.pop();
+          },2000);
+        } else {
+          console.log('认证失败');
+        }
+    });
+  } else {
+    UserService.updateCertifyGameID({'PhoneNumber':this.props.userData.PhoneNumber,'GameID': this.state.data.dota2id},(response) => {
+        console.log(response);
+    });
   }
   return;
 }
@@ -82,7 +121,7 @@ render(){
       </View>
 
       <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
-        <Text style={styles.btnfont} >{'认证'}</Text>
+        <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
       </TouchableHighlight>
 
       <View style={styles.linkblock}>

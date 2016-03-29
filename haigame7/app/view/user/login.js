@@ -62,11 +62,11 @@ export default class Login extends Component {
                 <View activeOpacity = {1} style = {styles.logo}>
                     <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>
                 </View>
-                <View key = { 'phone' } style = { styles.logininput }>
-                    <TextInput {...fields[0] } onFocus = {() => this.onFocus({...fields[0] }) } onChangeText = {(text) => this.state.data.phone = text }/>
+                <View key = { 'phone' } >
+                    <TextInput {...fields[0] } style = { styles.logininput }onFocus = {() => this.onFocus({...fields[0] }) } onChangeText = {(text) => this.state.data.phone = text }/>
                 </View>
-                <View key = { 'password' } style = { styles.logininput }>
-                    <TextInput {...fields[3] } onFocus = {() => this.onFocus({...fields[3] }) } onChangeText = {(text) => this.state.data.password = text }/>
+                <View key = { 'password' } >
+                    <TextInput {...fields[3] } style = { styles.logininput } onFocus = {() => this.onFocus({...fields[3] }) } onChangeText = {(text) => this.state.data.password = text }/>
                 </View>
                 <View style = {[commonstyle.row, styles.linkblock]} >
                     <TouchableOpacity style = {[commonstyle.col1, styles.link]} activeOpacity={0.8} onPress = {() => this.gotoRoute('forgetpwd') }>
