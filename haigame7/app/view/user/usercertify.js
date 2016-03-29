@@ -30,17 +30,28 @@ export default class extends Component{
     content:undefined,
     messages: [],
      btn_msg: '认证',
-   fightData: this.props.fightData
+   fightData: this.props.fightData,
+   resultStr: ''
   }
 }
 
 componentWillMount() {
+  console.log(this.state.fightData.CertifyState);
+  let data = {'dota2id':this.state.fightData.GameID,'certifyid':this.state.fightData.CertifyName}
   if (this.state.fightData.CertifyState == '1') {
-    let data = {'dota2id':this.state.fightData.GameID,'certifyid':this.state.fightData.CertifyName}
     this.setState({
       btn_msg: '重新认证',
-      dota2id: data
+      dota2id: data,
+    resultStr: '已认证'
     })
+  } else if(this.state.fightData.CertifyState == '2') {
+    this.setState({
+      btn_msg: '重新认证',
+      dota2id: data,
+    resultStr: '认证中...'
+    })
+  } else {
+
   }
 }
 componentWillUnmount() {
@@ -85,6 +96,20 @@ gotoCertify(numberID,argument) {
   } else {
     UserService.updateCertifyGameID({'PhoneNumber':this.props.userData.PhoneNumber,'GameID': this.state.data.dota2id},(response) => {
         console.log(response);
+        UserService.updateCertifyGameID({'PhoneNumber':this.props.userData.PhoneNumber,'GameID': this.state.data.dota2id},(response) => {
+          if (response[0].MessageCode == '0') {
+            let data = this.state.data;
+            data['certifyid'] = response[0].Message;
+            this.setState({data: data,btn_msg: '重新认证'})
+            ToastAndroid.show('申请已经发出,请等待',ToastAndroid.SHORT);
+            this.props._callback('Usercertify');
+            this.timer = setTimeout(()=>{
+              this.props.navigator.pop();
+            },2000);
+          } else {
+            console.log('认证失败');
+          }
+        })
     });
   }
   return;
@@ -100,21 +125,21 @@ render(){
       btn =
       (
         <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
-          <Text style={styles.btnfont} >0</Text>
+          <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
         </TouchableHighlight>
       )
     } else if(this.state.fightData.CertifyState == '1') {
       btn =
       (
         <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
-          <Text style={styles.btnfont} >1</Text>
+          <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
         </TouchableHighlight>
       )
     } else {
       btn =
       (
         <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'}>
-          <Text style={styles.btnfont} >2</Text>
+          <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
         </TouchableHighlight>
       )
     }
@@ -131,7 +156,7 @@ render(){
         <Text style={commonstyle.cream}>{'请输入Dota2数字ID'}</Text>
       </View>
       <View key={'dota2id'} style={styles.logininput}>
-        <TextInput {...fields[0]} onChangeText={(text) => this.state.data.dota2id = text} />
+        <TextInput {...fields[0]} defaultValue={this.state.data.dota2id || ''} onChangeText={(text) => this.state.data.dota2id = text} />
       </View>
 
       <View style={styles.loginlabel}>
@@ -143,10 +168,9 @@ render(){
           <Icon name="copy" size={30} color={'#C3C3C3'} />
         </TouchableHighlight>
       </View>
-
       {btn}
       <View style={styles.linkblock}>
-      <Text style={commonstyle.cream}>认证结果：{this.state.fightData.CertifyState}</Text>
+      <Text style={commonstyle.cream}>认证结果：{this.state.resultStr}</Text>
       </View>
       <View style={styles.linkblock}>
         <Text style={commonstyle.cream}>{'规则文字内容:\n'}</Text>
