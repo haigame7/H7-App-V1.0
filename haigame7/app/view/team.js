@@ -9,7 +9,7 @@
  */
 var Loading = require('./common/loading');
 var FindTeam = require('./team/findteam');
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 
 import React, {
   View,
@@ -168,7 +168,7 @@ import ApplyJoin from './user/applyjoin_screen';
           <View style={styles.userlistteam}>
             <TouchableOpacity style={styles.userlistteamname} activeOpacity={0.8}>
               <Text style={commonstyle.cream}>{'犀利拍立冬至'}</Text>
-              <Icon name="angle-right" size={25} color={'#C3C3C3'} style={styles.userlistteamicon} />
+              <Icon name="angle-right" size={20} color={'#C3C3C3'} style={styles.userlistteamicon} />
             </TouchableOpacity>
             <View style={styles.userlistteambox}>
               <Text style={commonstyle.yellow}>{'战斗力:'}</Text>

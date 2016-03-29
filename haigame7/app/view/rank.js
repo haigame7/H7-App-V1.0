@@ -4,7 +4,7 @@
  * @return {[rank Component]}
  * @author aran.hu
  */
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 import RankService from '../network/rankservice';
 import GlobalSetup from '../constants/globalsetup';
 
@@ -40,13 +40,13 @@ export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
-               navbar: 0,
-                 data: {subnavbar:1},
-             paraUser: {ranktype:'Asset',ranksort:'Desc',startpage:1,pagecount:10},
-             paraTeam: {ranktype:'Asset',ranksort:'Desc',startpage:1,pagecount:10},
+      navbar: 0,
+      data: {subnavbar:1},
+      paraUser: {ranktype:'Asset',ranksort:'Desc',startpage:1,pagecount:10},
+      paraTeam: {ranktype:'Asset',ranksort:'Desc',startpage:1,pagecount:10},
        dataUserSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
        dataTeamSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
-               loaded: false,
+       loaded: false,
       }
     }
     //加载完组件后操作
@@ -148,21 +148,21 @@ export default class extends Component{
               <View style={styles.navsub}>
                 <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1)}>
                   <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
-                  <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray}/>
+                  <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
                 </TouchableOpacity>
 
                 <View style={styles.navsubline}></View>
 
                 <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2)}>
                   <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
-                  <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray}/>
+                  <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
                 </TouchableOpacity>
 
                 <View style={styles.navsubline}></View>
 
                 <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3)}>
                   <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
-                  <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray}/>
+                  <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
                 </TouchableOpacity>
               </View>
             </View>
@@ -188,21 +188,21 @@ export default class extends Component{
             <View style={styles.navsub}>
               <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1)}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
-                <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray}/>
+                <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
               </TouchableOpacity>
 
               <View style={styles.navsubline}></View>
 
               <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2)}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
-                <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray}/>
+                <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
               </TouchableOpacity>
 
               <View style={styles.navsubline}></View>
 
               <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3)}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
-                <Icon name="angle-down" size={10}  style={this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray}/>
+                <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
               </TouchableOpacity>
             </View>
           </View>

@@ -223,6 +223,7 @@ export default StyleSheet.create({
         marginRight: 10,
     },
     listviewiconright: {
+        top: 5,
         width:15,
         height: 30,
         marginLeft: 10,

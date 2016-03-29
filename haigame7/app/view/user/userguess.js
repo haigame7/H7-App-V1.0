@@ -19,7 +19,7 @@ import React, {
     } from 'react-native';
 var Util = require('../common/util');
 var Header = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var commonstyle = require('../../styles/commonstyle');
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
@@ -37,10 +37,13 @@ export default class extends Component{
       userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
       dataguessSource:dataguess.cloneWithRows(['row1']),
       guesslist:[],
-      userdata:{
-        userid:0,
-        userteamid:0,
-        userasset:0
+      keykey:0,
+      footerMsg: "点击加载更多",
+      requestData:{
+        userID:0,
+        guessID:0,
+        startpage:0,
+        pagecount:0,
       },
       }
     }
@@ -54,25 +57,27 @@ export default class extends Component{
        Alert.alert('服务器请求异常');
      }else if(response[0].MessageCode == '0'){
        this.setState({
-        userdata:{
-          userid:response[1].Creater,
-         userteamid:response[1].TeamID,
-         userasset:response[1].Asset,
+        requestData:{
+          userID:response[1].Creater,
+          guessID:0,
+         startpage:GlobalVariable.PAGE_INFO.StartPage,
+         pagecount:GlobalVariable.PAGE_INFO.PageCount-2
        },
        });
-       this.getUserGuessList(response[1].Creater);
+       this.getUserGuessList();
      }
     }else{
         Alert.alert('请求错误');
     }
   });
  }
- getUserGuessList(userID){
-   GuessService.myGuessList({userID:userID,guessID:0,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount},(response) => {
+ getUserGuessList(){
+   GuessService.myGuessList(this.state.requestData,(response) => {
      if (response !== GlobalSetup.REQUEST_SUCCESS) {
        if(response[0].MessageCode == '40001'){
          Alert.alert('服务器请求异常');
        }else if(response[0].MessageCode == '0'){
+         console.log(response[1]);
          let newData = response[1];
          this.setState({
            dataguessSource: this.state.dataguessSource.cloneWithRows(newData),
@@ -86,7 +91,6 @@ export default class extends Component{
    });
  }
  renderguessList(rowData){
-   console.log(rowData);
     return(
       <View style={[styles.guesslist]}>
        <View style={[styles.guessli]}>
@@ -108,15 +112,15 @@ export default class extends Component{
          <View style={[styles.guessresult]}>
          <View style={[styles.flexrow,{marginBottom:5}]}>
            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'竞猜结果'}</Text>
-           <Text style={[commonstyle.white, commonstyle.fontsize12 ]}>{'  犀利拍立冬至'}</Text>
+           <Text style={[commonstyle.white, commonstyle.fontsize12 ]}>{'  '}{rowData.Result}</Text>
            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'       押注金额'}</Text>
-           <Text style={[commonstyle.white, commonstyle.fontsize12]}>{'  '}{rowData.BetTeamName}{'氦金'}</Text>
+           <Text style={[commonstyle.white, commonstyle.fontsize12]}>{'  '}{rowData.BetMoney}{'氦金'}</Text>
          </View>
          <View style={[styles.flexrow,{marginBottom:5}]}>
            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'我的选择'}</Text>
            <Text style={[commonstyle.white, commonstyle.fontsize12 ]}>{'  '}{rowData.BetTeamName}</Text>
            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'       竞猜收益'}</Text>
-           <Text style={[commonstyle.white, commonstyle.fontsize12]}>{'  '}{100}{'氦金'}</Text>
+           <Text style={[commonstyle.white, commonstyle.fontsize12]}>{'  '}{rowData.Result==GlobalVariable.GUESS_INFO.NoStart||GlobalVariable.GUESS_INFO.Starting?(rowData.BetMoney*rowData.Odds):0}{'氦金'}</Text>
          </View>
          </View>
        </View>
@@ -124,7 +128,49 @@ export default class extends Component{
     );
   }
   _renderFooter(){
-
+    return(
+      <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this)}>
+        <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerMsg}</Text>
+      </TouchableHighlight>
+    );
+  }
+  _onLoadMore() {
+    if (this.state.keykey > 0) {
+      this.setState({
+        footerMsg: "木有更多多数据了~~~~"
+      });
+    }else{
+      let _ds = this.state.guesslist;
+      let _params = this.state.requestData;
+      _params.startpage = _params.startpage+1;
+      this.setState({
+        footerMsg: "正在加载....."
+      });
+      {/*加载下一页*/}
+      GuessService.myGuessList(_params,(response) => {
+        if (response[0].MessageCode == '0') {
+          let nextData = response[1];
+          if(nextData.length<3){
+            this.setState({
+              keykey:1,
+            });
+          }
+          for(var item in nextData){
+            _ds.push(nextData[item])
+          }
+        } else {
+          console.log('请求错误' + response[0].MessageCode);
+        }
+      });
+      //这等到有api在搞吧
+      setTimeout(()=>{
+        this.setState({
+          dataguessSource: this.state.dataguessSource.cloneWithRows(_ds),
+          loaded: true,
+          footerMsg: "点击加载更多",
+        });
+      },1000);
+    }
   }
 render() {
   return (

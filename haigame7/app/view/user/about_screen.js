@@ -15,7 +15,7 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Header from '../common/headernav'; //导航有问题
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 export default class extends React.Component {
   constructor(props){
     super(props);
@@ -57,12 +57,12 @@ export default class extends React.Component {
             <TouchableOpacity style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]} activeOpacity={0.8}  onPress={this._help.bind(null,this)}>
               <Text style={styles.listviewtextleft}>帮助与反馈</Text>
               <View style={styles.listviewtextbox} ></View>
-              <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+              <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
             </TouchableOpacity>
             <TouchableOpacity style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]} activeOpacity={0.8}  onPress={this._update.bind(null,this)}>
               <Text style={styles.listviewtextleft}>检查版本更新</Text>
               <View style={styles.listviewtextbox} ></View>
-              <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+              <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
             </TouchableOpacity>
 
             <View style={commonstyle.row}>

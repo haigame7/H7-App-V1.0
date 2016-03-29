@@ -18,7 +18,7 @@ import React, {
 } from 'react-native';
 var Util = require('../common/util');
 var Header = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var commonstyle = require('../../styles/commonstyle');
 var styles = require('../../styles/matchstyle');
 var Carousel = require('react-native-carousel');

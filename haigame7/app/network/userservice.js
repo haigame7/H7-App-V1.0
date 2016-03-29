@@ -109,6 +109,36 @@ export default{
       callback
     );
   },
+
+  /*获取用户游戏信息信息*/
+  getUserGameInfo(phoneNumber,callback) {
+    FecthService.postFecth(
+      ApiConfig.USER_API.GET_USER_GAME_INFO,
+      {
+        'PhoneNumber':phoneNumber
+      },
+      callback
+    );
+  },
+
+
+  /*提交游戏认证ID*/
+  certifyGameID(data,callback) {
+    FecthService.postFecth(
+      ApiConfig.USER_API.CERTIFY_GAME_ID,
+      data,
+      callback
+    );
+  },
+
+  /*更新用户游戏ID认证信息*/
+  updateCertifyGameID(data,callback) {
+    FecthService.postFecth(
+      ApiConfig.USER_API.UPDATE_CERTIFY_GAME_ID,
+      data,
+      callback
+    );
+  },
   _urlForQueryAndPage(query: string, pageNumber: number): string {
     // var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     // if (query) {

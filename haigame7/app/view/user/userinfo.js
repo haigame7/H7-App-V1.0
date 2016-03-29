@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var {
   View,
   Text,
@@ -58,6 +58,10 @@ export default class extends Component {
     })
   }
   componentWillReceiveProps(nextProps,nextState) {
+  }
+
+  componentWillUnmount() {
+    this.timer && clearTimeout(this.timer);
   }
   _createAreaData(area){
   	let data = {};
@@ -139,7 +143,7 @@ export default class extends Component {
         userdata: this.state.userData,
         screenTitle: property,
         setProperty(key,pro){
-          console.log('列表页设置相应属性:' + key);
+          // console.log('列表页设置相应属性:' + key);
           switch (key) {
             case '昵称':
               UserService.updateUserInfo({"PhoneNumber":_this.state.userData.PhoneNumber,'UserWebNickName':pro},(response) => {
@@ -154,7 +158,7 @@ export default class extends Component {
               break;
             case '个性签名':
             UserService.updateUserInfo({"PhoneNumber":_this.state.userData.PhoneNumber,'Hobby':pro},(response) => {
-              console.log(pro);
+              // console.log(pro);
               if(response[0].MessageCode == '0') {
                 udata['Hobby'] = pro
                 AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(udata));
@@ -183,6 +187,9 @@ export default class extends Component {
           _this.setState({
             userData: udata
           })
+          _this.timer = setTimeout(()=>{
+            _this.props._callback('UserInfo');
+          },1000);
         }
       }
     });
@@ -260,7 +267,7 @@ _onPressHandle_2(){
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'头像')}>
            <Image style={styles.listviewtextimg} source={{uri:this.state.userData.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
          </TouchableOpacity>
-         <Icon name="angle-right" size={30} color={'#484848'} style={[styles.listviewiconright, {marginTop: 30,}]} />
+         <Icon name="angle-right" size={20} color={'#484848'} style={[styles.listviewiconright, {marginTop: 30,}]} />
        </View>
 
        <View style={styles.listview} >
@@ -268,7 +275,7 @@ _onPressHandle_2(){
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'昵称')}>
            <Text style={styles.listviewtextright}>{this.state.userData.UserWebNickName}</Text>
          </TouchableOpacity>
-         <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+         <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
        </View>
 
        <View style={styles.listview} >
@@ -276,7 +283,7 @@ _onPressHandle_2(){
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._onPressHandle.bind(this)} >
            <Text style={styles.listviewtextright}>{parseInt(this.state.userData.Sex) ? '男' : '女'} </Text>
          </TouchableOpacity>
-         <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+         <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
        </View>
 
        <View style={styles.listview} >
@@ -284,7 +291,7 @@ _onPressHandle_2(){
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._onPressHandle_1.bind(this)}>
            <Text style={styles.listviewtextright}>{this.state.userData.Address}</Text>
          </TouchableOpacity>
-         <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+         <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
        </View>
 
        <View style={styles.listview} >
@@ -292,7 +299,7 @@ _onPressHandle_2(){
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._onPressHandle_2.bind(this)} >
            <Text style={styles.listviewtextright}>{this.state.userData.Birthday}</Text>
          </TouchableOpacity>
-         <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+         <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
        </View>
 
        <View style={styles.listview} >
@@ -300,7 +307,7 @@ _onPressHandle_2(){
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8}>
          <Text style={styles.listviewtextright}>{this.state.userData.PhoneNumber}</Text>
          </TouchableOpacity>
-         <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+         <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
        </View>
 
        <View style={styles.listview} >
@@ -308,7 +315,7 @@ _onPressHandle_2(){
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._editInfo.bind(this,'个性签名')}>
            <Text style={styles.listviewtextright}>{this.state.userData.Hobby}</Text>
          </TouchableOpacity>
-         <Icon name="angle-right" size={30} color={'#484848'} style={styles.listviewiconright} />
+         <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
        </View>
        </ScrollView>
 

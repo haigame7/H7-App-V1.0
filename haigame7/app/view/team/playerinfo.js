@@ -6,7 +6,7 @@
  */
 var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var Util = require('../common/util');
 var {
   View,
@@ -41,7 +41,7 @@ export default class extends Component{
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <View style={styles.headportraitv}><Icon name="book" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
+              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
             </View>
 
             <View style={styles.blocktop}>

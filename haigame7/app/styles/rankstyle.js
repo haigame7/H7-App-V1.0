@@ -60,6 +60,9 @@ var RankStyle = StyleSheet.create({
         marginBottom: 8,
         backgroundColor: '#484848',
     },
+    navsubicon: {
+        marginLeft: 5,
+    },
     //滚动列表
     scrollview: {
         paddingLeft: 10,

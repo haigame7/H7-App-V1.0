@@ -6,7 +6,7 @@
  */
 var React = require('react-native');
 var Header = require('./common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 
 var Progress = require('react-native-progress');
 var {
@@ -122,7 +122,7 @@ export default class extends Component{
   }
   getTeamList(data){
     FightService.getFightTeamList(data,(response) => {
-      console.log(response);
+      // console.log(response);
       if (response[0].MessageCode == '0') {
         let newData = response[1];
         this.setState({

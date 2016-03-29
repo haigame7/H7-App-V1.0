@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var Headernav = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 var Util = require('../common/util');
 var DateTimePicker = require('@remobile/react-native-datetime-picker');
 var {

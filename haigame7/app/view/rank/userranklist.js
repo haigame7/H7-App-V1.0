@@ -5,7 +5,7 @@
  * @author aran.hu
  */
 
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Iconfont');
 
 import React, {
     View,

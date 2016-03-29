@@ -4,8 +4,9 @@ import com.facebook.react.ReactActivity;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import com.remobile.datetimepicker.*;  // <--- import
+import com.remobile.datetimepicker.*;
 import com.imagepicker.ImagePickerPackage;
+import com.remobile.toast.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +40,8 @@ public class MainActivity extends ReactActivity {
         new MainReactPackage(),
         new RCTDateTimePickerPackage(MainActivity.this),
         new VectorIconsPackage(),
-        new ImagePickerPackage()
+        new ImagePickerPackage(),
+        new RCTToastPackage()
       );
     }
 }
