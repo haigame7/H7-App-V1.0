@@ -32,7 +32,7 @@ export default class extends React.Component {
     console.log('加入战队去了');
   }
   render(){
-    let BContent = <Button onPress={this._closeModa.bind(this)} ><Icon name="remove" size={20} color={'#FF0000'} /></Button>;
+    let BContent = <Button onPress={this._closeModa.bind(this)} ><Icon name="error" size={20} color={'#FF0000'} /></Button>;
     return(
       <View style={styles.wrapper}>
        <Button onPress={this._openModa.bind(this)} style={styles.btn}>点击弹出Modal</Button>

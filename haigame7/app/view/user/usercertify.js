@@ -140,7 +140,7 @@ render(){
       <View key={'certifyid'} style={styles.logininput}>
         <TextInput {...fields[1]}>{this.state.data.certifyid}</TextInput>
         <TouchableHighlight style={styles.logininputright} underlayColor={'#000000'} onPress={()=>console.log('copy certify')}>
-          <Icon name="book" size={30} color={'#C3C3C3'} />
+          <Icon name="copy" size={30} color={'#C3C3C3'} />
         </TouchableHighlight>
       </View>
 

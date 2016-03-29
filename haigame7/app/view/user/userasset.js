@@ -146,7 +146,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
             <View style={[commonstyle.row, styles.assetblock]}>
               <View style={[commonstyle.col1, styles.assetlabel]}>
                 <View style={commonstyle.row}>
-                  <Icon name="upload" size={25} color={'#D31B25'}/>
+                  <Icon name="money" size={25} color={'#D31B25'}/>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>总金额</Text>
                 </View>
                 <Text style={[commonstyle.yellow, commonstyle.fontsize22]}>{this.state.hjData.totalAsset}</Text>
@@ -156,7 +156,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
               <TouchableOpacity style={[commonstyle.col1, styles.assetlabel]}>
                 <View style={commonstyle.row}>
-                  <Icon name="upload" size={25} color={'#D31B25'}/>
+                  <Icon name="ranking" size={25} color={'#D31B25'}/>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>财富排行</Text>
                 </View>
                 <Text style={[commonstyle.yellow, commonstyle.fontsize22]}>{this.state.hjData.myRank}</Text>

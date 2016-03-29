@@ -121,7 +121,7 @@ var TeamStyle = StyleSheet.create({
     },
     userlistteamicon: {
         position: 'absolute',
-        top: 5,
+        top: 10,
         right: 10,
     },
     userlistteambox: {
