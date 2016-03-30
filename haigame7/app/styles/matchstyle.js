@@ -51,10 +51,10 @@ var MatchStyle = StyleSheet.create({
     },
     //列表
     anchorlistblock: {
-        width: Util.size.width - 60,
+        width: Util.size.width - 20,
         marginTop: 10,
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 10,
+        marginRight: 10,
     },
     anchorlistimg: {
         width: (Util.size.width - 120) / 3,
