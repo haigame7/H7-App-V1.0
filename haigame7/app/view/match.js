@@ -154,8 +154,9 @@ export default class extends Component{
             Toast.show('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
             let newData = response[1];
+            let groups=this.groupItems(newData,3);
             this.setState({
-              databoboSource: this.state.databoboSource.cloneWithRows(newData),
+              databoboSource: this.state.databoboSource.cloneWithRows(groups),
               bobolist:newData,
               loaded:false,
             });
@@ -166,6 +167,22 @@ export default class extends Component{
             }
       });
     }
+    groupItems(items, itemsPerRow){
+       var itemsGroups = [];
+       var group = [];
+       items.forEach(function(item) {
+         if (group.length === itemsPerRow) {
+           itemsGroups.push(group);
+           group = [item];
+         } else {
+           group.push(item);
+         }
+       });
+       if (group.length > 0) {
+         itemsGroups.push(group);
+       }
+       return itemsGroups;
+   }
     _openBoBoModa(rowData) {
       MatchService.getBoBoCount(rowData,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -359,19 +376,27 @@ export default class extends Component{
       );
      }
     }
-
-_renderBoBoRow(rowData, sectionID, rowID){
+renderItem(rowData,key){
+  return(
+    <View key={key} style={commonstyle.col1}>
+    <View style={styles.anchorlistline}></View>
+    <TouchableOpacity   onPress={this._openBoBoModa.bind(this,rowData)}>
+      <Image style={styles.anchorlistimg} source={{uri:rowData.UserPicture}} />
+      <Text style={commonstyle.gray}>{rowData.Name}</Text>
+    </TouchableOpacity>
+    </View>
+  );
+}
+ _renderBoBoRow(group,sectionID,rowID){
+   var that = this;
+    var items =Object.keys(group).map(function(item,key) {
+      return that.renderItem(group[item],key);
+    });
      return(
        <View style={[commonstyle.row, styles.anchorlistblock]}>
-         <View style={styles.anchorlistline}></View>
-         <TouchableOpacity style={commonstyle.col1} onPress={this._openBoBoModa.bind(this,rowData)}>
-           <Image style={styles.anchorlistimg} source={{uri:rowData.UserPicture}} />
-           <Text style={commonstyle.gray}>{rowData.Name}</Text>
-         </TouchableOpacity>
+        {items}
        </View>
      );
-
-
 }
 
 _renderGuessRow(rowData){
@@ -453,12 +478,13 @@ rendermatchList(){
     return(
       <View>
       <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
-        <Image  style={styles.matchbannerimg}source={{uri:'http://a4.att.hudong.com/57/68/20300533970223133722680195303.jpg'}}  resizeMode={"stretch"} />
+        <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture}}  resizeMode={"stretch"} />
       </TouchableOpacity>
       <ListView
         dataSource={this.state.databoboSource}
         renderRow={this._renderBoBoRow.bind(this)}
         renderFooter={this._renderFooter.bind(this)}
+        pageSize={3}
       />
       </View>
     );

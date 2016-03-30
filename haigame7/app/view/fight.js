@@ -73,6 +73,7 @@ export default class extends Component{
 
   componentDidMount() {
     this.initData();
+
   }
   updateContentData(content){
     this.setState({
