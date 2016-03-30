@@ -379,8 +379,7 @@ export default class extends Component{
 renderItem(rowData,key){
   return(
     <View key={key} style={commonstyle.col1}>
-    <View style={styles.anchorlistline}></View>
-    <TouchableOpacity   onPress={this._openBoBoModa.bind(this,rowData)}>
+    <TouchableOpacity style={commonstyle.viewcenter}   onPress={this._openBoBoModa.bind(this,rowData)}>
       <Image style={styles.anchorlistimg} source={{uri:rowData.UserPicture}} />
       <Text style={commonstyle.gray}>{rowData.Name}</Text>
     </TouchableOpacity>
