@@ -14,7 +14,6 @@ import React, {
     TouchableHighlight,
     TouchableOpacity,
     ToastAndroid,
-    Alert,
     AsyncStorage,
     Navigator,
     Image
@@ -29,6 +28,7 @@ import HeaderPre from '../common/header';
 import UserService from '../../network/userservice';
 import GlobalVariable from '../../constants/globalvariable';
 import GlobalSetup from '../../constants/globalsetup';
+import Toast from '@remobile/react-native-toast';
 
 export default class Login extends Component {
     constructor(props) {
@@ -92,7 +92,7 @@ export default class Login extends Component {
 
     onSubmit(argument) {
         if (this.state.loading) {
-            Alert.alert('请稍后...');
+            Toast.show('请稍后...');
             return;
         }
 
@@ -117,13 +117,18 @@ export default class Login extends Component {
                   let data = response[1];
                   data['needUpdate'] = false;
                   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
-                  console.log('login获取用户数据成功');
+                  {/*更新appjs登录状态*/}
                   setTimeout(() => {
+                    Toast.showLongCenter('登陆成功');
+                    if(this.props.updateLoginState){
+                      this.props.updateLoginState();
+                     }
                       this.props.navigator.pop();
-                  }, 2000);
+                  }, 500);
+
                 } else {
                   console.log('获取用户数据失败' + response[0].Message);
-                  Alert.alert(
+                  Toast.show(
                       response[0].Message
                   );
                   this.setState({
@@ -133,7 +138,7 @@ export default class Login extends Component {
               })
             } else {
               console.log('登录失败' + response[0].Message);
-              Alert.alert(
+              Toast.show(
                   response[0].Message
               );
               this.setState({

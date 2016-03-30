@@ -13,6 +13,7 @@ var {
   ToastAndroid,
   Navigator,
   Switch,
+  AsyncStorage,
   ScrollView
   } = React;
 
@@ -21,6 +22,8 @@ import styles from '../../styles/userstyle';
 import ReSetPwd from './reset_pwd_screen';
 import About from './about_screen';
 import Share from './share_screen';
+import GlobalVariable from '../../constants/globalvariable'
+import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
   constructor(props) {
@@ -39,6 +42,17 @@ export default class extends Component{
    }
   return this.state.notshow;
 }
+ onLoginout(){
+
+       AsyncStorage.removeItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+         Toast.show("退出登录");
+         if(this.props.updateLoginState){
+           this.props.updateLoginState();
+          }
+       });
+         this.props.navigator.popToTop();
+
+ }
  _toNextScreen(params){
     // Toast.show("this is a message")
     let _this = this;
@@ -92,7 +106,7 @@ export default class extends Component{
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
-          <TouchableHighlight style = {this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor = {'#FF0000'}  >
+          <TouchableHighlight style = {this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} onPress = {() => this.onLoginout() } underlayColor = {'#FF0000'}  >
              <Text style = {styles.btnfont}> { '退出登录'}</Text>
           </TouchableHighlight>
         </ScrollView>
