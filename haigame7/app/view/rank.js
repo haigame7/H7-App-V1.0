@@ -54,6 +54,11 @@ export default class extends Component{
         this.fetchUserData();
         this.fetchTeamData();
       }
+    updateContentData(content){
+        this.setState({
+          content: content
+        });
+    }
     //获取个人排行数据
     fetchUserData() {
       RankService.rankUser(this.state.paraUser,(response) => {

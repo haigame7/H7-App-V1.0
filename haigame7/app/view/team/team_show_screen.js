@@ -24,6 +24,7 @@ export default class extends React.Component {
     super();
     this.state = {
       navigator: undefined,
+      teamData:{},
       role: 'user',
       iconText: '添加战队',
       defaultTeamLogo: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
@@ -35,8 +36,9 @@ export default class extends React.Component {
   componentWillMount(){
       this.setState({
         navigator: this.props.navigator,
+        teamData:this.props.teamData,
       });
-  console.log(this.props.teamData);
+
       if (this.state.role != 'captain') {
         this.setState({
           iconText: undefined,
@@ -51,10 +53,36 @@ export default class extends React.Component {
     this.setState({isOpen: true});
   }
   _closeModa() {
-    console.log('******');
      this.setState({isOpen: false});
   }
+  parseCount(count){
+    if(count==null){
+      count = 0;
+    }else{
+      count = parseInt(count);
+    }
+    return count;
+  }
+  initTeamOdd(wincount,losecount,followcount){
+    wincount = this.parseCount(wincount);
+    losecount = this.parseCount(losecount);
+    followcount = this.parseCount(followcount);
+    var totalcount  = wincount+losecount+followcount;
+    var odd =0;
+    if(totalcount!==0){
+      odd = wincount*100/totalcount;
+    }
+    var odddata = {
+      wincount:wincount,
+      losecount:losecount,
+      followcount:followcount,
+      totalcount:totalcount,
+      odd :odd,
+    };
+    return odddata;
+  }
   render() {
+    let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let myHero = (
       <View>
         <View style={{flexDirection: 'row'}}>
@@ -88,25 +116,25 @@ export default class extends React.Component {
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+              <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
               <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} /></View>
             </View>
 
             <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
+              <Text style={[styles.headname, commonstyle.white]}>{this.state.teamData.TeamName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.teamData.FightScore}{'  '}</Text>
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.teamData.Asset}{'  '}</Text>
                 </View>
               </View>
               <View style={styles.headtext}>
-                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>战队宣言:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>战队宣言:{this.state.teamData.TeamDescription}</Text>
               </View>
             </View>
           </Image>
@@ -116,14 +144,14 @@ export default class extends React.Component {
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队战绩</Text></View>
               <View style={styles.listviewright}>
                 <Text style={commonstyle.cream}>参赛场次  </Text>
-                <Text style={commonstyle.yellow}>20场</Text>
+                <Text style={commonstyle.yellow}>{odddata.totalcount}场</Text>
                 <Text style={commonstyle.cream}>  胜率  </Text>
-                <Text style={commonstyle.red}>79%</Text>
+                <Text style={commonstyle.red}>{odddata.odd}%</Text>
               </View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>成立日期</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>2016/02/15</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teamData.CreateTime}</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>

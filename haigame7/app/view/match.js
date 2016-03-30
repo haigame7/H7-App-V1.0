@@ -68,6 +68,11 @@ export default class extends Component{
       }
 
     }
+    updateContentData(content){
+      this.setState({
+        content: content
+      });
+    }
     componentWillMount() {
     this.setState({loaded: true})
     this.initData();
@@ -185,7 +190,7 @@ export default class extends Component{
             });
           }
         else if(response2[0].MessageCode == '0'){
-          this.setState({  
+          this.setState({
            isOpen: true,
            modaData:rowData,
            jointeam:response2[1].Name,

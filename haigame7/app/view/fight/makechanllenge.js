@@ -98,25 +98,29 @@ export default class extends Component{
   showDatePicker(){
       var date = this.state.date;
       this.picker.showDatePicker(date, (d)=>{
-          this.setState({fighttime:d});
+          this.showTimePicker(d);
       });
+
   }
-  showTimePicker(){
+  showTimePicker(fightdate){
       var date = this.state.date;
       this.picker.showTimePicker(date, (d)=>{
+          d.setFullYear(fightdate.getFullYear());
+          d.setMonth(fightdate.getMonth());
+          d.setDate(fightdate.getDate());
           this.setState({fighttime:d});
       });
   }
   formatDate(strTime){
     if(strTime!=''){
       var date = new Date(strTime);
-      var format = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+      var format = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
       return format;
     }else{
       return '';
     }
-
   }
+
   render(){
     return (
       <View>
@@ -128,7 +132,7 @@ export default class extends Component{
               <TextInput style={[commonstyle.cream, styles.fightviewinputfont]} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
             </View>
             <View style={styles.fightviewinput}>
-              <TextInput style={commonstyle.cream} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.fighttime = text} defaultValue={this.formatDate(this.state.fighttime.toString())}  />
+              <TextInput style={commonstyle.white} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.fighttime = text} defaultValue={this.formatDate(this.state.fighttime.toString())}  />
               <TouchableOpacity style={styles.fightviewinputicon} activeOpacity={0.8} onPress={this.showDatePicker.bind(this)}>
                 <Icon name="date" size={16}  color={'#484848'}/>
               </TouchableOpacity>
@@ -149,7 +153,7 @@ export default class extends Component{
               <Text style = {commonstyle.white}> {'发送挑战'}</Text>
             </TouchableOpacity>
           </View>
-          <View style={{top:Util.size.height/3}}>
+          <View style={{top:Util.size.height/12}}>
             <DateTimePicker  ref={(picker)=>{this.picker=picker}}/>
           </View>
         </View>

@@ -42,7 +42,13 @@ import ApplyJoin from './user/applyjoin_screen';
             subnavbarone:'我的申请',
             subnavbartwo:'我的受邀',
         },
+        content:null,
       }
+    }
+    updateContentData(content){
+      this.setState({
+        content: content
+      });
     }
     gotoRoute(name) {
         if (name == 'teamrecruit') {
@@ -59,8 +65,9 @@ import ApplyJoin from './user/applyjoin_screen';
           }
         }
         else if (name == 'myapply') {
+
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: MyApply, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: MyApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
         else if (name == 'myreceiveapply') {
