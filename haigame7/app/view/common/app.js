@@ -12,6 +12,8 @@ import Match from '../match.js';
 import Login from '../user/login';
 import GlobalVariable from '../../constants/globalvariable';
 import UserService from '../../network/userservice';
+import Cache from '../../../temp/cache'
+
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
@@ -45,7 +47,7 @@ export default class App extends Component {
     //   let data = JSON.parse(value);
     //   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
 
-      if( value == undefined) {
+      if( value != undefined) {
         this.refs.header_match.updateComponent({name:'登陆1',component:Login});
         this.refs.header_fight.updateComponent({name:'登陆2',component:Login});
         this.refs.header_rank.updateComponent({name:'登陆3',component:Login});
@@ -138,6 +140,21 @@ export default class App extends Component {
               isPop={false}
               navigator={this.props.navigator} {...this.state}/>
            <Team navigator={this.props.navigator}/>
+          </View>
+          </RawContent>
+        </Tab>
+        <Tab name="Test">
+          <IconWithBar label="Test" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
+          <RawContent>
+          <View>
+            <Headernav
+              ref="header_team"
+              screenTitle='Test'
+              iconName='user'
+              nextComponent={{name:'用户中心',component:User}}
+              isPop={false}
+              navigator={this.props.navigator} {...this.state}/>
+           <Cache />
           </View>
           </RawContent>
         </Tab>
