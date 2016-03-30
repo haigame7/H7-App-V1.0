@@ -52,6 +52,10 @@ export default class App extends Component {
         this.refs.header_fight.updateComponent({name:'登陆2',component:Login});
         this.refs.header_rank.updateComponent({name:'登陆3',component:Login});
         this.refs.header_team.updateComponent({name:'登陆4',component:Login});
+        this.refs.content_team.updateContentData({userData:''});
+        this.refs.content_fight.updateContentData({userData:''});
+        this.refs.content_rank.updateContentData({userData:''});
+        this.refs.content_match.updateContentData({userData:''});
       } else {
         let jsondata = JSON.parse(value);
         this.setState({userData: jsondata});
