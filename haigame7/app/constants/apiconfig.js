@@ -49,8 +49,9 @@ const teamApi={
   'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'GETTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/TeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'CREATETEAM':apiSetup.MASTER_API_PATH +'/v1/Team/Create?accesstoken='+ apiSetup.ACCESS_TOKEN,
-  'ApplyTeamList':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyTeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
-  'TeamRecruitList':apiSetup.MASTER_API_PATH +'/v1/Team/TeamRecruitList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MyApplyTeamList':apiSetup.MASTER_API_PATH +'/v1/Team/MyApplyTeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MyInvitedTeamList':apiSetup.MASTER_API_PATH +'/v1/Team/MyInvitedTeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'ApplyTeam':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
 module.exports = {
   USER_API: userApi,

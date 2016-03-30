@@ -50,12 +50,15 @@ export default class extends Component{
           pagecount:GlobalVariable.PAGE_INFO.PageCount-1,
       },
       isOpen: false,
+      content:{
+        userData:{},
+      },
       login:0,
       footerMsg: "点击加载更多",
       userteamname:'',
       userteamid:0,
       userteamdata:{
-        phone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
+        phone:'',
         odd:0,
         asset:0,
         teamlogo:'',
@@ -71,8 +74,13 @@ export default class extends Component{
   componentDidMount() {
     this.initData();
   }
+  updateContentData(content){
+    this.setState({
+      content: content,
+    });
+   this.initData();
+  }
   _openModa() {
-    console.log(this.state.userteamdata);
     this.setState({isOpen: true});
   }
   _closeModa() {
@@ -136,7 +144,7 @@ export default class extends Component{
       }
   initData(){
     {/*请求我的战队信息*/}
-    FightService.getUserDefaultTeam(this.state.userteamdata,(response) => {
+    FightService.getUserDefaultTeam({'phone':this.state.content.userData.PhoneNumber},(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Alert.alert('服务器请求异常');
@@ -404,7 +412,6 @@ export default class extends Component{
     let fightview = this.renderFightView();
     let fightrule = this.fightrule();
     let userdefaulteam = this.renderuserdefaulteam();
-
       return (
         <View style={styles.container}>
           <View style={styles.nav}>
