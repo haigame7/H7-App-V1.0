@@ -12,7 +12,7 @@ import React,{
   ToastAndroid
 } from 'react-native';
 
-import * as httpCache from './cachedo'
+import * as httpCache from '../app/components/common/cache'
 export default class TestPage extends React.Component {
   constructor(props){
     super(props);

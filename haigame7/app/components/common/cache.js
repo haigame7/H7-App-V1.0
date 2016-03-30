@@ -1,4 +1,5 @@
 /**
+ * From github
  * Created by tdzl2_000 on 2015-12-29.
  */
 import { NativeModules } from 'react-native';
