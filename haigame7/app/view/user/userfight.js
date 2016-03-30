@@ -21,9 +21,6 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/fightstyle';
 import Header from '../common/headernav'; // 主屏
-import Icon from 'react-native-vector-icons/Iconfont';
-import Modal from 'react-native-modalbox';
-import Button from 'react-native-button';
 
 import UserFightList from '../fight/userfightdate';
 import Loading from '../common/loading';

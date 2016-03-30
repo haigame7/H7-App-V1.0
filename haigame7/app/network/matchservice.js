@@ -81,4 +81,22 @@ export default{
         callback
       );
   },
+  /*我的赛事列表*/
+  myMatchList(data,callback){
+    /**
+     * @param  {[type]}   {'UserID':userID}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.MATCH_API.MYMATCHLIST,
+        {
+          'UserID':data.userID,
+          'State': data.state,
+          'StartPage':data.startpage,
+          'PageCount':data.pagecount,
+        },
+        callback
+      );
+  },
 }
