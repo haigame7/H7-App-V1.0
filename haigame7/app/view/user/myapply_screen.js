@@ -118,6 +118,7 @@ export default class extends React.Component {
           if(nextData.length<3){
             this.setState({
               keykey:1,
+              footerMsg: "木有更多多数据了~~~~"
             });
           }
           for(var item in nextData){
