@@ -54,6 +54,7 @@ import Toast from '@remobile/react-native-toast';
           asset:0,
           teamlogo:'',
           fightscore:0,
+          recruit:'',
         },
         data:{
             subnavbarone:'我的申请',
@@ -156,12 +157,12 @@ import Toast from '@remobile/react-native-toast';
         }
         else if (name == 'myreceiveapply') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: MyReceiveApply, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: MyReceiveApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
         else if (name == 'mysendapply') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: MySendApply, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: MySendApply, params:this.state.content,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
         else if (name == 'applyjoin') {
@@ -232,19 +233,15 @@ import Toast from '@remobile/react-native-toast';
           if(nextData.length<1&&param.state==0){
             this.setState({
               keyone:1,
+                footerOneMsg: "木有更多多数据了~~~~",
             });
           }else if(nextData.length<1&&param.state==1){
             this.setState({
               keytwo:1,
+              footerTwoMsg: "木有更多多数据了~~~~",
             });
           }
           if(nextData.length==0){
-          setTimeout(()=>{
-              this.setState({
-                  footerOneMsg: "木有更多多数据了~~~~",
-                    footerTwoMsg: "木有更多多数据了~~~~",
-              });
-            },1000);
             return;
           }else{
             for(var item in nextData){
@@ -290,19 +287,19 @@ import Toast from '@remobile/react-native-toast';
       return(
         <View>
         <View style={styles.userlist}>
-          <Image style={styles.teamlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+          <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo}} />
           <View style={styles.userlistteam}>
             <TouchableOpacity style={styles.userlistteamname} activeOpacity={0.8}>
-              <Text style={commonstyle.cream}>{'犀利拍立冬至'}</Text>
+              <Text style={commonstyle.cream}>{this.state.userteamname}</Text>
               <Icon name="angle-right" size={20} color={'#C3C3C3'} style={styles.userlistteamicon} />
             </TouchableOpacity>
             <View style={styles.userlistteambox}>
               <Text style={commonstyle.yellow}>{'战斗力:'}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
+              <Text style={commonstyle.red}>{this.state.userteamdata.fightscore}</Text>
               <Text style={commonstyle.yellow}>{'氦金:'}</Text>
-              <Text style={commonstyle.red}>{'12345'}</Text>
+              <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
             </View>
-            <Text style={commonstyle.cream}>{'本队需要辅助1名,擅长XX英雄,战队福利优厚，报名从速'}</Text>
+            <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>
             <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.gotoRoute('teamrecruit')} >
               <Text style = {commonstyle.white}> {'发布招募'} </Text>
             </TouchableOpacity>
