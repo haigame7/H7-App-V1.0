@@ -184,19 +184,15 @@ export default class extends Component{
           if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
             this.setState({
               keyone:1,
+              footerOneMsg: "木有更多多数据了~~~~"
             });
           }else if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
             this.setState({
               keytwo:1,
+              footerTwoMsg: "木有更多多数据了~~~~"
             });
           }
           if(nextData.length==0){
-          setTimeout(()=>{
-              this.setState({
-                  footerOneMsg: "点击加载更多",
-                    footerTwoMsg: "点击加载更多",
-              });
-            },1000);
             return;
           }else{
             for(var item in nextData){

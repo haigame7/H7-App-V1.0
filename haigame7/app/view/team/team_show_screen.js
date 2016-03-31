@@ -13,6 +13,8 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 import Icon from 'react-native-vector-icons/Iconfont';
+import CreateTeam from './team_create_screen';
+import TeamRecruit from './teamrecruit';
 import Header from '../common/headernav';
 
 export default class extends React.Component {
@@ -46,8 +48,30 @@ export default class extends React.Component {
       }
   }
   _callback() {
-    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
-    this.state.navigator.pop()
+    if(this.state.teamData.Role=='teamcreater'){
+        this._toNextScreen({"name":"创建战队","component":CreateTeam});
+    }
+  }
+  _toNextScreen(params){
+    let _this = this;
+    this.props.navigator.push({
+      name: params.name,
+      component: params.component,
+      sceneConfig:params.sceneConfig || undefined,
+      params: {
+        ...this.props,
+        teamData:this.state.teamData,
+        _callback(key,params){
+        switch (key) {
+          case 'UserInfo':
+              AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+                let jsondata = JSON.parse(value);
+                _this.setState({userData: jsondata})
+              });
+            break;
+        }
+      }}
+    })
   }
   _openModa() {
     this.setState({isOpen: true});
@@ -62,6 +86,9 @@ export default class extends React.Component {
       count = parseInt(count);
     }
     return count;
+  }
+  editTeamMember(){
+    console.log('edit');
   }
   initTeamOdd(wincount,losecount,followcount){
     wincount = this.parseCount(wincount);
@@ -83,36 +110,30 @@ export default class extends React.Component {
   }
   render() {
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
-    let myHero = (
-      <View>
-        <View style={{flexDirection: 'row'}}>
-          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <Image style={{width:20,height:20}} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-        </View>
-      </View>
-      )
-    let teamUser = (
-      <View>
-        <TouchableOpacity onPress={this._openModa.bind(this)}>
-          <View>
-            <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-          </View>
+    let createrOperate = this.state.teamData.Role=='teamcreater'?(
+      <View style={styles.listviewbtnblock}>
+        <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this._toNextScreen({"name":"发布招募","component":TeamRecruit})} activeOpacity={0.8}>
+        <Text style = {commonstyle.black}> {'招募队员'}</Text>
         </TouchableOpacity>
-        <View style={{flexDirection: 'row'}}>
-          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
-          <Image style={{width:20,height:20}} source={{uri:this.state.defaultTeamLogo}} />
+        <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} activeOpacity={0.8}>
+        <Text style = {commonstyle.white}> {'解散战队'}</Text>
+        </TouchableOpacity>
+      </View>
+    ):(<View></View>);
+    let teamUser = (
+      <View style={styles.listviewteam}>
+        <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+        <View style={styles.listviewteamblock}>
+          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
+          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
         </View>
       </View>
       )
     return(
       <View>
-        <Header screenTitle='战队信息' isPop={true} iconText={this.state.iconText} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
+        <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
@@ -160,27 +181,12 @@ export default class extends React.Component {
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
               <View style={styles.listviewright}>
-                <TouchableOpacity style={styles.listviewteamedit} activeOpacity={0.8}><Icon name="edit" size={20} color={'#fff'} /></TouchableOpacity>
-                <View style={styles.listviewteam}>
-                  <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-                  <View style={styles.listviewteamblock}>
-                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-                    <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-                  </View>
-                </View>
+                <TouchableOpacity style={styles.listviewteamedit} onPress={this.state.teamData.Role=='teamcreater'?()=>this.editTeamMember():console.log('teamuser')} activeOpacity={0.8}><Icon name="edit" size={20} color={this.state.teamData.Role=='teamcreater'?'#fff':'#000'} /></TouchableOpacity>
+                {teamUser}
               </View>
             </View>
           </View>
-          <View style={styles.listviewbtnblock}>
-            <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} activeOpacity={0.8}>
-              <Text style = {commonstyle.black}> {'招募队员'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} activeOpacity={0.8}>
-              <Text style = {commonstyle.white}> {'解散战队'}</Text>
-            </TouchableOpacity>
-          </View>
+            {createrOperate}
         </ScrollView>
       </View>
     );
