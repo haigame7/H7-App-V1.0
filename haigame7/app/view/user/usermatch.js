@@ -20,7 +20,7 @@ import React, {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/matchstyle';
-import Header from '../common/headernav'; 
+import Header from '../common/headernav';
 import Toast from '@remobile/react-native-toast';
 
 import UserMatchList from '../match/usermatchdate';
@@ -55,6 +55,7 @@ export default class extends Component{
       footerTwoMsg: "点击加载更多",
       navbar:0,
       keyone:0,
+      keytwo:0,
     }
   }
   //加载完组件后操作
@@ -103,7 +104,6 @@ export default class extends Component{
     this.setState({
       navbar:nav,
     });
-    return;
   }
   gotoRoute(name) {
     if (name == 'matchrule') {
@@ -156,14 +156,13 @@ export default class extends Component{
     }
   }
   _onLoadMore(param,data) {
-    console.log(data);
     if (this.state.keyone > 0 &&param.state==GlobalVariable.MATCH_INFO.Starting) {
       this.setState({
-        footerOneMsg: "木有更多多数据了~~~~"
+        footerOneMsg: "木有更多多数据了~~~~",
       });
     }else if(this.state.keytwo>0 &&param.state==GlobalVariable.MATCH_INFO.NoStart){
       this.setState({
-        footerTwoMsg: "木有更多多数据了~~~~"
+        footerTwoMsg: "木有更多多数据了~~~~",
       });
     }else{
       let _ds = data;
@@ -175,7 +174,7 @@ export default class extends Component{
         });
       }else if(param.state==GlobalVariable.MATCH_INFO.NoStart){
         this.setState({
-          footerTwoMsg: "正在加载....."
+          footerTwoMsg: "正在加载.....",
         });
       }
       {/*加载下一页*/}
@@ -186,36 +185,47 @@ export default class extends Component{
             this.setState({
               keyone:1,
             });
+
           }else if(nextData.length<1&&param.state==GlobalVariable.MATCH_INFO.NoStart){
             this.setState({
               keytwo:1,
             });
           }
-          for(var item in nextData){
-            _ds.push(nextData[item])
+          if(nextData.length==0){
+          setTimeout(()=>{
+              this.setState({
+                  footerOneMsg: "点击加载更多",
+                    footerTwoMsg: "点击加载更多",
+              });
+            },1000);
+            return;
+          }else{
+            for(var item in nextData){
+              _ds.push(nextData[item])
+            }
+            setTimeout(()=>{
+              if(param.state==GlobalVariable.MATCH_INFO.Starting){
+                this.setState({
+                  datasendSource: this.state.datasendSource.cloneWithRows(_ds),
+                  dateSend:_ds,
+                  loaded: true,
+                  footerOneMsg: "点击加载更多",
+                });
+              }else if(param.state==GlobalVariable.MATCH_INFO.NoStart){
+                this.setState({
+                  datareceiveSource: this.state.datareceiveSource.cloneWithRows(_ds),
+                  dataReceive:_ds,
+                  loaded: true,
+                  footerTwoMsg: "点击加载更多",
+                });
+              }
+            },1000);
           }
         } else {
           console.log('请求错误' + response[0].MessageCode);
         }
       });
-      //这等到有api在搞吧
-      setTimeout(()=>{
-        if(param.state==GlobalVariable.MATCH_INFO.Starting){
-          Toast.show(param.state.toString());
-          this.setState({
-            datasendSource: this.state.datasendSource.cloneWithRows(_ds),
-            loaded: true,
-            footerOneMsg: "点击加载更多",
-          });
-        }else if(param.state==GlobalVariable.MATCH_INFO.NoStart){
-          Toast.show(param.state.toString());
-          this.setState({
-            datareceiveSource: this.state.datareceiveSource.cloneWithRows(_ds),
-            loaded: true,
-            footerTwoMsg: "点击加载更多",
-          });
-        }
-      },1000);
+
     }
   }
   render() {
