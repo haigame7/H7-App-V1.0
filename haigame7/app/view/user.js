@@ -56,7 +56,7 @@ var User = React.createClass({
           isOpen: false,
           modalOpen:false,
           teamData:{},
-          hjData: {'totalAsset': 888,'myRank': 1},
+          hjData: {'totalAsset': 0,'myRank': 1},
         fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":1,"CertifyName":""}
     };
   },
@@ -68,18 +68,19 @@ var User = React.createClass({
     // Toast.show("this is a message")
   },
   componentWillMount() {
+
+  },
+  componentDidMount() {
     this.setState({isOpen: true})
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       let jsondata = JSON.parse(value);
       this.setState({userData: jsondata})
-      this.getUserGameInfo(jsondata.PhoneNumber)
-      this.getUserTeamInfo(jsondata.PhoneNumber)
-      this.getTotalAssertAndRank(jsondata.PhoneNumber)
-
-
+      setTimeout(() => {
+        this.getUserGameInfo(jsondata.PhoneNumber)
+        this.getUserTeamInfo(jsondata.PhoneNumber)
+        this.getTotalAssertAndRank(jsondata.PhoneNumber)
+      },400)
     });
-  },
-  componentDidMount() {
   },
   _userTeam(params){
     if(params.Role==null){

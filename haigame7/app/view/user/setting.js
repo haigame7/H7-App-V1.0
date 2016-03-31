@@ -55,8 +55,8 @@ export default class extends Component{
   async clearCache(){
     try {
       await httpCache.clear();
-      Toast('清除缓存成功');
-      // await this.getData();
+      Toast.show('清除缓存成功');
+      await this.getData();
     } catch(err){
       console.log(err);
       // Toast.show(err)

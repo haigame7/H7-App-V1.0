@@ -6,7 +6,7 @@ import React, {
 } from 'react-native';
 
 import SecondPageComponent from './SecondPageComponent';
-
+import ThirdPage from './ThirdPage';
 export default class FirstPageComponent extends React.Component {
 
   //在组件类创建的时候调用一次，然后返回值被缓存下来。全局调用一次，所有实例共享。
@@ -22,6 +22,8 @@ export default class FirstPageComponent extends React.Component {
     this.state = {
       id: 2,
       user: null,
+      woqu:{'name':'huhaoran'},
+      dodo: this.dod.bind(this)
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -42,18 +44,23 @@ export default class FirstPageComponent extends React.Component {
 
 
 
-
+ dod() {
+   let data = {'name':'胡浩然','age':'1'}
+   this.setState({
+     woqu: data
+   })
+ }
   _pressButton(){
     //const { navigator } = this.props;
     var _this = this;
     const navigator = this.props.navigator;
-    ToastAndroid.show('提示的信息', ToastAndroid.SHORT);
+    // ToastAndroid.show('提示的信息', ToastAndroid.SHORT);
     if(navigator) {
       navigator.push({
         name: 'SecondPageComponent',
         component: SecondPageComponent,
         params: {
-          id: this.state.id,
+          ...this.state,
           getUser(user) {
             _this.setState({
               user: user
@@ -69,10 +76,14 @@ export default class FirstPageComponent extends React.Component {
       return(
               <View>
                   <Text>用户信息: { JSON.stringify(this.state.user) }</Text>
+                  <Text>{ this.state.woqu.name }</Text>
+                    <TouchableOpacity onPress={this._pressButton.bind(this)}>
+                      <Text>点我跳转</Text>
+                    </TouchableOpacity>
+                    <ThirdPage ref='3' name={this.state.woqu.name}/>
               </View>
           );
     }else{
-      console.log('@@@@@@@@@@@@@');
       return (
         <View>
           <View><Text>点我跳转</Text></View>
@@ -80,6 +91,7 @@ export default class FirstPageComponent extends React.Component {
           <TouchableOpacity onPress={this._pressButton.bind(this)}>
             <Text>点我跳转</Text>
           </TouchableOpacity>
+          <ThirdPage ref='3' name={this.state.woqu.name}/>
         </View>
       )
     }
