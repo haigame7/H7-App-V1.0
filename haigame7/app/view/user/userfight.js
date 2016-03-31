@@ -21,9 +21,6 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/fightstyle';
 import Header from '../common/headernav'; // 主屏
-import Icon from 'react-native-vector-icons/Iconfont';
-import Modal from 'react-native-modalbox';
-import Button from 'react-native-button';
 
 import UserFightList from '../fight/userfightdate';
 import Loading from '../common/loading';
@@ -137,6 +134,7 @@ export default class extends Component{
     }
   }
   _renderRow(rowData){
+
     return(
       <UserFightList rowData={rowData} navigator={this.props.navigator}  />
     );
@@ -192,29 +190,42 @@ export default class extends Component{
               keytwo:1,
             });
           }
-          for(var item in nextData){
-            _ds.push(nextData[item])
+          if(nextData.length==0){
+          setTimeout(()=>{
+              this.setState({
+                  footerOneMsg: "点击加载更多",
+                    footerTwoMsg: "点击加载更多",
+              });
+            },1000);
+            return;
+          }else{
+            for(var item in nextData){
+              _ds.push(nextData[item])
+            }
+            setTimeout(()=>{
+              if(param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
+                this.setState({
+                  datasendSource: this.state.datasendSource.cloneWithRows(_ds),
+                  dateSend:_ds,
+                  loaded: true,
+                  footerOneMsg: "点击加载更多",
+                });
+              }else if(param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
+                this.setState({
+                  datareceiveSource: this.state.datareceiveSource.cloneWithRows(_ds),
+                  dataReceive:_ds,
+                  loaded: true,
+                  footerTwoMsg: "点击加载更多",
+                });
+              }
+            },1000);
           }
         } else {
           console.log('请求错误' + response[0].MessageCode);
         }
       });
       //这等到有api在搞吧
-      setTimeout(()=>{
-        if(param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
-          this.setState({
-            datasendSource: this.state.datasendSource.cloneWithRows(_ds),
-            loaded: true,
-            footerOneMsg: "点击加载更多",
-          });
-        }else if(param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
-          this.setState({
-            datareceiveSource: this.state.datareceiveSource.cloneWithRows(_ds),
-            loaded: true,
-            footerTwoMsg: "点击加载更多",
-          });
-        }
-      },1000);
+
     }
 
   }

@@ -14,7 +14,6 @@ import React, {
     TouchableHighlight,
     TouchableOpacity,
     ToastAndroid,
-    Alert,
     AsyncStorage,
     Navigator,
     Image
@@ -29,6 +28,7 @@ import HeaderPre from '../common/header';
 import UserService from '../../network/userservice';
 import GlobalVariable from '../../constants/globalvariable';
 import GlobalSetup from '../../constants/globalsetup';
+import Toast from '@remobile/react-native-toast';
 
 export default class Login extends Component {
     constructor(props) {
@@ -50,10 +50,10 @@ export default class Login extends Component {
 
     render() {
         let fields = [
-            { ref: 'phone', placeholder: '手机号码', placeholderTextColor: 'white', keyboardType: 'numeric', secureTextEntry: false, style: [styles.logininputfont] },
-            { ref: 'password', placeholder: '请您设置密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
-            { ref: 'passwordd', placeholder: '请再次确认密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
-            { ref: 'password', placeholder: '输入密码', placeholderTextColor: 'white', keyboardType: 'default', secureTextEntry: true, selectionColor: '#FF0000', style: [styles.logininputfont] },
+            { ref: 'phone', placeholder: '手机号码', placeholderTextColor: 'white', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'numeric', secureTextEntry: false, style: [styles.logininputfont] },
+            { ref: 'password', placeholder: '请您设置密码', placeholderTextColor: 'white', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
+            { ref: 'passwordd', placeholder: '请再次确认密码', placeholderTextColor: 'white', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
+            { ref: 'password', placeholder: '输入密码', placeholderTextColor: 'white', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', secureTextEntry: true, selectionColor: '#FF0000', style: [styles.logininputfont] },
         ];
         return (
             <View style = {{ flex: 1 }}>
@@ -62,11 +62,11 @@ export default class Login extends Component {
                 <View activeOpacity = {1} style = {styles.logo}>
                     <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>
                 </View>
-                <View key = { 'phone' } >
-                    <TextInput {...fields[0] } style = { styles.logininput }onFocus = {() => this.onFocus({...fields[0] }) } onChangeText = {(text) => this.state.data.phone = text }/>
+                <View key = { 'phone' } style = { styles.logininput }>
+                    <TextInput {...fields[0] } onFocus = {() => this.onFocus({...fields[0] }) } onChangeText = {(text) => this.state.data.phone = text }/>
                 </View>
-                <View key = { 'password' } >
-                    <TextInput {...fields[3] } style = { styles.logininput } onFocus = {() => this.onFocus({...fields[3] }) } onChangeText = {(text) => this.state.data.password = text }/>
+                <View key = { 'password' } style = { styles.logininput }>
+                    <TextInput {...fields[3] }  onFocus = {() => this.onFocus({...fields[3] }) } onChangeText = {(text) => this.state.data.password = text }/>
                 </View>
                 <View style = {[commonstyle.row, styles.linkblock]} >
                     <TouchableOpacity style = {[commonstyle.col1, styles.link]} activeOpacity={0.8} onPress = {() => this.gotoRoute('forgetpwd') }>
@@ -92,7 +92,7 @@ export default class Login extends Component {
 
     onSubmit(argument) {
         if (this.state.loading) {
-            Alert.alert('请稍后...');
+            Toast.show('请稍后...');
             return;
         }
 
@@ -117,13 +117,17 @@ export default class Login extends Component {
                   let data = response[1];
                   data['needUpdate'] = false;
                   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
-                  console.log('login获取用户数据成功');
+                  {/*更新appjs登录状态*/}
                   setTimeout(() => {
-                      this.props.navigator.pop();
-                  }, 2000);
+                    Toast.showLongCenter('登陆成功');
+                    if(this.props.updateLoginState){
+                      this.props.updateLoginState();
+                     }
+                     this.props.navigator.pop();
+                  }, 500);
                 } else {
                   console.log('获取用户数据失败' + response[0].Message);
-                  Alert.alert(
+                  Toast.show(
                       response[0].Message
                   );
                   this.setState({
@@ -133,7 +137,7 @@ export default class Login extends Component {
               })
             } else {
               console.log('登录失败' + response[0].Message);
-              Alert.alert(
+              Toast.show(
                   response[0].Message
               );
               this.setState({

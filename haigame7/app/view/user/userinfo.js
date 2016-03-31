@@ -54,9 +54,14 @@ export default class extends Component {
 
   componentDidMount() {
     this.setState({
-      pickerData: this._createAreaData(AreaData),
-      selectedValue: this._setSelectedValue(this.state.userData.Address),
+      pickerData: this._createAreaData(AreaData)
     })
+    if(this.state.userData.Address != undefined && this.state.userData.Address !=  ''){
+      this.setState({
+        selectedValue: this._setSelectedValue(this.state.userData.Address),
+      })
+    }
+
   }
   componentWillReceiveProps(nextProps,nextState) {
   }

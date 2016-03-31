@@ -12,7 +12,19 @@ import Match from '../match.js';
 import Login from '../user/login';
 import GlobalVariable from '../../constants/globalvariable';
 import UserService from '../../network/userservice';
+
 import Cache from '../../../temp/cache'
+
+/*暂时留着*/
+// let userdata = {
+//   'PhoneNumber': '15101075739',
+//   'UserWebNickName': 'naive',
+//   'UserWebPicture': '',
+//   'Sex': '1',
+//   'Address': '广东-广州-越秀区',
+//   'Birthday': '2000-01-01',
+//   'Hobby': '我干！'
+// }
 
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
@@ -24,30 +36,22 @@ const glypy = glypyMapMaker({
   RankOn: 'e621',
   Rank: 'e622'
 });
-let userdata = {
-  'PhoneNumber': '15101075739',
-  'UserWebNickName': 'naive',
-  'UserWebPicture': '',
-  'Sex': '1',
-  'Address': '广东-广州-越秀区',
-  'Birthday': '2000-01-01',
-  'Hobby': '我干！'
-}
 export default class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.toggle = false;
     this.state = {
-               userData: userdata,
+               userData: {},
     }
   }
   componentWillMount() {
+    this.updateLoginState();
+
 
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
     //   let data = JSON.parse(value);
     //   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
-
-      if( value != undefined) {
+      if( value == undefined) {
         this.refs.header_match.updateComponent({name:'登陆1',component:Login});
         this.refs.header_fight.updateComponent({name:'登陆2',component:Login});
         this.refs.header_rank.updateComponent({name:'登陆3',component:Login});
@@ -67,6 +71,31 @@ export default class App extends Component {
   }
   componentDidMount() {
 
+  }
+  updateLoginState(){
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+      if( value == undefined) {
+        this.refs.header_match.updateComponent({name:'登陆1',component:Login});
+        this.refs.header_fight.updateComponent({name:'登陆2',component:Login});
+        this.refs.header_rank.updateComponent({name:'登陆3',component:Login});
+        this.refs.header_team.updateComponent({name:'登陆4',component:Login});
+        this.refs.content_team.updateContentData({userData:''});
+        this.refs.content_fight.updateContentData({userData:''});
+        this.refs.content_rank.updateContentData({userData:''});
+        this.refs.content_match.updateContentData({userData:''});
+      } else {
+        let jsondata = JSON.parse(value);
+        this.setState({userData: jsondata});
+        this.refs.header_match.updateComponent({name:'用户中心',component:User});
+        this.refs.header_fight.updateComponent({name:'用户中心',component:User});
+        this.refs.header_rank.updateComponent({name:'用户中心',component:User});
+        this.refs.header_team.updateComponent({name:'用户中心',component:User});
+        this.refs.content_team.updateContentData({userData:this.state.userData});
+        this.refs.content_fight.updateContentData({userData:this.state.userData});
+        this.refs.content_rank.updateContentData({userData:this.state.userData});
+        this.refs.content_match.updateContentData({userData:this.state.userData});
+      }
+    });
   }
   gotoRef(toggle){
       this.refs['myTabbar'].gotoTab(toggle);
@@ -90,9 +119,12 @@ export default class App extends Component {
             iconName='user'
             nextComponent={{name:'用户中心',component:User}}
             gotoRef={this.gotoRef.bind(this)}
+            updateLoginState={this.updateLoginState.bind(this)}
             isPop={false}
             navigator={this.props.navigator} {...this.state}/>
-           <Match navigator={this.props.navigator} {...this.state}/>
+           <Match
+            ref="content_match"
+            navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>
         </Tab>
@@ -106,9 +138,12 @@ export default class App extends Component {
              iconName='user'
              nextComponent={{name:'用户中心',component:User}}
              gotoRef={this.gotoRef.bind(this)}
+             updateLoginState={this.updateLoginState.bind(this)}
              isPop={false}
              navigator={this.props.navigator} {...this.state}/>
-           <Fight navigator={this.props.navigator}/>
+           <Fight
+             ref="content_fight"
+             navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>
         </Tab>
@@ -122,9 +157,12 @@ export default class App extends Component {
              iconName='user'
              nextComponent={{name:'用户中心',component:User}}
              gotoRef={this.gotoRef.bind(this)}
+             updateLoginState={this.updateLoginState.bind(this)}
              isPop={false}
              navigator={this.props.navigator} {...this.state}/>
-           <Rank navigator={this.props.navigator}/>
+           <Rank
+            ref="content_rank"
+            navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>
         </Tab>
@@ -137,24 +175,12 @@ export default class App extends Component {
               screenTitle='组队'
               iconName='user'
               nextComponent={{name:'用户中心',component:User}}
+              updateLoginState={this.updateLoginState.bind(this)}
               isPop={false}
               navigator={this.props.navigator} {...this.state}/>
-           <Team navigator={this.props.navigator}/>
-          </View>
-          </RawContent>
-        </Tab>
-        <Tab name="Test">
-          <IconWithBar label="Test" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
-          <RawContent>
-          <View>
-            <Headernav
-              ref="header_team"
-              screenTitle='Test'
-              iconName='user'
-              nextComponent={{name:'用户中心',component:User}}
-              isPop={false}
-              navigator={this.props.navigator} {...this.state}/>
-           <Cache />
+           <Team
+             ref="content_team"
+             navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>
         </Tab>

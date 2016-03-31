@@ -2,7 +2,7 @@
 /**
  * APPs我的赛事
  * @return {[SplashScreen Component]}
- * @author aran.hu
+ * @author Drex
  */
 
 import React, {
@@ -13,40 +13,97 @@ import React, {
     Component,
     TouchableOpacity,
     Navigator,
+    ListView,
     ScrollView,
     TouchableHighlight,
     } from 'react-native';
-var Util = require('../common/util');
-var Header = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/Iconfont');
-var commonstyle = require('../../styles/commonstyle');
-var styles = require('../../styles/matchstyle');
-import Modal from 'react-native-modalbox';
-import Button from 'react-native-button';
+
+import commonstyle from '../../styles/commonstyle';
+import styles from '../../styles/matchstyle';
+import Header from '../common/headernav';
+import Toast from '@remobile/react-native-toast';
+
+import UserMatchList from '../match/usermatchdate';
+import Loading from '../common/loading';
+import MatchService from '../../network/matchservice';
+import GlobalSetup from '../../constants/globalsetup';
+import GlobalVariable from '../../constants/globalvariable';
 
 export default class extends Component{
   constructor(props) {
     super(props);
+    var datasend = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var datareceive = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      navbar: 0,
-      data:{
-          subnavbar:1,
-          subnavbarname:'热度',
+      datasendSource: datasend.cloneWithRows(['row1','row2']),
+      datareceiveSource:datareceive.cloneWithRows(['row1','row2']),
+      paraSend:{
+        userID:this.props.userID?this.props.userID : 61,
+        state: GlobalVariable.MATCH_INFO.Starting,
+        startpage:GlobalVariable.PAGE_INFO.StartPage,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
       },
+      paraReceive:{
+        userID:this.props.userID?this.props.userID : 61,
+        state: GlobalVariable.MATCH_INFO.NoStart,
+        startpage:GlobalVariable.PAGE_INFO.StartPage,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+      },
+      dataReceive:[],
+      dataSend:[],
+      footerOneMsg: "点击加载更多",
+      footerTwoMsg: "点击加载更多",
+      navbar:0,
+      keyone:0,
+      keytwo:0,
+    }
+  }
+  //加载完组件后操作
+  componentDidMount() {
+      this.fetchSendData();
+      this.fetchReceiveData();
+  }
+  //获取已结束赛事数据
+  fetchSendData() {
+    MatchService.myMatchList(this.state.paraSend,(response) => {
+      if (response[0].MessageCode == '0') {
+        let newData = response[1];
+        this.setState({
+          datasendSource: this.state.datasendSource.cloneWithRows(newData),
+          dataSend:newData,
+        });
       }
-    }
-    _openModa() {
-      this.setState({isOpen: true});
-    }
-    _closeModa() {
-      console.log('******');
-       this.setState({isOpen: false});
-    }
+      else {
+        console.log('请求错误' + response[0].MessageCode);
+      }
+    });
+  }
+  //获取未进行赛事数据
+  fetchReceiveData() {
+    MatchService.myMatchList(this.state.paraReceive,(response) => {
+      if (response[0].MessageCode == '0') {
+        let newData = response[1];
+        this.setState({
+          datareceiveSource: this.state.datareceiveSource.cloneWithRows(newData),
+          dataReceive:newData,
+        });
+      }
+      else {
+        console.log('请求错误' + response[0].MessageCode);
+      }
+    });
+  }
+  _openModa() {
+    this.setState({isOpen: true});
+  }
+  _closeModa() {
+    console.log('******');
+     this.setState({isOpen: false});
+  }
   _switchNavbar(nav){
     this.setState({
       navbar:nav,
     });
-    return;
   }
   gotoRoute(name) {
     if (name == 'matchrule') {
@@ -61,96 +118,114 @@ export default class extends Component{
   rendermatchList(){
     if(this.state.navbar==0){
       return(
-        <View>
-          <View style={[styles.schedulelistblock]}>
-            <View style={styles.schedulelisttitle}><Text style={commonstyle.black}>什么什么鱼汤大赛</Text></View>
-            <View style={[commonstyle.row, styles.schedulelist]}>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-              </View>
-              <View style={commonstyle.col1}>
-                <View style={[commonstyle.row, styles.schedulelistcenter]}>
-                  <View style={[commonstyle.btnborderorange, styles.schedulelisttexticon]}>
-                    <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
-                  </View>
-                  <View style={styles.schedulelistvs}>
-                    <Text style={[commonstyle.blue, commonstyle.fontsize18]}>{'VS'}</Text>
-                  </View>
-                  <View style={[commonstyle.btnbordercyan, styles.schedulelisttexticon]}>
-                    <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
-                  </View>
-                </View>
-                <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'2016/02/23'}</Text></View>
-              </View>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={[styles.schedulelistblock]}>
-            <View style={styles.schedulelisttitle}><Text style={commonstyle.black}>什么什么鱼汤大赛</Text></View>
-            <View style={[commonstyle.row, styles.schedulelist]}>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-              </View>
-              <View style={commonstyle.col1}>
-                <View style={[commonstyle.row, styles.schedulelistcenter]}>
-                  <View style={[commonstyle.btnborderorange, styles.schedulelisttexticon]}>
-                    <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
-                  </View>
-                  <View style={styles.schedulelistvs}>
-                    <Text style={[commonstyle.blue, commonstyle.fontsize18]}>{'VS'}</Text>
-                  </View>
-                  <View style={[commonstyle.btnbordercyan, styles.schedulelisttexticon]}>
-                    <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
-                  </View>
-                </View>
-                <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'2016/02/23'}</Text></View>
-              </View>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-              </View>
-            </View>
-          </View>
-        </View>
+        <ListView
+          dataSource={this.state.datasendSource}
+          renderRow={this._renderRow.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
       );
     }
     else{
       return(
-        <View>
-          <View style={[styles.schedulelistblock]}>
-            <View style={styles.schedulelisttitle}><Text style={commonstyle.black}>什么什么鱼汤大赛</Text></View>
-            <View style={[commonstyle.row, styles.schedulelist]}>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-              </View>
-              <View style={commonstyle.col1}>
-                <View style={[commonstyle.row, styles.schedulelistcenter]}>
-                  <View style={[commonstyle.btnborderorange, styles.schedulelisttexticon]}>
-                    <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
-                  </View>
-                  <View style={styles.schedulelistvs}>
-                    <Text style={[commonstyle.blue, commonstyle.fontsize18]}>{'VS'}</Text>
-                  </View>
-                  <View style={[commonstyle.btnbordercyan, styles.schedulelisttexticon]}>
-                    <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
-                  </View>
-                </View>
-                <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'2016/02/23'}</Text></View>
-              </View>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
-              </View>
-            </View>
-          </View>
-        </View>
+        <ListView
+          dataSource={this.state.datareceiveSource}
+          renderRow={this._renderRow.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
       );
+    }
+  }
+  _renderRow(rowData){
+    return(
+      <UserMatchList rowData={rowData} navigator={this.props.navigator}  />
+    );
+  }
+  _renderFooter(){
+    if(this.state.navbar==0){
+      return(
+        <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraSend,this.state.dataSend)}>
+          <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerOneMsg}</Text>
+        </TouchableHighlight>
+      );
+    }else{
+      return(
+        <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraReceive,this.state.dataReceive)}>
+          <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerTwoMsg}</Text>
+        </TouchableHighlight>
+      );
+    }
+  }
+  _onLoadMore(param,data) {
+    if (this.state.keyone > 0 &&param.state==GlobalVariable.MATCH_INFO.Starting) {
+      this.setState({
+        footerOneMsg: "木有更多多数据了~~~~",
+      });
+    }else if(this.state.keytwo>0 &&param.state==GlobalVariable.MATCH_INFO.NoStart){
+      this.setState({
+        footerTwoMsg: "木有更多多数据了~~~~",
+      });
+    }else{
+      let _ds = data;
+      let _params = param;
+      _params.startpage = _params.startpage+1;
+      if(param.state==GlobalVariable.MATCH_INFO.Starting){
+        this.setState({
+          footerOneMsg: "正在加载.....",
+        });
+      }else if(param.state==GlobalVariable.MATCH_INFO.NoStart){
+        this.setState({
+          footerTwoMsg: "正在加载.....",
+        });
+      }
+      {/*加载下一页*/}
+      MatchService.myMatchList(_params,(response) => {
+        if (response[0].MessageCode == '0') {
+          let nextData = response[1];
+          if(nextData.length<1&&param.state==GlobalVariable.MATCH_INFO.Starting){
+            this.setState({
+              keyone:1,
+            });
+
+          }else if(nextData.length<1&&param.state==GlobalVariable.MATCH_INFO.NoStart){
+            this.setState({
+              keytwo:1,
+            });
+          }
+          if(nextData.length==0){
+          setTimeout(()=>{
+              this.setState({
+                  footerOneMsg: "点击加载更多",
+                    footerTwoMsg: "点击加载更多",
+              });
+            },1000);
+            return;
+          }else{
+            for(var item in nextData){
+              _ds.push(nextData[item])
+            }
+            setTimeout(()=>{
+              if(param.state==GlobalVariable.MATCH_INFO.Starting){
+                this.setState({
+                  datasendSource: this.state.datasendSource.cloneWithRows(_ds),
+                  dateSend:_ds,
+                  loaded: true,
+                  footerOneMsg: "点击加载更多",
+                });
+              }else if(param.state==GlobalVariable.MATCH_INFO.NoStart){
+                this.setState({
+                  datareceiveSource: this.state.datareceiveSource.cloneWithRows(_ds),
+                  dataReceive:_ds,
+                  loaded: true,
+                  footerTwoMsg: "点击加载更多",
+                });
+              }
+            },1000);
+          }
+        } else {
+          console.log('请求错误' + response[0].MessageCode);
+        }
+      });
+
     }
   }
   render() {

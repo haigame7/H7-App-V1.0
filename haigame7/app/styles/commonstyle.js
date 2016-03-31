@@ -48,6 +48,11 @@ var CommonStyle = StyleSheet.create({
         width: Util.size.width,
         backgroundColor: '#000000',
     },
+    viewbodyer: {
+        height: (Platform.OS === 'ios') ? Util.size.height - 113 : Util.size.height - 122,
+        width: Util.size.width,
+        backgroundColor: '#000000',
+    },
     footer: {
         backgroundColor: '#FF0009',
         position: 'absolute',

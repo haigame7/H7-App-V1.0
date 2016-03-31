@@ -33,6 +33,7 @@ import Modal from 'react-native-modalbox';
 import Toast from '@remobile/react-native-toast';
 import Button from 'react-native-button';
 
+const default_user_pic = 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -67,6 +68,11 @@ export default class extends Component{
       modaData:"",
       }
 
+    }
+    updateContentData(content){
+      this.setState({
+        content: content
+      });
     }
     componentWillMount() {
     this.setState({loaded: true})
@@ -149,8 +155,9 @@ export default class extends Component{
             Toast.show('服务器请求异常');
           }else if(response[0].MessageCode == '0'){
             let newData = response[1];
+            let groups=this.groupItems(newData,3);
             this.setState({
-              databoboSource: this.state.databoboSource.cloneWithRows(newData),
+              databoboSource: this.state.databoboSource.cloneWithRows(groups),
               bobolist:newData,
               loaded:false,
             });
@@ -161,6 +168,22 @@ export default class extends Component{
             }
       });
     }
+    groupItems(items, itemsPerRow){
+       var itemsGroups = [];
+       var group = [];
+       items.forEach(function(item) {
+         if (group.length === itemsPerRow) {
+           itemsGroups.push(group);
+           group = [item];
+         } else {
+           group.push(item);
+         }
+       });
+       if (group.length > 0) {
+         itemsGroups.push(group);
+       }
+       return itemsGroups;
+   }
     _openBoBoModa(rowData) {
       MatchService.getBoBoCount(rowData,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -185,7 +208,7 @@ export default class extends Component{
             });
           }
         else if(response2[0].MessageCode == '0'){
-          this.setState({  
+          this.setState({
            isOpen: true,
            modaData:rowData,
            jointeam:response2[1].Name,
@@ -354,19 +377,26 @@ export default class extends Component{
       );
      }
     }
-
-_renderBoBoRow(rowData, sectionID, rowID){
+renderItem(rowData,key){
+  return(
+    <View key={key} style={commonstyle.col1}>
+    <TouchableOpacity style={commonstyle.viewcenter}   onPress={this._openBoBoModa.bind(this,rowData)}>
+      <Image style={styles.anchorlistimg} source={{uri:rowData.UserPicture}} />
+      <Text style={commonstyle.gray}>{rowData.Name}</Text>
+    </TouchableOpacity>
+    </View>
+  );
+}
+ _renderBoBoRow(group,sectionID,rowID){
+   var that = this;
+    var items =Object.keys(group).map(function(item,key) {
+      return that.renderItem(group[item],key);
+    });
      return(
        <View style={[commonstyle.row, styles.anchorlistblock]}>
-         <View style={styles.anchorlistline}></View>
-         <TouchableOpacity style={commonstyle.col1} onPress={this._openBoBoModa.bind(this,rowData)}>
-           <Image style={styles.anchorlistimg} source={{uri:rowData.UserPicture}} />
-           <Text style={commonstyle.gray}>{rowData.Name}</Text>
-         </TouchableOpacity>
+        {items}
        </View>
      );
-
-
 }
 
 _renderGuessRow(rowData){
@@ -448,12 +478,13 @@ rendermatchList(){
     return(
       <View>
       <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
-        <Image  style={styles.matchbannerimg}source={{uri:'http://a4.att.hudong.com/57/68/20300533970223133722680195303.jpg'}}  resizeMode={"stretch"} />
+        <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture || default_user_pic}}  resizeMode={"stretch"} />
       </TouchableOpacity>
       <ListView
         dataSource={this.state.databoboSource}
         renderRow={this._renderBoBoRow.bind(this)}
         renderFooter={this._renderFooter.bind(this)}
+        pageSize={3}
       />
       </View>
     );
@@ -472,7 +503,7 @@ render() {
   let matchlist = this.rendermatchList();
   let modal = this.rendermodaldetail();
   return (
-    <View style={commonstyle.bodyer}>
+    <View style={commonstyle.viewbodyer}>
       <View style={styles.nav}>
         <View style={styles.navtab}>
           <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
