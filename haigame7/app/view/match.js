@@ -502,7 +502,7 @@ render() {
   let matchlist = this.rendermatchList();
   let modal = this.rendermodaldetail();
   return (
-    <View style={commonstyle.bodyer}>
+    <View style={commonstyle.viewbodyer}>
       <View style={styles.nav}>
         <View style={styles.navtab}>
           <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>

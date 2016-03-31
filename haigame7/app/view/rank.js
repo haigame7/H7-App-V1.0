@@ -140,7 +140,7 @@ export default class extends Component{
 
       if(this.state.navbar==1){
         return(
-          <View style={styles.container}>
+          <View style={commonstyle.viewbodyer}>
             <View style={styles.nav}>
               <View style={styles.navtab}>
                 <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)} >
@@ -180,7 +180,7 @@ export default class extends Component{
           </View>);
       }
       return (
-        <View style={styles.container}>
+        <View style={commonstyle.viewbodyer}>
           <View style={styles.nav}>
             <View style={styles.navtab}>
               <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)} >

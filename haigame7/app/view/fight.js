@@ -414,7 +414,7 @@ export default class extends Component{
     let fightrule = this.fightrule();
     let userdefaulteam = this.renderuserdefaulteam();
       return (
-        <View style={styles.container}>
+        <View style={commonstyle.viewbodyer}>
           <View style={styles.nav}>
             <View style={styles.navsub}>
               <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('userfight',this.state.userteamid,0)}>
