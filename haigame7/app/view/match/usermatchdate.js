@@ -33,14 +33,9 @@ var UserMatchList = React.createClass({
   componentDidMount(){
   },
   gotoRoute(params) {
-    if (params.name == 'matchdetail') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
         this.props.navigator.push({ name: params.name, component: MatchDetail, params:params,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
-    } else if (params.name == 'playerinfo') {
-      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
-      }
-    }
   },
   rendercurrent(){
     if(this.props.rowData.Result=='主队胜'){
@@ -58,6 +53,9 @@ var UserMatchList = React.createClass({
             </View>
           </View>
           <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.EndTime}</Text></View>
+          <TouchableOpacity activeOpacity={0.8}  onPress = {this.gotoRoute.bind(this,{"name":"matchdetail","matchID":this.props.rowData.MatchID})}>
+            <Text style={commonstyle.red}>查看详情</Text>
+          </TouchableOpacity>
         </View>
       );
     }else if(this.props.rowData.Result=='客队胜'){
