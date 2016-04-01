@@ -16,7 +16,7 @@ export default{
         callback
       );
   },
-  /*获取约战列表*/
+  /*获取赛事主播列表*/
   getBoBoList(data,callback){
     /**
      * @param  {[type]}   {'MatchID':matchid}             [params]
