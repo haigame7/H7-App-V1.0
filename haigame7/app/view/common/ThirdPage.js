@@ -16,20 +16,24 @@ export default class SecondPageComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id : null,
-      woqu: this.props.woqu
+      name: this.props.name
     };
   }
   componentWillReceiveProps(nextProps) {
-    console.log('im here 2');
+    console.log('ThirdPage receiveProps');
+    console.log(nextProps);
+    console.log(this.props.name);
+    if (nextProps.name != this.props.name) {
+      this.setState({
+        name: nextProps.name
+      })
+    }
   }
   componentWillMount() {
         //这里获取从FirstPageComponent传递过来的参数: id
         // console.log(this.props.key);
-        this.setState({
-            id: this.props.id //这个ID是从第一个component中传过来的
 
-        });
+        console.log('12121212');
         console.log(this.props);
     }
 
@@ -49,11 +53,7 @@ export default class SecondPageComponent extends React.Component {
   render() {
     return (
       <View>
-      <Text>获得的参数: id={ this.state.id }</Text>
-      <Text>{ this.state.woqu.name }</Text>
-          <TouchableOpacity onPress={this._pressButton.bind(this)}>
-              <Text>点我跳回去</Text>
-          </TouchableOpacity>
+      <Text>我是老三: {this.state.name}</Text>
       </View>
     );
   }

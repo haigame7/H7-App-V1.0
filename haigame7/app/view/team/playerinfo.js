@@ -28,33 +28,42 @@ export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
+      playerinfo:this.props.playerinfo,
       messages: []
     }
   }
-
+  renderHeroImageItem(rowData,key){
+    return(
+      <Image key={key} style={styles.listviewheroimg} source={{uri:rowData.HeroImage}} />
+    );
+  }
 
   render(){
+    var that = this
+    var items =Object.keys(that.state.playerinfo.HeroImage).map(function(item,key) {
+      return that.renderHeroImageItem(that.state.playerinfo.HeroImage[item],key);
+    });
     return (
       <View>
         <Header screenTitle='个人信息'   navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+              <Image style={styles.headportrait} source={{uri:this.state.playerinfo.UserWebPicture}} />
               <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
             </View>
 
             <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
+              <Text style={[styles.headname, commonstyle.white]}>{this.state.playerinfo.UserWebNickName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.playerinfo.GamePower}{'  '}</Text>
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.playerinfo.Asset}{'  '}</Text>
                 </View>
               </View>
               <View style={styles.headtext}>
@@ -66,11 +75,11 @@ export default class extends Component{
           <View style={styles.listblock}>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>性别</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>男</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.playerinfo.Sex}</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>地区</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>北京-西城区</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.playerinfo.Address}</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>擅长位置</Text></View>
@@ -83,9 +92,7 @@ export default class extends Component{
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>擅长英雄</Text></View>
               <View style={[styles.listviewright, styles.listviewhero]}>
-                <Image style={styles.listviewheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Image style={styles.listviewheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Image style={styles.listviewheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+               {items}
               </View>
             </View>
           </View>

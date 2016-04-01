@@ -135,4 +135,5 @@ dependencies {
     compile "com.facebook.react:react-native:0.20.+"
     compile project(':react-native-image-picker')
     compile project(':react-native-toast')
+    compile project(':RCTHttpCache')
 }

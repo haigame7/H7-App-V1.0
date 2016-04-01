@@ -16,6 +16,7 @@ var userApi = {
   'GET_USER_GAME_INFO': apiSetup.MASTER_API_PATH + 'v1/User/MyGameInfo?accesstoken=' + apiSetup.ACCESS_TOKEN,
   'CERTIFY_GAME_ID': apiSetup.MASTER_API_PATH + 'v1/User/CertifyGameID?accesstoken=' + apiSetup.ACCESS_TOKEN,
   'UPDATE_CERTIFY_GAME_ID': apiSetup.MASTER_API_PATH + 'v1/User/UpdateCertifyGameID?accesstoken=' + apiSetup.ACCESS_TOKEN,
+  'NOTEAMUSERLIST':apiSetup.MASTER_API_PATH +'/v1/User/NoTeamUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
 
 const assertApi = {

@@ -1,10 +1,11 @@
-import React, { Component, View, Text, ScrollView,AsyncStorage ,TouchableOpacity} from 'react-native';
+'use strict';
+import React,
+{ Component, View, Text, ScrollView,AsyncStorage ,TouchableOpacity,Dimensions,Platform,Navigator,BackAndroid}
+from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 import Toast from '@remobile/react-native-toast';
-var Headernav = require('./headernav');
-
-
-var User  = require('../user.js');
+import Headernav from './headernav';
+import User from '../user.js';
 import Team from '../team.js';
 import Rank from '../rank.js';
 import Fight from '../fight.js';
@@ -12,6 +13,19 @@ import Match from '../match.js';
 import Login from '../user/login';
 import GlobalVariable from '../../constants/globalvariable';
 import UserService from '../../network/userservice';
+
+import Cache from '../../../temp/cache'
+
+/*暂时留着*/
+// let userdata = {
+//   'PhoneNumber': '15101075739',
+//   'UserWebNickName': 'naive',
+//   'UserWebPicture': '',
+//   'Sex': '1',
+//   'Address': '广东-广州-越秀区',
+//   'Birthday': '2000-01-01',
+//   'Hobby': '我干！'
+// }
 
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
@@ -23,7 +37,117 @@ const glypy = glypyMapMaker({
   RankOn: 'e621',
   Rank: 'e622'
 });
-export default class App extends Component {
+let _navigator;
+var BaseLeftToRightGesture = {
+
+  // If the gesture can end and restart during one continuous touch
+  isDetachable: false,
+
+  // How far the swipe must drag to start transitioning
+  gestureDetectMovement: 2,
+
+  // Amplitude of release velocity that is considered still
+  notMoving: 0.3,
+
+  // Fraction of directional move required.
+  directionRatio: 0.66,
+
+  // Velocity to transition with when the gesture release was "not moving"
+  snapVelocity: 2,
+
+  // Region that can trigger swipe. iOS default is 30px from the left edge
+  edgeHitWidth: 30,
+
+  // Ratio of gesture completion when non-velocity release will cause action
+  stillCompletionRatio: 3 / 5,
+
+  fullDistance: Dimensions.get('window').width,
+
+  direction: 'left-to-right',
+
+};
+var BaseOverswipeConfig = {
+  frictionConstant: 1,
+  frictionByDistance: 1.5,
+};
+export default class haigame7 extends Component {
+  componentWillMount() {
+      if (Platform.OS === 'android') {
+        BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
+      }
+    }
+    componentWillUnmount() {
+      if (Platform.OS === 'android') {
+        BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
+      }
+    }
+    onBackAndroid(){
+      const nav = _navigator;
+      const routers = nav.getCurrentRoutes();
+      var lastBackPressed = Date.now();
+      if (routers.length > 1) {
+        nav.pop();
+        return true;
+      }else {
+        if (lastBackPressed && lastBackPressed + 2000 >= Date.now()) {
+          //最近2秒内按过back键，可以退出应用。
+          return false;
+        }
+        lastBackPressed = Date.now();
+        ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
+        return true;
+      }
+    }
+
+  render() {
+      var defaultName = 'AppComponent';
+      var defaultComponent = App;
+      return (
+        <Navigator
+          initialRoute={{ name: defaultName,component: defaultComponent }}
+          configureScene={(route,_navigator) => {
+            let config = route.sceneConfig || Navigator.SceneConfigs.HorizontalSwipeJump;
+            if(_navigator.length == 1) {
+              config.gestures.jumpForward.overswipe = null;
+              config.gestures.jumpBack.overswipe = null;
+            }
+            return config;
+          }}
+          renderScene={(route, navigator) => {
+            // console.log(navigator.getCurrentRoutes().length);
+            let config = route.sceneConfig
+            if (config != undefined) {
+              console.log(navigator.getCurrentRoutes().length);
+              if(navigator.getCurrentRoutes().length == 1){
+                config.gestures.jumpBack = {
+                  ...BaseLeftToRightGesture,
+                  overswipe: BaseOverswipeConfig,
+                  edgeHitWidth: null,
+                  isDetachable: true,
+                }
+              } else {
+                console.log('设置回退为空');
+                config.gestures.jumpBack = {
+                  ...BaseLeftToRightGesture,
+                  overswipe: null,
+                  edgeHitWidth: null,
+                  isDetachable: true,
+                }
+              }
+            }
+
+            let Component  = route.component;
+            _navigator = navigator //android 设置返回按键导航
+            return <Component {...route.params} navigator={navigator} />
+          }}/>
+      );
+    }
+}
+
+
+
+
+class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.toggle = false;
@@ -34,6 +158,20 @@ export default class App extends Component {
   componentWillMount() {
     this.updateLoginState();
 
+
+    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+    //   let data = JSON.parse(value);
+    //   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
+      if( value == undefined) {
+        this.refs.header_match.updateComponent({name:'登陆1',component:Login});
+        this.refs.header_fight.updateComponent({name:'登陆2',component:Login});
+        this.refs.header_rank.updateComponent({name:'登陆3',component:Login});
+        this.refs.header_team.updateComponent({name:'登陆4',component:Login});
+      } else {
+        let jsondata = JSON.parse(value);
+        this.setState({userData: jsondata})
+      }
+    });
   }
   componentWillReceiveProps(nextProps) {
   }

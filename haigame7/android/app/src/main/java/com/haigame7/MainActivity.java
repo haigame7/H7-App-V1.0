@@ -7,6 +7,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.remobile.datetimepicker.*;
 import com.imagepicker.ImagePickerPackage;
 import com.remobile.toast.*;
+import cn.reactnative.httpcache.HttpCachePackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +42,8 @@ public class MainActivity extends ReactActivity {
         new RCTDateTimePickerPackage(MainActivity.this),
         new VectorIconsPackage(),
         new ImagePickerPackage(),
-        new RCTToastPackage()
+        new RCTToastPackage(),
+        new HttpCachePackage()
       );
     }
 }

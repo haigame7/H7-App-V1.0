@@ -40,6 +40,7 @@ import Toast from '@remobile/react-native-toast';
     constructor(props) {
       super(props);
       var dataRecruit = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      var dataInvite = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.state = {
         navbar: 0,
         invite:0,
@@ -47,7 +48,9 @@ import Toast from '@remobile/react-native-toast';
         userteamname:'',
         userteamid:0,
         dataRecruitSource: dataRecruit.cloneWithRows(['row1']),
+        dataInviteSource:dataInvite.cloneWithRows(['row1']),
         recruitlist:[],
+        invitelist:[],
         paraRecruit:{},
         userteamdata:{
           phone:'',
@@ -79,7 +82,12 @@ import Toast from '@remobile/react-native-toast';
           startpage:GlobalVariable.PAGE_INFO.StartPage,
           pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
           state:0,
-        }
+        },
+        paraInvite:{
+          startpage:GlobalVariable.PAGE_INFO.StartPage,
+          pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+          state:1,
+        },
       });
       this.initData();
     }
@@ -134,19 +142,34 @@ import Toast from '@remobile/react-native-toast';
               Toast.show('请求错误');
           }
         });
+        TeamService.getInviteUserList(this.state.paraInvite,(response) => {
+          if (response !== GlobalSetup.REQUEST_SUCCESS) {
+             if(response[0].MessageCode == '40001'){
+               Toast.show('服务器请求异常');
+             }else if(response[0].MessageCode == '0'){
+               let newData = response[1];
+               this.setState({
+                 dataInviteSource: this.state.dataInviteSource.cloneWithRows(newData),
+                 invitelist:newData,
+               });
+             }
+            }else{
+                Toast.show('请求错误');
+            }
+          });
     }
-    gotoRoute(name) {
+    gotoRoute(name,params) {
         if (name == 'teamrecruit') {
             if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
                 this.props.navigator.push({ name: name, component: TeamRecruit, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
             }
         } else if (name == 'playerinfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: PlayerInfo, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: PlayerInfo, params:{'playerinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }else if (name == 'teaminfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: TeamInfo, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: TeamInfo, params:params,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
         else if (name == 'myapply') {
@@ -172,8 +195,9 @@ import Toast from '@remobile/react-native-toast';
         }
     }
   _renderRecruitRow(rowData){
+
     return(
-    <TouchableOpacity style={styles.teamlist} activeOpacity={0.8} onPress={()=>this.gotoRoute('teaminfo')}>
+    <TouchableOpacity style={styles.teamlist} activeOpacity={0.8} onPress={()=>this.gotoRoute('teaminfo',rowData)}>
       <Image style={styles.teamlistimg} source={{uri:rowData.TeamLogo}} />
       <View style={styles.teamlistcenter}>
         <Text style={[commonstyle.yellow, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
@@ -189,16 +213,50 @@ import Toast from '@remobile/react-native-toast';
     </TouchableOpacity>
     );
   }
+  renderHeroImageItem(rowData,key){
+    return(
+      <Image key={key} style={styles.userlistheroimg} source={{uri:rowData.HeroImage}} />
+    );
+  }
+  _renderInviteRow(rowData){
+    var that = this;
+    var items =Object.keys(rowData.HeroImage).map(function(item,key) {
+      return that.renderHeroImageItem(rowData.HeroImage[item],key);
+    });
+    return(
+      <TouchableOpacity style={styles.userlist} activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo',rowData)}>
+        <Image style={styles.userlistimg} source={{uri:rowData.UserWebPicture}} />
+        <View style={commonstyle.col1} >
+          <Text style={commonstyle.white} >{rowData.UserWebNickName}</Text>
+          <View style={styles.userlistteambox}>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
+            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.GamePower}</Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
+            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.Asset}</Text>
+          </View>
+          <View style={styles.userlistteambox}>
+            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'擅长英雄:'}</Text>
+            <View style={styles.userlisthero}>
+             {items}
+            </View>
+          </View>
+        </View>
+        <TouchableOpacity style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
+          <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
+    );
+  }
   _renderFooter(){
     if(this.state.navbar==0){
       return(
-        <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraRecruit,this.state.dataRecruit)}>
+        <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraRecruit,this.state.recruitlist)}>
           <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerOneMsg}</Text>
         </TouchableHighlight>
       );
     }else{
       return(
-        <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraRecruit,this.state.dataRecruit)}>
+        <TouchableHighlight   underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraInvite,this.state.invitelist)}>
           <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerTwoMsg}</Text>
         </TouchableHighlight>
       );
@@ -227,50 +285,56 @@ import Toast from '@remobile/react-native-toast';
         });
       }
       {/*加载下一页*/}
-      TeamService.getRecruitList(_params,(response) => {
-        if (response[0].MessageCode == '0') {
-          let nextData = response[1];
-          if(nextData.length<1&&param.state==0){
-            this.setState({
-              keyone:1,
-                footerOneMsg: "木有更多多数据了~~~~",
-            });
-          }else if(nextData.length<1&&param.state==1){
-            this.setState({
-              keytwo:1,
-              footerTwoMsg: "木有更多多数据了~~~~",
-            });
-          }
-          if(nextData.length==0){
+      let nextData='';
+      if(param.state==0){
+        TeamService.getRecruitList(_params,(response) => {
+          this.parseLoadResponse(response,_ds,param.state);
+      });
+    }
+    else if(param.state==1){
+        TeamService.getInviteUserList(_params,(response) => {
+        this.parseLoadResponse(response,_ds,param.state);
+      });
+     }
+    }
+  }
+  parseLoadResponse(response,data,state){
+    if (response[0].MessageCode == '0') {
+      let nextData = response[1];
+      if(nextData.length<1&&state==0){
+        this.setState({
+          keyone:1,
+          footerOneMsg: "木有更多多数据了~~~~",
+        });
+      }else if(nextData.length<1&&state==1){
+        this.setState({
+          keytwo:1,
+          footerTwoMsg: "木有更多多数据了~~~~",
+        });
+      }
+     if(nextData.length==0){
             return;
-          }else{
-            for(var item in nextData){
-              _ds.push(nextData[item])
-            }
-            setTimeout(()=>{
-              if(param.state==0){
-                this.setState({
-                  dataRecruitSource: this.state.dataRecruitSource.cloneWithRows(_ds),
-                  recruitlist:_ds,
-                  footerOneMsg: "点击加载更多",
+      }else{
+        for(var item in nextData){
+        data.push(nextData[item])
+         }
+        setTimeout(()=>{
+          if(state==0){
+            this.setState({
+              dataRecruitSource: this.state.dataRecruitSource.cloneWithRows(data),
+              recruitlist:data,
+              footerOneMsg: "点击加载更多",
                 });
-              }else if(param.state==1){
+          }else if(state==1){
                 this.setState({
-                  dataRecruitSource: this.state.dataRecruitSource.cloneWithRows(_ds),
-                  recruitlist:_ds,
+                  dataInviteSource: this.state.dataInviteSource.cloneWithRows(data),
+                  invitelist:data,
                   footerTwoMsg: "点击加载更多",
                 });
               }
             },1000);
-          }
-        } else {
-          console.log('请求错误' + response[0].MessageCode);
-        }
-      });
-      //这等到有api在搞吧
-
-    }
-
+       }
+     }
   }
   renderteamList(){
     if(this.state.navbar==0){
@@ -305,54 +369,11 @@ import Toast from '@remobile/react-native-toast';
             </TouchableOpacity>
           </View>
         </View>
-
-        <TouchableOpacity style={styles.userlist}  activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo')}>
-          <Image style={styles.userlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={commonstyle.col1} >
-            <Text style={commonstyle.white} onPress={()=>this.gotoRoute('playerinfo')}>{'犀利拍立冬至'}</Text>
-            <View style={styles.userlistteambox}>
-              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
-              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
-            </View>
-            <View style={styles.userlistteambox}>
-              <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'擅长英雄:'}</Text>
-              <View style={styles.userlisthero}>
-                <Image style={styles.userlistheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Image style={styles.userlistheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Image style={styles.userlistheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              </View>
-            </View>
-          </View>
-          <TouchableOpacity style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
-            <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
-          </TouchableOpacity>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.userlist} activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo')}>
-          <Image style={styles.userlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-          <View style={commonstyle.col1} >
-            <Text style={commonstyle.white} onPress={()=>this.gotoRoute('playerinfo')}>{'犀利拍立冬至'}</Text>
-            <View style={styles.userlistteambox}>
-              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
-              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'12345'}</Text>
-            </View>
-            <View style={styles.userlistteambox}>
-              <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'擅长英雄:'}</Text>
-              <View style={styles.userlisthero}>
-                <Image style={styles.userlistheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Image style={styles.userlistheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                <Image style={styles.userlistheroimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              </View>
-            </View>
-          </View>
-          <TouchableOpacity style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
-            <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
-          </TouchableOpacity>
-        </TouchableOpacity>
+        <ListView
+          dataSource={this.state.dataInviteSource}
+          renderRow={this._renderInviteRow.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
        </View>
       );
     }
