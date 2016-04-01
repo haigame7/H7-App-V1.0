@@ -25,12 +25,42 @@ import Share from './share_screen';
 import GlobalVariable from '../../constants/globalvariable'
 import Toast from '@remobile/react-native-toast';
 
+import * as httpCache from '../../components/common/cache'
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
       alertvoice:false,
-      messages: []
+      messages: [],
+      allcache: 0
+    }
+  }
+
+  componentWillMount() {
+    this.getData()
+  }
+  componentDidMount() {
+
+  }
+
+  async getData(){
+    try {
+      this.setState({
+        allcache: Math.round((await httpCache.getSize()/1024)/1024*10)/10 + 'M',
+      });
+    } catch(err){
+      alert('获取错误', err.message);
+    }
+  }
+  async clearCache(){
+    try {
+      await httpCache.clear();
+      Toast.show('清除缓存成功');
+      await this.getData();
+    } catch(err){
+      console.log(err);
+      // Toast.show(err)
+      alert('清除失败', err.message);
     }
   }
 
@@ -80,9 +110,10 @@ export default class extends Component{
             </View>
           </View>
 
-          <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this.clearCache.bind(this)}>
             <Text style={styles.listviewtextleft}>清空缓存</Text>
             <View style={styles.listviewtextbox} ></View>
+            <Text style={styles.listviewtextright}>{this.state.allcache}</Text>
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
@@ -101,7 +132,7 @@ export default class extends Component{
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"分享","component":Share})}>
-            <Text style={styles.listviewtextleft}>共享H7给朋友们</Text>
+            <Text style={styles.listviewtextleft}>分享H7给朋友们</Text>
             <View style={styles.listviewtextbox} ></View>
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>

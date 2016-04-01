@@ -33,6 +33,7 @@ import Modal from 'react-native-modalbox';
 import Toast from '@remobile/react-native-toast';
 import Button from 'react-native-button';
 
+const default_user_pic = 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -477,7 +478,7 @@ rendermatchList(){
     return(
       <View>
       <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
-        <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture}}  resizeMode={"stretch"} />
+        <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture || default_user_pic}}  resizeMode={"stretch"} />
       </TouchableOpacity>
       <ListView
         dataSource={this.state.databoboSource}

@@ -60,6 +60,7 @@ module.exports = React.createClass({
     }
   },
   componentWillReceiveProps(nextProps,nextState) {
+    console.log('ThirdPage receiveProps');
   },
 
   componentWillUnmount() {

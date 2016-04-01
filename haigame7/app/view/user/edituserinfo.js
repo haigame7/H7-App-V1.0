@@ -16,7 +16,8 @@ import React,
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
-var Header = require('../common/headernav');export default class extends Component {
+var Header = require('../common/headernav');
+export default class extends Component {
   constructor(props) {
     super(props)
     this.state = {

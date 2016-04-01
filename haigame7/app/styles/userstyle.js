@@ -245,6 +245,7 @@ export default StyleSheet.create({
     },
     listviewtextright: {
         color: '#484848',
+        marginTop: 5,
         justifyContent: 'center',
     },
     listviewtextimg: {
