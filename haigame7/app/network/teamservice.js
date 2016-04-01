@@ -50,7 +50,43 @@ myApplyTeamList(data,callback){
    * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
    */
     FecthService.postFecth(
-      ApiConfig.TEAM_API.MyApplyTeamList,
+      ApiConfig.TEAM_API.MYAPPLYTEAMLIST,
+      {
+        'UserID':data.userID,
+        'StartPage':data.startpage,
+        'PageCount':data.pagecount,
+      },
+      callback
+    );
+},
+/*获取受邀列表*/
+myInvitedTeamList(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.MYINVITEDTEAMLIST,
+      {
+        'UserID':data.userID,
+        'StartPage':data.startpage,
+        'PageCount':data.pagecount,
+      },
+      callback
+    );
+},
+/*获取招募信息列表*/
+getRecruitList(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.GETRECRUITLIST,
       {
         'UserID':data.userID,
         'StartPage':data.startpage,
