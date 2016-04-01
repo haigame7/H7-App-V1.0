@@ -49,7 +49,6 @@ export default class extends Component {
         userData: jsondata
       })
     });
-    console.log(this.props);
   }
 
 

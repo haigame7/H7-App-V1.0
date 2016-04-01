@@ -61,11 +61,6 @@ var User = React.createClass({
     };
   },
   componentWillReceiveProps(nextProps,nextState) {
-    // AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
-    //   let jsondata = JSON.parse(value);
-    //   this.setState({userData: jsondata})
-    // });
-    // Toast.show("this is a message")
   },
   componentWillMount() {
 
@@ -261,7 +256,7 @@ var User = React.createClass({
         <View style={styles.listbox}></View>
         <View style={styles.listbox}></View>
 
-        <Spinner visible={this.state.isOpen} />
+        <Spinner key='user_spinner'visible={this.state.isOpen} />
       </ScrollView>
       <Modal isOpen={this.state.modalOpen}  style={[commonstyle.modal, commonstyle.modalmiddle]} position={"center"}>
          <View style={commonstyle.modalclose}><Button onPress={this._closeModa} ><Icon name="error" size={20} color={'#FF0000'} /></Button></View>
