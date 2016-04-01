@@ -21,6 +21,22 @@ export default{
         callback
       );
   },
+  /*获取战队详情*/
+  getTeambyID(data,callback){
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.TEAM_API.GETTEAMBYID,
+        {
+          'TeamID':data.teamID,
+        },
+        callback
+      );
+},
   /*获取约战列表*/
   getTeamList(data,callback){
     /**
@@ -59,7 +75,7 @@ myApplyTeamList(data,callback){
       callback
     );
 },
-/*获取加入战队*/
+/*加入战队*/
 applyTeam(data,callback){
   /**
    * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
@@ -111,6 +127,23 @@ getRecruitList(data,callback){
         'UserID':data.userID,
         'StartPage':data.startpage,
         'PageCount':data.pagecount,
+      },
+      callback
+    );
+},
+/*发布招募信息*/
+sendRecruit(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.SENDRECRUIT,
+      {
+        'TeamID':data.teamID,
+        'Content':data.content,
       },
       callback
     );

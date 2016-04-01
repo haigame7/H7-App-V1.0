@@ -161,7 +161,7 @@ import Toast from '@remobile/react-native-toast';
     gotoRoute(name,params) {
         if (name == 'teamrecruit') {
             if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-                this.props.navigator.push({ name: name, component: TeamRecruit, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+                this.props.navigator.push({ name: name, component: TeamRecruit,params:{'teamID':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
             }
         } else if (name == 'playerinfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -195,7 +195,6 @@ import Toast from '@remobile/react-native-toast';
         }
     }
   _renderRecruitRow(rowData){
-
     return(
     <TouchableOpacity style={styles.teamlist} activeOpacity={0.8} onPress={()=>this.gotoRoute('teaminfo',rowData)}>
       <Image style={styles.teamlistimg} source={{uri:rowData.TeamLogo}} />
@@ -206,7 +205,7 @@ import Toast from '@remobile/react-native-toast';
       </View>
       <View style={styles.teamlistright}>
         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.RecruitTime}</Text>
-        <TouchableOpacity  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity  onPress={()=>this.applyTeam(this.state.content.userData.UserID,rowData.TeamID)} style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '申请加入' : '已申请' } </Text>
         </TouchableOpacity>
       </View>
@@ -261,6 +260,113 @@ import Toast from '@remobile/react-native-toast';
         </TouchableHighlight>
       );
     }
+  }
+
+  renderteamList(){
+    if(this.state.navbar==0){
+      return(
+        <View>
+        <ListView
+          dataSource={this.state.dataRecruitSource}
+          renderRow={this._renderRecruitRow.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
+       </View>
+      );
+    }else{
+      return(
+        <View>
+        <View style={styles.userlist}>
+          <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo}} />
+          <View style={styles.userlistteam}>
+            <TouchableOpacity style={styles.userlistteamname} activeOpacity={0.8}>
+              <Text style={commonstyle.cream}>{this.state.userteamname}</Text>
+              <Icon name="angle-right" size={20} color={'#C3C3C3'} style={styles.userlistteamicon} />
+            </TouchableOpacity>
+            <View style={styles.userlistteambox}>
+              <Text style={commonstyle.yellow}>{'战斗力:'}</Text>
+              <Text style={commonstyle.red}>{this.state.userteamdata.fightscore}</Text>
+              <Text style={commonstyle.yellow}>{'氦金:'}</Text>
+              <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
+            </View>
+            <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>
+            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.gotoRoute('teamrecruit',this.state.userteamid)} >
+              <Text style = {commonstyle.white}> {'发布招募'} </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <ListView
+          dataSource={this.state.dataInviteSource}
+          renderRow={this._renderInviteRow.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
+       </View>
+      );
+    }
+  }
+
+  render()
+  {
+    let teamlist = this.renderteamList();
+    return (
+      <View style={commonstyle.viewbodyer}>
+        <View style={styles.nav}>
+          <View style={styles.navtab}>
+            <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
+              <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>加入战队</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
+              <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>招募队员</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.navsub}>
+            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbarone=='我的申请'?'myapply':'mysendapply')}>
+              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbarone}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
+            </TouchableOpacity>
+
+            <View style={styles.navsubline}></View>
+
+            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbartwo=='我的受邀'?'myreceiveapply':'applyjoin')}>
+              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbartwo}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <ScrollView style={[styles.scrollview]}>
+          {teamlist}
+        </ScrollView>
+     </View>
+    );
+  }
+  _switchNavbar(nav){
+ var nameone ='我的申请';
+ var nametwo = '我的受邀';
+  if(nav==1){
+    nameone = '发出邀请';
+    nametwo = '申请加入';
+  }
+ this.setState({
+   navbar:nav,
+   data:{subnavbarone:nameone,subnavbartwo:nametwo},
+ });
+ return;
+  }
+  applyTeam(userID,teamID){
+    var data = {'userID':userID,'teamID':teamID};
+    TeamService.applyTeam(data,(response)=>{
+      if(response[0].MessageCode == '20006'){
+        Toast.show('您已经加入其他战队');
+      }
+      else if (response[0].MessageCode == '20007') {
+         Toast.show('您已向其他发出申请');
+      }
+      else if (response[0].MessageCode == '0') {
+         Toast.show('成功发出申请');
+      } else {
+        console.log('请求错误' + response[0].MessageCide);
+      }
+    });
   }
   _onLoadMore(param,data) {
     if (this.state.keyone > 0 &&param.state==0) {
@@ -335,95 +441,5 @@ import Toast from '@remobile/react-native-toast';
             },1000);
        }
      }
-  }
-  renderteamList(){
-    if(this.state.navbar==0){
-      return(
-        <View>
-        <ListView
-          dataSource={this.state.dataRecruitSource}
-          renderRow={this._renderRecruitRow.bind(this)}
-          renderFooter={this._renderFooter.bind(this)}
-        />
-       </View>
-      );
-    }else{
-      return(
-        <View>
-        <View style={styles.userlist}>
-          <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo}} />
-          <View style={styles.userlistteam}>
-            <TouchableOpacity style={styles.userlistteamname} activeOpacity={0.8}>
-              <Text style={commonstyle.cream}>{this.state.userteamname}</Text>
-              <Icon name="angle-right" size={20} color={'#C3C3C3'} style={styles.userlistteamicon} />
-            </TouchableOpacity>
-            <View style={styles.userlistteambox}>
-              <Text style={commonstyle.yellow}>{'战斗力:'}</Text>
-              <Text style={commonstyle.red}>{this.state.userteamdata.fightscore}</Text>
-              <Text style={commonstyle.yellow}>{'氦金:'}</Text>
-              <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
-            </View>
-            <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.gotoRoute('teamrecruit')} >
-              <Text style = {commonstyle.white}> {'发布招募'} </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <ListView
-          dataSource={this.state.dataInviteSource}
-          renderRow={this._renderInviteRow.bind(this)}
-          renderFooter={this._renderFooter.bind(this)}
-        />
-       </View>
-      );
-    }
-  }
-
-  render()
-  {
-    let teamlist = this.renderteamList();
-    return (
-      <View style={commonstyle.viewbodyer}>
-        <View style={styles.nav}>
-          <View style={styles.navtab}>
-            <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
-              <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>加入战队</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-              <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>招募队员</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.navsub}>
-            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbarone=='我的申请'?'myapply':'mysendapply')}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbarone}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
-            </TouchableOpacity>
-
-            <View style={styles.navsubline}></View>
-
-            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbartwo=='我的受邀'?'myreceiveapply':'applyjoin')}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbartwo}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <ScrollView style={[styles.scrollview]}>
-          {teamlist}
-        </ScrollView>
-     </View>
-    );
-  }
-  _switchNavbar(nav){
- var nameone ='我的申请';
- var nametwo = '我的受邀';
-  if(nav==1){
-    nameone = '发出邀请';
-    nametwo = '申请加入';
-  }
- this.setState({
-   navbar:nav,
-   data:{subnavbarone:nameone,subnavbartwo:nametwo},
- });
- return;
   }
 }
