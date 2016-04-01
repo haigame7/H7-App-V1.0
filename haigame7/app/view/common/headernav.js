@@ -43,7 +43,8 @@ module.exports = React.createClass({
     }
   },
   componentWillMount() {
-
+    console.log('888888888888888888');
+    console.log(this.props.data.name);
   },
   componentDidMount(){
     if (this.state.icon_name != undefined){
@@ -60,7 +61,7 @@ module.exports = React.createClass({
     }
   },
   componentWillReceiveProps(nextProps,nextState) {
-    console.log('ThirdPage receiveProps');
+    console.log('headernav receiveProps');
   },
 
   componentWillUnmount() {
@@ -89,6 +90,7 @@ module.exports = React.createClass({
          </TouchableOpacity>
          <View style={[CommonStyle.col1, CommonStyle.headertext]}>
            <Text style={CommonStyle.headertextfont} numberOfLines={1}>{this.state.current_title}</Text>
+           <Text>{this.props.data.name}</Text>
          </View>
          <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerright]} activeOpacity={0.8} onPress={this.state.icon_onPress}>
            {icon}
@@ -102,6 +104,7 @@ module.exports = React.createClass({
          </View>
          <View style={[CommonStyle.col1, CommonStyle.headertext]}>
            <Text style={CommonStyle.headertextfont} numberOfLines={1}>{this.state.current_title}</Text>
+           <Text>{this.props.data.name}</Text>
          </View>
          <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerright]} activeOpacity={0.8} onPress={this._pushroute}>
            {icon}
