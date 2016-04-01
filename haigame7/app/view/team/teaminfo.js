@@ -28,11 +28,15 @@ export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      messages: []
+      teaminfo:this.props.teaminfo,
+      userID:this.props.userID,
+      messages: [],
     }
   }
 
-
+  applyTeam(userID,teamID){
+    console.log(userID+'applyTeam'+teamID);
+  }
   render(){
     return (
       <View>
@@ -40,16 +44,16 @@ export default class extends Component{
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+              <Image style={styles.headportrait} source={{uri:this.state.teaminfo.TeamLogo}} />
               <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></View>
             </View>
 
             <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>我的名字</Text>
+              <Text style={[styles.headname, commonstyle.white]}>{this.state.teaminfo.TeamName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{'1234'}{'  '}</Text>
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
@@ -58,7 +62,7 @@ export default class extends Component{
                 </View>
               </View>
               <View style={styles.headtext}>
-                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>战队宣言:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>{'战队宣言:'}{this.state.teaminfo.TeamDescription}</Text>
               </View>
             </View>
           </Image>
@@ -79,7 +83,7 @@ export default class extends Component{
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>本队需要辅助一名，擅长XX英雄，战队福利优厚，报名从速...</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teaminfo.RecruitContent}</Text></View>
             </View>
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
@@ -96,8 +100,8 @@ export default class extends Component{
               </View>
             </View>
           </View>
-          
-          <TouchableHighlight style = {styles.btn} underlayColor = {'#FF0000'} >
+
+          <TouchableHighlight onPress={()=>this.applyTeam(this.state.userID,this.state.teaminfo.TeamID)} style = {styles.btn} underlayColor = {'#FF0000'} >
             <Text style = {styles.btnfont}> {'申请加入' } </Text>
           </TouchableHighlight>
         </ScrollView>

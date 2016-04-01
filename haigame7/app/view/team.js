@@ -169,7 +169,7 @@ import Toast from '@remobile/react-native-toast';
           }
         }else if (name == 'teaminfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: TeamInfo, params:params,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
         else if (name == 'myapply') {

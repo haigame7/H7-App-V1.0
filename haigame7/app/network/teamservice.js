@@ -59,6 +59,25 @@ myApplyTeamList(data,callback){
       callback
     );
 },
+/*获取加入战队*/
+applyTeam(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.APPLYTEAM,
+      {
+        'UserID':data.userID,
+        'TeamID':data.teamID,
+        'StartPage':data.startpage,
+        'PageCount':data.pagecount,
+      },
+      callback
+    );
+},
 
 /*获取受邀列表*/
 myInvitedTeamList(data,callback){
