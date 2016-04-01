@@ -60,13 +60,11 @@ export default class extends Component{
   }
   getBoBoList(){
     MatchService.getBoBoList(this.state.matchdata,(response) => {
-    Toast.show('sdfsdf');
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');
         }else if(response[0].MessageCode == '0'){
           let newData = response[1];
-          
           this.setState({
             databoboSource: this.state.databoboSource.cloneWithRows(newData),
             bobolist:newData,
@@ -105,7 +103,7 @@ export default class extends Component{
   }
   _renderBoBoRow(rowData){
     return(
-      <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={this._openBoBoModa.bind(this,rowData)}>
+      <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} >
         <Image style={styles.carousellistimg} source={{uri:rowData.UserPicture}} />
         <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.Name}</Text>
       </TouchableOpacity>
