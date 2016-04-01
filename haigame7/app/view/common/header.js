@@ -36,7 +36,7 @@ module.exports = React.createClass({
     return (
       <View style={[CommonStyle.header, CommonStyle.row]}>
         <TouchableOpacity style={[CommonStyle.col1, CommonStyle.headerleft]} onPress={this._pop}>
-          <Icon name="angle-left" size={30} color="#FFF" />
+          <Icon name="angle-left" size={20} color="#FFF" />
         </TouchableOpacity>
         <View style={[CommonStyle.col1, CommonStyle.headertext]}>
           <Text style={CommonStyle.headertextfont} numberOfLines={1}>{screenTitle}</Text>
