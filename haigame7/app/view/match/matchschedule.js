@@ -37,6 +37,7 @@ export default class extends Component{
       subbar: 0,
       databoboSource: databobo.cloneWithRows([]),
       bobolist:[],
+      boboid: 2,
       loaded:false,
       userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
       userdata:{
@@ -46,9 +47,6 @@ export default class extends Component{
       },
       matchdata:{
         matchID:4,
-        matchname:'',
-        showpicture:'',
-        introduce:'',
       },
     }
   }
@@ -59,7 +57,7 @@ export default class extends Component{
    this.getBoBoList();
   }
   getBoBoList(){
-    MatchService.getBoBoList(this.state.matchdata,(response) => {
+    MatchService.getBoBoList(this.props.matchdata,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');
@@ -103,8 +101,8 @@ export default class extends Component{
   }
   _renderBoBoRow(rowData){
     return(
-      <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} >
-        <Image style={styles.carousellistimg} source={{uri:rowData.UserPicture}} />
+      <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} >
+        <Image style={this.state.boboid==rowData.BoBoID?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.UserPicture}} />
         <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.Name}</Text>
       </TouchableOpacity>
     );
@@ -113,13 +111,13 @@ export default class extends Component{
     return(
       <View style={styles.carouselview}>
         <Carousel  hideIndicators={true} animate={false} delay={5000}  loop={true} >
-        <View style={styles.carousellistblock}>
-          <ListView
-            dataSource={this.state.databoboSource}
-            renderRow={this._renderBoBoRow.bind(this)}
-            renderFooter={this._renderFooter.bind(this)}
-          />
-        </View>
+          <View style={styles.carousellistblock}>
+            <ListView style={styles.carousellist} horizontal={true}
+              dataSource={this.state.databoboSource}
+              renderRow={this._renderBoBoRow.bind(this)}
+              renderFooter={this._renderFooter.bind(this)}
+            />
+          </View>
         </Carousel>
       </View>
     );
