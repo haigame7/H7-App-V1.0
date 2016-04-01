@@ -20,7 +20,14 @@ export default class SecondPageComponent extends React.Component {
     };
   }
   componentWillReceiveProps(nextProps) {
-    console.log('im here 3');
+    console.log('ThirdPage receiveProps');
+    console.log(nextProps);
+    console.log(this.props.name);
+    if (nextProps.name != this.props.name) {
+      this.setState({
+        name: nextProps.name
+      })
+    }
   }
   componentWillMount() {
         //这里获取从FirstPageComponent传递过来的参数: id

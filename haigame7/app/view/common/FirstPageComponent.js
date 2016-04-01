@@ -32,9 +32,9 @@ export default class FirstPageComponent extends React.Component {
   // componentWillMount() {
   //   console.log("渲染之前 componentWillMount");
   // }
-  // componentDidMount() {
-  //   console.log("渲染完毕 componentWillMount");
-  // }
+  componentDidMount() {
+    this.dod()
+  }
   //
   // //在组件接收到新的 props 的时候调用，也就是父组件修改子组件的属性时触发。在初始化渲染的时候，该方法不会调用。可以用于更新 state 来响应某个 prop 的改变。
   // componentWillReceiveProps(nextProps) {
@@ -46,9 +46,13 @@ export default class FirstPageComponent extends React.Component {
 
  dod() {
    let data = {'name':'胡浩然','age':'1'}
-   this.setState({
-     woqu: data
-   })
+   setTimeout(() => {
+     console.log('开始更新');
+     this.setState({
+       woqu: data
+     })
+   },5000)
+
  }
   _pressButton(){
     //const { navigator } = this.props;
