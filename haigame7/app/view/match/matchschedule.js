@@ -1,6 +1,6 @@
 'use strict';
 /**
- * APPs我的赛事
+ * APP 赛程详情
  * @return {[SplashScreen Component]}
  * @author aran.hu
  */
@@ -32,12 +32,18 @@ export default class extends Component{
   constructor(props) {
     super(props);
     var databobo = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var databobotime = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var databobomatch = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      navbar: 0,
+      navbar: this.props.boboID,
       subbar: 0,
       databoboSource: databobo.cloneWithRows([]),
+      databobotimeSource: databobotime.cloneWithRows([]),
+      databobomatchSource: databobomatch.cloneWithRows([]),
       bobolist:[],
-      boboid: 2,
+      bobotimelist:[],
+      bobomatchlist:[],
+      boboid: this.props.boboID,
       loaded:false,
       userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
       userdata:{
@@ -55,6 +61,7 @@ export default class extends Component{
   }
   initData(){
    this.getBoBoList();
+   this.getBoBoMatchList(this.props.matchdata.matchID, this.props.boboID);
   }
   getBoBoList(){
     MatchService.getBoBoList(this.props.matchdata,(response) => {
@@ -75,10 +82,33 @@ export default class extends Component{
           }
     });
   }
+  getBoBoMatchList(matchid, boboid){
+    MatchService.getBoBoMatchList({matchID: matchid,boboID: boboid},(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          let newData = response[1];
+          let lastData = response[2];
+          this.setState({
+            databobotimeSource: this.state.databobotimeSource.cloneWithRows(newData),
+            databobomatchSource: this.state.databobomatchSource.cloneWithRows(lastData),
+            bobotimelist:newData,
+            bobomatchlist:lastData,
+            loaded:false,
+          });
+         }
+       }
+        else{
+            Toast.show('请求错误');
+          }
+    });
+  }
   _switchNavbar(nav){
     this.setState({
       navbar:nav,
     });
+    this.getBoBoMatchList(this.props.matchdata.matchID, nav);
     return;
   }
   _switchSubbar(sub){
@@ -101,11 +131,25 @@ export default class extends Component{
   }
   _renderBoBoRow(rowData){
     return(
-      <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} >
-        <Image style={this.state.boboid==rowData.BoBoID?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.UserPicture}} />
+      <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} onPress = {() => this._switchNavbar(rowData.BoBoID)}>
+        <Image style={this.state.navbar==rowData.BoBoID?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.UserPicture}} />
         <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.Name}</Text>
       </TouchableOpacity>
     );
+  }
+  _renderBoBoTimeRow(rowData,sectionID,rowID){
+    return(
+      <TouchableOpacity style={[this.state.navbar==rowID?styles.navbtnactive:styles.navbtn, styles.navtime]} activeOpacity={0.8}  onPress = {() => this._switchSubbar(rowID)}>
+        <Text style={this.state.navbar==rowID?commonstyle.red:commonstyle.white}>{rowData.StartTime}</Text>
+      </TouchableOpacity>
+    );
+  }
+  _renderBoBoMatchRow(rowData){
+    return(
+        <TouchableOpacity style={this.state.navbar==rowID?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}>
+          <Text style={this.state.navbar==rowID?commonstyle.red:commonstyle.white}>demo</Text>
+        </TouchableOpacity>
+      );
   }
   rendercarousellist(){
     return(
@@ -194,17 +238,11 @@ export default class extends Component{
         {carousel}
         {/*轮播end*/}
         <View style={styles.nav}>
-          <View style={styles.navtab}>
-            <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
-             <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>05/12</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={this.state.navbar==1?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-              <Text style={this.state.navbar==1?commonstyle.red:commonstyle.white}>05/13</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={this.state.navbar==2?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(2)}>
-              <Text style={this.state.navbar==2?commonstyle.red:commonstyle.white}>05/14</Text>
-            </TouchableOpacity>
-          </View>
+          <ListView style={styles.navtab} horizontal={true}
+              dataSource={this.state.databobotimeSource}
+              renderRow={this._renderBoBoTimeRow.bind(this)}
+              renderFooter={this._renderFooter.bind(this)}
+            />
         </View>
         <ScrollView style={styles.centerbg}>
           {schedulelist}

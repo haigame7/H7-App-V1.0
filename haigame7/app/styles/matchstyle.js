@@ -38,6 +38,10 @@ var MatchStyle = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#D31B25',
     },
+    navtime: {
+        height: 40,
+        width: (Util.size.width-20)/3,
+    },
     scrollview: {
         padding: 0,
     },

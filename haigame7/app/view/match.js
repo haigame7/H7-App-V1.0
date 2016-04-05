@@ -295,7 +295,7 @@ export default class extends Component{
         }
     } else if (name == 'matchschedule') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-        this.props.navigator.push({ name: name, component: MatchSchedule, params:{'matchdata':params}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        this.props.navigator.push({ name: name, component: MatchSchedule, params:{'matchdata':params,'boboID':this.state.boboid}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
     }
     }
