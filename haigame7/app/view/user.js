@@ -71,13 +71,14 @@ var User = React.createClass({
 
   },
   componentDidMount() {
+
     this.setState({isOpen: true})
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       let jsondata = JSON.parse(value);
       this.setState({userData: jsondata})
       setTimeout(() => {
         this.getUserGameInfo(jsondata.PhoneNumber)
-        this.getUserTeamInfo(jsondata.PhoneNumber)
+        this.getUserTeamInfo(jsondata.UserID)
         this.getTotalAssertAndRank(jsondata.PhoneNumber)
       },400)
     });
@@ -153,6 +154,7 @@ var User = React.createClass({
       sceneConfig:params.sceneConfig || undefined,
       params: {
         ...this.props,
+        userData:this.state.userData,
         hjData: this.state.hjData,
         teamData:this.state.teamData,
         fightData: this.state.fightData,

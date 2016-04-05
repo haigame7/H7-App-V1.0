@@ -31,6 +31,7 @@ import MakeChanllenge from './fight/makechanllenge';
 import FightState from './fight/fightstate';
 import UserFight from './user/userfight';
 import FightService from '../network/fightservice';
+import TeamService from '../network/teamservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
 import commonstyle from '../styles/commonstyle';
@@ -72,7 +73,6 @@ export default class extends Component{
   }
 
   componentDidMount() {
-    this.initData();
 
   }
   updateContentData(content){
@@ -130,7 +130,7 @@ export default class extends Component{
     }
   }
   getTeamList(data){
-    FightService.getFightTeamList(data,(response) => {
+    TeamService.getTeamList(data,(response) => {
       // console.log(response);
       if (response[0].MessageCode == '0') {
         let newData = response[1];
@@ -145,7 +145,7 @@ export default class extends Component{
       }
   initData(){
     {/*请求我的战队信息*/}
-    FightService.getUserDefaultTeam({'phone':this.state.content.userData.PhoneNumber},(response) => {
+    TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Alert.alert('服务器请求异常');

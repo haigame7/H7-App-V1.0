@@ -23,14 +23,33 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
+import TeamService from '../../network/teamservice';
+import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
       playerinfo:this.props.playerinfo,
+      teamID:this.props.teamID,
       messages: []
     }
+  }
+  inviteUser(userID,teamID){
+    var data = {'teamID':teamID,'userID':userID};
+    TeamService.inviteUser(data,(response)=>{
+      if(response[0].MessageCode == '20008'){
+        Toast.show('您已经邀请该玩家');
+      }
+      else if (response[0].MessageCode == '20007') {
+         Toast.show('您已向其他发出申请');
+      }
+      else if (response[0].MessageCode == '0') {
+         Toast.show('成功发出邀请');
+      } else {
+        console.log('请求错误' + response[0].MessageCide);
+      }
+    });
   }
   renderHeroImageItem(rowData,key){
     return(
@@ -43,6 +62,7 @@ export default class extends Component{
     var items =Object.keys(that.state.playerinfo.HeroImage).map(function(item,key) {
       return that.renderHeroImageItem(that.state.playerinfo.HeroImage[item],key);
     });
+    console.log(this.state.playerinfo);
     return (
       <View>
         <Header screenTitle='个人信息'   navigator={this.props.navigator}/>
@@ -97,7 +117,7 @@ export default class extends Component{
             </View>
           </View>
 
-          <TouchableHighlight style = {styles.btn} underlayColor = {'#FF0000'} >
+          <TouchableHighlight  onPress={()=>this.inviteUser(this.state.playerinfo.UserID,this.state.teamID)} style = {styles.btn} underlayColor = {'#FF0000'} >
             <Text style = {styles.btnfont}> {'发出邀请' } </Text>
           </TouchableHighlight>
         </ScrollView>
