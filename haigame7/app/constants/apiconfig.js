@@ -58,6 +58,10 @@ const teamApi={
   'GETRECRUITLIST':apiSetup.MASTER_API_PATH +'/v1/Team/RecruitList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'GETTEAMBYID':apiSetup.MASTER_API_PATH +'/v1/Team/GetTeambyID?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'SENDRECRUIT':apiSetup.MASTER_API_PATH +'/v1/Team/SendRecruit?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'INVITEUSER':apiSetup.MASTER_API_PATH +'/v1/Team/InviteUser?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'INVITEDUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/InvitedUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'APPLYUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+
 }
 module.exports = {
   USER_API: userApi,

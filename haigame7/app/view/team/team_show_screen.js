@@ -61,16 +61,7 @@ export default class extends React.Component {
       params: {
         ...this.props,
         teamData:this.state.teamData,
-        _callback(key,params){
-        switch (key) {
-          case 'UserInfo':
-              AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
-                let jsondata = JSON.parse(value);
-                _this.setState({userData: jsondata})
-              });
-            break;
         }
-      }}
     })
   }
   _openModa() {

@@ -15,23 +15,82 @@ import React, {
 import Header from '../common/headernav';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
+import Toast from '@remobile/react-native-toast';
+var ImagePickerManager = require('NativeModules').ImagePickerManager;
 export default class extends React.Component {
   constructor() {
     super();
     this.state = {
       imgnull: 0,
+      value:0,
+      creater:0,
+      teamname:'',
       navigator: undefined,
-      teamName: undefined,
       isUsed: false,
       defaultTeamName:'请输入战队名称',
       defaultTeamLogo: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
     }
+
+  }
+  selectPhotoTapped() {
+      let options = {
+          title: '选择照片',
+          cancelButtonTitle: '取消',
+          takePhotoButtonTitle: '拍照',
+          chooseFromLibraryButtonTitle: '从相册选择',
+          quality: 0.5,
+          maxWidth: 300,
+          maxHeight: 300,
+          storageOptions: {
+            skipBackup: true
+          }
+        };
+
+      ImagePickerManager.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled photo picker');
+        }
+        else if (response.error) {
+          console.log('ImagePickerManager Error: ', response.error);
+        }
+        else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        }
+        else {
+          // You can display the image using either:
+          let source = 'data:image/jpeg;base64,' + response.data;
+          this.setState({
+            value: source,
+            imgnull:1,
+          });
+        }
+      });
+    }
+  _callback(){
+    let teamData={
+    'creater':this.state.creater,
+    'teamname':this.state.teamname,
+    'teamlogo':this.state.value,
+    'teamtype':'DOTA2',
+    };
+    if(teamData.teamname==''){
+      Toast.show('请填写战队名称');
+      return;
+    }else if(teamData.teamlogo==0){
+      Toast.show('请上传战队图片');
+      return;
+    }else{
+      console.log(teamData);
+    }
+
   }
   renderteamimg(){
     if(this.state.imgnull==0){
       return(
         <View>
-          <TouchableOpacity style={commonstyle.viewcenter} activeOpacity={0.8}>
+          <TouchableOpacity onPress={()=> this.selectPhotoTapped()} style={commonstyle.viewcenter} activeOpacity={0.8}>
             <Text style={[commonstyle.gray, commonstyle.fontsize22]}>+</Text>
             <Text style={commonstyle.gray}>添加战队头像</Text>
           </TouchableOpacity>
@@ -41,7 +100,7 @@ export default class extends React.Component {
       return(
         <View>
           <TouchableOpacity style={commonstyle.viewcenter} activeOpacity={0.8}>
-            <Image style={styles.teamcreateportrait} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+            <Image style={styles.teamcreateportrait} source={{uri:this.state.value||'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
           </TouchableOpacity>
         </View>
       );
@@ -50,10 +109,8 @@ export default class extends React.Component {
   componentDidMount(){
       this.setState({
         navigator: this.props.navigator,
+        creater:this.props.teamData.Creater,
       });
-  }
-  _callback(){
-    this.state.navigator.pop()
   }
 
   render() {
