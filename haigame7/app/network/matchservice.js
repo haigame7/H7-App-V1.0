@@ -16,7 +16,7 @@ export default{
         callback
       );
   },
-  /*获取约战列表*/
+  /*获取赛事主播列表*/
   getBoBoList(data,callback){
     /**
      * @param  {[type]}   {'MatchID':matchid}             [params]
@@ -95,6 +95,22 @@ export default{
           'State': data.state,
           'StartPage':data.startpage,
           'PageCount':data.pagecount,
+        },
+        callback
+      );
+  },
+  /*赛事主播列表*/
+  getBoBoMatchList(data,callback){
+    /**
+     * @param  {[type]}   {'UserID':userID}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.MATCH_API.BOBOMATCHLIST,
+        {
+          'MatchID':data.matchID,
+          'BoBoID': data.boboID,
         },
         callback
       );

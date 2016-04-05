@@ -13,41 +13,82 @@ import React, {
   Component,
   TouchableOpacity,
   Navigator,
+  ListView,
   ScrollView,
   TouchableHighlight,
 } from 'react-native';
-var Util = require('../common/util');
 var Header = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/Iconfont');
 var commonstyle = require('../../styles/commonstyle');
 var styles = require('../../styles/matchstyle');
 var Carousel = require('react-native-carousel');
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+import MatchService from '../../network/matchservice';
+import GlobalSetup from '../../constants/globalsetup';
+import GlobalVariable from '../../constants/globalvariable';
+import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
   constructor(props) {
     super(props);
+    var databobo = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       navbar: 0,
-      data:{
-          subnavbar:1,
-          subnavbarname:'热度',
+      subbar: 0,
+      databoboSource: databobo.cloneWithRows([]),
+      bobolist:[],
+      boboid: 2,
+      loaded:false,
+      userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
+      userdata:{
+        userid:0,
+        userteamid:0,
+        userasset:0
+      },
+      matchdata:{
+        matchID:4,
       },
     }
   }
-  _openModa() {
-    this.setState({isOpen: true});
+  componentWillMount() {
+    this.initData();
   }
-  _closeModa() {
-    console.log('******');
-     this.setState({isOpen: false});
+  initData(){
+   this.getBoBoList();
+  }
+  getBoBoList(){
+    MatchService.getBoBoList(this.props.matchdata,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          let newData = response[1];
+          this.setState({
+            databoboSource: this.state.databoboSource.cloneWithRows(newData),
+            bobolist:newData,
+            loaded:false,
+          });
+         }
+       }
+        else{
+            Toast.show('请求错误');
+          }
+    });
   }
   _switchNavbar(nav){
     this.setState({
       navbar:nav,
     });
     return;
+  }
+  _switchSubbar(sub){
+    this.setState({
+      subbar:sub,
+    });
+    return;
+  }
+  _renderFooter(){
+
   }
   gotoRoute(name) {
     if (name == 'carouselrule') {
@@ -58,52 +99,25 @@ export default class extends Component{
       }
     }
   }
+  _renderBoBoRow(rowData){
+    return(
+      <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} >
+        <Image style={this.state.boboid==rowData.BoBoID?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.UserPicture}} />
+        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.Name}</Text>
+      </TouchableOpacity>
+    );
+  }
   rendercarousellist(){
     return(
       <View style={styles.carouselview}>
         <Carousel  hideIndicators={true} animate={false} delay={5000}  loop={true} >
-        <View style={styles.carousellistblock}>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.carousellistblock}>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.carousellistblock}>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.carousellist} activeOpacity={0.8} onPress={()=>this.gotoRoute('carouselschedule')}>
-            <Image style={styles.carousellistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍冬至'}</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.carousellistblock}>
+            <ListView style={styles.carousellist} horizontal={true}
+              dataSource={this.state.databoboSource}
+              renderRow={this._renderBoBoRow.bind(this)}
+              renderFooter={this._renderFooter.bind(this)}
+            />
+          </View>
         </Carousel>
       </View>
     );

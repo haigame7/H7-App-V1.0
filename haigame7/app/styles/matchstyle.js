@@ -204,12 +204,20 @@ var MatchStyle = StyleSheet.create({
     },
     carousellist: {
         marginLeft: 15,
-        marginRight: 15
+        marginRight: 15,
     },
     carousellistimg: {
         width: Util.size.width / 5,
         height: Util.size.width / 5,
         borderWidth: 1,
+        borderColor: 'rgb(208, 46, 70)',
+        borderRadius: 5,
+        marginBottom: 5,
+    },
+    carousellistimgactive: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderWidth: 3,
         borderColor: 'rgb(208, 46, 70)',
         borderRadius: 5,
         marginBottom: 5,
@@ -259,7 +267,7 @@ var MatchStyle = StyleSheet.create({
         marginBottom: 5,
         marginRight: 5,
     },
-    schedulelisttime:{
+    schedulelisttime: {
         marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
@@ -274,8 +282,61 @@ var MatchStyle = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
     },
+    //竞猜
+    guesslistblock: {
+        flex: 1,
+        marginTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    guesslist: {
+        width: Util.size.width - 20,
+        borderColor: '#484848',
+        borderWidth: 1,
 
-    //原
+    },
+    guesslisttitle: {
+        backgroundColor: '#484848',
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    guesslistcontent: {
+        paddingTop: 20,
+        alignItems: 'center',
+    },
+    guesslistimg: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 255, 255, 0.6)',
+        marginRight: 10,
+    },
+    guesslistcenter: {
+        width: Util.size.width / 3,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    guesslisttext: {
+        marginTop: 5,
+        marginBottom: 5,
+    },
+    guesslistresult: {
+        width: Util.size.width - 40,
+        height: 60,
+        margin: 10,
+        borderRadius: 2,
+        backgroundColor: '#6B1518',
+    },
+    guesslistresulttext: {
+        paddingTop: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    guesslistresulttextfont: {
+        top: 8,
+    },
     flexrow: {
         flexDirection: 'row',
     },

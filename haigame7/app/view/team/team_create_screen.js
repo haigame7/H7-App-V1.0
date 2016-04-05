@@ -13,7 +13,6 @@ import React, {
   ToastAndroid,
 } from 'react-native';
 import Header from '../common/headernav';
-
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 export default class extends React.Component {
@@ -54,7 +53,6 @@ export default class extends React.Component {
       });
   }
   _callback(){
-    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
     this.state.navigator.pop()
   }
 
