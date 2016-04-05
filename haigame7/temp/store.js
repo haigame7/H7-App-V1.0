@@ -18,7 +18,8 @@ export default class SectionHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state ={
-      bar: undefined
+      bar: undefined,
+      key: undefined
     }
   }
   componentDidMount() {
@@ -28,19 +29,14 @@ export default class SectionHeader extends React.Component {
   }
   getData(){
     DB.bar.find().then(resp => {
-      // console.log(resp);
+      console.log(resp);
       this.setState({bar: resp.length})
     })
   }
   handleFilter(itemName) {
-      DB.foo.find({
-          where: {
-              and: [{ foo: { neq: itemName } }, { age: { gte: 5 } }]
-          },
-          order: {
-              age: 'ASC',
-          }
-      }).then(resp => this.setState({items: resp}));
+      DB.bar.find({
+          where: {name:'huhaoran'}
+      }).then(resp => this.setState({key: JSON.stringify(resp)}));
   }
 
   handleOnPress() {
@@ -48,7 +44,6 @@ export default class SectionHeader extends React.Component {
           name: 'huhaoran',
           age: 12
       }).then(() => this.getData());
-
   }
 
   render(){
@@ -60,6 +55,10 @@ export default class SectionHeader extends React.Component {
         <Text>点击添加</Text>
       </TouchableHighlight>
       {bar}
+      <TouchableHighlight onPress={this.handleFilter.bind(this)}>
+        <Text>查找</Text>
+      </TouchableHighlight>
+      <Text>{this.state.key}</Text>
       </View>
     );
   }
