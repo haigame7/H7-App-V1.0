@@ -157,7 +157,7 @@ class App extends Component {
   }
   componentWillMount() {
     this.updateLoginState();
-    console.log(userdata);
+    // console.log(userdata);
 
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
     //   let data = JSON.parse(value);
