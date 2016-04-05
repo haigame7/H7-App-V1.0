@@ -25,7 +25,7 @@ import MatchRule from './match/matchrule';
 import MatchSchedule from './match/matchschedule';
 import MatchService from '../network/matchservice';
 import GuessService from '../network/guessservice';
-import FightService from '../network/fightservice';
+import TeamService from '../network/teamservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -74,17 +74,18 @@ export default class extends Component{
       this.setState({
         content: content
       });
+      this.initData();
     }
     componentWillMount() {
     this.setState({loaded: true})
-    this.initData();
+
     }
     componentDidMount(){
 
     }
     initData(){
       {/*请求我的战队信息*/}
-      FightService.getUserDefaultTeam({phone:this.state.userphone},(response) => {
+      TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');

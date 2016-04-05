@@ -93,7 +93,7 @@ import Toast from '@remobile/react-native-toast';
     }
     initData(){
       {/*请求我的战队信息*/}
-      TeamService.getUserDefaultTeam(this.state.content.userData.PhoneNumber,(response) => {
+      TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
             Toast.show('服务器请求异常');
@@ -165,7 +165,7 @@ import Toast from '@remobile/react-native-toast';
             }
         } else if (name == 'playerinfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: PlayerInfo, params:{'playerinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.userteamid,'playerinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }else if (name == 'teaminfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -185,12 +185,12 @@ import Toast from '@remobile/react-native-toast';
         }
         else if (name == 'mysendapply') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: MySendApply, params:this.state.content,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: MySendApply,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
         else if (name == 'applyjoin') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: ApplyJoin, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+              this.props.navigator.push({ name: name, component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
     }
@@ -240,7 +240,7 @@ import Toast from '@remobile/react-native-toast';
             </View>
           </View>
         </View>
-        <TouchableOpacity style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
         </TouchableOpacity>
       </TouchableOpacity>
@@ -363,6 +363,22 @@ import Toast from '@remobile/react-native-toast';
       }
       else if (response[0].MessageCode == '0') {
          Toast.show('成功发出申请');
+      } else {
+        console.log('请求错误' + response[0].MessageCide);
+      }
+    });
+  }
+  inviteUser(userID,teamID){
+    var data = {'teamID':teamID,'userID':userID};
+    TeamService.inviteUser(data,(response)=>{
+      if(response[0].MessageCode == '20008'){
+        Toast.show('您已经邀请该玩家');
+      }
+      else if (response[0].MessageCode == '20007') {
+         Toast.show('您已向其他发出申请');
+      }
+      else if (response[0].MessageCode == '0') {
+         Toast.show('成功发出邀请');
       } else {
         console.log('请求错误' + response[0].MessageCide);
       }
