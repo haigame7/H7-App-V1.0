@@ -23,6 +23,10 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
+import TeamService from '../../network/teamservice';
+import GlobalSetup from '../../constants/globalsetup';
+import GlobalVariable from '../../constants/globalvariable';
+import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
   constructor(props) {
@@ -35,7 +39,20 @@ export default class extends Component{
   }
 
   applyTeam(userID,teamID){
-    console.log(userID+'applyTeam'+teamID);
+    var data = {'userID':userID,'teamID':teamID};
+    TeamService.applyTeam(data,(response)=>{
+      if(response[0].MessageCode == '20006'){
+        Toast.show('您已经加入其他战队');
+      }
+      else if (response[0].MessageCode == '20007') {
+         Toast.show('您已向其他发出申请');
+      }
+      else if (response[0].MessageCode == '0') {
+         Toast.show('成功发出申请');
+      } else {
+        console.log('请求错误' + response[0].MessageCide);
+      }
+    });
   }
   render(){
     return (

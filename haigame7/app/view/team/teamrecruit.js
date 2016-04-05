@@ -19,26 +19,47 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
+import TeamService from '../../network/teamservice';
+import GlobalSetup from '../../constants/globalsetup';
+import GlobalVariable from '../../constants/globalvariable';
+import Toast from '@remobile/react-native-toast';
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
       content:undefined,
       textnumber:0,
+      teamID:this.props.teamID,
       messages: []
     }
   }
   onChange(text){
     this.setState(
       {
-        textnumber:text.length
+        textnumber:text.length,
+        content:text,
       }
     );
-    console.log(text.length);
   }
-
+ cancelRecruit(){
+   this.props.navigator.pop();
+ }
+ sendRecruit(){
+   if(this.state.textnumber<5){
+     Toast.show('至少输入5个字符');
+     return;
+   }
+   var data = {'teamID':this.state.teamID,'content':this.state.content};
+   TeamService.sendRecruit(data,(response)=>{
+     if(response[0].MessageCode == '0'){
+       Toast.show('发布成功');
+     }
+     else {
+       Toast.show('发布失败');
+     }
+   });
+ }
   render(){
-
     return (
       <View>
         <Headernav screenTitle='发布招募'  navigator={this.props.navigator}/>
@@ -48,10 +69,10 @@ export default class extends Component{
             <Text style={styles.recruitnumber}>{this.state.textnumber}/200</Text>
           </View>
           <View style={styles.recruitbtnblock}>
-            <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} activeOpacity={0.8}>
+            <TouchableOpacity onPress={()=>this.cancelRecruit()} style = {[commonstyle.btncreamblack, styles.recruitbtn]} activeOpacity={0.8}>
               <Text style = {commonstyle.black}> {'取消'}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} activeOpacity={0.8}>
+            <TouchableOpacity onPress={()=>this.sendRecruit()} style = {[commonstyle.btnredwhite, styles.recruitbtn]} activeOpacity={0.8}>
               <Text style = {commonstyle.white}> {'发布'}</Text>
             </TouchableOpacity>
           </View>
