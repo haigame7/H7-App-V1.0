@@ -37,6 +37,8 @@ import GlobalVariable from '../constants/globalvariable';
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/fightstyle';
 import Toast from '@remobile/react-native-toast';
+import Login from './user/login';
+import User from './user.js';
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -92,8 +94,20 @@ export default class extends Component{
   gotoRoute(name,userteamid,fightteamid){
     if (name == 'makechanllenge') {
        {/*先判断登录*/}
-       if(this.state.login==0){
-         Alert.alert(this.state.userteamname);
+       if(this.state.content.userData.UserID==undefined){
+         this.props.navigator.push({
+           name:'login',
+           component:Login,
+           params:{...this.props},
+          sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+         });
+       }else if(this.state.userteamid==0){
+         this.props.navigator.push({
+           name:'user',
+           component:User,
+           params:{'userData':this.state.content.userData,'openmodal':true},
+           sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+         });
        }else{
          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
              this.props.navigator.push({
