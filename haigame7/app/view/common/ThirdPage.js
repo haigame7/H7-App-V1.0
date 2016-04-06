@@ -21,8 +21,6 @@ export default class SecondPageComponent extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     console.log('ThirdPage receiveProps');
-    console.log(nextProps);
-    console.log(this.props.name);
     if (nextProps.name != this.props.name) {
       this.setState({
         name: nextProps.name
@@ -53,7 +51,7 @@ export default class SecondPageComponent extends React.Component {
   render() {
     return (
       <View>
-      <Text>我是老三: {this.state.name}</Text>
+      <Text>Component BBBB: {this.state.name}</Text>
       </View>
     );
   }
