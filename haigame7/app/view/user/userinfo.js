@@ -42,13 +42,16 @@ export default class extends Component {
   }
 
   componentWillMount() {
-    AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
-      let jsondata = JSON.parse(value);
-      let birthday = jsondata.Birthday.split("-");
-      this.setState({
-        userData: jsondata
-      })
-    });
+    // AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+    //   let jsondata = JSON.parse(value);
+    //   alert(jsondata.Birthday)
+    //   if (jsondata.Birthday != '' && jsondata.Birthday != null){
+    //     let birthday = jsondata.Birthday.split("-");
+    //     this.setState({
+    //       userData: jsondata
+    //     })
+    //   }
+    // });
   }
 
 
@@ -56,9 +59,16 @@ export default class extends Component {
     this.setState({
       pickerData: this._createAreaData(AreaData)
     })
-    if(this.state.userData.Address != undefined && this.state.userData.Address !=  ''){
+    // Alert.alert(this.state.userData.Address)
+    if(this.state.userData.Address != undefined && this.state.userData.Address != ''){
       this.setState({
         selectedValue: this._setSelectedValue(this.state.userData.Address),
+      })
+    }
+    if (this.state.userData.Birthday != '' && this.state.userData.Birthday != undefined){
+      let birthday = this.state.userData.Birthday.split("-");
+      this.setState({
+        selectedValueDate: ['2000', '4', '18']
       })
     }
 
@@ -91,11 +101,11 @@ export default class extends Component {
     if (this.beContent(temp[0])){
       result[0] = temp[0];
       result[1] = temp[0];
-      result[1] = temp[1];
+      result[2] = temp[2];
     } else {
       result[0] = temp[0];
       result[1] = temp[1];
-      result[1] = temp[1];
+      result[2] = temp[2];
     }
     return result;
   }
@@ -249,7 +259,6 @@ _onPressHandle_2(){
   //  console.log(pickedValue);
    let date = pickedValue[0] + '-' + pickedValue[1] + '-' + pickedValue[2];
    let data = this.state.userData;
-   console.log(date);
    data['Birthday'] = date;
    UserService.updateUserInfo({"PhoneNumber":this.state.userData.PhoneNumber,'Birthday':date},(response) => {
      if(response[0].MessageCode == '0') {
