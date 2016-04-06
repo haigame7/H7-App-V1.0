@@ -159,7 +159,7 @@ import Toast from '@remobile/react-native-toast';
           });
     }
     gotoRoute(name,params) {
-      if(this.state.userteamid==0){
+      if(this.state.content.userData.UserID==0){
         Toast.showLongCenter('请先登录');
         return;
       }
@@ -209,7 +209,7 @@ import Toast from '@remobile/react-native-toast';
       </View>
       <View style={styles.teamlistright}>
         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.RecruitTime}</Text>
-        <TouchableOpacity  onPress={()=>this.state.userteamid==0?Toast.showLongCenter('请先登录'):this.applyTeam(this.state.content.userData.UserID,rowData.TeamID)} style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity  onPress={()=>this.state.content.userData.UserID==0?Toast.showLongCenter('请先登录'):this.applyTeam(this.state.content.userData.UserID,rowData.TeamID)} style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '申请加入' : '已申请' } </Text>
         </TouchableOpacity>
       </View>
@@ -244,7 +244,7 @@ import Toast from '@remobile/react-native-toast';
             </View>
           </View>
         </View>
-        <TouchableOpacity onPress={()=>this.state.userteamid==0?Toast.showLongCenter('请先登录'):this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>this.state.userteamid==0?Toast.showLongCenter('请先创建战队'):this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
         </TouchableOpacity>
       </TouchableOpacity>

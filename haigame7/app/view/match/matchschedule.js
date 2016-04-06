@@ -126,6 +126,7 @@ export default class extends Component{
       navbar:nav,
       subbar: 0,
     });
+     this.getBoBoList();
     this.getMatchDateList(this.props.matchdata.matchID, nav);
     return;
   }

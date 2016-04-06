@@ -63,7 +63,9 @@ var User = React.createClass({
   componentWillReceiveProps(nextProps,nextState) {
   },
   componentWillMount() {
-
+   if(this.props.openmodal){
+     this._openModa();
+   }
   },
   componentDidMount() {
 
@@ -87,6 +89,9 @@ var User = React.createClass({
   },
   _closeModa() {
      this.setState({modalOpen: false});
+  },
+  _openModa() {
+     this.setState({modalOpen: true});
   },
   _createTeam(){
     this._toNextScreen({"name":"创建战队","component":CreateTeam});
