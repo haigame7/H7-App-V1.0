@@ -38,6 +38,11 @@ var MatchStyle = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#D31B25',
     },
+    navtimetab: {
+        flexDirection: 'row',
+        height: 40,
+        backgroundColor: '#232220',
+    },
     navtime: {
         height: 40,
         width: (Util.size.width-20)/3,
