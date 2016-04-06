@@ -19,7 +19,7 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/matchstyle';
 
-import MatchDetail from '../user/matchdetail';
+import MatchDetail from '../match/matchdetail';
 
 
 var UserMatchList = React.createClass({

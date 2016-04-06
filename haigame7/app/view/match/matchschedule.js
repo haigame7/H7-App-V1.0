@@ -23,6 +23,8 @@ var styles = require('../../styles/matchstyle');
 var Carousel = require('react-native-carousel');
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+import MatchDetail from '../match/matchdetail';
+import UserMatch from '../user/usermatch';
 import MatchService from '../../network/matchservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
@@ -44,6 +46,8 @@ export default class extends Component{
       matchdatelist:[],
       bobomatchlist:[],
       boboid: this.props.boboID,
+      starttime: '',
+      num: 1,
       loaded:false,
       userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
       userdata:{
@@ -52,7 +56,10 @@ export default class extends Component{
         userasset:0
       },
       matchdata:{
-        matchID:4,
+        matchID:this.props.matchdata.matchID,
+        matchname:this.props.matchdata.matchname,
+        showpicture:this.props.matchdata.showpicture,
+        introduce:this.props.matchdata.introduce,
       },
     }
   }
@@ -61,10 +68,10 @@ export default class extends Component{
   }
   initData(){
    this.getBoBoList();
-   this.getMatchDateList(this.props.matchdata.matchID, this.props.boboID);
+   this.getMatchDateList(this.state.matchdata.matchID, this.state.boboid, this.state.num);
   }
   getBoBoList(){
-    MatchService.getBoBoList(this.props.matchdata,(response) => {
+    MatchService.getBoBoList(this.state.matchdata,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');
@@ -82,7 +89,7 @@ export default class extends Component{
           }
     });
   }
-  getMatchDateList(matchid, boboid){
+  getMatchDateList(matchid, boboid, num){
     MatchService.getMatchDateList({matchID: matchid,boboID: boboid},(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
@@ -90,11 +97,14 @@ export default class extends Component{
         }else if(response[0].MessageCode == '0'){
           let newData = response[1];
           this.setState({
+            starttime: newData[0].StartTime.toString(),
             datamatchdateSource: this.state.datamatchdateSource.cloneWithRows(newData),
             matchdatelist:newData,
             loaded:false,
           });
-          this.getBoBoMatchList(this.props.matchdata.matchID, this.props.boboID, newData[0].StartTime.toString());
+          if(num == 1){
+            this.getBoBoMatchList(this.state.matchdata.matchID, this.state.boboid, this.state.starttime);
+          }
          }
        }
         else{
@@ -124,28 +134,35 @@ export default class extends Component{
   _switchNavbar(nav){
     this.setState({
       navbar:nav,
+      boboid: nav,
       subbar: 0,
+      num: 1,
     });
-     this.getBoBoList();
-    this.getMatchDateList(this.props.matchdata.matchID, nav);
+    this.getBoBoList();
+    this.getMatchDateList(this.state.matchdata.matchID, this.state.boboid, this.state.num);
     return;
   }
   _switchSubbar(sub, date){
     this.setState({
       subbar:sub,
+      starttime: date,
+      num: 2,
     });
-    this.getBoBoMatchList(this.props.matchdata.matchID, this.props.boboID, date);
+    this.getMatchDateList(this.state.matchdata.matchID, this.state.boboid, this.state.num);
+    this.getBoBoMatchList(this.state.matchdata.matchID, this.state.boboid, date);
     return;
   }
   _renderFooter(){
 
   }
-  gotoRoute(name) {
-    if (name == 'carouselrule') {
-      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+  gotoRoute(params) {
+    if (params.name == 'usermatch') {
+      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
+        this.props.navigator.push({ name: params.name, component: UserMatch, params:params,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
-    } else if (name == 'playerinfo') {
-      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+    } else if (params.name == 'matchdetail') {
+      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
+        this.props.navigator.push({ name: params.name, component: MatchDetail, params:params,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
     }
   }
@@ -184,7 +201,7 @@ export default class extends Component{
                   <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
                 </View>
               </View>
-              <TouchableOpacity style={[commonstyle.btnborderred, styles.schedulelistbtn]} activeOpacity={0.8}>
+              <TouchableOpacity style={[commonstyle.btnborderred, styles.schedulelistbtn]} activeOpacity={0.8}  onPress = {this.gotoRoute.bind(this,{"name":"matchdetail","matchID":rowData.MatchID})}>
                 <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'查看详情'}</Text>
               </TouchableOpacity>
             </View>
@@ -213,7 +230,7 @@ export default class extends Component{
                   <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
                 </View>
               </View>
-              <TouchableOpacity style={[commonstyle.btnborderred, styles.schedulelistbtn]} activeOpacity={0.8}>
+              <TouchableOpacity style={[commonstyle.btnborderred, styles.schedulelistbtn]} activeOpacity={0.8}  onPress = {this.gotoRoute.bind(this,{"name":"matchdetail","matchID":rowData.MatchID})}>
                 <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'查看详情'}</Text>
               </TouchableOpacity>
             </View>
@@ -266,21 +283,22 @@ export default class extends Component{
   }
   render() {
     let carousel = this.rendercarousellist();
+    let matchtitle = this.state.matchdata.matchname;
     return (
       <View style={styles.container}>
-        <Header screenTitle="Dota2争霸赛赛程"   iconText='我的赛程' callback={this.gotoRoute.bind(this,'carouselrule')} navigator={this.props.navigator}/>
+        <Header screenTitle={matchtitle} iconText='我的赛事' callback={this.gotoRoute.bind(this,{"name":"usermatch"})} navigator={this.props.navigator}/>
         {/*轮播*/}
         {carousel}
         {/*轮播end*/}
         <View style={styles.nav}>
-            <View style={styles.navtab}>
-          <Carousel  hideIndicators={true} animate={false} delay={5000}  loop={true} >
+          <View style={styles.navtab}>
+            <Carousel  hideIndicators={true} animate={false} delay={5000}  loop={true} >
               <ListView style={styles.navtimetab} horizontal={true}
                   dataSource={this.state.datamatchdateSource}
                   renderRow={this._renderMatchDateRow.bind(this)}
                 />
-          </Carousel>
-            </View>
+            </Carousel>
+          </View>
         </View>
         <ScrollView style={styles.centerbg}>
           <ListView
