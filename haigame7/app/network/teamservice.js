@@ -56,6 +56,24 @@ createTeam(data,callback){
       callback
     );
 },
+/*删除战队*/
+deleteTeam(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.DELETETEAM,
+      {
+        'CreatUserID':data.creater,
+        'TeamName':data.teamname,
+        'TeamType':data.teamtype,
+      },
+      callback
+    );
+},
   /*获取约战列表*/
   getTeamList(data,callback){
     /**

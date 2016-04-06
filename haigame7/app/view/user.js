@@ -125,6 +125,7 @@ var User = React.createClass({
               this.setState({teamData: response[1]});
       }else{
         console.log('请求错误' + response[0].Message);
+        this.setState({teamData:{}});
       }
     });
   },
@@ -170,6 +171,10 @@ var User = React.createClass({
               console.log('认证回调');
               _this.getUserGameInfo(_this.state.userData.PhoneNumber)
             break;
+          case 'TeamInfo':
+              _this.getUserTeamInfo(_this.state.userData.UserID);
+              _this.setState({modalOpen: false});
+              break;
           default:
 
         }

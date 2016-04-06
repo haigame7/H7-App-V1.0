@@ -36,6 +36,7 @@ import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/fightstyle';
+import Toast from '@remobile/react-native-toast';
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -148,9 +149,9 @@ export default class extends Component{
     TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
-          Alert.alert('服务器请求异常');
+          Toast.show('服务器请求异常');
         }else if(response.MessageCode == '40002'){
-          Alert.alert('token过期');
+          Toast.show('token过期');
         }else if(response[0].MessageCode == '20003'){
           this.setState({
             userteamname:'还没有创建战队',
@@ -191,7 +192,7 @@ export default class extends Component{
         }
       }
       else {
-        Alert.alert('请求错误');
+        Toast.show('请求错误');
         //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
       }
     });
@@ -375,7 +376,7 @@ export default class extends Component{
         footerMsg: "正在加载....."
       });
       {/*加载下一页*/}
-      FightService.getFightTeamList(_params,(response) => {
+        TeamService.getTeamList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
           if(nextData.length<4){
