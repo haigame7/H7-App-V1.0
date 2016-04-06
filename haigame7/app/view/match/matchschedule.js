@@ -32,16 +32,16 @@ export default class extends Component{
   constructor(props) {
     super(props);
     var databobo = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var databobotime = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var datamatchdate = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var databobomatch = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       navbar: this.props.boboID,
       subbar: 0,
       databoboSource: databobo.cloneWithRows([]),
-      databobotimeSource: databobotime.cloneWithRows([]),
+      datamatchdateSource: datamatchdate.cloneWithRows([]),
       databobomatchSource: databobomatch.cloneWithRows([]),
       bobolist:[],
-      bobotimelist:[],
+      matchdatelist:[],
       bobomatchlist:[],
       boboid: this.props.boboID,
       loaded:false,
@@ -61,7 +61,7 @@ export default class extends Component{
   }
   initData(){
    this.getBoBoList();
-   this.getBoBoMatchList(this.props.matchdata.matchID, this.props.boboID);
+   this.getMatchDateList(this.props.matchdata.matchID, this.props.boboID);
   }
   getBoBoList(){
     MatchService.getBoBoList(this.props.matchdata,(response) => {
@@ -82,19 +82,36 @@ export default class extends Component{
           }
     });
   }
-  getBoBoMatchList(matchid, boboid){
-    MatchService.getBoBoMatchList({matchID: matchid,boboID: boboid},(response) => {
+  getMatchDateList(matchid, boboid){
+    MatchService.getMatchDateList({matchID: matchid,boboID: boboid},(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');
         }else if(response[0].MessageCode == '0'){
           let newData = response[1];
-          let lastData = response[2];
           this.setState({
-            databobotimeSource: this.state.databobotimeSource.cloneWithRows(newData),
-            databobomatchSource: this.state.databobomatchSource.cloneWithRows(lastData),
-            bobotimelist:newData,
-            bobomatchlist:lastData,
+            datamatchdateSource: this.state.datamatchdateSource.cloneWithRows(newData),
+            matchdatelist:newData,
+            loaded:false,
+          });
+          this.getBoBoMatchList(this.props.matchdata.matchID, this.props.boboID, newData[0].StartTime.toString());
+         }
+       }
+        else{
+            Toast.show('请求错误');
+          }
+    });
+  }
+  getBoBoMatchList(matchid, boboid, matchdate){
+    MatchService.getBoBoMatchList({matchID: matchid,boboID: boboid,matchtime: matchdate},(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          let newData = response[1];
+          this.setState({
+            databobomatchSource: this.state.databobomatchSource.cloneWithRows(newData),
+            bobomatchlist:newData,
             loaded:false,
           });
          }
@@ -107,14 +124,16 @@ export default class extends Component{
   _switchNavbar(nav){
     this.setState({
       navbar:nav,
+      subbar: 0,
     });
-    this.getBoBoMatchList(this.props.matchdata.matchID, nav);
+    this.getMatchDateList(this.props.matchdata.matchID, nav);
     return;
   }
-  _switchSubbar(sub){
+  _switchSubbar(sub, date){
     this.setState({
       subbar:sub,
     });
+    this.getBoBoMatchList(this.props.matchdata.matchID, this.props.boboID, date);
     return;
   }
   _renderFooter(){
@@ -132,48 +151,25 @@ export default class extends Component{
   _renderBoBoRow(rowData){
     return(
       <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} onPress = {() => this._switchNavbar(rowData.BoBoID)}>
-        <Image style={this.state.navbar==rowData.BoBoID?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.UserPicture}} />
+        <Image style={rowData.BoBoID==this.state.navbar?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.UserPicture}} />
         <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.Name}</Text>
       </TouchableOpacity>
     );
   }
-  _renderBoBoTimeRow(rowData,sectionID,rowID){
+  _renderMatchDateRow(rowData,sectionID,rowID){
     return(
-      <TouchableOpacity style={[this.state.navbar==rowID?styles.navbtnactive:styles.navbtn, styles.navtime]} activeOpacity={0.8}  onPress = {() => this._switchSubbar(rowID)}>
-        <Text style={this.state.navbar==rowID?commonstyle.red:commonstyle.white}>{rowData.StartTime}</Text>
+      <TouchableOpacity style={[this.state.subbar==rowID?styles.navbtnactive:styles.navbtn, styles.navtime]} activeOpacity={0.8}  onPress = {() => this._switchSubbar(rowID, rowData.StartTime)}>
+        <Text style={this.state.subbar==rowID?commonstyle.red:commonstyle.white}>{rowData.StartTime}</Text>
       </TouchableOpacity>
     );
   }
   _renderBoBoMatchRow(rowData){
-    return(
-        <TouchableOpacity style={this.state.navbar==rowID?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}>
-          <Text style={this.state.navbar==rowID?commonstyle.red:commonstyle.white}>demo</Text>
-        </TouchableOpacity>
-      );
-  }
-  rendercarousellist(){
-    return(
-      <View style={styles.carouselview}>
-        <Carousel  hideIndicators={true} animate={false} delay={5000}  loop={true} >
-          <View style={styles.carousellistblock}>
-            <ListView style={styles.carousellist} horizontal={true}
-              dataSource={this.state.databoboSource}
-              renderRow={this._renderBoBoRow.bind(this)}
-              renderFooter={this._renderFooter.bind(this)}
-            />
-          </View>
-        </Carousel>
-      </View>
-    );
-  }
-  renderscheduleList(){
-    if(this.state.navbar==0){
+    if(rowData.Result=='主队胜'){
       return(
-        <View>
           <View style={[commonstyle.row, styles.schedulelist]}>
             <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-              <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
+              <Image style={styles.schedulelistimg} source={{uri:rowData.STeamLogo}} />
+              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.STeamName}</Text>
             </View>
             <View style={commonstyle.col1}>
               <View style={[commonstyle.row, styles.schedulelistcenter]}>
@@ -192,20 +188,46 @@ export default class extends Component{
               </TouchableOpacity>
             </View>
             <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-              <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
+              <Image style={styles.schedulelistimg} source={{uri:rowData.ETeamLogo}} />
+              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.ETeamName}</Text>
             </View>
           </View>
-        </View>
-      );
-    }
-    else{
+        );
+    }else if(rowData.Result=='客队胜'){
       return(
-        <View>
           <View style={[commonstyle.row, styles.schedulelist]}>
             <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-              <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
+              <Image style={styles.schedulelistimg} source={{uri:rowData.STeamLogo}} />
+              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.STeamName}</Text>
+            </View>
+            <View style={commonstyle.col1}>
+              <View style={[commonstyle.row, styles.schedulelistcenter]}>
+                <View style={[commonstyle.btnbordercyan, styles.schedulelisttexticon]}>
+                  <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
+                </View>
+                <View style={styles.schedulelistvs}>
+                  <Text style={[commonstyle.blue, commonstyle.fontsize18]}>{'VS'}</Text>
+                </View>
+                <View style={[commonstyle.btnborderorange, styles.schedulelisttexticon]}>
+                  <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
+                </View>
+              </View>
+              <TouchableOpacity style={[commonstyle.btnborderred, styles.schedulelistbtn]} activeOpacity={0.8}>
+                <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'查看详情'}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+              <Image style={styles.schedulelistimg} source={{uri:rowData.ETeamLogo}} />
+              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.ETeamName}</Text>
+            </View>
+          </View>
+        );
+    }else{
+      return(
+          <View style={[commonstyle.row, styles.schedulelist]}>
+            <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+              <Image style={styles.schedulelistimg} source={{uri:rowData.STeamLogo}} />
+              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.STeamName}</Text>
             </View>
             <View style={commonstyle.col1}>
               <View style={[commonstyle.row, styles.schedulelistcenter]}>
@@ -216,20 +238,32 @@ export default class extends Component{
                 <View style={commonstyle.col1}></View>
               </View>
               <View style={[commonstyle.btnbordergray, styles.schedulelistbtn]}>
-                <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'查看详情'}</Text>
+                <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'未开始'}</Text>
               </View>
             </View>
             <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-              <Image style={styles.schedulelistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{'犀利拍立冬至'}</Text>
+              <Image style={styles.schedulelistimg} source={{uri:rowData.ETeamLogo}} />
+              <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.ETeamName}</Text>
             </View>
           </View>
-        </View>
-      );
+        );
     }
   }
+  rendercarousellist(){
+    return(
+      <View style={styles.carouselview}>
+        <Carousel  hideIndicators={true} animate={false} delay={5000}  loop={true} >
+          <View style={styles.carousellistblock}>
+            <ListView style={styles.carousellist} horizontal={true}
+              dataSource={this.state.databoboSource}
+              renderRow={this._renderBoBoRow.bind(this)}
+            />
+          </View>
+        </Carousel>
+      </View>
+    );
+  }
   render() {
-    let schedulelist = this.renderscheduleList();
     let carousel = this.rendercarousellist();
     return (
       <View style={styles.container}>
@@ -238,14 +272,21 @@ export default class extends Component{
         {carousel}
         {/*轮播end*/}
         <View style={styles.nav}>
-          <ListView style={styles.navtab} horizontal={true}
-              dataSource={this.state.databobotimeSource}
-              renderRow={this._renderBoBoTimeRow.bind(this)}
-              renderFooter={this._renderFooter.bind(this)}
-            />
+            <View style={styles.navtab}>
+          <Carousel  hideIndicators={true} animate={false} delay={5000}  loop={true} >
+              <ListView style={styles.navtimetab} horizontal={true}
+                  dataSource={this.state.datamatchdateSource}
+                  renderRow={this._renderMatchDateRow.bind(this)}
+                />
+          </Carousel>
+            </View>
         </View>
         <ScrollView style={styles.centerbg}>
-          {schedulelist}
+          <ListView
+              dataSource={this.state.databobomatchSource}
+              renderRow={this._renderBoBoMatchRow.bind(this)}
+              renderFooter={this._renderFooter.bind(this)}
+            />
         </ScrollView>
       </View>
     );
