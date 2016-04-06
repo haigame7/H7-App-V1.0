@@ -349,6 +349,7 @@ export default class extends Component{
     }
     }
   rendermodaldetail(){
+    console.log(this.state.modaData);
     if(this.state.navbar==0){
       {/*获得已报名战队数*/}
       let joinView =this.state.jointeam==''?<View></View>:<View><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛事信息,请关注'}</Text></View>
@@ -358,12 +359,12 @@ export default class extends Component{
           <View style={styles.modalheader}>
             <Image style={styles.modalimg} source={{uri:this.state.modaData.UserPicture}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14, styles.modalfont]}>{this.state.modaData.Name}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.modalfont]}>{'生命不息电竞不止,来吧加入我的战队'}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.modalfont]}>{this.state.modaData.TalkShow}</Text>
             <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'主播名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
             <View style={commonstyle.viewleft}>
-              <Text style={commonstyle.cream}>{'ID:      '} <Text style={commonstyle.white}>{'12312423'}</Text></Text>
+              <Text style={commonstyle.cream}>{'ID:      '} <Text style={commonstyle.white}>{this.state.modaData.GameID}</Text></Text>
               <Text style={commonstyle.cream}>{'性别:  '} <Text style={commonstyle.white}>{this.state.modaData.Sex}</Text></Text>
               <Text style={commonstyle.cream}>{'年龄:  '} <Text style={commonstyle.white}>{this.state.modaData.Age}</Text></Text>
               <Text style={commonstyle.cream}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
