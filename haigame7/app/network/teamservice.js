@@ -6,7 +6,7 @@ import ApiConfig from '../constants/apiconfig';
 export default{
 
   /* 获取我的战队 */
-  getUserDefaultTeam(phone,callback) {
+  getUserDefaultTeam(data,callback) {
     /**
      * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
      * @param  {[type]}   {'PhoneNumber':phone}             [params]
@@ -16,7 +16,7 @@ export default{
       FecthService.postFecth(
         ApiConfig.TEAM_API.GETUSERDEFAULTTEAM,
         {
-          'Creater':phone,
+          'CreatUserID':data,
         },
         callback
       );
@@ -36,6 +36,25 @@ export default{
         },
         callback
       );
+},
+/*创建新战队*/
+createTeam(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.CREATETEAM,
+      {
+        'CreatUserID':data.creater,
+        'TeamName':data.teamname,
+        'TeamLogo':data.teamlogo,
+        'TeamType':data.teamtype,
+      },
+      callback
+    );
 },
   /*获取约战列表*/
   getTeamList(data,callback){
@@ -159,6 +178,59 @@ getInviteUserList(data,callback){
     FecthService.postFecth(
       ApiConfig.USER_API.NOTEAMUSERLIST,
       {
+        'StartPage':data.startpage,
+        'PageCount':data.pagecount,
+      },
+      callback
+    );
+},
+/*邀请队员*/
+inviteUser(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.INVITEUSER,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+      },
+      callback
+    );
+},
+/*获得发出邀请列表*/
+getInvitedUserList(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.INVITEDUSERLIST,
+      {
+        'TeamID':data.teamID,
+        'StartPage':data.startpage,
+        'PageCount':data.pagecount,
+      },
+      callback
+    );
+},
+/*获得申请加入列表*/
+getApplyUserList(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.APPLYUSERLIST,
+      {
+        'TeamID':data.teamID,
         'StartPage':data.startpage,
         'PageCount':data.pagecount,
       },
