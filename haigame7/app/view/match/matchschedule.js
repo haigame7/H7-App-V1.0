@@ -51,9 +51,9 @@ export default class extends Component{
       loaded:false,
       userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
       userdata:{
-        userid:0,
-        userteamid:0,
-        userasset:0
+        userid:this.props.userdata.userid,
+        userteamid:this.props.userdata.userteamid,
+        userasset:this.props.userdata.userasset,
       },
       matchdata:{
         matchID:this.props.matchdata.matchID,
@@ -158,7 +158,7 @@ export default class extends Component{
   gotoRoute(params) {
     if (params.name == 'usermatch') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
-        this.props.navigator.push({ name: params.name, component: UserMatch, params:params,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        this.props.navigator.push({ name: params.name, component: UserMatch, params:{'userdata':this.state.userdata},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
     } else if (params.name == 'matchdetail') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
