@@ -26,7 +26,7 @@ import styles from '../../styles/matchstyle';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 import GuessService from '../../network/guessservice';
-import FightService from '../../network/fightservice';
+import TeamService from '../../network/teamservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 
@@ -36,7 +36,7 @@ export default class extends Component{
     var dataguess = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       navbar: 0,
-      userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
+      userID:this.props.userData.UserID,
       dataguessSource:dataguess.cloneWithRows(['row1']),
       guesslist:[],
       keykey:0,
@@ -53,7 +53,7 @@ export default class extends Component{
    this.initData();
  }
  initData(){
-   FightService.getUserDefaultTeam({phone:this.state.userphone},(response) => {
+   TeamService.getUserDefaultTeam(this.state.userID,(response) => {
    if (response !== GlobalSetup.REQUEST_SUCCESS) {
      if(response[0].MessageCode == '40001'){
        Alert.alert('服务器请求异常');
@@ -79,7 +79,6 @@ export default class extends Component{
        if(response[0].MessageCode == '40001'){
          Alert.alert('服务器请求异常');
        }else if(response[0].MessageCode == '0'){
-         console.log(response[1]);
          let newData = response[1];
          this.setState({
            dataguessSource: this.state.dataguessSource.cloneWithRows(newData),
@@ -109,8 +108,8 @@ export default class extends Component{
               <Text style={[commonstyle.gray, commonstyle.fontsize12 ]}>{rowData.GuessTime}</Text>
             </View>
             <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-              <Image style={styles.guesslistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-              <Text style={[commonstyle.white, commonstyle.fontsize14, styles.guesslisttext]}>{'犀利拍立冬至'}</Text>
+              <Image style={styles.guesslistimg} source={{uri:rowData.ETeamLogo}} />
+              <Text style={[commonstyle.white, commonstyle.fontsize14, styles.guesslisttext]}>{rowData.ETeamName}</Text>
             </View>
           </View>
           <View style={styles.guesslistresult}>
