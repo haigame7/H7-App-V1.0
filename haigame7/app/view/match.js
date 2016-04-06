@@ -344,7 +344,7 @@ export default class extends Component{
         }
     } else if (name == 'matchschedule') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-        this.props.navigator.push({ name: name, component: MatchSchedule, params:{'matchdata':params,'boboID':this.state.boboid,'userdata':this.state.content.userData}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        this.props.navigator.push({ name: name, component: MatchSchedule, params:{'matchdata':params,'boboID':this.state.boboid, 'userdata':this.state.userdata}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
     }
     }
@@ -380,7 +380,7 @@ export default class extends Component{
       return(
         <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalbig, styles.modalbgopacity]} position={"top"} >
           <View style={[styles.modalheader]}>
-            <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}</Text>
+            <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}{' 获胜'}</Text>
             <View  style = {styles.modalinput }>
               <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
             </View>
