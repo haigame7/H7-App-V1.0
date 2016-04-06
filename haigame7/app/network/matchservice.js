@@ -133,4 +133,19 @@ export default{
         callback
       );
   },
+  /*赛事状态*/
+  getMatchState(data,callback){
+    /**
+     * @param  {[type]}   {'UserID':userID}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.MATCH_API.MATCHSTATE,
+        {
+          'MatchID':data.matchID,
+        },
+        callback
+      );
+  },
 }

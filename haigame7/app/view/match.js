@@ -32,6 +32,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modalbox';
 import Toast from '@remobile/react-native-toast';
 import Button from 'react-native-button';
+import Login from './user/login';
+import User from './user.js';
 
 const default_user_pic = 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'
 export default class extends Component{
@@ -47,13 +49,14 @@ export default class extends Component{
       datamyguessSource:datamyguess.cloneWithRows([]),
       bobolist:[],
       boboid: 1,
+      matchstate:0,
       guesslist:[],
       isOpen:false,
       loaded:false,
       joincount:-1,
       jointeam:'',
       jointime:'',
-      userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
+      userphone:'' ,
       guessmoney:0,
       userdata:{
         userid:0,
@@ -72,7 +75,15 @@ export default class extends Component{
     }
     updateContentData(content){
       this.setState({
-        content: content
+        content: content,
+        jointeam:'',
+        isOpen: false,
+        userphone:content.userData.PhoneNumber,
+        userdata:{
+          userid:0,
+          userteamid:0,
+          userasset:0
+        }
       });
       this.initData();
     }
@@ -105,6 +116,7 @@ export default class extends Component{
      this.getMatchList();
      this.getGuessList();
     }
+
     getMatchList(){
       {/*请求赛事信息*/}
        MatchService.getMatchList((response) => {
@@ -121,6 +133,7 @@ export default class extends Component{
                },
 
              });
+              this.getMatchState(this.state.matchdata);
               this.getBoBoList(this.state.matchdata);
             }
           }
@@ -149,7 +162,23 @@ export default class extends Component{
              }
        });
     }
-
+    getMatchState(matchdata){
+      {/*请求赛事信息*/}
+       MatchService.getMatchState(matchdata,(response) => {
+         if (response !== GlobalSetup.REQUEST_SUCCESS) {
+           if(response[0].MessageCode == '40001'){
+             Toast.show('服务器请求异常');
+           }else if(response[0].MessageCode == '0'){
+             this.setState({
+                 matchstate:response[1].MatchState,
+               });
+            }
+          }
+           else{
+               Toast.show('请求错误');
+             }
+       });
+    }
     getBoBoList(matchdata){
       MatchService.getBoBoList(matchdata,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -187,6 +216,9 @@ export default class extends Component{
        return itemsGroups;
    }
     _openBoBoModa(rowData) {
+      if(this.state.matchstate==1){
+      this.gotoRoute('matchschedule',this.state.matchdata);
+      }else{
       MatchService.getBoBoCount(rowData,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
@@ -218,8 +250,9 @@ export default class extends Component{
       });
       }
      }
-   });
-    }
+     });
+   }
+ }
     _openGuessModa(rowData) {
       GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount},(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -243,6 +276,7 @@ export default class extends Component{
        this.setState({isOpen: false});
     }
     _doBet(params){
+      params.money = parseInt(this.state.guessmoney);
       GuessService.doGuessBet(params,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
@@ -262,7 +296,22 @@ export default class extends Component{
       });
     }
     _joinMatch(params){
-      if(params.jointeam!==''){
+      if(this.state.content.userData.UserID==undefined){
+        this.props.navigator.push({
+          name:'login',
+          component:Login,
+          params:{...this.props},
+         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+      }else if(this.state.userdata.userteamid==0){
+        this.props.navigator.push({
+          name:'user',
+          component:User,
+          params:{'userData':this.state.content.userData,'openmodal':true},
+          sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+      }
+      else if(params.jointeam!==''){
         Toast.showLongCenter('您已报名'+params.jointeam+'!');
       }else{
         MatchService.joinMatch(params,(response) => {
@@ -333,7 +382,7 @@ export default class extends Component{
           <View style={[styles.modalheader]}>
             <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}{' 获胜'}</Text>
             <View  style = {styles.modalinput }>
-              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' style={styles.modalinputfont}  onChangeText = {(text) => this.state.guessmoney = text }/>
+              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
             </View>
             <View style ={commonstyle.row}>
               <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.userdata.userasset}</Text></Text></View>
@@ -343,7 +392,7 @@ export default class extends Component{
 
           <View style={commonstyle.row}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >取消关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._doBet.bind(this,{'guessID':this.state.modaData.guessid,'userID':this.state.userdata.userid,'teamID':this.state.modaData.guessteamid,'money':this.state.guessmoney,'odds':this.state.modaData.guessodd})} >确认下注</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._doBet.bind(this,{'guessID':this.state.modaData.guessid,'userID':this.state.userdata.userid,'teamID':this.state.modaData.guessteamid,'money':0,'odds':this.state.modaData.guessodd})} >确认下注</Button>
           </View>
 
           <View style={styles.modalfooter}>
@@ -408,17 +457,17 @@ _renderGuessRow(rowData){
         <View style={[commonstyle.viewcenter, styles.matchlisttitle]}><Text style={[commonstyle.fontsize14,commonstyle.white]}>{rowData.GuessName}</Text></View>
         <View style={commonstyle.row}>
           <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.ETeamID,guessname:rowData.ETeamName,guessodd:rowData.ETeamOdds})}>
-            <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+            <Image style={styles.matchlistimg} source={{uri:rowData.ETeamLogo}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.ETeamName}</Text>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.ETeamOdds}</Text>
           </TouchableOpacity>
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
             <Text style={[commonstyle.blue, styles.matchlistvs]}>{'VS'}</Text>
-            <Text style={[commonstyle.white, commonstyle.fontsize12, styles.matchlistvstime]}>{'2015/05/04'}</Text>
+            <Text style={[commonstyle.white, commonstyle.fontsize12, styles.matchlistvstime]}>{rowData.MatchTime!==null?rowData.MatchTime.substring(0,10):rowData.MatchTime}</Text>
             <Text style={[commonstyle.yellow ]}>{rowData.GuessType}</Text>
           </View>
           <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.STeamID,guessname:rowData.STeamName,guessodd:rowData.STeamOdds})}>
-            <Image style={styles.matchlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+            <Image style={styles.matchlistimg} source={{uri:rowData.STeamLogo}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.STeamName}</Text>
             <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.STeamOdds}</Text>
           </TouchableOpacity>
@@ -428,7 +477,7 @@ _renderGuessRow(rowData){
       <View style={[commonstyle.row, styles.matchlisttab]}>
         <View style={[commonstyle.col1, commonstyle.viewcenter]}>
           <Icon name="time" size={20} color={'#D31B25'}/>
-          <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'08:20:49'}</Text>
+          <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{rowData.MatchTime!==null?rowData.MatchTime.substring(10,20):rowData.MatchTime}</Text>
         </View>
         <View style={styles.matchlisttabline}></View>
         <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} activeOpacity={0.8} >
@@ -457,7 +506,7 @@ rendermyguessList(rowData){
         <View style={styles.modaltabcontent}>
                   <View style={[commonstyle.row, styles.modaltablist]}>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.GuessTime.substring(2,10)}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.GuessTime!==null?rowData.GuessTime.substring(2,10):rowData.GuessTime}</Text>
                     </View>
                     <View style={[commonstyle.col2, commonstyle.viewcenter]}>
                       <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.BetTeamName}</Text>
@@ -469,7 +518,7 @@ rendermyguessList(rowData){
                       <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.Odds}</Text>
                     </View>
                     <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{rowData.BetMoney*rowData.Odds}</Text>
+                      <Text style={[commonstyle.cream,commonstyle.fontsize12]}>{Math.round(rowData.BetMoney*rowData.Odds)}</Text>
                     </View>
                 </View>
        </View>

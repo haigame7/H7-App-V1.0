@@ -43,6 +43,7 @@ const matchApi = {
   'MYMATCHLIST':apiSetup.MASTER_API_PATH +'v1/Match/MyMatchList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MATCHDATELIST':apiSetup.MASTER_API_PATH +'v1/Match/MatchDateList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'BOBOMATCHLIST':apiSetup.MASTER_API_PATH +'v1/Match/BoBoMatchList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MATCHSTATE':apiSetup.MASTER_API_PATH +'v1/Match/MatchState?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
 const guessApi={
   'GETGUESSLIST':apiSetup.MASTER_API_PATH + 'v1/Guess/GuessList?accesstoken='+ apiSetup.ACCESS_TOKEN,
