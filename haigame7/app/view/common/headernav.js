@@ -43,7 +43,6 @@ module.exports = React.createClass({
     }
   },
   componentWillMount() {
-
   },
   componentDidMount(){
     if (this.state.icon_name != undefined){
@@ -60,7 +59,7 @@ module.exports = React.createClass({
     }
   },
   componentWillReceiveProps(nextProps,nextState) {
-    console.log('ThirdPage receiveProps');
+    console.log('headernav receiveProps');
   },
 
   componentWillUnmount() {

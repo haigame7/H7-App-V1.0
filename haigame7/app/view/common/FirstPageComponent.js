@@ -6,7 +6,8 @@ import React, {
 } from 'react-native';
 
 import SecondPageComponent from './SecondPageComponent';
-import ThirdPage from './ThirdPage';
+import B from './ThirdPage';
+import C from './SecondPage_1';
 export default class FirstPageComponent extends React.Component {
 
   //在组件类创建的时候调用一次，然后返回值被缓存下来。全局调用一次，所有实例共享。
@@ -22,8 +23,8 @@ export default class FirstPageComponent extends React.Component {
     this.state = {
       id: 2,
       user: null,
-      woqu:{'name':'huhaoran'},
-      dodo: this.dod.bind(this)
+      data:{'name':'小怪兽'},
+      updateFn: this.upFn.bind(this)
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -33,7 +34,7 @@ export default class FirstPageComponent extends React.Component {
   //   console.log("渲染之前 componentWillMount");
   // }
   componentDidMount() {
-    this.dod()
+    this.upFn()
   }
   //
   // //在组件接收到新的 props 的时候调用，也就是父组件修改子组件的属性时触发。在初始化渲染的时候，该方法不会调用。可以用于更新 state 来响应某个 prop 的改变。
@@ -44,15 +45,14 @@ export default class FirstPageComponent extends React.Component {
 
 
 
- dod() {
-   let data = {'name':'胡浩然','age':'1'}
+ upFn() {
+   let data = {'name':'凹凸曼'}
    setTimeout(() => {
      console.log('开始更新');
      this.setState({
-       woqu: data
+       data: data
      })
-   },5000)
-
+   },3000)
  }
   _pressButton(){
     //const { navigator } = this.props;
@@ -84,7 +84,6 @@ export default class FirstPageComponent extends React.Component {
                     <TouchableOpacity onPress={this._pressButton.bind(this)}>
                       <Text>点我跳转</Text>
                     </TouchableOpacity>
-                    <ThirdPage ref='3' name={this.state.woqu.name}/>
               </View>
           );
     }else{
@@ -95,7 +94,8 @@ export default class FirstPageComponent extends React.Component {
           <TouchableOpacity onPress={this._pressButton.bind(this)}>
             <Text>点我跳转</Text>
           </TouchableOpacity>
-          <ThirdPage ref='3' name={this.state.woqu.name}/>
+          <B name={this.state.data.name}/>
+          <C name={this.state.data.name}/>
         </View>
       )
     }
