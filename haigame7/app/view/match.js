@@ -254,7 +254,7 @@ export default class extends Component{
    }
  }
     _openGuessModa(rowData) {
-      GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount},(response) => {
+      GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount*20},(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
           if(response[0].MessageCode == '40001'){
             Toast.show('服务器请求异常');
@@ -349,7 +349,6 @@ export default class extends Component{
     }
     }
   rendermodaldetail(){
-    console.log(this.state.modaData);
     if(this.state.navbar==0){
       {/*获得已报名战队数*/}
       let joinView =this.state.jointeam==''?<View></View>:<View><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛事信息,请关注'}</Text></View>
@@ -457,20 +456,20 @@ _renderGuessRow(rowData){
       <Image source = {require('../images/assetbg.jpg')} style={styles.matchlistbg} resizeMode = {"cover"}>
         <View style={[commonstyle.viewcenter, styles.matchlisttitle]}><Text style={[commonstyle.fontsize14,commonstyle.white]}>{rowData.GuessName}</Text></View>
         <View style={commonstyle.row}>
-          <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.ETeamID,guessname:rowData.ETeamName,guessodd:rowData.ETeamOdds})}>
-            <Image style={styles.matchlistimg} source={{uri:rowData.ETeamLogo}} />
-            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.ETeamName}</Text>
-            <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.ETeamOdds}</Text>
+          <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.STeamID,guessname:rowData.STeamName,guessodd:rowData.STeamOdds})}>
+            <Image style={styles.matchlistimg} source={{uri:rowData.STeamLogo}} />
+            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.STeamName}</Text>
+            <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.STeamOdds}</Text>
           </TouchableOpacity>
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
             <Text style={[commonstyle.blue, styles.matchlistvs]}>{'VS'}</Text>
             <Text style={[commonstyle.white, commonstyle.fontsize12, styles.matchlistvstime]}>{rowData.MatchTime!==null?rowData.MatchTime.substring(0,10):rowData.MatchTime}</Text>
             <Text style={[commonstyle.yellow ]}>{rowData.GuessType}</Text>
           </View>
-          <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.STeamID,guessname:rowData.STeamName,guessodd:rowData.STeamOdds})}>
-            <Image style={styles.matchlistimg} source={{uri:rowData.STeamLogo}} />
-            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.STeamName}</Text>
-            <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.STeamOdds}</Text>
+          <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} onPress={this._openGuessModa.bind(this,{guessid:rowData.GuessID,guessteamid:rowData.ETeamID,guessname:rowData.ETeamName,guessodd:rowData.ETeamOdds})}>
+            <Image style={styles.matchlistimg} source={{uri:rowData.ETeamLogo}} />
+            <Text style={[commonstyle.white, commonstyle.fontsize14, styles.matchlistname]}>{rowData.ETeamName}</Text>
+            <Text style={[commonstyle.yellow,commonstyle.fontsize12 ]}>{'赔率'}{rowData.ETeamOdds}</Text>
           </TouchableOpacity>
         </View>
       </Image>
