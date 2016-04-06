@@ -61,23 +61,19 @@ var User = React.createClass({
     };
   },
   componentWillReceiveProps(nextProps,nextState) {
-    // AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
-    //   let jsondata = JSON.parse(value);
-    //   this.setState({userData: jsondata})
-    // });
-    // Toast.show("this is a message")
   },
   componentWillMount() {
 
   },
   componentDidMount() {
+
     this.setState({isOpen: true})
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       let jsondata = JSON.parse(value);
       this.setState({userData: jsondata})
       setTimeout(() => {
         this.getUserGameInfo(jsondata.PhoneNumber)
-        this.getUserTeamInfo(jsondata.PhoneNumber)
+        this.getUserTeamInfo(jsondata.UserID)
         this.getTotalAssertAndRank(jsondata.PhoneNumber)
       },400)
     });
@@ -124,6 +120,7 @@ var User = React.createClass({
               this.setState({teamData: response[1]});
       }else{
         console.log('请求错误' + response[0].Message);
+        this.setState({teamData:{}});
       }
     });
   },
@@ -153,6 +150,7 @@ var User = React.createClass({
       sceneConfig:params.sceneConfig || undefined,
       params: {
         ...this.props,
+        userData:this.state.userData,
         hjData: this.state.hjData,
         teamData:this.state.teamData,
         fightData: this.state.fightData,
@@ -168,6 +166,10 @@ var User = React.createClass({
               console.log('认证回调');
               _this.getUserGameInfo(_this.state.userData.PhoneNumber)
             break;
+          case 'TeamInfo':
+              _this.getUserTeamInfo(_this.state.userData.UserID);
+              _this.setState({modalOpen: false});
+              break;
           default:
 
         }
@@ -261,7 +263,7 @@ var User = React.createClass({
         <View style={styles.listbox}></View>
         <View style={styles.listbox}></View>
 
-        <Spinner visible={this.state.isOpen} />
+        <Spinner key='user_spinner'visible={this.state.isOpen} />
       </ScrollView>
       <Modal isOpen={this.state.modalOpen}  style={[commonstyle.modal, commonstyle.modalmiddle]} position={"center"}>
          <View style={commonstyle.modalclose}><Button onPress={this._closeModa} ><Icon name="error" size={20} color={'#FF0000'} /></Button></View>

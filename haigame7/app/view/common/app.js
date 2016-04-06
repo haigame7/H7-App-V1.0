@@ -15,7 +15,7 @@ import GlobalVariable from '../../constants/globalvariable';
 import UserService from '../../network/userservice';
 
 import Cache from '../../../temp/cache'
-
+import userdata from '../../modules/data_model'
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
@@ -146,7 +146,7 @@ export default class haigame7 extends Component {
 
 
 
-
+/** 首页 */
 class App extends Component {
   constructor(props, context) {
     super(props, context);
@@ -157,7 +157,7 @@ class App extends Component {
   }
   componentWillMount() {
     this.updateLoginState();
-
+    // console.log(userdata);
 
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
     //   let data = JSON.parse(value);

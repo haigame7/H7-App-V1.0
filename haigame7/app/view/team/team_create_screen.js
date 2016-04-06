@@ -15,6 +15,7 @@ import React, {
 import Header from '../common/headernav';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
+import TeamService from '../../network/teamservice';
 import Toast from '@remobile/react-native-toast';
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 export default class extends React.Component {
@@ -22,7 +23,8 @@ export default class extends React.Component {
     super();
     this.state = {
       imgnull: 0,
-      value:0,
+      value:'',
+      jsonvalue:'',
       creater:0,
       teamname:'',
       navigator: undefined,
@@ -47,8 +49,6 @@ export default class extends React.Component {
         };
 
       ImagePickerManager.showImagePicker(options, (response) => {
-        console.log('Response = ', response);
-
         if (response.didCancel) {
           console.log('User cancelled photo picker');
         }
@@ -63,6 +63,7 @@ export default class extends React.Component {
           let source = 'data:image/jpeg;base64,' + response.data;
           this.setState({
             value: source,
+            jsonvalue:response.data,
             imgnull:1,
           });
         }
@@ -72,17 +73,35 @@ export default class extends React.Component {
     let teamData={
     'creater':this.state.creater,
     'teamname':this.state.teamname,
-    'teamlogo':this.state.value,
+    'teamlogo':this.state.jsonvalue,
     'teamtype':'DOTA2',
     };
     if(teamData.teamname==''){
       Toast.show('请填写战队名称');
       return;
-    }else if(teamData.teamlogo==0){
+    }else if(teamData.teamlogo==''){
       Toast.show('请上传战队图片');
       return;
     }else{
-      console.log(teamData);
+      TeamService.createTeam(teamData,(response)=>{
+        if(response[0].MessageCode == '0'){
+          Toast.show('创建成功');
+          this.timer = setTimeout(()=>{
+              this.props._callback('TeamInfo');
+             if(this.props.navigator.getCurrentRoutes().length>3){
+               var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
+               this.props.navigator.jumpTo(route);
+             }else{
+                 this.props.navigator.pop();
+             }
+            },1000);
+        }else if(response[0].MessageCode=='20001'){
+          Toast.show('已经存在同名的战队');
+        }
+        else {
+          Toast.show('创建失败');
+        }
+      });
     }
 
   }
@@ -109,7 +128,7 @@ export default class extends React.Component {
   componentDidMount(){
       this.setState({
         navigator: this.props.navigator,
-        creater:this.props.teamData.Creater,
+        creater:this.props.userData.UserID,
       });
   }
 
@@ -122,8 +141,10 @@ export default class extends React.Component {
           <View style={styles.teamcreate}>
             <View style={styles.teamcreateimg}>{teamimg}</View>
             <View style={[commonstyle.btnborderred, styles.teamcreateinput]}>
-              <TextInput placeholder={'请输入战队名称'} placeholderTextColor={'#484848'} style={[commonstyle.cream, styles.teamcreateinputfont]} onChangeText={(text) => this.setState({teamName: text})} />
             </View>
+            <TextInput placeholder={'请输入战队名称'} placeholderTextColor={'#484848'} style={[commonstyle.cream, styles.teamcreateinputfont,{height:30}]} onChangeText={(text) => this.setState({teamname: text})} />
+
+
             <View style={commonstyle.viewleft}>
               <Text style={commonstyle.gray}>温馨提示：</Text>
               <Text style={commonstyle.gray}>您的战队战队创建完成后，将会有一次更改名称及战队LOGO的机会</Text>

@@ -7,7 +7,8 @@ import React, {
   Image,
   ScrollView,
   ToastAndroid,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -16,6 +17,8 @@ import Icon from 'react-native-vector-icons/Iconfont';
 import CreateTeam from './team_create_screen';
 import TeamRecruit from './teamrecruit';
 import Header from '../common/headernav';
+import TeamService from '../../network/teamservice';
+import Toast from '@remobile/react-native-toast';
 
 export default class extends React.Component {
   /**
@@ -26,6 +29,7 @@ export default class extends React.Component {
     super();
     this.state = {
       navigator: undefined,
+      userData:{},
       teamData:{},
       role: 'user',
       iconText: '添加战队',
@@ -39,6 +43,7 @@ export default class extends React.Component {
       this.setState({
         navigator: this.props.navigator,
         teamData:this.props.teamData,
+        userData:this.props.userData
       });
 
       if (this.state.role != 'captain') {
@@ -70,6 +75,34 @@ export default class extends React.Component {
   _closeModa() {
      this.setState({isOpen: false});
   }
+  confirmDelTeam(){
+    Alert.alert(
+            '删除战队',
+            '确认删除战队？',
+            [
+              {text: '取消', onPress: () => console.log('Cancel Pressed!')},
+              {text: '确认', onPress: () => this._delTeam()},
+            ]
+          )
+  }
+ _delTeam(){
+   let data={'creater':this.state.userData.UserID,'teamname':this.state.teamData.TeamName,'teamtype':this.state.teamData.TeamType,};
+   TeamService.deleteTeam(data,(response)=>{
+     if(response[0].MessageCode == '0'){
+       Toast.show('解散成功');
+       this.timer = setTimeout(()=>{
+           this.props._callback('TeamInfo');
+           this.props.navigator.pop();
+         },1000);
+
+     }else if(response[0].MessageCode=='20009'){
+       Toast.show('您没有解散的权利');
+     }
+     else {
+       Toast.show('解散失败');
+     }
+   });
+ }
   parseCount(count){
     if(count==null){
       count = 0;
@@ -106,7 +139,7 @@ export default class extends React.Component {
         <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this._toNextScreen({"name":"发布招募","component":TeamRecruit})} activeOpacity={0.8}>
         <Text style = {commonstyle.black}> {'招募队员'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} activeOpacity={0.8}>
+        <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} onPress={()=>this.confirmDelTeam()} activeOpacity={0.8}>
         <Text style = {commonstyle.white}> {'解散战队'}</Text>
         </TouchableOpacity>
       </View>
