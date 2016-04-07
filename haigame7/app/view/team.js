@@ -340,14 +340,14 @@ import User from './user.js';
           <View style={styles.navsub}>
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbarone=='我的申请'?'myapply':'mysendapply')}>
               <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbarone}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbartwo=='我的受邀'?'myreceiveapply':'applyjoin')}>
               <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbartwo}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
             </TouchableOpacity>
           </View>
         </View>

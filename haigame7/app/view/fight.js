@@ -70,6 +70,8 @@ export default class extends Component{
         teamlogo:'',
         fightscore:0,
         losecount:0,
+        role:'',
+        usercount:0,
         wincount:0,
         followcount:0,
         totalcount:0,
@@ -110,19 +112,24 @@ export default class extends Component{
       });
     }else{
       if (name == 'makechanllenge') {
-
-         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-             this.props.navigator.push({
-               name: name,
-               params:{
-                 userid:this.state.teamlistRequestData.createUserID,
-                 steamid:userteamid,
-                 eteamid:fightteamid,
-                 teamasset:this.state.userteamdata.asset,
-               },
-               component: MakeChanllenge,
-               sceneConfig: Navigator.SceneConfigs.FloatFromBottom
-             });
+         if(this.state.userteamdata.role=='teamuser'){
+           Toast.showLongCenter('您不是队长无法发起约战');
+         }else if(this.state.userteamdata.usercount<5){
+           Toast.showLongCenter('战队成员不够5人无法发起约战');
+         }else{
+           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+               this.props.navigator.push({
+                 name: name,
+                 params:{
+                   userid:this.state.teamlistRequestData.createUserID,
+                   steamid:userteamid,
+                   eteamid:fightteamid,
+                   teamasset:this.state.userteamdata.asset,
+                 },
+                 component: MakeChanllenge,
+                 sceneConfig: Navigator.SceneConfigs.FloatFromBottom
+               });
+           }
          }
        }
      else if (name == 'fightstate') {
@@ -185,6 +192,8 @@ export default class extends Component{
               odd:oddsdata.odd,
               asset:response[1].Asset,
               teamlogo:response[1].TeamLogo,
+              role:response[1].Role,
+              usercount:response[1].UserCount,
               fightscore:response[1].FightScore,
               wincount:oddsdata.wincount,
               losecount:oddsdata.losecount,
@@ -265,7 +274,7 @@ export default class extends Component{
 
            {'9.	比赛之后，胜负双方必须上传比赛ID，如果有一方未上传比赛ID则视为该队比赛失利，如果双方均未上传比赛ID，则视为双方均“认怂”记入档案。如果双方上传的比赛ID不一样，经核实之后，上传虚假比赛ID一方的队长永久取消比赛资格，没收所有个人氦金和该战队氦金；\n\n'}
 
-          {'10.	双方正常上传比赛ID之后，由氦7平台判断胜负。一切该比赛的所有权和解释权归氦7品台所有。'}
+           {'10.	双方正常上传比赛ID之后，由氦7平台判断胜负。一切该比赛的所有权和解释权归氦7平台所有。'}
           </Text>
         </ScrollView>
         <View style={[commonstyle.row, commonstyle.modalbtn]}>
@@ -437,14 +446,14 @@ export default class extends Component{
             <View style={styles.navsub}>
               <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('userfight',this.state.userteamid,0)}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'我的约战'}</Text>
-                <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
+                <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
               </TouchableOpacity>
 
               <View style={styles.navsubline}></View>
 
               <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('fightstate',this.state.userteamid,0)}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'约战动态'}</Text>
-                <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'(10)'}</Text>
+                <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
               </TouchableOpacity>
             </View>
           </View>
