@@ -82,12 +82,12 @@ import User from './user.js';
         paraRecruit:{
           userID:content.userData.UserID,
           startpage:GlobalVariable.PAGE_INFO.StartPage,
-          pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+          pagecount:GlobalVariable.PAGE_INFO.PageCount,
           state:0,
         },
         paraInvite:{
           startpage:GlobalVariable.PAGE_INFO.StartPage,
-          pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+          pagecount:GlobalVariable.PAGE_INFO.PageCount,
           state:1,
         },
       });
@@ -441,12 +441,12 @@ import User from './user.js';
   parseLoadResponse(response,data,state){
     if (response[0].MessageCode == '0') {
       let nextData = response[1];
-      if(nextData.length<1&&state==0){
+      if(nextData.length<5&&state==0){
         this.setState({
           keyone:1,
           footerOneMsg: "木有更多多数据了~~~~",
         });
-      }else if(nextData.length<1&&state==1){
+      }else if(nextData.length<5&&state==1){
         this.setState({
           keytwo:1,
           footerTwoMsg: "木有更多多数据了~~~~",
