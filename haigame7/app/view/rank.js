@@ -42,8 +42,8 @@ export default class extends Component{
     this.state = {
       navbar: 0,
       data: {subnavbar:1},
-      paraUser: {ranktype:'Asset',ranksort:'Desc',startpage:1,pagecount:10},
-      paraTeam: {ranktype:'Asset',ranksort:'Desc',startpage:1,pagecount:10},
+      paraUser: {ranktype:'GameGrade',ranksort:'Desc',startpage:1,pagecount:10},
+      paraTeam: {ranktype:'HotScore',ranksort:'Desc',startpage:1,pagecount:10},
        dataUserSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
        dataTeamSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
        loaded: false,
@@ -51,13 +51,14 @@ export default class extends Component{
     }
     //加载完组件后操作
     componentDidMount() {
-        this.fetchUserData();
-        this.fetchTeamData();
+
       }
     updateContentData(content){
         this.setState({
           content: content
         });
+        this.fetchUserData();
+        this.fetchTeamData();
     }
     //获取个人排行数据
     fetchUserData() {
@@ -103,10 +104,20 @@ export default class extends Component{
       });
     }
 
-    _switchSubNavbar(sub){
+    _switchSubNavbar(sub,params){
+      if(this.state.navbar==0){
       this.setState({
         data:{subnavbar:sub},
+        paraTeam: {ranktype:params.team,ranksort:'Desc',startpage:1,pagecount:10},
       });
+      this.fetchTeamData();
+    }else {
+      this.setState({
+        data:{subnavbar:sub},
+        paraUser: {ranktype:params.user,ranksort:'Desc',startpage:1,pagecount:10},
+      });
+      this.fetchUserData();
+    }
     }
 
     renderSubData(){
@@ -133,7 +144,6 @@ export default class extends Component{
     render() {
       let navdata=NAVBAR_DATA;
       let navsubdata=this.renderSubData();
-
       if(this.state.loaded==false){
         return (<Loading/>);
       }
@@ -151,21 +161,21 @@ export default class extends Component{
                 </TouchableOpacity>
               </View>
               <View style={styles.navsub}>
-                <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1)}>
+                <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1,{'user':'GameGrade','team':'HotScore'})}>
                   <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
                   <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
                 </TouchableOpacity>
 
                 <View style={styles.navsubline}></View>
 
-                <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2)}>
+                <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'GamePower','team':'FightScore'})}>
                   <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
                   <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
                 </TouchableOpacity>
 
                 <View style={styles.navsubline}></View>
 
-                <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3)}>
+                <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3,{'user':'Asset','team':'Asset'})}>
                   <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
                   <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
                 </TouchableOpacity>
@@ -191,21 +201,21 @@ export default class extends Component{
               </TouchableOpacity>
             </View>
             <View style={styles.navsub}>
-              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1)}>
+              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1,{'user':'GameGrade','team':'HotScore'})}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
                 <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
               </TouchableOpacity>
 
               <View style={styles.navsubline}></View>
 
-              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2)}>
+              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'FightScore','team':'FightScore'})}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
                 <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
               </TouchableOpacity>
 
               <View style={styles.navsubline}></View>
 
-              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3)}>
+              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3,{'user':'Asset','team':'Asset'})}>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
                 <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
               </TouchableOpacity>

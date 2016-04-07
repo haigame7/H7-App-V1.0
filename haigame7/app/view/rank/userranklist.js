@@ -33,15 +33,15 @@ var UserRankList = React.createClass({
     return(
       <View>
         <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
-          <Image style={styles.ranklistimg} source={{uri:this.state.user.UserPicture}} />
+          <Image style={styles.ranklistimg} source={{uri:this.props.user.UserPicture}} />
           <View style={styles.ranklistcenter}>
-            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.state.user.NickName}</Text>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{this.state.user.Hobby}</Text>
+            <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.props.user.NickName}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.ranklisttext]}>{this.props.user.Hobby}</Text>
             <View style={styles.ranklistrow}>
               <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
-              <Text style={commonstyle.red}>{this.state.user.GamePower}</Text>
+              <Text style={commonstyle.red}>{this.props.user.GamePower}</Text>
               <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
-              <Text style={commonstyle.red}>{this.state.user.Asset}</Text>
+              <Text style={commonstyle.red}>{this.props.user.Asset}</Text>
             </View>
           </View>
         </TouchableOpacity>
