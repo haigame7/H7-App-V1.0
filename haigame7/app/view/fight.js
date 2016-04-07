@@ -88,7 +88,6 @@ export default class extends Component{
     this.setState({isOpen: true});
   }
   _closeModa() {
-    console.log('******');
      this.setState({isOpen: false});
   }
   gotoRoute(name,userteamid,fightteamid){
@@ -134,7 +133,7 @@ export default class extends Component{
               name: name,
               component: UserFight,
               params:{
-                userid:this.state.userteamdata.phone,
+                phone:this.state.content.userData.PhoneNumber,
               },
               sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
