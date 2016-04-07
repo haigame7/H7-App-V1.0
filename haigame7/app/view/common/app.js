@@ -16,6 +16,7 @@ import UserService from '../../network/userservice';
 
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
+import AndroidSDK from '../../../temp/androidsdk'
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
@@ -292,6 +293,14 @@ class App extends Component {
            <Team
              ref="content_team"
              navigator={this.props.navigator} {...this.state}/>
+          </View>
+          </RawContent>
+        </Tab>
+        <Tab name="组队1">
+          <IconWithBar label="组队1" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
+          <RawContent>
+          <View>
+           <AndroidSDK />
           </View>
           </RawContent>
         </Tab>
