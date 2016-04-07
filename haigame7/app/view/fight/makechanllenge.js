@@ -65,8 +65,8 @@ export default class extends Component{
     }
     else if(this.state.money>this.state.teamasset){
           Alert.alert('战队资产不够');
-    }else if(this.state.money<10){
-        Alert.alert('请输入大于10氦金的正整数');
+    }else if(this.state.money<50){
+        Alert.alert('请输入大于50氦金的正整数');
     }else if(datefight<datetomorrow){
         Alert.alert('约战日期应在一天以后');
     }else if(datefight>datenextweek){
@@ -127,7 +127,7 @@ export default class extends Component{
         <Headernav screenTitle='发起约战'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <View  style={styles.fightview}>
-            <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于10氦金'}</Text>
+            <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于50氦金'}</Text>
             <View style={styles.fightviewinput}>
               <TextInput style={[commonstyle.cream, styles.fightviewinputfont]} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
             </View>
@@ -161,79 +161,3 @@ export default class extends Component{
     );
   }
 }
-var MakeChanllengeStyle = StyleSheet.create({
-  bgImageWrapper:{
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0
-  },
-  inputContainer:{
-      width: Util.size.width - 40,
-      height: 80,
-      marginTop: 20,
-      borderBottomWidth: 1,
-      borderBottomColor: 'transparent'
-  },
-  inputTitleText:{
-   marginBottom:10,
-   marginLeft:40,
-   color:'rgb(150, 150, 150)',
-  },
-  iconright:{
-    left:Util.size.width-75,
-    top:-35,
-    width:25,
-    color:'rgb(240, 12, 12)',
-  },
-  inputText: {
-      marginLeft: 40,
-      backgroundColor: 'rgba(45, 50, 45, 0.6)',
-      borderColor: 'rgb(240, 12, 12)',
-      borderWidth: 1,
-      borderRadius: 5,
-      height: 45,
-      color:'#fff',
-      fontSize:14
-  },
- centertextarea:{
-   left:40,
-   fontSize:14,
-   marginTop:10,
-   width:Util.size.width-80,
-   height:Util.size.height/5,
-   color:'rgb(180,180,180)',
-   backgroundColor:'rgb(50,50,50)',
- },
- centerbg: {
-    flex:1,
-    backgroundColor:'rgb(0, 0, 0)',
-    height: Util.size.height,
-    width: Util.size.width,
-},
-
-
-teamrecruit:{
-  backgroundColor:'red',
-  left:40,
-   height:Util.pixel*100,
-    marginTop:10,
-   width:Util.size.width-80,
-},
-teamrecruitfont:{
-  color:'#fff',
-  fontSize:16,
-  top:Util.pixel*30,
-  textAlign:'center',
-},
-
- centertextareacount:{
-   position:'absolute',
-   marginTop:-25,
-   right:25,
-   color:'rgb(180,180,180)',
-   backgroundColor:'rgb(50,50,50)',
-  },
-
- });
