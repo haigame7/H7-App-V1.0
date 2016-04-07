@@ -36,6 +36,8 @@ import TeamService from '../network/teamservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
 import Toast from '@remobile/react-native-toast';
+import Login from './user/login';
+import User from './user.js';
   export default class extends Component{
     constructor(props) {
       super(props);
@@ -159,10 +161,21 @@ import Toast from '@remobile/react-native-toast';
           });
     }
     gotoRoute(name,params) {
-      if(this.state.content.userData.UserID==0){
-        Toast.showLongCenter('请先登录');
-        return;
-      }
+      if(this.state.content.userData.UserID==undefined){
+        this.props.navigator.push({
+          name:'login',
+          component:Login,
+          params:{...this.props},
+         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+      }else if(this.state.userteamid==0&&this.state.navbar!==0){
+        this.props.navigator.push({
+          name:'user',
+          component:User,
+          params:{'userData':this.state.content.userData,'openmodal':true},
+          sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+      }else{
         if (name == 'teamrecruit') {
             if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
                 this.props.navigator.push({ name: name, component: TeamRecruit,params:{'teamID':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
@@ -197,6 +210,7 @@ import Toast from '@remobile/react-native-toast';
               this.props.navigator.push({ name: name, component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
         }
+      }
     }
   _renderRecruitRow(rowData){
     return(
@@ -209,7 +223,7 @@ import Toast from '@remobile/react-native-toast';
       </View>
       <View style={styles.teamlistright}>
         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.RecruitTime}</Text>
-        <TouchableOpacity  onPress={()=>this.state.content.userData.UserID==0?Toast.showLongCenter('请先登录'):this.applyTeam(this.state.content.userData.UserID,rowData.TeamID)} style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity  onPress={()=>this.state.content.userData.UserID==0?Toast.show('请先登录'):this.applyTeam(this.state.content.userData.UserID,rowData.TeamID)} style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '申请加入' : '已申请' } </Text>
         </TouchableOpacity>
       </View>
@@ -244,7 +258,7 @@ import Toast from '@remobile/react-native-toast';
             </View>
           </View>
         </View>
-        <TouchableOpacity onPress={()=>this.state.userteamid==0?Toast.showLongCenter('请先创建战队'):this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>this.state.userteamid==0?Toast.show('请先创建战队'):this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
         </TouchableOpacity>
       </TouchableOpacity>
