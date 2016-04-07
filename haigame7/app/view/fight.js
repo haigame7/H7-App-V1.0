@@ -129,9 +129,6 @@ export default class extends Component{
       }
     }
     else if (name == 'userfight') {
-      if(this.state.login==0){
-        Alert.alert(this.state.userteamname);
-      }else{
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
             this.props.navigator.push({
               name: name,
@@ -141,7 +138,7 @@ export default class extends Component{
               },
               sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
-      }
+
     }
   }
   getTeamList(data){
@@ -170,12 +167,10 @@ export default class extends Component{
           this.setState({
             userteamname:'还没有创建战队',
           });
-          this.getTeamList(this.state.teamlistRequestData);
         }else if(response[0].MessageCode=='10001'){
           this.setState({
            userteamname:'还没有登录',
           });
-          this.getTeamList(this.state.teamlistRequestData);
         }
         else if(response[0].MessageCode == '0'){
           var oddsdata =  this.initTeamOdd(response[1].WinCount,response[1].LoseCount,response[1].FollowCount);
@@ -202,8 +197,8 @@ export default class extends Component{
                 pagecount:GlobalVariable.PAGE_INFO.PageCount-1,
             },
           });
-          this.getTeamList(this.state.teamlistRequestData);
         }
+        this.getTeamList(this.state.teamlistRequestData);
       }
       else {
         Toast.show('请求错误');
