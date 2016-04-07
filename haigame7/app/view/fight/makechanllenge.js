@@ -65,8 +65,8 @@ export default class extends Component{
     }
     else if(this.state.money>this.state.teamasset){
           Alert.alert('战队资产不够');
-    }else if(this.state.money<10){
-        Alert.alert('请输入大于10氦金的正整数');
+    }else if(this.state.money<50){
+        Alert.alert('请输入大于50氦金的正整数');
     }else if(datefight<datetomorrow){
         Alert.alert('约战日期应在一天以后');
     }else if(datefight>datenextweek){
@@ -127,7 +127,7 @@ export default class extends Component{
         <Headernav screenTitle='发起约战'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <View  style={styles.fightview}>
-            <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于10氦金'}</Text>
+            <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于50氦金'}</Text>
             <View style={styles.fightviewinput}>
               <TextInput style={[commonstyle.cream, styles.fightviewinputfont]} placeholder={'请输入压注金额'} placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
             </View>
