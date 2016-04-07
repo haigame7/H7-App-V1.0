@@ -114,7 +114,7 @@ export default class extends Component{
       if (name == 'makechanllenge') {
          if(this.state.userteamdata.role=='teamuser'){
            Toast.showLongCenter('您不是队长无法发起约战');
-         }else if(this.state.userteamdata.usercount<5){
+         }else if(this.state.userteamdata.usercount<4){
            Toast.showLongCenter('战队成员不够5人无法发起约战');
          }else{
            if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -143,7 +143,7 @@ export default class extends Component{
               name: name,
               component: UserFight,
               params:{
-                phone:this.state.content.userData.PhoneNumber,
+                userData:this.state.content.userData,
               },
               sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
