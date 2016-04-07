@@ -48,7 +48,9 @@ export default class extends Component{
       teamlist:[],
       teamlistRequestData:{
           createUserID:'0',
-          type:'createdate',
+          type:'teamfightscore',
+          teamfightscore:0,
+          userfightscore:0,
           sort:'desc',
           startpage:GlobalVariable.PAGE_INFO.StartPage,
           pagecount:GlobalVariable.PAGE_INFO.PageCount-1,
@@ -193,6 +195,7 @@ export default class extends Component{
             teamlistRequestData:{
                 createUserID:response[1].Creater,
                 type:'teamfightscore',
+                teamfightscore:response[1].FightScore,
                 sort:'desc',
                 startpage:GlobalVariable.PAGE_INFO.StartPage,
                 pagecount:GlobalVariable.PAGE_INFO.PageCount-1,

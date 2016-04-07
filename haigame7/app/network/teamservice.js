@@ -87,6 +87,8 @@ deleteTeam(data,callback){
         {
           'createUserID':data.createUserID,
           'Type':data.type,
+          'TeamFightScore':data.teamfightscore,
+          'UserFightScore':data.userfightscore,
           'Sort':data.sort,
           'StartPage':data.startpage,
           'PageCount':data.pagecount,
