@@ -14,6 +14,7 @@ import React, {
     ScrollView,
     StyleSheet,
     Component,
+    Navigator,
     TouchableOpacity,
     TouchableHighlight,
     } from 'react-native';
@@ -21,18 +22,26 @@ import React, {
 //引用样式文件
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/rankstyle';
+import PlayerInfo from '../team/playerinfo';
 
 var UserRankList = React.createClass({
   getInitialState() {
     return {
       user: this.props.user,
+      userteamid: this.props.userteamid, 
+      navigator:this.props.navigator,
+    }
+  },
+  gotoRoute(name,params) {
+    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+      this.props.navigator.push({ name: name, component: PlayerInfo, params:{'playerinfo':params, 'teamID':this.props.userteamid},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   },
   render: function() {
     //返回团队排行组件
     return(
       <View>
-        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo',this.props.user)}>
           <Image style={styles.ranklistimg} source={{uri:this.props.user.UserPicture}} />
           <View style={styles.ranklistcenter}>
             <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.props.user.NickName}</Text>
