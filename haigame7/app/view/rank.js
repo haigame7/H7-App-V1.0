@@ -16,6 +16,7 @@ import React, {
     ScrollView,
     StyleSheet,
     Component,
+    Navigator,
     ListView,
     TouchableOpacity,
     TouchableHighlight,
@@ -42,6 +43,7 @@ export default class extends Component{
     super(props);
     this.state = {
       navbar: 0,
+      userteamid:0,
       data: {subnavbar:1},
       paraUser: {ranktype:'GameGrade',ranksort:'Desc',startpage:1,pagecount:10},
       paraTeam: {ranktype:'HotScore',ranksort:'Desc',startpage:1,pagecount:10},
@@ -49,6 +51,9 @@ export default class extends Component{
       dataTeamSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
       dataUser:[],
       dataTeam:[],
+      content:{
+        userData:{},
+      },
       loaded: false,
       footerOneMsg: "点击加载更多团队",
       footerTwoMsg: "点击加载更多名人",
@@ -58,11 +63,13 @@ export default class extends Component{
   }
   //加载完组件后操作
   componentDidMount() {
-
     }
   updateContentData(content){
       this.setState({
-        content: content
+        content: content,
+        paraRecruit:{
+          userID:content.userData.UserID,
+        },
       });
       this.fetchUserData();
       this.fetchTeamData();
@@ -238,12 +245,12 @@ export default class extends Component{
 
   renderUserRankList(user){
       //返回个人组件
-      return(<UserRankList user={user}/>);
+      return(<UserRankList user={user} userteamid={this.state.userteamid} navigator={this.props.navigator}/>);
   }
 
   renderTeamRankList(team){
       //返回团队组件
-      return(<TeamRankList team={team}/>);
+      return(<TeamRankList team={team} userID={this.state.content.userData.UserID} navigator={this.props.navigator}/>);
   }
 
   render() {
@@ -289,7 +296,7 @@ export default class extends Component{
           <ScrollView style={styles.scrollview}>
             <ListView
               dataSource={this.state.dataUserSource}
-              renderRow={this.renderUserRankList}
+              renderRow={this.renderUserRankList.bind(this)}
               renderFooter={this._renderFooter.bind(this)}
             />
           </ScrollView>
@@ -330,7 +337,7 @@ export default class extends Component{
         <ScrollView style={styles.scrollview}>
         <ListView
           dataSource={this.state.dataTeamSource}
-          renderRow={this.renderTeamRankList}
+          renderRow={this.renderTeamRankList.bind(this)}
           renderFooter={this._renderFooter.bind(this)}
         />
         </ScrollView>
