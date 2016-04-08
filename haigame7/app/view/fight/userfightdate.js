@@ -40,7 +40,7 @@ var UserFightList = React.createClass({
    if (params.name == 'fightdetail') {
        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
 
-           this.props.navigator.push({ name: params.name, component: FightDetail, params:params,sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+           this.props.navigator.push({ name: params.name, component: FightDetail, params:{...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
        }
    } else if (params.name == 'playerinfo') {
      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
@@ -57,7 +57,7 @@ var UserFightList = React.createClass({
    }
    else{
      return(
-       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]} onPress = {this.gotoRoute.bind(this,{"name":"fightdetail","steamname":this.props.rowData.STeamName,"eteamname":this.props.rowData.ETeamName,'money':this.props.rowData.Money})} >
+       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]} onPress = {this.gotoRoute.bind(this,{"name":"fightdetail"})} >
          <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.props.rowData.CurrentState}</Text>
        </TouchableOpacity>
      );
