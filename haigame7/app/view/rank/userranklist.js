@@ -41,7 +41,7 @@ var UserRankList = React.createClass({
     //返回团队排行组件
     return(
       <View>
-        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo',this.props.user)}>
+        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8}/*会报错，等待API解决 onPress={()=>this.gotoRoute('playerinfo',this.props.user)}*/>
           <Image style={styles.ranklistimg} source={{uri:this.props.user.UserPicture}} />
           <View style={styles.ranklistcenter}>
             <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.props.user.NickName}</Text>
