@@ -22,6 +22,7 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/fightstyle';
 import FightService from '../../network/fightservice';
 import GlobalSetup from '../../constants/globalsetup';
+import Toast from '@remobile/react-native-toast';
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -61,16 +62,16 @@ export default class extends Component{
     let datenextweek = new Date().getTime()+1000*60*60*24*7;
     let datefight = new Date(this.state.fighttime).getTime();
     if(this.state.fighttime==''){
-        Alert.alert('请输入日期');
+        Toast.showLongCenter('请输入日期');
     }
     else if(this.state.money>this.state.teamasset){
-          Alert.alert('战队资产不够');
+          Toast.showLongCenter('战队资产不够');
     }else if(this.state.money<50){
-        Alert.alert('请输入大于50氦金的正整数');
+        Toast.showLongCenter('请输入大于50氦金的正整数');
     }else if(datefight<datetomorrow){
-        Alert.alert('约战日期应在一天以后');
+        Toast.showLongCenter('约战日期应在一天以后');
     }else if(datefight>datenextweek){
-        Alert.alert('约战日期应在一周内');
+      Toast.showLongCenter('约战日期应在一周内');
     }
       else{
       let requestData={
@@ -83,7 +84,7 @@ export default class extends Component{
       FightService.makeChanllenge(requestData,(response) => {
        if (response !== GlobalSetup.REQUEST_SUCCESS) {
          if (response[0].MessageCode == '0') {
-          Alert.alert(response[0].Message+'!');
+          Toast.showLongCenter(response[0].Message);
          } else {
            console.log('请求错误' + response[0].MessageCode);
          }
