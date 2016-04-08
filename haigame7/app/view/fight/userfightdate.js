@@ -30,6 +30,7 @@ var UserFightList = React.createClass({
   getInitialState() {
     return {
       rowData: this.props.rowData,
+      fightstate:this.props.fightstate,
       navigator:this.props.navigator,
       _onPress: null,
     }
@@ -55,7 +56,13 @@ var UserFightList = React.createClass({
        </TouchableOpacity>
      );
    }
-   else{
+   else if(this.state.rowData.CurrentState=='发起挑战'&&this.props.fightstate=='send'){
+     return(
+       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnbordergray]}  >
+         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'等待回复'}</Text>
+       </TouchableOpacity>
+     );
+   }else{
      return(
        <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]} onPress = {this.gotoRoute.bind(this,{"name":"fightdetail"})} >
          <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.props.rowData.CurrentState}</Text>

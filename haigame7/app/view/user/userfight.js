@@ -135,10 +135,15 @@ export default class extends Component{
     }
   }
   _renderRow(rowData){
-
+  if(this.state.navbar==0){
     return(
-      <UserFightList rowData={rowData} navigator={this.props.navigator}  />
+      <UserFightList rowData={rowData} fightstate={'send'} navigator={this.props.navigator}  />
     );
+  }else{
+    return(
+      <UserFightList rowData={rowData} fightstate={'receive'} navigator={this.props.navigator}  />
+    );
+  }
   }
   _renderFooter(){
     if(this.state.navbar==0){

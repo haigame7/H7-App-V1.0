@@ -38,10 +38,11 @@ export default class extends Component{
     this.setState({
       content:this.props.rowData
     });
+    console.log(this.props);
   }
 
   renderfightdetailList(){
-     if(this.state.content.CurrentState=='发出挑战'){
+     if(this.state.content.CurrentState=='发起挑战'){
        return(
        <View>
          <View style={styles.fightdetail}>
@@ -66,10 +67,9 @@ export default class extends Component{
       <View>
         <View style={styles.fightdetail}>
           <Icon name="war" size={60}  style={commonstyle.red}/>
-          <Text style={[commonstyle.white,styles.fightdetailtext]}>{'['+this.state.content.STeamName+'] 战队联系人: '}</Text>
-          <Text style={[commonstyle.white,styles.fightdetailtext]}>{'['+this.state.content.ETeamName+'] 战队联系人:'}</Text>
+          <Text style={[commonstyle.white,styles.fightdetailtext]}>{this.props.fightstate=='send'?'['+this.state.content.ETeamName:'['+this.state.content.STeamName+'] 战队联系人电话: '+this.state.content.PhoneNumber}</Text>
           <Text style={[commonstyle.red,commonstyle.fontsize14,styles.fightdetailtext]}>{'压注金额'+this.state.content.Money+'氦金'}</Text>
-          <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'约战时间: '+this.state.content.StateTimeStr}</Text>
+          <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'约战时间: '+this.state.content.FightTime}</Text>
           <View  style = {matchstyles.modalinput }>
             <TextInput placeholder={'请输入比赛房间号'} placeholderTextColor='#484848' style={matchstyles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
           </View>
