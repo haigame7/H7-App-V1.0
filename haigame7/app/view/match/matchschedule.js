@@ -29,6 +29,7 @@ import MatchService from '../../network/matchservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 import Toast from '@remobile/react-native-toast';
+import Login from '../user/login';
 
 export default class extends Component{
   constructor(props) {
@@ -157,7 +158,15 @@ export default class extends Component{
   }
   gotoRoute(params) {
     if (params.name == 'usermatch') {
-      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
+      if(this.state.userdata.userid!==undefined){
+        this.props.navigator.push({
+          name:'login',
+          component:Login,
+          params:{...this.props},
+         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+      }
+      else if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
         this.props.navigator.push({ name: params.name, component: UserMatch, params:{'userdata':this.state.userdata},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
     } else if (params.name == 'matchdetail') {

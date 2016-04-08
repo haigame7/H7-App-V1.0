@@ -37,13 +37,13 @@ export default class extends Component{
       datasendSource: datasend.cloneWithRows([]),
       datareceiveSource:datareceive.cloneWithRows([]),
       paraSend:{
-        phone:this.props.phone?this.props.phone : '',
+        phone:this.props.userData.PhoneNumber?this.props.userData.PhoneNumber : '',
         fighttype:GlobalVariable.FIGHT_INFO.FightSend,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
         pagecount:GlobalVariable.PAGE_INFO.PageCount,
       },
       paraReceive:{
-        phone:this.props.phone?this.props.phone : '',
+        phone:this.props.userData.PhoneNumber?this.props.userData.PhoneNumber : '',
         fighttype:GlobalVariable.FIGHT_INFO.FightReceive,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
         pagecount:GlobalVariable.PAGE_INFO.PageCount,
@@ -64,6 +64,7 @@ export default class extends Component{
   //获取发出约战数据
   fetchSendData() {
     FightService.getUserFight(this.state.paraSend,(response) => {
+      console.log(response);
       if (response[0].MessageCode == '0') {
         let newData = response[1];
         this.setState({
