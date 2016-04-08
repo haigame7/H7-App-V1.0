@@ -380,6 +380,7 @@ var TeamStyle = StyleSheet.create({
     },
     teamcreateinput: {
         height: 40,
+        width: Util.size.width - 72,
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
@@ -388,9 +389,10 @@ var TeamStyle = StyleSheet.create({
     },
     teamcreateinputfont: {
         textAlign: 'center',
+        height: 30,
     },
     teammanage: {
-        margin: 10, 
+        margin: 10,
     },
     teammanagelader: {
         alignItems: 'center',
