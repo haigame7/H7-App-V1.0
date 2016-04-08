@@ -38,13 +38,13 @@ export default class extends Component{
       datasendSource: datasend.cloneWithRows(['row1','row2']),
       datareceiveSource:datareceive.cloneWithRows(['row1','row2']),
       paraSend:{
-        userID:this.props.userdata.userid,
+        userID:this.props.userData.UserID,
         state: GlobalVariable.MATCH_INFO.Starting,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
         pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
       },
       paraReceive:{
-        userID:this.props.userdata.userid,
+        userID:this.props.userData.UserID,
         state: GlobalVariable.MATCH_INFO.NoStart,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
         pagecount:GlobalVariable.PAGE_INFO.PageCount-4,

@@ -141,10 +141,8 @@ export default class extends React.Component {
           <View style={styles.teamcreate}>
             <View style={styles.teamcreateimg}>{teamimg}</View>
             <View style={[commonstyle.btnborderred, styles.teamcreateinput]}>
+            <TextInput placeholder={'请输入战队名称'} placeholderTextColor={'#484848'} style={[commonstyle.cream, styles.teamcreateinputfont]} onChangeText={(text) => this.setState({teamname: text})} />
             </View>
-            <TextInput placeholder={'请输入战队名称'} placeholderTextColor={'#484848'} style={[commonstyle.cream, styles.teamcreateinputfont,{height:30}]} onChangeText={(text) => this.setState({teamname: text})} />
-
-
             <View style={commonstyle.viewleft}>
               <Text style={commonstyle.gray}>温馨提示：</Text>
               <Text style={commonstyle.gray}>您的战队战队创建完成后，将会有一次更改名称及战队LOGO的机会</Text>
