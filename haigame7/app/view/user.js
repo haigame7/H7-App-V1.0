@@ -265,8 +265,7 @@ var User = React.createClass({
           <Text style={styles.listviewtext}>设置</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <View style={styles.listbox}></View>
-        <View style={styles.listbox}></View>
+        <View style={styles.listboxfoot}></View>
 
         <Spinner key='user_spinner'visible={this.state.isOpen} />
       </ScrollView>

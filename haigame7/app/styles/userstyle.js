@@ -258,6 +258,11 @@ export default StyleSheet.create({
         backgroundColor: '#484848',
         marginTop: -1,
     },
+    listboxfoot: {
+        height: (Platform.OS === 'ios') ? 2 : 25,
+        backgroundColor: '#484848',
+        marginTop: -1,
+    },
     listviewlable: {
         justifyContent: 'center',
         width: 80,
@@ -296,7 +301,6 @@ export default StyleSheet.create({
     },
     switchtext: {
         flex: 1,
-        color: '#C3C3C3',
         textAlign: 'right',
         marginRight: 10
     },
