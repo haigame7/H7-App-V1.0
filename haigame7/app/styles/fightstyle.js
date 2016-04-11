@@ -183,7 +183,7 @@ var FightStyle = StyleSheet.create({
         justifyContent: 'center',
     },
     fightviewinputfont: {
-        height: 30,
+        height: 40,
         left: 5,
     },
     fightviewtextarea: {

@@ -156,6 +156,7 @@ var MatchStyle = StyleSheet.create({
     },
     modalscrollview: {
         padding: 20,
+        width: Util.size.width - 40,
     },
     modalinput: {
         height: 40,

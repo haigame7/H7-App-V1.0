@@ -156,7 +156,7 @@ render(){
         <Text style={commonstyle.cream}>{'请输入Dota2数字ID'}</Text>
       </View>
       <View key={'dota2id'} style={styles.logininput}>
-        <TextInput {...fields[0]} defaultValue={this.state.data.dota2id || ''} onChangeText={(text) => this.state.data.dota2id = text} />
+        <TextInput {...fields[0]} defaultValue={this.state.data.dota2id || ''} underlineColorAndroid = 'transparent' onChangeText={(text) => this.state.data.dota2id = text} />
       </View>
 
       <View style={styles.loginlabel}>
