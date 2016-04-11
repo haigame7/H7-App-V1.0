@@ -29,6 +29,8 @@ const fightApi = {
   'GETALLFIGHTINFO':apiSetup.MASTER_API_PATH + 'v1/Fight/AllFightList?accesstoken='+apiSetup.ACCESS_TOKEN,
   'MAKECHANLLENGE':apiSetup.MASTER_API_PATH + 'v1/Fight/MakeChallenge?accesstoken='+apiSetup.ACCESS_TOKEN,
   'GETUSERFIGHT':apiSetup.MASTER_API_PATH + 'v1/Fight/MyFight?accesstoken='+apiSetup.ACCESS_TOKEN,
+  'REJECT':apiSetup.MASTER_API_PATH + 'v1/Fight/Reject?accesstoken='+apiSetup.ACCESS_TOKEN,
+  'ACCEPT':apiSetup.MASTER_API_PATH + 'v1/Fight/Accept?accesstoken='+apiSetup.ACCESS_TOKEN,
 }
 const rankApi = {
   'USERRANK':apiSetup.MASTER_API_PATH +'/v1/Rank/UserRank?accesstoken='+ apiSetup.ACCESS_TOKEN,

@@ -97,12 +97,14 @@ export default class extends Component{
           Toast.show('服务器请求异常');
         }else if(response[0].MessageCode == '0'){
           let newData = response[1];
-          this.setState({
-            starttime: newData[0].StartTime.toString(),
-            datamatchdateSource: this.state.datamatchdateSource.cloneWithRows(newData),
-            matchdatelist:newData,
-            loaded:false,
-          });
+          if(newData!==[]){
+            this.setState({
+              starttime: newData[0]==undefined?'':newData[0].StartTime.toString(),
+              datamatchdateSource: this.state.datamatchdateSource.cloneWithRows(newData),
+              matchdatelist:newData,
+              loaded:false,
+            });
+          }
           if(num == 1){
             this.getBoBoMatchList(this.state.matchdata.matchID, this.state.boboid, this.state.starttime);
           }

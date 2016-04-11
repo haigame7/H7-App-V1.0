@@ -175,16 +175,19 @@ export default class extends React.Component {
     );
   }
   parseDescript(descript){
-  {/*将数据分割*/}
-  var data =  descript.split('【');
-  var dataOne = data[1].split('】');
-  var dataTwo = data[2].split('】');
-  var desData = {
-    teampre:dataOne[0],
-    teamprecontent:dataOne[1],
-    teamnext:dataTwo[0],
-    teamnextcontent:dataTwo[1],
-  }
-  return desData;
+    if(descript.length>0){
+      {/*将数据分割*/}
+      var data =  descript.split('【');
+      var dataOne = data[1].split('】');
+      var dataTwo = data[2].split('】');
+      var desData = {
+        teampre:dataOne[0],
+        teamprecontent:dataOne[1],
+        teamnext:dataTwo[0],
+        teamnextcontent:dataTwo[1],
+      }
+      return desData;
+    }
+   return '';
   }
 }
