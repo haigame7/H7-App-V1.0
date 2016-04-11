@@ -59,7 +59,7 @@ module.exports = React.createClass({
     }
   },
   componentWillReceiveProps(nextProps,nextState) {
-    console.log('headernav receiveProps');
+  
   },
 
   componentWillUnmount() {
