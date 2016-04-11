@@ -48,6 +48,7 @@ export default class extends Component{
         startpage:GlobalVariable.PAGE_INFO.StartPage,
         pagecount:GlobalVariable.PAGE_INFO.PageCount,
       },
+      userData:this.props.userData,
       dataReceive:[],
       dataSend:[],
       footerOneMsg: "点击加载更多",
@@ -64,7 +65,6 @@ export default class extends Component{
   //获取发出约战数据
   fetchSendData() {
     FightService.getUserFight(this.state.paraSend,(response) => {
-      console.log(response);
       if (response[0].MessageCode == '0') {
         let newData = response[1];
         this.setState({
@@ -135,13 +135,14 @@ export default class extends Component{
     }
   }
   _renderRow(rowData){
+    let _this =this;
   if(this.state.navbar==0){
     return(
-      <UserFightList rowData={rowData} fightstate={'send'} navigator={this.props.navigator}  />
+      <UserFightList rowData={rowData} fightstate={'send'} userdata={this.state.userData} callback={function(key,params){_this.fetchSendData()}}  navigator={this.props.navigator}  />
     );
   }else{
     return(
-      <UserFightList rowData={rowData} fightstate={'receive'} navigator={this.props.navigator}  />
+      <UserFightList rowData={rowData} fightstate={'receive'} userdata={this.state.userData} callback={function(key,params){_this.fetchReceiveData()}} navigator={this.props.navigator}  />
     );
   }
   }

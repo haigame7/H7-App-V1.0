@@ -61,4 +61,40 @@ export default{
         callback
       );
   },
+  /* 认怂 */
+  reject(data,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.FIGHT_API.REJECT,
+        {
+          'UserID':data.userID,
+          'DateID':data.dateID,
+          'Money':data.money,
+        },
+        callback
+      );
+  },
+  /* 应战 */
+  accept(data,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.FIGHT_API.ACCEPT,
+        {
+          'UserID':data.userID,
+          'DateID':data.dateID,
+          'Money':data.money,
+        },
+        callback
+      );
+  },
 }
