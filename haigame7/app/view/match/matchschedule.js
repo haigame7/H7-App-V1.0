@@ -51,10 +51,10 @@ export default class extends Component{
       num: 1,
       loaded:false,
       userphone:this.props.phoneNum?this.props.phoneNum : '13439843883' ,
-      userdata:{
-        userid:this.props.userdata.userid,
-        userteamid:this.props.userdata.userteamid,
-        userasset:this.props.userdata.userasset,
+      userData:{
+        UserID:this.props.userdata.userid,
+        UserTeamID:this.props.userdata.userteamid,
+        UserAsset:this.props.userdata.userasset,
       },
       matchdata:{
         matchID:this.props.matchdata.matchID,
@@ -97,12 +97,14 @@ export default class extends Component{
           Toast.show('服务器请求异常');
         }else if(response[0].MessageCode == '0'){
           let newData = response[1];
-          this.setState({
-            starttime: newData[0].StartTime.toString(),
-            datamatchdateSource: this.state.datamatchdateSource.cloneWithRows(newData),
-            matchdatelist:newData,
-            loaded:false,
-          });
+          if(newData!==[]){
+            this.setState({
+              starttime: newData[0]==undefined?'':newData[0].StartTime.toString(),
+              datamatchdateSource: this.state.datamatchdateSource.cloneWithRows(newData),
+              matchdatelist:newData,
+              loaded:false,
+            });
+          }
           if(num == 1){
             this.getBoBoMatchList(this.state.matchdata.matchID, this.state.boboid, this.state.starttime);
           }
@@ -158,7 +160,7 @@ export default class extends Component{
   }
   gotoRoute(params) {
     if (params.name == 'usermatch') {
-      if(this.state.userdata.userid!==undefined){
+      if(this.state.userData.UserID==undefined||this.state.userData.UserID==0){
         this.props.navigator.push({
           name:'login',
           component:Login,
@@ -167,7 +169,7 @@ export default class extends Component{
         });
       }
       else if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
-        this.props.navigator.push({ name: params.name, component: UserMatch, params:{'userdata':this.state.userdata},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        this.props.navigator.push({ name: params.name, component: UserMatch, params:{'userData':this.state.userData},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
     } else if (params.name == 'matchdetail') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {

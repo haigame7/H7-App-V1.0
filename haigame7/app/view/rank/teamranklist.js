@@ -19,7 +19,7 @@ import React, {
 //引用样式文件
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/rankstyle';
-import TeamInfo from '../team/teaminfo';
+import TeamInfo from '../rank/teaminfo';
 
 var TeamRankList = React.createClass({
   getInitialState() {
@@ -31,7 +31,7 @@ var TeamRankList = React.createClass({
   },
   gotoRoute(name,params) {
     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-      this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID': this.props.userID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+      this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   },
   render: function() {

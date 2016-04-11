@@ -31,6 +31,7 @@ var UserFightList = React.createClass({
     return {
       rowData: this.props.rowData,
       fightstate:this.props.fightstate,
+      userData:this.props.userdata,
       navigator:this.props.navigator,
       _onPress: null,
     }
@@ -49,20 +50,27 @@ var UserFightList = React.createClass({
    }
  },
  rendercurrent(){
-   if(this.state.rowData.CurrentState=='已认怂'){
+   if(this.props.rowData.CurrentState=='已认怂'){
      return(
        <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnbordergray]} >
          <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.props.rowData.CurrentState}</Text>
        </TouchableOpacity>
      );
    }
-   else if(this.state.rowData.CurrentState=='发起挑战'&&this.props.fightstate=='send'){
+   else if(this.props.rowData.CurrentState=='发起挑战'&&this.props.fightstate=='send'){
      return(
        <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnbordergray]}  >
          <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'等待回复'}</Text>
        </TouchableOpacity>
      );
-   }else{
+   }else if(this.props.rowData.CurrentState=='已拒绝'){
+     return(
+       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnbordergray]}  >
+         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.props.rowData.CurrentState}</Text>
+       </TouchableOpacity>
+     );
+   }
+   else{
      return(
        <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]} onPress = {this.gotoRoute.bind(this,{"name":"fightdetail"})} >
          <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.props.rowData.CurrentState}</Text>

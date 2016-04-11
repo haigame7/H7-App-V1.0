@@ -363,10 +363,10 @@ export default class extends Component{
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
             <View style={commonstyle.viewleft}>
-              <Text style={commonstyle.cream}>{'ID:      '} <Text style={commonstyle.white}>{this.state.modaData.GameID}</Text></Text>
-              <Text style={commonstyle.cream}>{'性别:  '} <Text style={commonstyle.white}>{this.state.modaData.Sex}</Text></Text>
-              <Text style={commonstyle.cream}>{'年龄:  '} <Text style={commonstyle.white}>{this.state.modaData.Age}</Text></Text>
-              <Text style={commonstyle.cream}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
+              <Text style={[commonstyle.cream, styles.modalfont]}>{'ID:      '} <Text style={commonstyle.white}>{this.state.modaData.GameID}</Text></Text>
+              <Text style={[commonstyle.cream, styles.modalfont]}>{'性别:  '} <Text style={commonstyle.white}>{this.state.modaData.Sex}</Text></Text>
+              <Text style={[commonstyle.cream, styles.modalfont]}>{'年龄:  '} <Text style={commonstyle.white}>{this.state.modaData.Age}</Text></Text>
+              <Text style={[commonstyle.cream, styles.modalfont]}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
             {joinView}
           </ScrollView>
@@ -382,7 +382,7 @@ export default class extends Component{
           <View style={[styles.modalheader]}>
             <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}</Text>
             <View  style = {styles.modalinput }>
-              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
+              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
             </View>
             <View style ={commonstyle.row}>
               <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.userdata.userasset}</Text></Text></View>

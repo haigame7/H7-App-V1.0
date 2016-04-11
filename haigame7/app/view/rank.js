@@ -63,7 +63,7 @@ export default class extends Component{
   }
   //加载完组件后操作
   componentDidMount() {
-    }
+  }
   updateContentData(content){
       this.setState({
         content: content,

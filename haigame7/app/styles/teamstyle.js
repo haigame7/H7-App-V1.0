@@ -389,7 +389,7 @@ var TeamStyle = StyleSheet.create({
     },
     teamcreateinputfont: {
         textAlign: 'center',
-        height: 30,
+        height: 50,
     },
     teammanage: {
         margin: 10,

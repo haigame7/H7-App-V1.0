@@ -32,22 +32,22 @@ import GlobalVariable from '../../constants/globalvariable';
 export default class extends Component{
   constructor(props) {
     super(props);
-    var datasend = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var datareceive = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var datasend = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
+    var datareceive = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
     this.state = {
-      datasendSource: datasend.cloneWithRows(['row1','row2']),
-      datareceiveSource:datareceive.cloneWithRows(['row1','row2']),
+      datasendSource: datasend.cloneWithRows([]),
+      datareceiveSource:datareceive.cloneWithRows([]),
       paraSend:{
         userID:this.props.userData.UserID,
         state: GlobalVariable.MATCH_INFO.Starting,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
-        pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount,
       },
       paraReceive:{
         userID:this.props.userData.UserID,
         state: GlobalVariable.MATCH_INFO.NoStart,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
-        pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount,
       },
       dataReceive:[],
       dataSend:[],
@@ -191,15 +191,6 @@ export default class extends Component{
               keytwo:1,
             });
           }
-          if(nextData.length==0){
-          setTimeout(()=>{
-              this.setState({
-                  footerOneMsg: "点击加载更多",
-                    footerTwoMsg: "点击加载更多",
-              });
-            },1000);
-            return;
-          }else{
             for(var item in nextData){
               _ds.push(nextData[item])
             }
@@ -220,7 +211,7 @@ export default class extends Component{
                 });
               }
             },1000);
-          }
+          
         } else {
           console.log('请求错误' + response[0].MessageCode);
         }

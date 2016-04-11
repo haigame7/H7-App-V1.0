@@ -23,6 +23,9 @@ var Icon = require('react-native-vector-icons/Iconfont');
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 import commonstyle from '../../styles/commonstyle';
+import FightService from '../../network/fightservice';
+import GlobalSetup from '../../constants/globalsetup';
+import Toast from '@remobile/react-native-toast';
 import styles from '../../styles/fightstyle';
 import matchstyles from '../../styles/matchstyle';
 
@@ -31,16 +34,54 @@ export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
-       content:{}
+       content:{},
+       userdata:{},
      }
     }
   componentDidMount(){
     this.setState({
-      content:this.props.rowData
+      content:this.props.rowData,
+      userdata:this.props.userdata,
     });
-    console.log(this.props);
   }
-
+  _reject(){
+    let requestdata = {'userID':this.state.userdata.UserID,'dateID':this.state.content.DateID,'money':this.state.content.Money,}
+    FightService.reject(requestdata,(response) => {
+     if (response !== GlobalSetup.REQUEST_SUCCESS) {
+       if (response[0].MessageCode == '0') {
+        Toast.showLongCenter('已拒绝约战');
+        this.callback();
+        setTimeout(()=>{
+        this.props.navigator.pop();
+      },1000);
+       } else {
+         console.log('请求错误' + response[0].MessageCode);
+       }
+    }else {
+        Toast.showLongCenter('请求错误');
+        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+    }
+    });
+  }
+  _accept(){
+    let requestdata = {'userID':this.state.userdata.UserID,'dateID':this.state.content.DateID,'money':this.state.content.Money,}
+    FightService.accept(requestdata,(response) => {
+     if (response !== GlobalSetup.REQUEST_SUCCESS) {
+       if (response[0].MessageCode == '0') {
+        Toast.showLongCenter('已接受约战');
+        this.callback();
+        setTimeout(()=>{
+        this.props.navigator.pop();
+      },1000);
+       } else {
+         console.log('请求错误' + response[0].MessageCode);
+       }
+    }else {
+        Toast.showLongCenter('请求错误');
+        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+    }
+    });
+  }
   renderfightdetailList(){
      if(this.state.content.CurrentState=='发起挑战'){
        return(
@@ -52,10 +93,10 @@ export default class extends Component{
            <Text style={[commonstyle.red,commonstyle.fontsize14,styles.fightdetailtext]}>{'压注金额'+this.state.content.Money+'氦金'}</Text>
            <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{' 是否接受挑战？'}</Text>
            <View style={styles.detailbtnblock}>
-             <TouchableOpacity style = {[commonstyle.btncreamblack, styles.detailbtn]} activeOpacity={0.8}>
+             <TouchableOpacity style = {[commonstyle.btncreamblack, styles.detailbtn]} onPress={()=>this._reject()} activeOpacity={0.8}>
                <Text style = {commonstyle.black}> {'认怂'}</Text>
              </TouchableOpacity>
-             <TouchableOpacity style = {[commonstyle.btnredwhite, styles.detailbtn]} activeOpacity={0.8}>
+             <TouchableOpacity style = {[commonstyle.btnredwhite, styles.detailbtn]} onPress={()=>this._accept()}  activeOpacity={0.8}>
                <Text style = {commonstyle.white}> {'接受挑战'}</Text>
              </TouchableOpacity>
            </View>
