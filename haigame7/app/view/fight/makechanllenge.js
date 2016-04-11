@@ -84,7 +84,7 @@ export default class extends Component{
       FightService.makeChanllenge(requestData,(response) => {
        if (response !== GlobalSetup.REQUEST_SUCCESS) {
          if (response[0].MessageCode == '0') {
-          Toast.showLongCenter(response[0].Message);
+          Toast.showLongCenter('约战请求已发出,请在我的约战中查看对方回复');
          } else {
            console.log('请求错误' + response[0].MessageCode);
          }
