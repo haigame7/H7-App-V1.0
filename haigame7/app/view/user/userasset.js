@@ -103,7 +103,7 @@ export default class extends Component{
 
             <TouchableOpacity style={[commonstyle.col1, styles.assetlabel]}>
               <View style={commonstyle.row}>
-                <Icon name="ranking" size={25} color={'#D31B25'}/>
+                <Icon name="ranking" size={25} color={'#D31B25'} style={commonstyle.iconnobg}/>
                 <Text style={[commonstyle.red, commonstyle.fontsize12, styles.assettext]}>财富排行</Text>
               </View>
               <Text style={[commonstyle.yellow, commonstyle.fontsize22]}>{this.state.hjData.myRank}</Text>
