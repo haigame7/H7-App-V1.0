@@ -17,6 +17,7 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var Header = require('../common/headernav');
+import Toast from '@remobile/react-native-toast';
 export default class extends Component {
   constructor(props) {
     super(props)
@@ -41,10 +42,20 @@ export default class extends Component {
     switch (property) {
       case '昵称':
         value = this.state.value;
-        break;
+        if(value == '' || value.indexOf(" ") >=0){
+          Toast.show("用户名不能为空！");
+          return;
+        }else{
+          break;
+        }
       case '个性签名':
         value = this.state.value;
-        break;
+        if(value == '' || value.indexOf(" ") >=0){
+          Toast.show("个性签名不能为空！");
+          return;
+        }else{
+          break;
+        }
       case '手机号':
         value = this.state.value;
       case '头像':

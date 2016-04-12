@@ -67,10 +67,21 @@ export default class extends React.Component {
     );
   }
   _renderRow(rowData) {
+
     var that = this;
     var items =Object.keys(rowData.HeroImage).map(function(item,key) {
       return that.renderHeroImageItem(rowData.HeroImage[item],key);
     });
+    let state;
+    if(rowData.State=="加入战队"){
+      state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'等待回复'}</Text></View>;
+    }else if(rowData.State=="加入成功"){
+      state=<View style={[commonstyle.btnborderred, styles.listblockbtn]}><Text style={commonstyle.red}>{'成功加入'}</Text></View>;
+    }else if(rowData.State=="加入失败"){
+      state=<View style={[commonstyle.btnredwhite, styles.listblockbtn]}><Text style={commonstyle.white}>{'被拒绝'}</Text></View>;
+    }else{
+      state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'已失效'}</Text></View>;
+    }
     return (
       <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null} >
         <View style={commonstyle.row}>
@@ -81,9 +92,7 @@ export default class extends React.Component {
                 <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.UserWebNickName}</Text>
                 <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'生命不息,电竞不止~~1231231231'}</Text>
               </View>
-              <View style={[commonstyle.btnredwhite, styles.listblockbtn]}>
-                <Text style={[commonstyle.white, commonstyle.fontsize12]}>等待回复</Text>
-              </View>
+              {state}
             </View>
             <View style={styles.listblocktext}>
               <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:  '}</Text>

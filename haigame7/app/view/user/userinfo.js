@@ -221,7 +221,7 @@ _onPressHandle_2(){
 }
  _sexDone(pickedValue){
    let data = this.state.userData;
-   data['Sex'] = pickedValue[0] == '男'? 1: 0
+   data['Sex'] = pickedValue[0];
    UserService.updateUserInfo({"PhoneNumber":this.state.userData.PhoneNumber,'Sex':data['Sex']},(response) => {
      if(response[0].MessageCode == '0') {
        AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
@@ -296,7 +296,7 @@ _onPressHandle_2(){
        <View style={styles.listview} >
          <Text  style={styles.listviewtextleft}>性别</Text>
          <TouchableOpacity style={styles.listviewtextbox} activeOpacity={0.8} onPress={this._onPressHandle.bind(this)} >
-           <Text style={styles.listviewtextright}>{parseInt(this.state.userData.Sex) ? '男' : '女'} </Text>
+           <Text style={styles.listviewtextright}>{this.state.userData.Sex} </Text>
          </TouchableOpacity>
          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
        </View>

@@ -34,20 +34,21 @@ export default class extends Component{
     var datasend = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var datareceive = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      datasendSource: datasend.cloneWithRows(['row1','row2']),
-      datareceiveSource:datareceive.cloneWithRows(['row1','row2']),
+      datasendSource: datasend.cloneWithRows([]),
+      datareceiveSource:datareceive.cloneWithRows([]),
       paraSend:{
-        phone:this.props.phone?this.props.phone : '13466500850',
+        phone:this.props.userData.PhoneNumber?this.props.userData.PhoneNumber : '',
         fighttype:GlobalVariable.FIGHT_INFO.FightSend,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
-        pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount,
       },
       paraReceive:{
-        phone:this.props.phone?this.props.phone : '13466500850',
+        phone:this.props.userData.PhoneNumber?this.props.userData.PhoneNumber : '',
         fighttype:GlobalVariable.FIGHT_INFO.FightReceive,
         startpage:GlobalVariable.PAGE_INFO.StartPage,
-        pagecount:GlobalVariable.PAGE_INFO.PageCount-4,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount,
       },
+      userData:this.props.userData,
       dataReceive:[],
       dataSend:[],
       footerOneMsg: "点击加载更多",
@@ -134,10 +135,16 @@ export default class extends Component{
     }
   }
   _renderRow(rowData){
-
+    let _this =this;
+  if(this.state.navbar==0){
     return(
-      <UserFightList rowData={rowData} navigator={this.props.navigator}  />
+      <UserFightList rowData={rowData} fightstate={'send'} userdata={this.state.userData} callback={function(key,params){_this.fetchSendData()}}  navigator={this.props.navigator}  />
     );
+  }else{
+    return(
+      <UserFightList rowData={rowData} fightstate={'receive'} userdata={this.state.userData} callback={function(key,params){_this.fetchReceiveData()}} navigator={this.props.navigator}  />
+    );
+  }
   }
   _renderFooter(){
     if(this.state.navbar==0){
@@ -155,7 +162,6 @@ export default class extends Component{
     }
   }
   _onLoadMore(param,data) {
-    console.log(data);
     if (this.state.keyone > 0 &&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend) {
       this.setState({
         footerOneMsg: "木有更多多数据了~~~~"
@@ -181,12 +187,12 @@ export default class extends Component{
       FightService.getUserFight(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
+          if(nextData.length<5&&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
             this.setState({
               keyone:1,
               footerOneMsg: "木有更多多数据了~~~~"
             });
-          }else if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
+          }else if(nextData.length<5&&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
             this.setState({
               keytwo:1,
               footerTwoMsg: "木有更多多数据了~~~~"

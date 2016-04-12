@@ -235,6 +235,7 @@ class App extends Component {
             navigator={this.props.navigator} {...this.state}/>
            <Match
             ref="content_match"
+            updateLoginState={this.updateLoginState.bind(this)}
             navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>
@@ -254,6 +255,7 @@ class App extends Component {
              navigator={this.props.navigator} {...this.state}/>
            <Fight
              ref="content_fight"
+             updateLoginState={this.updateLoginState.bind(this)}
              navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>
@@ -273,6 +275,7 @@ class App extends Component {
              navigator={this.props.navigator} {...this.state}/>
            <Rank
             ref="content_rank"
+            updateLoginState={this.updateLoginState.bind(this)}
             navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>
@@ -291,6 +294,7 @@ class App extends Component {
               navigator={this.props.navigator} {...this.state}/>
            <Team
              ref="content_team"
+             updateLoginState={this.updateLoginState.bind(this)}
              navigator={this.props.navigator} {...this.state}/>
           </View>
           </RawContent>

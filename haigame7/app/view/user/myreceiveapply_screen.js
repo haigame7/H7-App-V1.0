@@ -32,7 +32,7 @@ export default class extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       userData:{},
-      dataSource: ds.cloneWithRows(['row1','row2','row3']),
+      dataSource: ds.cloneWithRows([]),
       myinvitedList:[],
       footerMsg: "点击加载更多",
     }
@@ -48,7 +48,8 @@ export default class extends React.Component {
   }
 
   initData(){
-    TeamService.myInvitedTeamList({userID:this.state.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2},(response) => {
+    let requestdata = {'userID':this.state.userData.UserID,'startpage':GlobalVariable.PAGE_INFO.StartPage,'pagecount':GlobalVariable.PAGE_INFO.PageCount-2};
+    TeamService.myInvitedTeamList(requestdata,(response) => {
     if (response !== GlobalSetup.REQUEST_SUCCESS) {
       if(response[0].MessageCode == '40001'){
         Toast.show('服务器请求异常');
@@ -64,14 +65,30 @@ export default class extends React.Component {
      }
    });
   }
-
+ handleInvited(params,isok){
+   let requestdata = {'teamID':params.TeamID,'userID':this.state.userData.UserID,'messageID':params.MessageID,'isOK':isok};
+   TeamService.handleMyInvited(requestdata,(response) => {
+   if (response !== GlobalSetup.REQUEST_SUCCESS) {
+     if(response[0].MessageCode == '40001'){
+       Toast.show('服务器请求异常');
+     }else if(response[0].MessageCode == '0'){
+       Toast.showLongCenter(response[1]);
+       setTimeout(()=>{
+         this.initData();
+         },1000);
+     }
+    }else{
+        Toast.show('请求错误');
+    }
+  });
+ }
   _renderRow(rowData) {
     let state;
     if(rowData.State=="招募队员"){
-      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
-    }else if(rowData.State=="招募成功"){
+      state=  <View style={styles.listblocktext}><Button onPress={()=>this.handleInvited(rowData,0)} containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button onPress={()=>this.handleInvited(rowData,1)}  containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
+    }else if(rowData.State=="加入成功"){
       state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnborderred, styles.listblockbutton]} style={[commonstyle.red, commonstyle.fontsize12]} activeOpacity={0.8}>已同意</Button></View>;
-    }else if(rowData.State=="招募失败"){
+    }else if(rowData.State=="加入失败"){
       state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已拒绝</Button></View>;
     }
     return (

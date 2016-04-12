@@ -38,6 +38,11 @@ var MatchStyle = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#D31B25',
     },
+    navtimetab: {
+        flexDirection: 'row',
+        height: 40,
+        backgroundColor: '#232220',
+    },
     navtime: {
         height: 40,
         width: (Util.size.width-20)/3,
@@ -151,6 +156,7 @@ var MatchStyle = StyleSheet.create({
     },
     modalscrollview: {
         padding: 20,
+        width: Util.size.width - 40,
     },
     modalinput: {
         height: 40,
@@ -354,6 +360,72 @@ var MatchStyle = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         backgroundColor: '#000000',
+    },
+    //赛程详情
+    detaildescription: {
+        width: Util.size.width,
+        padding:5,
+        backgroundColor: '#232323',
+    },
+    detaillistblock: {
+        marginTop: 5,
+    },
+    detailresultyellow: {
+        height: 25,
+        borderTopWidth: 1,
+        borderTopColor: '#FFCA00',
+    },
+    detailresultred: {
+        height: 25,
+        borderTopWidth: 1,
+        borderTopColor: '#D31B25',
+    },
+    detailresultbg: {
+        paddingLeft: 10,
+        justifyContent: 'center',
+    },
+    detailresulttransform: {
+        width: 20,
+        transform: [{rotate: '15deg'}],
+        marginTop: -10,
+        marginLeft: -10,
+    },
+    detaillist: {
+        margin: 10,
+        width: Util.size.width - 20,
+    },
+    detailhero: {
+        width: (Util.size.width - 20)/4-10,
+        height: (Util.size.width - 20)/4-10,
+    },
+    detailarms: {
+        width:  (Util.size.width - 20)/9 - 5,
+        height:  (Util.size.width - 20)/9 - 5,
+        marginBottom: 5,
+    },
+    detailuser: {
+        width: (Util.size.width - 20)/6-10,
+        height: (Util.size.width - 20)/6-10,
+        borderRadius: ((Util.size.width - 20)/6-10)/2,
+    },
+    detaillistdata: {
+        backgroundColor: '#282725',
+        marginTop: 10,
+        paddingTop: 10,
+        paddingRight: 30,
+        paddingBottom: 10,
+        paddingLeft: 30,
+    },
+    detaillistnodata: {
+        width: 1,
+        height: 1,
+        overflow: 'hidden',
+    },
+    detailnote: {
+        backgroundColor: '#282725',
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 

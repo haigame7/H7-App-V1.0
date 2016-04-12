@@ -29,6 +29,10 @@ const fightApi = {
   'GETALLFIGHTINFO':apiSetup.MASTER_API_PATH + 'v1/Fight/AllFightList?accesstoken='+apiSetup.ACCESS_TOKEN,
   'MAKECHANLLENGE':apiSetup.MASTER_API_PATH + 'v1/Fight/MakeChallenge?accesstoken='+apiSetup.ACCESS_TOKEN,
   'GETUSERFIGHT':apiSetup.MASTER_API_PATH + 'v1/Fight/MyFight?accesstoken='+apiSetup.ACCESS_TOKEN,
+  'REJECT':apiSetup.MASTER_API_PATH + 'v1/Fight/Reject?accesstoken='+apiSetup.ACCESS_TOKEN,
+  'ACCEPT':apiSetup.MASTER_API_PATH + 'v1/Fight/Accept?accesstoken='+apiSetup.ACCESS_TOKEN,
+  'UPDATEGAMEID':apiSetup.MASTER_API_PATH + 'v1/Fight/UpdateGameID?accesstoken='+apiSetup.ACCESS_TOKEN,
+
 }
 const rankApi = {
   'USERRANK':apiSetup.MASTER_API_PATH +'/v1/Rank/UserRank?accesstoken='+ apiSetup.ACCESS_TOKEN,
@@ -41,7 +45,9 @@ const matchApi = {
   'JOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/JoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYJOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/MyJoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYMATCHLIST':apiSetup.MASTER_API_PATH +'v1/Match/MyMatchList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MATCHDATELIST':apiSetup.MASTER_API_PATH +'v1/Match/MatchDateList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'BOBOMATCHLIST':apiSetup.MASTER_API_PATH +'v1/Match/BoBoMatchList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'MATCHSTATE':apiSetup.MASTER_API_PATH +'v1/Match/MatchState?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
 const guessApi={
   'GETGUESSLIST':apiSetup.MASTER_API_PATH + 'v1/Guess/GuessList?accesstoken='+ apiSetup.ACCESS_TOKEN,
@@ -52,6 +58,7 @@ const teamApi={
   'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'GETTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/TeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'CREATETEAM':apiSetup.MASTER_API_PATH +'/v1/Team/Create?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'DELETETEAM':apiSetup.MASTER_API_PATH +'/v1/Team/Delete?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYAPPLYTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/MyApplyTeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYINVITEDTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/MyInvitedTeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'APPLYTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
@@ -61,6 +68,8 @@ const teamApi={
   'INVITEUSER':apiSetup.MASTER_API_PATH +'/v1/Team/InviteUser?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'INVITEDUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/InvitedUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'APPLYUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'HANDLEMYINVITED':apiSetup.MASTER_API_PATH +'v1/Team/HandleMyInvited?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'HANDLEMYAPPLY':apiSetup.MASTER_API_PATH +'v1/Team/HandleMyApply?accesstoken='+ apiSetup.ACCESS_TOKEN,
 
 }
 module.exports = {

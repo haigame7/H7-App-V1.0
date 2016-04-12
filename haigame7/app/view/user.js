@@ -52,22 +52,25 @@ var User = React.createClass({
   getInitialState() {
     return {
       _navigator: this.props.navigator,
-        userData: this.props.userData,
-          isOpen: false,
-          modalOpen:false,
-          teamData:{},
-          hjData: {'totalAsset': 0,'myRank': 1},
-        fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":1,"CertifyName":""}
+      userData: this.props.userData,
+      isOpen: false,
+      modalOpen:false,
+      teamData:{},
+      hjData: {'totalAsset': 0,'myRank': 1},
+      fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":1,"CertifyName":""}
     };
   },
   componentWillReceiveProps(nextProps,nextState) {
   },
   componentWillMount() {
-
+   if(this.props.openmodal){
+     this._openModa();
+   }
   },
   componentDidMount() {
-
-    this.setState({isOpen: true})
+    this.setState({
+      isOpen: true
+    })
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
       let jsondata = JSON.parse(value);
       this.setState({userData: jsondata})
@@ -87,6 +90,9 @@ var User = React.createClass({
   },
   _closeModa() {
      this.setState({modalOpen: false});
+  },
+  _openModa() {
+     this.setState({modalOpen: true});
   },
   _createTeam(){
     this._toNextScreen({"name":"创建战队","component":CreateTeam});
@@ -120,6 +126,7 @@ var User = React.createClass({
               this.setState({teamData: response[1]});
       }else{
         console.log('请求错误' + response[0].Message);
+        this.setState({teamData:{}});
       }
     });
   },
@@ -165,6 +172,10 @@ var User = React.createClass({
               console.log('认证回调');
               _this.getUserGameInfo(_this.state.userData.PhoneNumber)
             break;
+          case 'TeamInfo':
+              _this.getUserTeamInfo(_this.state.userData.UserID);
+              _this.setState({modalOpen: false});
+              break;
           default:
 
         }
@@ -179,7 +190,7 @@ var User = React.createClass({
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserInfo","component":UserInfo})}>
             <Image style={styles.headportrait} source={{uri:this.state.userData.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <TouchableOpacity style={styles.headportraitv} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserCertify","component":UserCertify})}><Icon name="certified" size={15} color={'#484848'} /><Text style={styles.headportraitvfont}>未认证</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.headportraitv} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserCertify","component":UserCertify})}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg} /><Text style={styles.headportraitvfont}>未认证</Text></TouchableOpacity>
           </TouchableOpacity>
 
           <View style={styles.blocktop}>
@@ -255,8 +266,7 @@ var User = React.createClass({
           <Text style={styles.listviewtext}>设置</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <View style={styles.listbox}></View>
-        <View style={styles.listbox}></View>
+        <View style={styles.listboxfoot}></View>
 
         <Spinner key='user_spinner'visible={this.state.isOpen} />
       </ScrollView>

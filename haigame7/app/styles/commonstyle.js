@@ -236,6 +236,11 @@ var CommonStyle = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#D31B25',
     },
+    btnyellowblack: {
+        backgroundColor: '#FFCA00',
+        borderWidth: 1,
+        borderColor: '#FFCA00',
+    },
     btncreamblack: {
         backgroundColor: '#C3C3C3',
         borderWidth: 1,
@@ -274,6 +279,10 @@ var CommonStyle = StyleSheet.create({
     btnborderpurple: {
         borderWidth: 1,
         borderColor: '#C1337F',
+    },
+    //图标
+    iconnobg: {
+        backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     //刷新&加载
     loading: {

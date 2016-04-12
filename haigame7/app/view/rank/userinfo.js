@@ -7,7 +7,6 @@
 var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/Iconfont');
-var Util = require('../common/util');
 var {
   View,
   Text,
@@ -23,33 +22,15 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
-import TeamService from '../../network/teamservice';
 import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      playerinfo:this.props.playerinfo,
-      teamID:this.props.teamID,
+      userinfo:this.props.userinfo,
       messages: []
     }
-  }
-  inviteUser(userID,teamID){
-    var data = {'teamID':teamID,'userID':userID};
-    TeamService.inviteUser(data,(response)=>{
-      if(response[0].MessageCode == '20008'){
-        Toast.show('您已经邀请该玩家');
-      }
-      else if (response[0].MessageCode == '20007') {
-         Toast.show('您已向其他发出申请');
-      }
-      else if (response[0].MessageCode == '0') {
-         Toast.show('成功发出邀请');
-      } else {
-        console.log('请求错误' + response[0].MessageCide);
-      }
-    });
   }
   renderHeroImageItem(rowData,key){
     return(
@@ -59,35 +40,40 @@ export default class extends Component{
 
   render(){
     var that = this
-    var items =Object.keys(that.state.playerinfo.HeroImage).map(function(item,key) {
-      return that.renderHeroImageItem(that.state.playerinfo.HeroImage[item],key);
+    var items =Object.keys(that.state.userinfo.HeroImage).map(function(item,key) {
+      return that.renderHeroImageItem(that.state.userinfo.HeroImage[item],key);
     });
-    console.log(this.state.playerinfo);
+    var Sex = '';
+    if(this.state.userinfo.Sex == 0){
+      Sex = '男';
+    }else{
+      Sex = '女';
+    }
     return (
       <View>
         <Header screenTitle='个人信息'   navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:this.state.playerinfo.UserWebPicture}} />
+              <Image style={styles.headportrait} source={{uri:this.state.userinfo.UserPicture}} />
               <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/><Text style={styles.headportraitvfont}>未认证</Text></View>
             </View>
 
             <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>{this.state.playerinfo.UserWebNickName}</Text>
+              <Text style={[styles.headname, commonstyle.white]}>{this.state.userinfo.UserWebNickName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.playerinfo.GamePower}{'  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userinfo.GamePower}{'  '}</Text>
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.playerinfo.Asset}{'  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userinfo.Asset}{'  '}</Text>
                 </View>
               </View>
               <View style={styles.headtext}>
-                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>{this.state.userinfo.Hobby}</Text>
               </View>
             </View>
           </Image>
@@ -95,19 +81,19 @@ export default class extends Component{
           <View style={styles.listblock}>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>性别</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.playerinfo.Sex}</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{Sex}</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>地区</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.playerinfo.Address}</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.userinfo.Address}</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>擅长位置</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>辅助</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>暂无</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>注册时间</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>2016/01/23</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.userinfo.RegDate}</Text></View>
             </View>
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>擅长英雄</Text></View>
@@ -116,10 +102,6 @@ export default class extends Component{
               </View>
             </View>
           </View>
-
-          <TouchableHighlight  onPress={()=>this.inviteUser(this.state.playerinfo.UserID,this.state.teamID)} style = {styles.btn} underlayColor = {'#FF0000'} >
-            <Text style = {styles.btnfont}> {'发出邀请' } </Text>
-          </TouchableHighlight>
         </ScrollView>
       </View>
     );

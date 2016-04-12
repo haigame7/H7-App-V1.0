@@ -200,7 +200,7 @@ export default class extends Component {
               <TextInput {...fields[2]} onFocus={() => this.onFocus({...fields[2]})} onChangeText={(text) => this.state.data.passwordd = text} />
           </View>
           <View style={styles.switchblock}>
-              <Text style={styles.switchtext} >{'显示密码'}</Text>
+              <Text style={[commonstyle.cream, styles.switchtext]} >{'显示密码'}</Text>
               <Switch onValueChange={(value) =>this.showPwd(this.state.notshow)} style={styles.switchbar} value= {!this.state.notshow}/>
           </View>
           <TouchableHighlight style={this.state.loading ? styles.btndisable : styles.btn} underlayColor={'#FF0000'} onPress={() => this.register(this.props.reset)}>

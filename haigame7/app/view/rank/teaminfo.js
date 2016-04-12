@@ -7,7 +7,6 @@
 var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/Iconfont');
-var Util = require('../common/util');
 var {
   View,
   Text,
@@ -37,32 +36,26 @@ export default class extends Component{
       messages: [],
     }
   }
-
-  applyTeam(userID,teamID){
-    var data = {'userID':userID,'teamID':teamID};
-    TeamService.applyTeam(data,(response)=>{
-      if(response[0].MessageCode == '20006'){
-        Toast.show('您已经加入其他战队');
-      }
-      else if (response[0].MessageCode == '20007') {
-         Toast.show('您已向其他发出申请');
-      }
-      else if (response[0].MessageCode == '0') {
-         Toast.show('成功发出申请');
-      } else {
-        console.log('请求错误' + response[0].MessageCide);
-      }
-    });
+  renderUserImageItem(rowData,key){
+    return(
+      <Image key={key} style={styles.listviewteamimg} source={{uri:rowData.UserPicture}} />
+    );
   }
   render(){
+    var that = this;
+    var userimage =Object.keys(that.state.teaminfo.UserImage).map(function(item,key) {
+      return that.renderUserImageItem(that.state.teaminfo.UserImage[item],key);
+    });
+    var total = this.state.teaminfo.WinCount + this.state.teaminfo.LoseCount;
+    var winning = this.state.teaminfo.WinCount/total*100;
+
     return (
       <View>
         <Header screenTitle='战队信息' navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:this.state.teaminfo.TeamLogo}} />
-              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/><Text style={styles.headportraitvfont}>未认证</Text></View>
+              <Image style={styles.headportrait} source={{uri:this.state.teaminfo.TeamPicture}} />
             </View>
 
             <View style={styles.blocktop}>
@@ -70,16 +63,16 @@ export default class extends Component{
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{'1234'}{'  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.state.teaminfo.FightScore}</Text>
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  1234  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.state.teaminfo.Asset}</Text>
                 </View>
               </View>
               <View style={styles.headtext}>
-                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>{'战队宣言:'}{this.state.teaminfo.TeamDescription}</Text>
+                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>{this.state.teaminfo.TeamDescription}</Text>
               </View>
             </View>
           </Image>
@@ -89,14 +82,14 @@ export default class extends Component{
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队战绩</Text></View>
               <View style={styles.listviewright}>
                 <Text style={commonstyle.cream}>参赛场次  </Text>
-                <Text style={commonstyle.yellow}>20场</Text>
+                <Text style={commonstyle.yellow}>{total}场</Text>
                 <Text style={commonstyle.cream}>  胜率  </Text>
-                <Text style={commonstyle.red}>79%</Text>
+                <Text style={commonstyle.red}>{winning}%</Text>
               </View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>成立日期</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>2016/02/15</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teaminfo.CreateTime}</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>
@@ -106,21 +99,14 @@ export default class extends Component{
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
               <View style={styles.listviewright}>
                 <View style={styles.listviewteam}>
-                  <Image style={styles.listviewteamleader} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+                  <Image style={styles.listviewteamleader} source={{uri:this.state.teaminfo.CreateUserLogo}} />
                   <View style={styles.listviewteamblock}>
-                    <Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                    <Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                    <Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-                    <Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+                    {userimage}
                   </View>
                 </View>
               </View>
             </View>
           </View>
-
-          <TouchableHighlight onPress={()=>this.applyTeam(this.state.userID,this.state.teaminfo.TeamID)} style = {styles.btn} underlayColor = {'#FF0000'} >
-            <Text style = {styles.btnfont}> {'申请加入' } </Text>
-          </TouchableHighlight>
         </ScrollView>
       </View>
     );

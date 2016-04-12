@@ -56,6 +56,24 @@ createTeam(data,callback){
       callback
     );
 },
+/*删除战队*/
+deleteTeam(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.DELETETEAM,
+      {
+        'CreatUserID':data.creater,
+        'TeamName':data.teamname,
+        'TeamType':data.teamtype,
+      },
+      callback
+    );
+},
   /*获取约战列表*/
   getTeamList(data,callback){
     /**
@@ -69,6 +87,8 @@ createTeam(data,callback){
         {
           'createUserID':data.createUserID,
           'Type':data.type,
+          'TeamFightScore':data.teamfightscore,
+          'UserFightScore':data.userfightscore,
           'Sort':data.sort,
           'StartPage':data.startpage,
           'PageCount':data.pagecount,
@@ -237,6 +257,43 @@ getApplyUserList(data,callback){
       callback
     );
 },
-
+/*我的受邀操作【同意or拒绝】*/
+handleMyInvited(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.HANDLEMYINVITED,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+        'MessageID':data.messageID,
+        'ISOK':data.isOK,
+      },
+      callback
+    );
+},
+/*我的受邀操作【同意or拒绝】*/
+handleMyApply(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.HANDLEMYAPPLY,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+        'MessageID':data.messageID,
+        'ISOK':data.isOK,
+      },
+      callback
+    );
+},
 
 }

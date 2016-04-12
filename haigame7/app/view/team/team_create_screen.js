@@ -86,7 +86,15 @@ export default class extends React.Component {
       TeamService.createTeam(teamData,(response)=>{
         if(response[0].MessageCode == '0'){
           Toast.show('创建成功');
-          this.props.navigator.pop();
+          this.timer = setTimeout(()=>{
+              this.props._callback('TeamInfo');
+             if(this.props.navigator.getCurrentRoutes().length>3){
+               var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
+               this.props.navigator.jumpTo(route);
+             }else{
+                 this.props.navigator.pop();
+             }
+            },1000);
         }else if(response[0].MessageCode=='20001'){
           Toast.show('已经存在同名的战队');
         }
@@ -134,9 +142,7 @@ export default class extends React.Component {
             <View style={styles.teamcreateimg}>{teamimg}</View>
             <View style={[commonstyle.btnborderred, styles.teamcreateinput]}>
             <TextInput placeholder={'请输入战队名称'} placeholderTextColor={'#484848'} style={[commonstyle.cream, styles.teamcreateinputfont]} onChangeText={(text) => this.setState({teamname: text})} />
-
             </View>
-
             <View style={commonstyle.viewleft}>
               <Text style={commonstyle.gray}>温馨提示：</Text>
               <Text style={commonstyle.gray}>您的战队战队创建完成后，将会有一次更改名称及战队LOGO的机会</Text>

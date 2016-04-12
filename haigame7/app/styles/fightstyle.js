@@ -183,7 +183,7 @@ var FightStyle = StyleSheet.create({
         justifyContent: 'center',
     },
     fightviewinputfont: {
-        height: 30,
+        height: 40,
         left: 5,
     },
     fightviewtextarea: {
@@ -237,6 +237,14 @@ var FightStyle = StyleSheet.create({
     fightlistdate: {
         marginTop:10,
         marginBottom: 5,
+    },
+    fightlisttexticon: {
+        marginTop: 2,
+        width: 30,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 15,
     },
     fightlistbtn: {
         width: 70,
