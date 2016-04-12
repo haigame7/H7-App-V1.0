@@ -29,7 +29,8 @@ export default class extends Component{
     this.state = {
       content:undefined,
       textnumber:0,
-      teamID:this.props.teamID,
+      teamID:this.props.teamid,
+      teamrecruit:this.props.teamrecruit,
       messages: []
     }
   }
@@ -53,6 +54,10 @@ export default class extends Component{
    TeamService.sendRecruit(data,(response)=>{
      if(response[0].MessageCode == '0'){
        Toast.show('发布成功');
+       this.props.callback();
+       setTimeout(()=>{
+       this.props.navigator.pop();
+        },1000);
      }
      else {
        Toast.show('发布失败');
@@ -65,7 +70,7 @@ export default class extends Component{
         <Headernav screenTitle='发布招募'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <View style={styles.recruitbox}>
-            <TextInput style={styles.recruitinput} multiline={true} placeholder='此处为填写招募队员信息...' placeholderTextColor='#C3C3C3' {...this.props} onChangeText={(text) => this.onChange(text)} value={this.state.value} maxLength={200}/>
+            <TextInput style={styles.recruitinput} multiline={true} defaultValue={this.state.teamrecruit} placeholder='此处为填写招募队员信息...' placeholderTextColor='#C3C3C3' {...this.props} onChangeText={(text) => this.onChange(text)} value={this.state.value} maxLength={200}/>
             <Text style={styles.recruitnumber}>{this.state.textnumber}/200</Text>
           </View>
           <View style={styles.recruitbtnblock}>
