@@ -17,12 +17,10 @@ import React, {
     ScrollView,
     TouchableHighlight,
     } from 'react-native';
-import Util from '../common/util';
-import Header from '../common/headernav'; // 主屏
-import Icon from 'react-native-vector-icons/Iconfont';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/matchstyle';
 
+import Header from '../common/headernav';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 import GuessService from '../../network/guessservice';
@@ -47,50 +45,49 @@ export default class extends Component{
         startpage:0,
         pagecount:0,
       },
-      }
     }
- componentDidMount(){
-   this.initData();
- }
- initData(){
-   TeamService.getUserDefaultTeam(this.state.userID,(response) => {
-   if (response !== GlobalSetup.REQUEST_SUCCESS) {
-     if(response[0].MessageCode == '40001'){
-       Alert.alert('服务器请求异常');
-     }else if(response[0].MessageCode == '0'){
-       this.setState({
-        requestData:{
-          userID:response[1].Creater,
-          guessID:0,
-         startpage:GlobalVariable.PAGE_INFO.StartPage,
-         pagecount:GlobalVariable.PAGE_INFO.PageCount-2
-       },
-       });
-       this.getUserGuessList();
-     }
-    }else{
-        Alert.alert('请求错误');
-    }
-  });
- }
- getUserGuessList(){
-   GuessService.myGuessList(this.state.requestData,(response) => {
-     if (response !== GlobalSetup.REQUEST_SUCCESS) {
-       if(response[0].MessageCode == '40001'){
-         Alert.alert('服务器请求异常');
-       }else if(response[0].MessageCode == '0'){
-         let newData = response[1];
-         this.setState({
-           dataguessSource: this.state.dataguessSource.cloneWithRows(newData),
-           isOpen: true,
-         });
+  }
+  componentDidMount(){
+    this.initData();
+  }
+  initData(){
+    TeamService.getUserDefaultTeam(this.state.userID,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Alert.alert('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          this.setState({
+            requestData:{
+              userID:response[1].Creater,
+              guessID:0,
+              startpage:GlobalVariable.PAGE_INFO.StartPage,
+              pagecount:GlobalVariable.PAGE_INFO.PageCount-2,
+            },
+          });
+          this.getUserGuessList();
         }
+      }else{
+        Alert.alert('请求错误');
       }
-       else{
-           Alert.alert('请求错误');
-         }
-   });
- }
+    });
+  }
+  getUserGuessList(){
+    GuessService.myGuessList(this.state.requestData,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Alert.alert('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          let newData = response[1];
+          this.setState({
+            dataguessSource: this.state.dataguessSource.cloneWithRows(newData),
+            dataguess:newData,
+          });
+        }
+      }else{
+        Alert.alert('请求错误');
+      }
+    });
+  }
   renderguessList(rowData){
     return(
       <View style={styles.guesslistblock}>
@@ -141,7 +138,7 @@ export default class extends Component{
         footerMsg: "木有更多多数据了~~~~"
       });
     }else{
-      let _ds = this.state.guesslist;
+      let _ds = this.state.dataguess;
       let _params = this.state.requestData;
       _params.startpage = _params.startpage+1;
       this.setState({
@@ -151,26 +148,26 @@ export default class extends Component{
       GuessService.myGuessList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<3){
+          if(nextData.length<1){
             this.setState({
               keykey:1,
+              footerMsg: "木有更多多数据了~~~~",
             });
           }
           for(var item in nextData){
             _ds.push(nextData[item])
           }
+          setTimeout(()=>{
+            this.setState({
+              dataguessSource: this.state.dataguessSource.cloneWithRows(_ds),
+              dataguess: _ds,
+              loaded: true,
+            });
+          },1000);
         } else {
           console.log('请求错误' + response[0].MessageCode);
         }
       });
-      //这等到有api在搞吧
-      setTimeout(()=>{
-        this.setState({
-          dataguessSource: this.state.dataguessSource.cloneWithRows(_ds),
-          loaded: true,
-          footerMsg: "点击加载更多",
-        });
-      },1000);
     }
   }
   render() {
