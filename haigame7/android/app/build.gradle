@@ -73,7 +73,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
@@ -88,6 +88,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -128,6 +129,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-wechat-android')
     compile project(':react-native-vector-icons')
     compile project(':react-native-datetime-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
