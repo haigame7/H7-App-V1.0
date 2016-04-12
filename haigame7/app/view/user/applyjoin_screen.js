@@ -63,6 +63,23 @@ export default class extends React.Component {
      }
    });
   }
+  handleApply(params,isok){
+    let requestdata = {'teamID':this.state.teamID,'userID':params.UserID,'messageID':params.MessageID,'isOK':isok};
+    TeamService.handleMyApply(requestdata,(response) => {
+    if (response !== GlobalSetup.REQUEST_SUCCESS) {
+      if(response[0].MessageCode == '40001'){
+        Toast.show('服务器请求异常');
+      }else if(response[0].MessageCode == '0'){
+        Toast.showLongCenter(response[1]);
+        setTimeout(()=>{
+          this.initData();
+          },1000);
+      }
+     }else{
+         Toast.show('请求错误');
+     }
+   });
+  }
   renderHeroImageItem(rowData,key){
     return(
       <Image key={key} style={styles.listblocktexthero} source={{uri:rowData.HeroImage}} />
@@ -75,11 +92,14 @@ export default class extends React.Component {
    });
    let state;
    if(rowData.State=="加入战队"){
-     state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
+     state=  <View style={styles.listblocktext}><Button  onPress={()=>this.handleApply(rowData,0)} containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button  onPress={()=>this.handleApply(rowData,1)} containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
    }else if(rowData.State=="加入成功"){
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnborderred, styles.listblockbutton]} style={[commonstyle.red, commonstyle.fontsize12]} activeOpacity={0.8}>已同意</Button></View>;
    }else if(rowData.State=="加入失败"){
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已拒绝</Button></View>;
+   }else{
+     state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已失效</Button></View>;
+
    }
     return (
       <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null}>
@@ -146,7 +166,7 @@ export default class extends React.Component {
             dataSource: this.state.dataSource.cloneWithRows(_ds),
             footerMsg: "点击加载更多",
           });
-        }    
+        }
       },1000);
     }
   }

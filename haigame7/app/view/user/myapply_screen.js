@@ -72,6 +72,8 @@ export default class extends React.Component {
        state=<View style={[commonstyle.btnborderred, styles.listblockbtn]}><Text style={commonstyle.red}>{'成功加入'}</Text></View>;
      }else if(rowData.State=="加入失败"){
        state=<View style={[commonstyle.btnredwhite, styles.listblockbtn]}><Text style={commonstyle.white}>{'被拒绝'}</Text></View>;
+     }else{
+       state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'已失效'}</Text></View>;
      }
     return (
       <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null} >

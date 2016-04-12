@@ -68,6 +68,8 @@ const teamApi={
   'INVITEUSER':apiSetup.MASTER_API_PATH +'/v1/Team/InviteUser?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'INVITEDUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/InvitedUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'APPLYUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'HANDLEMYINVITED':apiSetup.MASTER_API_PATH +'v1/Team/HandleMyInvited?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'HANDLEMYAPPLY':apiSetup.MASTER_API_PATH +'v1/Team/HandleMyApply?accesstoken='+ apiSetup.ACCESS_TOKEN,
 
 }
 module.exports = {

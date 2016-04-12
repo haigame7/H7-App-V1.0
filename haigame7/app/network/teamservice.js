@@ -257,6 +257,43 @@ getApplyUserList(data,callback){
       callback
     );
 },
-
+/*我的受邀操作【同意or拒绝】*/
+handleMyInvited(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.HANDLEMYINVITED,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+        'MessageID':data.messageID,
+        'ISOK':data.isOK,
+      },
+      callback
+    );
+},
+/*我的受邀操作【同意or拒绝】*/
+handleMyApply(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.HANDLEMYAPPLY,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+        'MessageID':data.messageID,
+        'ISOK':data.isOK,
+      },
+      callback
+    );
+},
 
 }
