@@ -238,6 +238,14 @@ var FightStyle = StyleSheet.create({
         marginTop:10,
         marginBottom: 5,
     },
+    fightlisttexticon: {
+        marginTop: 2,
+        width: 30,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 15,
+    },
     fightlistbtn: {
         width: 70,
         height: 20,
