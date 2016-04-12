@@ -52,19 +52,8 @@ var UserFightList = React.createClass({
  },
  formatDate(strTime){
    if(strTime!=''||strTime!=undefined){
-     var date = new Date(strTime);
-     var month = (date.getMonth()+1);
-     var day = date.getDate();
-     if (month < 10 )
-     {
-      month = "0" + month;
-     }
-     if (day < 10 )
-     {
-      day = "0" + day;
-     }
-     var format = date.getFullYear()+"/"+month+"/"+day;
-     return format;
+
+     return strTime.substring(0,10);
    }else{
      return '';
    }
