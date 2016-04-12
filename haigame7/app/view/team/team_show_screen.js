@@ -162,7 +162,7 @@ export default class extends React.Component {
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
-              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} /></View>
+              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/></View>
             </View>
 
             <View style={styles.blocktop}>
