@@ -97,4 +97,22 @@ export default{
         callback
       );
   },
+  /* 上传比赛ID */
+  updateGameID(data,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.FIGHT_API.UPDATEGAMEID,
+        {
+          'DateID':data.dateID,
+          'SFightAddress':data.sfightaddress,
+          'EFightAddress':data.efightaddress,
+        },
+        callback
+      );
+  },
 }

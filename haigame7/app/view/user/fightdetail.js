@@ -10,6 +10,7 @@ import React, {
     Text,
     TextInput,
     Image,
+    Alert,
     StyleSheet,
     Component,
     TouchableOpacity,
@@ -36,12 +37,15 @@ export default class extends Component{
     this.state = {
        content:{},
        userdata:{},
+       fightstate:'',
      }
     }
   componentDidMount(){
     this.setState({
       content:this.props.rowData,
       userdata:this.props.userdata,
+      fightstate:this.props.fightstate,
+      fightaddress:this.props.fightstate=='send'?this.props.rowData.SFightAddress:this.props.rowData.EFightAddress,
     });
   }
   _reject(){
@@ -50,7 +54,7 @@ export default class extends Component{
      if (response !== GlobalSetup.REQUEST_SUCCESS) {
        if (response[0].MessageCode == '0') {
         Toast.showLongCenter('已拒绝约战');
-        this.callback();
+        this.props.callback();
         setTimeout(()=>{
         this.props.navigator.pop();
       },1000);
@@ -69,7 +73,40 @@ export default class extends Component{
      if (response !== GlobalSetup.REQUEST_SUCCESS) {
        if (response[0].MessageCode == '0') {
         Toast.showLongCenter('已接受约战');
-        this.callback();
+        this.props.callback();
+        setTimeout(()=>{
+        this.props.navigator.pop();
+      },1000);
+       } else {
+         console.log('请求错误' + response[0].MessageCode);
+       }
+    }else {
+        Toast.showLongCenter('请求错误');
+        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+    }
+    });
+  }
+  confirmResult(fightaddress){
+   if(this.state.fightaddress!==fightaddress){
+     Alert.alert(
+             '确认房间号',
+             '您跟对方输入不一致，确认输入结果？',
+             [
+               {text: '取消', onPress: () => console.log('Cancel Pressed!')},
+               {text: '确认', onPress: () => this._updateGameID(this.state.fightaddress)},
+             ]
+           )
+   }else{
+     this._updateGameID(this.state.fightaddress);
+   }
+  }
+  _updateGameID(updateaddress){
+    let requestdata = {'dateID':this.state.content.DateID,'sfightaddress':this.state.fightstate=='send'?updateaddress:null,'efightaddress':this.state.fightstate=='send'?null:updateaddress,}
+    FightService.updateGameID(requestdata,(response) => {
+     if (response !== GlobalSetup.REQUEST_SUCCESS) {
+       if (response[0].MessageCode == '0') {
+        Toast.showLongCenter('确认成功');
+        this.props.callback();
         setTimeout(()=>{
         this.props.navigator.pop();
       },1000);
@@ -111,11 +148,12 @@ export default class extends Component{
           <Text style={[commonstyle.white,styles.fightdetailtext]}>{this.props.fightstate=='send'?'['+this.state.content.ETeamName:'['+this.state.content.STeamName+'] 战队联系人电话: '+this.state.content.PhoneNumber}</Text>
           <Text style={[commonstyle.red,commonstyle.fontsize14,styles.fightdetailtext]}>{'压注金额'+this.state.content.Money+'氦金'}</Text>
           <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'约战时间: '+this.state.content.FightTime}</Text>
+          <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'对方确认房间号: '}{this.state.fightstate=='send'?this.state.content.EFightAddress:this.state.content.SFightAddress}</Text>
           <View  style = {matchstyles.modalinput }>
-            <TextInput placeholder={'请输入比赛房间号'} placeholderTextColor='#484848' style={matchstyles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
+            <TextInput placeholder={'请输入比赛房间号'} placeholderTextColor='#484848' style={matchstyles.modalinputfont} keyboardType='numeric'   defaultValue={this.state.fightstate=='send'?this.state.content.SFightAddress:this.state.content.EFightAddress}  onChangeText = {(text) => this.state.fightaddress = text }/>
           </View>
           <View style={styles.detailbtnblock}>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.detailbtn]} activeOpacity={0.8}>
+            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.detailbtn]} onPress={()=>this.confirmResult(this.state.fightstate=='send'?this.state.content.EFightAddress:this.state.content.SFightAddress)} activeOpacity={0.8}>
               <Text style = {commonstyle.white}> {'确认结果'}</Text>
             </TouchableOpacity>
           </View>
