@@ -280,6 +280,10 @@ var CommonStyle = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#C1337F',
     },
+    //图标
+    iconnobg: {
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+    },
     //刷新&加载
     loading: {
         height: 36,
