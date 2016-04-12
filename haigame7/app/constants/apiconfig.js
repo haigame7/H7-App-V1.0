@@ -31,6 +31,8 @@ const fightApi = {
   'GETUSERFIGHT':apiSetup.MASTER_API_PATH + 'v1/Fight/MyFight?accesstoken='+apiSetup.ACCESS_TOKEN,
   'REJECT':apiSetup.MASTER_API_PATH + 'v1/Fight/Reject?accesstoken='+apiSetup.ACCESS_TOKEN,
   'ACCEPT':apiSetup.MASTER_API_PATH + 'v1/Fight/Accept?accesstoken='+apiSetup.ACCESS_TOKEN,
+  'UPDATEGAMEID':apiSetup.MASTER_API_PATH + 'v1/Fight/UpdateGameID?accesstoken='+apiSetup.ACCESS_TOKEN,
+
 }
 const rankApi = {
   'USERRANK':apiSetup.MASTER_API_PATH +'/v1/Rank/UserRank?accesstoken='+ apiSetup.ACCESS_TOKEN,
