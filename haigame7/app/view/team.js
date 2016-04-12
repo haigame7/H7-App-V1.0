@@ -178,7 +178,7 @@ import User from './user.js';
       }else{
         if (name == 'teamrecruit') {
             if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-                this.props.navigator.push({ name: name, component: TeamRecruit,params:{'teamID':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+                this.props.navigator.push({ name: name, component: TeamRecruit,params:{'teamid':params.teamid,'teamrecruit':params.teamrecruit,'callback':this.initData.bind(this)},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
             }
         } else if (name == 'playerinfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -299,7 +299,6 @@ import User from './user.js';
           <View style={styles.userlistteam}>
             <TouchableOpacity style={styles.userlistteamname} activeOpacity={0.8}>
               <Text style={commonstyle.cream}>{this.state.userteamname}</Text>
-              <Icon name="angle-right" size={20} color={'#C3C3C3'} style={styles.userlistteamicon} />
             </TouchableOpacity>
             <View style={styles.userlistteambox}>
               <Text style={commonstyle.yellow}>{'战斗力:'}</Text>
@@ -308,7 +307,7 @@ import User from './user.js';
               <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
             </View>
             <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.gotoRoute('teamrecruit',this.state.userteamid)} >
+            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.gotoRoute('teamrecruit',{'teamid':this.state.userteamid,'teamrecruit':this.state.userteamdata.recruit})} >
               <Text style = {commonstyle.white}> {'发布招募'} </Text>
             </TouchableOpacity>
           </View>

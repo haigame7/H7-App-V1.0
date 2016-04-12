@@ -32,7 +32,7 @@ export default class extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       userData:{},
-      dataSource: ds.cloneWithRows(['row1','row2','row3']),
+      dataSource: ds.cloneWithRows([]),
       myinvitedList:[],
       footerMsg: "点击加载更多",
     }
@@ -48,7 +48,8 @@ export default class extends React.Component {
   }
 
   initData(){
-    TeamService.myInvitedTeamList({userID:this.state.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2},(response) => {
+    let requestdata = {'userID':this.state.userData.UserID,'startpage':GlobalVariable.PAGE_INFO.StartPage,'pagecount':GlobalVariable.PAGE_INFO.PageCount-2};
+    TeamService.myInvitedTeamList(requestdata,(response) => {
     if (response !== GlobalSetup.REQUEST_SUCCESS) {
       if(response[0].MessageCode == '40001'){
         Toast.show('服务器请求异常');

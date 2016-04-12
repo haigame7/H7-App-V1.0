@@ -30,7 +30,7 @@ export default class extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       userData:{},
-      dataSource: ds.cloneWithRows(['row1','row2','row3']),
+      dataSource: ds.cloneWithRows([]),
       myapplyList:[],
       footerMsg: "点击加载更多",
     }
