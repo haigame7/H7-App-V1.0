@@ -22,9 +22,18 @@ let videoOptions = {
       type: 5,
 
       videoUrl: 'http://www.iqiyi.com/v_19rrnlidhk.html?src=sharemodclk131212',
-      thumbImage: 'http://zx.youdao.com/zx/wp-content/uploads/2015/04/6401.jpg',
+      thumbImage: 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg',
 }
+let webpageOptions = {
+      title: '分享这个网页给你',
+      desc: '我发现这个网页很有趣，特意分享给你',
+      thumbSize: 150,
+      scene: 0,
+      type: 3,
 
+      webpageUrl: 'https://github.com/beefe/react-native-wechat-android',
+      thumbImage: 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg',
+}
 export default class MyProject extends React.Component {
   _registerApp(){
         WeChat.registerApp(appId,(err,registerOK) => {
@@ -40,14 +49,21 @@ export default class MyProject extends React.Component {
 
   _share(){
         WeChat.sendReq(videoOptions,(err,sendOK) => {
-          ToastAndroid.show(sendOK + '',ToastAndroid.SHORT);
-          ToastAndroid.show(err + '',ToastAndroid.SHORT);
+          // console.log('分享结果');
+          // console.log(sendOK);
+          // console.log(err);
+          });
+  }
+  _shareText(){
+        WeChat.sendReq(webpageOptions,(err,sendOK) => {
+          console.log('文本分享结果');
+          console.log(sendOK);
           });
   }
   _test(){
-    WeChat.registerApp(appId,(err,registerOK) => {
-        ToastAndroid.show(registerOK + '',ToastAndroid.SHORT);
-    });
+    // WeChat.registerApp(appId,(err,registerOK) => {
+    //     ToastAndroid.show(registerOK + '',ToastAndroid.SHORT);
+    // });
     let url = 'http://wx.haigame7.com/Weixin/JsApiPay';
     let data ={
       'UserID':'63',
@@ -58,11 +74,11 @@ export default class MyProject extends React.Component {
     var payOptions = {
       appId: '',
       nonceStr: '',
-      packageValue: 'Sign=WXPay',
+      packageValue: '',
       partnerId: '',
       prepayId: '',
       timeStamp: '',
-      paySign: '',
+      sign: '',
     };
     // WebService.postFecth(url,data,(response) => {
     //   console.log(response);
@@ -72,17 +88,21 @@ export default class MyProject extends React.Component {
       // res instanceof Response == true.
       if (res.ok) {
         res.json().then(function(_data) {
-          payOptions['appId'] = _data.appId
-          payOptions['nonceStr'] = _data.nonceStr
-          payOptions['partnerId'] = '1328184001'
-          payOptions['prepayId'] = _data.package.split("=")[1]
-          payOptions['timeStamp'] = _data.timeStamp
-          payOptions['paySign'] = _data.paySign
-        });
-        console.log(payOptions);
-        WeChat.weChatPay(payOptions,(err,sendReqOK) => {
-          console.log('支付结果');
-          console.log(sendReqOK);
+          console.log("服务器传回参数");
+          console.log(_data);
+          payOptions['appId'] = _data.appid
+          payOptions['nonceStr'] = _data.noncestr
+          payOptions['partnerId'] = _data.partnerid
+          payOptions['prepayId'] = _data.prepayid
+          payOptions['packageValue'] = _data.package
+          payOptions['timeStamp'] = _data.timestamp
+          payOptions['sign'] = _data.sign
+          console.log("发起支付请求，参数:");
+          console.log(payOptions);
+          WeChat.weChatPay(payOptions,(err,sendReqOK) => {
+            console.log('发起支付');
+            console.log(sendReqOK);
+          });
         });
       } else {
         console.log("Looks like the response wasn't perfect, got status", res.status);
@@ -128,7 +148,9 @@ export default class MyProject extends React.Component {
           打开微信
         </Text>
         </TouchableHighlight>
-
+        <Text style={styles.text} onPress={this._shareText} >
+                  分享网页到微信
+                </Text>
         <TouchableHighlight onPress={this._share}>
         <Text style={styles.text}  >
           分享视频到微信

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -47,6 +47,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
         // 下面@所标记的地方key值可以根据需要自行更改,对应你js文件中的key即可
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             int errCode = baseResp.errCode;
+            // Log.i("ReactNativeJS","支付错误代码" + errCode);
             WritableMap params = Arguments.createMap();
             params.putInt("errCode", errCode);                    // @
             switch (errCode) {

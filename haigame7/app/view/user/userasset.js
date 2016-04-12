@@ -39,7 +39,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
         footerMsg: "点击加载更多",
         content: undefined,
         hjData: this.props.hjData,
-        phoneNum: this.props.phoneNum?this.props.phoneNum : '15101075739' ,
+        phoneNum: this.props.userData.PhoneNumber?this.props.userData.PhoneNumber : '15101075739',
         isFetchData: true,
         keykey: 0,
         isOpen: true,
@@ -49,7 +49,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
     componentWillMount() {
     }
     componentDidMount() {
-      AssertService.fetchAssertList(this.state.phoneNum,(response) => {
+      AssertService.fetchAssertList(this.props.userData.PhoneNumber,(response) => {
         console.log(response[0].MessageCode);
         if (response[0].MessageCode == '0') {
           let newData = response[1];
@@ -76,7 +76,13 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
     gotoRecharge(name) {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-        this.props.navigator.push({name: name,component: Recharge,params:{data:this.state.data},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+        this.props.navigator.push({
+          name: name,
+          component: Recharge,
+          params:{
+            ...this.props,
+          },
+          sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
       }
       return;
     }

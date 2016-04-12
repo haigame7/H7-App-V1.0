@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -63,6 +64,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 params.putBoolean("success", false);                // @
                 break;
         }
+        Log.i("ReactNativeJS","分享完成,设置回调函数");
         WeChatModule.reactApplicationContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
         finish();
