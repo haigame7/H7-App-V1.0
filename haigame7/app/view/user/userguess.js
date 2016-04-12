@@ -142,7 +142,7 @@ export default class extends Component{
       let _params = this.state.requestData;
       _params.startpage = _params.startpage+1;
       this.setState({
-        footerMsg: "正在加载....."
+        footerMsg: "正在加载.....",
       });
       {/*加载下一页*/}
       GuessService.myGuessList(_params,(response) => {
@@ -153,17 +153,19 @@ export default class extends Component{
               keykey:1,
               footerMsg: "木有更多多数据了~~~~",
             });
+          }else{
+            for(var item in nextData){
+              _ds.push(nextData[item])
+            }
+            setTimeout(()=>{
+              this.setState({
+                dataguessSource: this.state.dataguessSource.cloneWithRows(_ds),
+                dataguess: _ds,
+                loaded: true,
+                footerMsg: "点击加载更多",
+              });
+            },1000);
           }
-          for(var item in nextData){
-            _ds.push(nextData[item])
-          }
-          setTimeout(()=>{
-            this.setState({
-              dataguessSource: this.state.dataguessSource.cloneWithRows(_ds),
-              dataguess: _ds,
-              loaded: true,
-            });
-          },1000);
         } else {
           console.log('请求错误' + response[0].MessageCode);
         }
