@@ -21,6 +21,8 @@ var Icon = require('react-native-vector-icons/Iconfont');
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
+import Certify from './usercertify';
+import UserInfo from './userinfo';
 
 export default class extends Component{
   constructor(props) {
@@ -33,18 +35,34 @@ export default class extends Component{
       },
     }
   }
-
+  gotoRoute(name,params) {
+    if(name=='usercertify'){
+      this.props.navigator.push({
+        name:'certify',
+        component:Certify,
+        params:{...this.props},
+       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      });
+    }else if(name=='userinfo'){
+      this.props.navigator.push({
+        name:'userinfo',
+        component:UserInfo,
+        params:{...this.props},
+        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      });
+    }
+  }
   rendertaskList(){
     return(
       <View>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.listview} onPress={()=>this.gotoRoute('userinfo')} activeOpacity={0.8}>
           <View style={styles.listviewiconleft}>
             <Icon name="modify" size={30} color={'#D31B25'} />
           </View>
           <Text style={styles.listviewtext}>{'完善资料  '}<Text style={commonstyle.red}>{'+50氦金'}</Text></Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.listview} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.listview} onPress={()=>this.gotoRoute('usercertify')}  activeOpacity={0.8}>
           <View style={styles.listviewiconleft}>
             <Icon name="task" size={30} color={'#D31B25'} />
           </View>
