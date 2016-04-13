@@ -228,6 +228,7 @@ class App extends Component {
             ref="header_match"
             screenTitle='赛事'
             iconName='user'
+            iconMessage= '0'
             nextComponent={{name:'用户中心',component:User}}
             gotoRef={this.gotoRef.bind(this)}
             updateLoginState={this.updateLoginState.bind(this)}
@@ -248,6 +249,7 @@ class App extends Component {
              ref="header_fight"
              screenTitle='约战'
              iconName='user'
+             iconMessage= '0'
              nextComponent={{name:'用户中心',component:User}}
              gotoRef={this.gotoRef.bind(this)}
              updateLoginState={this.updateLoginState.bind(this)}
@@ -268,6 +270,7 @@ class App extends Component {
              ref="header_rank"
              screenTitle='排行'
              iconName='user'
+             iconMessage= '0'
              nextComponent={{name:'用户中心',component:User}}
              gotoRef={this.gotoRef.bind(this)}
              updateLoginState={this.updateLoginState.bind(this)}
@@ -288,6 +291,7 @@ class App extends Component {
               ref="header_team"
               screenTitle='组队'
               iconName='user'
+              iconMessage= '0'
               nextComponent={{name:'用户中心',component:User}}
               updateLoginState={this.updateLoginState.bind(this)}
               isPop={false}

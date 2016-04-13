@@ -33,13 +33,14 @@ module.exports = React.createClass({
     return {
       icon_name: this.props.iconName,
       icon_size: 24,
-     icon_color: '#fff',
+      icon_color: '#fff',
       icon_text: this.props.iconText,
-  current_title: this.props.screenTitle,
+      current_title: this.props.screenTitle,
       navigator: undefined,
-   icon_onPress: null,
- next_component: null,
-          isPop: this.props.isPop == undefined ? true : this.props.isPop,
+      icon_onPress: null,
+      icon_message: this.props.iconMessage,
+      next_component: null,
+      isPop: this.props.isPop == undefined ? true : this.props.isPop,
     }
   },
   componentWillMount() {
@@ -48,8 +49,8 @@ module.exports = React.createClass({
     if (this.state.icon_name != undefined){
       this.setState({
         navigator: this.props.navigator,
-   next_component: this.props.nextComponent,
-     icon_onPress: this._pushroute,
+        next_component: this.props.nextComponent,
+        icon_onPress: this._pushroute,
       });
     }
     if (this.props.callback != undefined) {
@@ -76,6 +77,9 @@ module.exports = React.createClass({
      icon = <View></View>;
    }else if( this.state.icon_text != undefined){
      icon = <Text style={CommonStyle.headertextright}>{this.props.iconText}</Text>;
+   }
+   else if(this.state.icon_message != 0){
+     icon = <View><Icon name={this.state.icon_name} size={this.state.icon_size} color={this.state.icon_color} /><View style={CommonStyle.pointred}></View></View>;
    }
    else{
      icon = <Icon name={this.state.icon_name} size={this.state.icon_size} color={this.state.icon_color} />;

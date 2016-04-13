@@ -15,14 +15,17 @@ import Header from '../common/headernav';
 export default class extends React.Component {
   constructor(props){
     super(props);
-
+    this.state = {
+      Title: this.props.messagedata.Title,
+      Content: this.props.messagedata.Content,
+    }
   }
   render() {
     return(
       <View>
-        <Header screenTitle='信息标题' isPop={true} navigator={this.props.navigator}/>
+        <Header screenTitle={this.state.Title} isPop={true} navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
-          <Text style={commonstyle.cream}>这里是MSG 详情</Text>
+          <Text style={commonstyle.cream}>{this.state.Content}</Text>
         </View>
       </View>
     );

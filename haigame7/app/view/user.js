@@ -77,6 +77,7 @@ var User = React.createClass({
       setTimeout(() => {
         this.getUserGameInfo(jsondata.PhoneNumber)
         this.getUserTeamInfo(jsondata.UserID)
+        this.getUserMessage(jsondata.UserID)
         this.getTotalAssertAndRank(jsondata.PhoneNumber)
       },400)
     });
@@ -145,6 +146,17 @@ var User = React.createClass({
       }
     })
   },
+  getUserMessage(userMessage){
+    UserService.getUserMessage(userMessage,(response) =>{
+      if (response[0].MessageCode == '0') {
+        this.setState({
+          totalMessage: response[0].Message,
+        });
+      } else {
+        console.log('请求错误' + response[0].Message);
+      }
+    })
+  },
 
   _toNextScreen(params){
     // Toast.show("this is a message")
@@ -172,6 +184,10 @@ var User = React.createClass({
               console.log('认证回调');
               _this.getUserGameInfo(_this.state.userData.PhoneNumber)
             break;
+          case 'MyMsg':
+              console.log('消息回调');
+              _this.getUserMessage(_this.state.userData.UserID)
+            break;
           case 'TeamInfo':
               _this.getUserTeamInfo(_this.state.userData.UserID);
               _this.setState({modalOpen: false});
@@ -185,7 +201,7 @@ var User = React.createClass({
   render: function () {
     return (
       <View >
-      <Header  screenTitle='个人中心' iconName='email' nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} navigator={this.props.navigator}/>
+      <Header  screenTitle='个人中心' iconName='email' iconMessage={this.state.totalMessage} nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} navigator={this.props.navigator}/>
       <ScrollView style={commonstyle.bodyer}>
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserInfo","component":UserInfo})}>
