@@ -94,8 +94,6 @@ export default class extends Component{
       return
     }
     let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + money + "&tradeType=APP";
-    Toast.show(url)
-    return
     let payOptions = {
       appId: '',
       nonceStr: '',
