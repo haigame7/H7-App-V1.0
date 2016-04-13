@@ -88,6 +88,7 @@ export default class extends React.Component {
           Toast.show('创建成功');
           this.timer = setTimeout(()=>{
               this.props._callback('TeamInfo');
+              this.props.updateLoginState();
              if(this.props.navigator.getCurrentRoutes().length>3){
                var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
                this.props.navigator.jumpTo(route);

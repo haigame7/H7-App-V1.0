@@ -57,6 +57,7 @@ const guessApi={
 const teamApi={
   'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'GETTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/TeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'GETALLMYTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyAllTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'CREATETEAM':apiSetup.MASTER_API_PATH +'/v1/Team/Create?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'DELETETEAM':apiSetup.MASTER_API_PATH +'/v1/Team/Delete?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYAPPLYTEAMLIST':apiSetup.MASTER_API_PATH +'/v1/Team/MyApplyTeamList?accesstoken='+ apiSetup.ACCESS_TOKEN,
@@ -68,8 +69,9 @@ const teamApi={
   'INVITEUSER':apiSetup.MASTER_API_PATH +'/v1/Team/InviteUser?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'INVITEDUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/InvitedUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'APPLYUSERLIST':apiSetup.MASTER_API_PATH +'/v1/Team/ApplyUserList?accesstoken='+ apiSetup.ACCESS_TOKEN,
-  'HANDLEMYINVITED':apiSetup.MASTER_API_PATH +'v1/Team/HandleMyInvited?accesstoken='+ apiSetup.ACCESS_TOKEN,
-  'HANDLEMYAPPLY':apiSetup.MASTER_API_PATH +'v1/Team/HandleMyApply?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'HANDLEMYINVITED':apiSetup.MASTER_API_PATH +'/v1/Team/HandleMyInvited?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'HANDLEMYAPPLY':apiSetup.MASTER_API_PATH +'/v1/Team/HandleMyApply?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'SETDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/SetDefaultTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
 
 }
 module.exports = {
