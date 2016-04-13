@@ -42,6 +42,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new RCTSplashScreenPackage(MainActivity.this),
         new WeChatPackage(),
         new RCTDateTimePickerPackage(MainActivity.this),
         new VectorIconsPackage(),
