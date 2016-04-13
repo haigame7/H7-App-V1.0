@@ -20,7 +20,7 @@ import React,
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 
-import Header from '../common/headernav'; 
+import Header from '../common/headernav';
 import Icon from 'react-native-vector-icons/Iconfont';
 import Recharge from './recharge';
 import AssertService from '../../network/assertservice';
@@ -43,8 +43,35 @@ export default class extends Component{
       isOpen: true,
     }
   }
-  componentWillMount() {
-
+    gotoRecharge(name) {
+      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
+        this.props.navigator.push({
+          name: name,
+          component: Recharge,
+          params:{
+            ...this.props,
+          },
+          sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+      }
+    }
+    _onRefresh() {
+      this.setState({
+        isRefreshing: true
+      });
+      console.log("下拉刷新");
+      setTimeout(()=>{
+        this.setState({
+          isRefreshing: false
+        });
+      },1000);
+    }
+    _onLoadMore() {
+      if (this.state.keykey > 3) {
+        this.setState({
+          footerMsg: "木有更多多数据了~~~~"
+        });
+      }else{
+      }
   }
   componentDidMount() {
     AssertService.fetchAssertList(this.state.userData.PhoneNumber,(response) => {
@@ -61,13 +88,6 @@ export default class extends Component{
         this.setState({isOpen: false})
       }
     });
-  }
-
-  gotoRecharge(name) {
-    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-      this.props.navigator.push({name: name,component: Recharge,params:{data:this.state.data},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
-    }
-    return;
   }
   _renderRow(rowData, sectionID, rowID) {
     return(
