@@ -395,8 +395,14 @@ export default StyleSheet.create({
         marginTop: 5,
         marginRight: 10,
     },
+    msgliststatusno: {
+        width: 8,
+        height: 8,
+        marginTop: 5,
+        marginRight: 10,
+    },
     msglistdata: {
-        width: 40,
+        width: 130,
         marginLeft: 10,
         alignItems: 'flex-end',
     },

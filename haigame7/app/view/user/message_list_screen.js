@@ -6,6 +6,7 @@ import React, {
   Image,
   ListView,
   Text,
+  Navigator,
   TouchableHighlight,
   TouchableOpacity,
   RefreshControl
@@ -15,8 +16,9 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import ShowMsg from './message_show_screen';
 import Header from '../common/headernav';
-var Swipeout = require('react-native-swipeout');
-var Icon = require('react-native-vector-icons/Iconfont');
+import Swipeout from 'react-native-swipeout';
+import UserService from '../../network/userservice';
+import Icon from 'react-native-vector-icons/Iconfont';
 
 var swipeoutBtns = [
   {
@@ -24,17 +26,21 @@ var swipeoutBtns = [
     backgroundColor: '#D31B25'
   }
 ]
-const jsonData = '[{"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}]';
 export default class extends React.Component {
   constructor(props){
     super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(['row1','row2']),
+      data: [],
       pressTest: 0,
       loaded: false,
+      listdata:{
+        userID: 62,
+        startpage: 1,
+        pagecount: 5,
+      },
       updatePressed: false,
-      onpress: this._onItemPress.bind(this),
       isRefreshing: false,
       dataCount:0,
       keykey:0,
@@ -48,39 +54,24 @@ export default class extends React.Component {
   }
 
   getData() {
-    // let _ds = JSON.parse(JSON.stringify(['hu','haoran']));
-
-    let _ds = JSON.parse(jsonData);
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(_ds),
-      loaded: true
-    });
-    // fetch(README_URL)
-    // .then((response) => response.text())
-    // .then((responseText) => {
-    //   let f = responseText.match(/\- (.+)/g);
-    //   f = f.map((line, idx) => {
-		// 			let l = line.replace(/^\s?-\s?/, '') + '\n';
-		// 			let a = l.split(/\s?\:\s?/);
-		// 			return {
-		// 				title: a.shift(),
-		// 				desc: a.join(':').split(' ').shift()
-		// 			};
-		// 		});
-    //     f.push({
-    //       title: 'google-hosts',
-    //       desc: '每天2:00-3:00'
-    //     });
-    //     var _ds = JSON.parse(JSON.stringify(f));
-    //     // console.log(_ds);
-    //     this.setState({
-    //       dataSource: this.state.dataSource.cloneWithRows(_ds),
-    //       loaded: true
-    //     });
-    // }).done();
-
+    UserService.getUserMessage(this.state.listdata,(response) =>{
+      if (response[0].MessageCode == '0') {
+        let newData = response[1];
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(newData),
+          data:newData,
+          loaded: true,
+        });
+      } else {
+        console.log('请求错误' + response[0].Message);
+      }
+    })
   }
-
+  gotoRoute(params) {
+    if (this.props.navigator) {
+      this.props.navigator.push({ component: ShowMsg, params:{'messagedata':params}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+    }
+  }
   render() {
     if(!this.state.loaded){
       return this.renderLoadingView();
@@ -111,88 +102,84 @@ _onRefresh() {
   renderList() {
     return(
       <View style={styles.container}>
-        <Header screenTitle='我的信息{33}' isPop={true} navigator={this.props.navigator}/>
+        <Header screenTitle='我的消息' isPop={true} navigator={this.props.navigator}/>
         <ListView style={commonstyle.bodyer}
           dataSource={this.state.dataSource}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.isRefreshing}
-              onRefresh={this._onRefresh.bind(this)}
-              tintColor="#ff0000"
-              title="Loading..."
-              colors={['#ff0000', '#00ff00', '#0000ff']}
-              progressBackgroundColor="#ffff00"/>
-          }
           renderRow= {this._renderRow.bind(this)}
           renderFooter={this._renderFooter.bind(this)}
         />
       </View>
     );
   }
-  _onLoadMore() {
-    if (this.state.keykey > 3) {
+  _onLoadMore(param,data) {
+    if (this.state.keykey > 0) {
       this.setState({
-        footerMsg: "木有更多多数据了~~~~"
+        footerMsg: "木有更多数据了~~~~"
       });
     }else{
-      let _ds = JSON.parse(jsonData);
+      let _ds = data;
+      let _params = param;
+      _params.startpage = _params.startpage+1;
       this.setState({
-        footerMsg: "正在加载....."
+        footerMsg: "正在加载.....",
       });
-      let jsonstr='[{"title" : "标题123123", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}]'
-      let newData = JSON.parse(jsonstr)
-      let dd = _ds.push(newData)
-      //这等到有api在搞吧
-      setTimeout(()=>{
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(_ds),
-          loaded: true,
-          footerMsg: "点击加载更多",
-          keykey: this.state.keykey += 1
-        });
-      },2000);
+      UserService.getUserMessage(_params,(response) => {
+        if (response[0].MessageCode == '0') {
+          let nextData = response[1];
+          if(nextData.length<1){
+            this.setState({
+              keykey:1,
+              footerMsg: "木有更多数据了~~~~",
+            });
+          }else{
+            for(var item in nextData){
+              _ds.push(nextData[item])
+            }
+            setTimeout(()=>{
+              this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(_ds),
+                date:_ds,
+                loaded: true,
+                footerMsg: "点击加载更多",
+              });
+            },1000);
+          }
+        } else {
+          console.log('请求错误' + response[0].MessageCode);
+        }
+      });
     }
-
   }
 
   _renderFooter() {
     return(
-      <TouchableOpacity style={commonstyle.paginationview} underlayColor='#000000' activeOpacity={0.8} onPress={this._onLoadMore.bind(this)}>
+      <TouchableOpacity style={commonstyle.paginationview} underlayColor='#000000' activeOpacity={0.8} onPress={this._onLoadMore.bind(this,this.state.listdata,this.state.data)}>
         <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerMsg}</Text>
       </TouchableOpacity>
     );
   }
   _renderRow(rowData, sectionID, rowID) {
+    let point = 0;
+    if(rowData.State == '未读'){
+      point = 1;
+    }
     return(
       <Swipeout right={swipeoutBtns} close={true}>
-        <TouchableOpacity style={[commonstyle.row, styles.msglist]} activeOpacity={0.8} onPress={this.state.onpress} underlayColor="#000000" id={rowID}>
-          <View style={styles.msgliststatus}></View>
+        <TouchableOpacity style={[commonstyle.row, styles.msglist]} activeOpacity={0.8} onPress={()=>this.gotoRoute(rowData)} underlayColor="#000000" id={rowID}>
+          <View style={point == 1 ? styles.msgliststatus : styles.msgliststatusno}></View>
           <View style={commonstyle.col1}>
             <View style={commonstyle.row}>
-              <View style={commonstyle.col1}><Text style={commonstyle.yellow}>发件人{rowData.title}{rowData.desc}</Text></View>
-              <View style={styles.msglistdata}><Text style={commonstyle.gray}>14:21</Text></View>
+              <View style={commonstyle.col1}><Text style={commonstyle.yellow}>发件人: </Text></View>
+              <View style={styles.msglistdata}><Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.Time}</Text></View>
             </View>
             <View style={commonstyle.row}>
-              <View style={commonstyle.col1}><Text style={commonstyle.cream}>标题{rowData.title}</Text></View>
+              <View style={commonstyle.col1}><Text style={commonstyle.cream}>{rowData.Title}</Text></View>
               <View style={styles.msglisticon}><Icon name="angle-right" size={15} color={'#484848'} /></View>
             </View>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12]}>内容：{rowData.desc}</Text>
+            <Text style={[commonstyle.gray, commonstyle.fontsize12]}>内容：{rowData.Content}</Text>
           </View>
         </TouchableOpacity>
       </Swipeout>
     );
-  }
-
-  _onItemPress(rowData) {
-    let _nav = this.props.navigator;
-    if (_nav) {
-      _nav.push({
-        name: 'ShowMsg',
-        component: ShowMsg,
-        params: {
-         rowData: rowData,
-       }
-      });
-    }
   }
 }
