@@ -1,6 +1,7 @@
 package com.haigame7;
 
 import com.facebook.react.ReactActivity;
+import com.remobile.splashscreen.RCTSplashScreenPackage;
 import com.heng.wechat.WeChatPackage;
 import com.heng.wechat.WeChatPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
