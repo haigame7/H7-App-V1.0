@@ -276,24 +276,40 @@ export default class extends Component{
        this.setState({isOpen: false});
     }
     _doBet(params){
-      params.money = parseInt(this.state.guessmoney);
-      GuessService.doGuessBet(params,(response) => {
-        if (response !== GlobalSetup.REQUEST_SUCCESS) {
-          if(response[0].MessageCode == '40001'){
-            Toast.show('服务器请求异常');
-          }else if(response[0].MessageCode == '0'){
-           Toast.showLongCenter('下注成功');
+      if(this.state.content.userData.UserID==undefined){
+        this.props.navigator.push({
+          name:'login',
+          component:Login,
+          params:{...this.props},
+         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+      }else if(this.state.userdata.userteamid==0){
+        this.props.navigator.push({
+          name:'user',
+          component:User,
+          params:{'userData':this.state.content.userData,'openmodal':true},
+          sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        });
+      }else{
+        params.money = parseInt(this.state.guessmoney);
+        GuessService.doGuessBet(params,(response) => {
+          if (response !== GlobalSetup.REQUEST_SUCCESS) {
+            if(response[0].MessageCode == '40001'){
+              Toast.show('服务器请求异常');
+            }else if(response[0].MessageCode == '0'){
+             Toast.showLongCenter('下注成功');
+           }
+           {/*更新请求*/}
+           setTimeout(()=>{
+           this.getGuessList();
+           this.setState({isOpen: false});
+          },1000);
          }
-         {/*更新请求*/}
-         setTimeout(()=>{
-         this.getGuessList();
-         this.setState({isOpen: false});
-        },1000);
-       }
-        else{
-              Toast.show('请求错误');
-          }
-      });
+          else{
+                Toast.show('请求错误');
+            }
+        });
+      }
     }
     _joinMatch(params){
       if(this.state.content.userData.UserID==undefined){
