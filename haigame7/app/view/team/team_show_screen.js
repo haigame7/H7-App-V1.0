@@ -18,6 +18,7 @@ import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/Iconfont';
 import CreateTeam from './team_create_screen';
 import TeamRecruit from './teamrecruit';
+import TeamUserManager from './teamuser_manager_screen';
 import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
 import Toast from '@remobile/react-native-toast';
@@ -96,6 +97,7 @@ export default class extends React.Component {
         });
       }
   }
+
   _callback() {
     if(this.state.teamData.Role=='teamcreater'){
         this._toNextScreen({"name":"创建战队","component":CreateTeam});
@@ -156,7 +158,7 @@ export default class extends React.Component {
     return count;
   }
   editTeamMember(){
-    console.log('edit');
+    this._toNextScreen({"name":"队员管理","component":TeamUserManager});
   }
   initTeamOdd(wincount,losecount,followcount){
     wincount = this.parseCount(wincount);
@@ -212,6 +214,21 @@ export default class extends React.Component {
   }
   _renderFooter(){}
 
+
+  renderHeroImageItem(groups){
+    var items = Object.keys(groups).map(function(item,key) {
+    if(item<4){
+      return(
+        <TouchableOpacity key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+        <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
+        </TouchableOpacity>
+      );
+     }
+    });
+    return(
+      <View style={styles.listviewteamblock}>{items}</View>
+    );
+  }
   rendermodaldetail(){
     return(
       <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}   >
@@ -227,6 +244,7 @@ export default class extends React.Component {
     );
   }
   render() {
+    var items =this.renderHeroImageItem(this.props.teamData.TeamUserPicture);
     let myteammodal = this.rendermodaldetail();
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(
@@ -241,13 +259,8 @@ export default class extends React.Component {
     ):(<View></View>);
     let teamUser = (
       <View style={styles.listviewteam}>
-        <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-        <View style={styles.listviewteamblock}>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+        {items}
       </View>
       )
     return(
@@ -294,7 +307,7 @@ export default class extends React.Component {
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>本队需要辅助一名，擅长XX英雄，战队福利优厚，报名从速...</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teamData.RecruitContent}</Text></View>
             </View>
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
