@@ -132,6 +132,16 @@ export default{
       callback
     );
   },
+  /*设置用户消息状态*/
+  setMessageRead(data, callback){
+    FecthService.postFecth(
+      ApiConfig.USER_API.SET_MESSAGE_READ,
+      {
+        'MessageID':data.messageID,
+      },
+      callback
+    );
+  },
 
 
   /*提交游戏认证ID*/
