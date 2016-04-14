@@ -419,6 +419,9 @@ var TeamStyle = StyleSheet.create({
     },
     teammanageuser: {
         marginTop: 10,
+        alignItems:'flex-start',
+        flexWrap:'wrap',
+
     },
     teammanageimg: {
         width: (Util.size.width - 20)/4 - 20,
