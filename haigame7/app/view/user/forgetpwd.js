@@ -16,7 +16,6 @@ import React, {
 var {CountDownText} = require('react-native-sk-countdown');
 
 import styles from '../../styles/userstyle';
-import registerstyles from '../../styles/registerstyle';
 import Header from '../common/headernav';
 import api, {host, key} from './server';
 import Setpwd from './setpwd.js';
