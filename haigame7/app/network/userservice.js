@@ -120,6 +120,18 @@ export default{
       callback
     );
   },
+  /*获取用户消息列表*/
+  getUserMessage(data,callback) {
+    FecthService.postFecth(
+      ApiConfig.USER_API.GET_USER_MESSAGE,
+      {
+        'UserID':data.userID,
+        'StartPage': data.startpage,
+        'PageCount': data.pagecount,
+      },
+      callback
+    );
+  },
 
 
   /*提交游戏认证ID*/

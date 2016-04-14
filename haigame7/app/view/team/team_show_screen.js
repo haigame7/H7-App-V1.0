@@ -6,6 +6,7 @@ import React, {
   TextInput,
   Image,
   ScrollView,
+  ListView,
   ToastAndroid,
   TouchableOpacity,
   Alert,
@@ -13,13 +14,16 @@ import React, {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
+import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/Iconfont';
 import CreateTeam from './team_create_screen';
 import TeamRecruit from './teamrecruit';
+import TeamUserManager from './teamuser_manager_screen';
 import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
 import Toast from '@remobile/react-native-toast';
-
+import GlobalSetup from '../../constants/globalsetup';
+import GlobalVariable from '../../constants/globalvariable';
 export default class extends React.Component {
   /**
    * @param role 队长 captain | 队员：teamuser | 非本队成员: user
@@ -27,10 +31,14 @@ export default class extends React.Component {
    */
   constructor() {
     super();
+    var myTeamData  = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       navigator: undefined,
       userData:{},
       teamData:{},
+      myTeamDataSource: myTeamData.cloneWithRows(['row1']),
+      myTeams:[],
+      navbar:0,
       role: 'user',
       iconText: '添加战队',
       defaultTeamLogo: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
@@ -40,11 +48,48 @@ export default class extends React.Component {
 
   }
   componentWillMount(){
-      this.setState({
-        navigator: this.props.navigator,
-        teamData:this.props.teamData,
-        userData:this.props.userData
+    this.initData(0);
+  }
+  initData(flag){
+    let requestData = {'userID':this.props.userData.UserID};
+    TeamService.getAllMyTeam(requestData,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+         if(response[0].MessageCode == '40001'){
+           Toast.show('服务器请求异常');
+         }else if(response[0].MessageCode == '0'){
+           let newData = response[1];
+
+           this.setState({
+             myTeamDataSource: this.state.myTeamDataSource.cloneWithRows(newData),
+             myTeams:newData,
+           });
+         }
+        }else{
+            Toast.show('请求错误');
+        }
       });
+      if(flag==0){
+        this.setState({
+          navigator: this.props.navigator,
+          teamData:this.props.teamData,
+          userData:this.props.userData,
+          navbar:this.props.teamData.TeamID,
+        });
+      }
+      else{
+        TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
+          if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
+                this.setState({
+                navigator: this.props.navigator,
+                teamData: response[1],
+                userData:this.props.userData,
+                navbar:response[1].TeamID,
+                });
+          }else{
+            console.log('请求错误' + response[0].Message);
+          }
+        });
+      }
 
       if (this.state.role != 'captain') {
         this.setState({
@@ -52,6 +97,7 @@ export default class extends React.Component {
         });
       }
   }
+
   _callback() {
     if(this.state.teamData.Role=='teamcreater'){
         this._toNextScreen({"name":"创建战队","component":CreateTeam});
@@ -112,7 +158,7 @@ export default class extends React.Component {
     return count;
   }
   editTeamMember(){
-    console.log('edit');
+    this._toNextScreen({"name":"队员管理","component":TeamUserManager});
   }
   initTeamOdd(wincount,losecount,followcount){
     wincount = this.parseCount(wincount);
@@ -132,7 +178,74 @@ export default class extends React.Component {
     };
     return odddata;
   }
+  _switchTeam(nav,teamname){
+    let requestdata = {'userID':this.state.userData.UserID,'teamname':teamname};
+    TeamService.setUserDefaultTeam(requestdata,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+         if(response[0].MessageCode == '40001'){
+           Toast.show('服务器请求异常');
+         }else if(response[0].MessageCode == '0'){
+           Toast.show('设置成功');
+           setTimeout(()=>{
+             this.initData(1);
+             this.props.updateLoginState();
+             this.setState({
+               navbar:nav,
+               isOpen:false,
+             });
+           },1000);
+         }
+        }else{
+            Toast.show('请求错误');
+        }
+      });
+    return;
+  }
+  _renderMyTeamRow(rowData){
+    return(
+      <View>
+
+      <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
+        <Image style={rowData.TeamID==this.state.navbar?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.TeamLogo}} />
+        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
+      </TouchableOpacity>
+      </View>
+    );
+  }
+  _renderFooter(){}
+
+
+  renderHeroImageItem(groups){
+    var items = Object.keys(groups).map(function(item,key) {
+    if(item<4){
+      return(
+        <TouchableOpacity key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+        <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
+        </TouchableOpacity>
+      );
+     }
+    });
+    return(
+      <View style={styles.listviewteamblock}>{items}</View>
+    );
+  }
+  rendermodaldetail(){
+    return(
+      <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}   >
+      <View style={commonstyle.modaltitle}>
+        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>默认战队选择</Text>
+      </View>
+      <ListView
+        dataSource={this.state.myTeamDataSource}
+        renderRow={this._renderMyTeamRow.bind(this)}
+        renderFooter={this._renderFooter.bind(this)}
+      />
+      </Modal>
+    );
+  }
   render() {
+    var items =this.renderHeroImageItem(this.props.teamData.TeamUserPicture);
+    let myteammodal = this.rendermodaldetail();
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(
       <View style={styles.listviewbtnblock}>
@@ -146,13 +259,8 @@ export default class extends React.Component {
     ):(<View></View>);
     let teamUser = (
       <View style={styles.listviewteam}>
-        <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-        <View style={styles.listviewteamblock}>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-          <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} /></TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+        {items}
       </View>
       )
     return(
@@ -160,10 +268,10 @@ export default class extends React.Component {
         <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-            <View style={styles.blocktop}>
+            <TouchableOpacity onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')} style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
-              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/></View>
-            </View>
+              <TouchableOpacity  style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/></TouchableOpacity>
+            </TouchableOpacity>
 
             <View style={styles.blocktop}>
               <Text style={[styles.headname, commonstyle.white]}>{this.state.teamData.TeamName}</Text>
@@ -183,7 +291,6 @@ export default class extends React.Component {
               </View>
             </View>
           </Image>
-
           <View style={styles.listblock}>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队战绩</Text></View>
@@ -200,7 +307,7 @@ export default class extends React.Component {
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>本队需要辅助一名，擅长XX英雄，战队福利优厚，报名从速...</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teamData.RecruitContent}</Text></View>
             </View>
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
@@ -212,6 +319,7 @@ export default class extends React.Component {
           </View>
             {createrOperate}
         </ScrollView>
+        {myteammodal}
       </View>
     );
   }
