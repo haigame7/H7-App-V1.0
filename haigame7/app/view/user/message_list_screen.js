@@ -16,16 +16,9 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import ShowMsg from './message_show_screen';
 import Header from '../common/headernav';
-import Swipeout from 'react-native-swipeout';
 import UserService from '../../network/userservice';
 import Icon from 'react-native-vector-icons/Iconfont';
 
-var swipeoutBtns = [
-  {
-    text: '删除',
-    backgroundColor: '#D31B25'
-  }
-]
 export default class extends React.Component {
   constructor(props){
     super(props);
@@ -70,6 +63,13 @@ export default class extends React.Component {
   gotoRoute(params) {
     if (this.props.navigator) {
       this.props.navigator.push({ component: ShowMsg, params:{'messagedata':params}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+      UserService.setMessageRead(params.MessageID,(response) =>{
+        if (response[0].MessageCode == '0') {
+          console.log('设置成功' + response[0].Message);
+        } else {
+          console.log('请求错误' + response[0].Message);
+        }
+      })
     }
   }
   render() {
@@ -164,22 +164,20 @@ _onRefresh() {
       point = 1;
     }
     return(
-      <Swipeout right={swipeoutBtns} close={true}>
-        <TouchableOpacity style={[commonstyle.row, styles.msglist]} activeOpacity={0.8} onPress={()=>this.gotoRoute(rowData)} underlayColor="#000000" id={rowID}>
-          <View style={point == 1 ? styles.msgliststatus : styles.msgliststatusno}></View>
-          <View style={commonstyle.col1}>
-            <View style={commonstyle.row}>
-              <View style={commonstyle.col1}><Text style={commonstyle.yellow}>发件人: </Text></View>
-              <View style={styles.msglistdata}><Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.Time}</Text></View>
-            </View>
-            <View style={commonstyle.row}>
-              <View style={commonstyle.col1}><Text style={commonstyle.cream}>{rowData.Title}</Text></View>
-              <View style={styles.msglisticon}><Icon name="angle-right" size={15} color={'#484848'} /></View>
-            </View>
-            <Text style={[commonstyle.gray, commonstyle.fontsize12]}>内容：{rowData.Content}</Text>
+      <TouchableOpacity style={[commonstyle.row, styles.msglist]} activeOpacity={0.8} onPress={()=>this.gotoRoute(rowData)} underlayColor="#000000" id={rowID}>
+        <View style={point == 1 ? styles.msgliststatus : styles.msgliststatusno}></View>
+        <View style={commonstyle.col1}>
+          <View style={commonstyle.row}>
+            <View style={commonstyle.col1}><Text style={commonstyle.yellow}>发件人: </Text></View>
+            <View style={styles.msglistdata}><Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.Time}</Text></View>
           </View>
-        </TouchableOpacity>
-      </Swipeout>
+          <View style={commonstyle.row}>
+            <View style={commonstyle.col1}><Text style={commonstyle.cream}>{rowData.Title}</Text></View>
+            <View style={styles.msglisticon}><Icon name="angle-right" size={15} color={'#484848'} /></View>
+          </View>
+          <Text style={[commonstyle.gray, commonstyle.fontsize12]}>内容：{rowData.Content}</Text>
+        </View>
+      </TouchableOpacity>
     );
   }
 }

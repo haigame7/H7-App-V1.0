@@ -40,7 +40,6 @@ import MyMsg from './user/message_list_screen';
 import UserService from '../network/userservice';
 import TeamService from '../network/teamservice';
 import AssertService from '../network/assertservice';
-import Spinner from 'react-native-loading-spinner-overlay';
 import GlobalVariable from '../constants/globalvariable';
 
 import Toast from '@remobile/react-native-toast';
@@ -283,8 +282,6 @@ var User = React.createClass({
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <View style={styles.listboxfoot}></View>
-
-        <Spinner key='user_spinner'visible={this.state.isOpen} />
       </ScrollView>
       <Modal isOpen={this.state.modalOpen}  style={[commonstyle.modal, commonstyle.modalmiddle]} position={"center"}>
          <View style={commonstyle.modalclose}><Button onPress={this._closeModa} ><Icon name="error" size={20} color={'#FF0000'} /></Button></View>
