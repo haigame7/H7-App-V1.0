@@ -67,17 +67,17 @@ export default class extends React.Component {
     );
   }
   _renderRow(rowData) {
-
+    console.log(rowData);
     var that = this;
     var items =Object.keys(rowData.HeroImage).map(function(item,key) {
       return that.renderHeroImageItem(rowData.HeroImage[item],key);
     });
     let state;
-    if(rowData.State=="加入战队"){
+    if(rowData.State=="招募队员"){
       state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'等待回复'}</Text></View>;
-    }else if(rowData.State=="加入成功"){
+    }else if(rowData.State=="招募成功"){
       state=<View style={[commonstyle.btnborderred, styles.listblockbtn]}><Text style={commonstyle.red}>{'成功加入'}</Text></View>;
-    }else if(rowData.State=="加入失败"){
+    }else if(rowData.State=="招募失败"){
       state=<View style={[commonstyle.btnredwhite, styles.listblockbtn]}><Text style={commonstyle.white}>{'被拒绝'}</Text></View>;
     }else{
       state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'已失效'}</Text></View>;
