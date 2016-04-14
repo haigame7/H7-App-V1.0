@@ -50,7 +50,6 @@ class Circle extends React.Component {
       pan: new Animated.ValueXY(), // Vectors reduce boilerplate.  (step1: uncomment)
       pop: new Animated.Value(0),  // Initial value.               (step2a: uncomment)
     };
-    console.log(this.props);
   }
 
   _onLongPress(): void {

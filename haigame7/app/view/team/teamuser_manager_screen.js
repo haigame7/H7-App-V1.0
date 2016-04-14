@@ -46,11 +46,7 @@ export default class extends React.Component {
       });
   }
   _callback(){
-    this.props.navigator.push({
-      name:'TeamUser',
-      component:Circle,
-      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-    });
+    console.log(this.state.keys);
   }
   _onMove(position: Point): void {
     var newKeys = moveToClosest(this.state, position);
@@ -104,7 +100,7 @@ export default class extends React.Component {
           restLayout={this.state.activeInitialLayout}
           containerLayout={this.state.layout}
           onMove={this._onMove}
-          onDeactivate={() => { this.setState({activeKey: undefined}); }}
+          onDeactivate={() => {this.deactive(); }}
         />
       );
     }
@@ -112,6 +108,11 @@ export default class extends React.Component {
       <View style={[commonstyle.row, styles.teammanageuser]}>{circles}</View>
     );
   }
+  deactive(){
+  this.setState({
+    activeKey: undefined,
+  });
+}
   render() {
     var circles = this.renderCircle();
     return(
