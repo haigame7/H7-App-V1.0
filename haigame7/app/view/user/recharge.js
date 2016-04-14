@@ -83,17 +83,25 @@ export default class extends Component{
   }
 
   gotoRecharge(money,argument) {
+    let _money
+    let temp
     if (money === "" || money == null || money == undefined) {
+      temp = this.state.data.money;
+    } else {
+      temp = money;
+    }
+    if (temp === "" || temp == null || temp == undefined) {
       Toast.show("请选择或填写充值金额");
       return
     }
+    _money = temp.toString()
     let type = /^[0-9]*[1-9][0-9]*$/;
     let re = new RegExp(type);
-    if (money.match(re) == null) {
+    if (_money.match(re) == null) {
       Toast.show("请填写大于1的整数金额");
       return
     }
-    let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + money + "&tradeType=APP";
+    let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + _money + "&tradeType=APP";
     let payOptions = {
       appId: '',
       nonceStr: '',
