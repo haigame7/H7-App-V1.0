@@ -244,7 +244,7 @@ export default class extends React.Component {
     );
   }
   render() {
-    var items =this.renderHeroImageItem(this.props.teamData.TeamUserPicture);
+    var items =this.renderHeroImageItem(this.state.teamData.TeamUserPicture);
     let myteammodal = this.rendermodaldetail();
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(
