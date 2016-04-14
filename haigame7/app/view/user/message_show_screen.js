@@ -24,15 +24,6 @@ export default class extends React.Component {
       time: this.props.messagedata.Time,
     }
   }
-  componentDidMount() {
-    UserService.setMessageRead(this.state.messageID,(response) =>{
-      if (response[0].MessageCode == '0') {
-        console.log('设置成功' + response[0].Message);
-      } else {
-        console.log('请求错误' + response[0].Message);
-      }
-    })
-  }
   render() {
     return(
       <View>

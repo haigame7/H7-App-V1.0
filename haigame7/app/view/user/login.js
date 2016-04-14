@@ -35,8 +35,8 @@ export default class Login extends Component {
         super(props);
         this.state = {
             data: {
-                phone: undefined,
-                password: undefined,
+                phoneNumber: '',
+                password: '',
                 role: 0
             },
             loading: false,
@@ -63,14 +63,14 @@ export default class Login extends Component {
                     <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>
                 </View>
                 <View key = { 'phone' } style = { styles.logininput }>
-                    <TextInput {...fields[0] } onFocus = {() => this.onFocus({...fields[0] }) } onChangeText = {(text) => this.state.data.phone = text }/>
+                    <TextInput {...fields[0] } onFocus = {() => this.onFocus({...fields[0] }) } onChangeText = {(text) => this.state.data.phoneNumber = text }/>
                 </View>
                 <View key = { 'password' } style = { styles.logininput }>
                     <TextInput {...fields[3] }  onFocus = {() => this.onFocus({...fields[3] }) } onChangeText = {(text) => this.state.data.password = text }/>
                 </View>
                 <View style = {[commonstyle.row, styles.linkblock]} >
                     <TouchableOpacity style = {[commonstyle.col1, styles.link]} activeOpacity={0.8} onPress = {() => this.gotoRoute('forgetpwd') }>
-                        <Text style = {[styles.linkleft, commonstyle.cream]} > { '忘记密码? ' } </Text>
+                        <Text style = {[styles.linkleft, commonstyle.cream]} > { '忘记密码? ' }</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style = {[commonstyle.col1, styles.link]} activeOpacity={0.8} onPress = {() => this.gotoRoute('register') }>
                          <Text style = {[styles.linkright, commonstyle.blue]} > { '新用户注册' } </Text>
@@ -91,28 +91,27 @@ export default class Login extends Component {
     }
 
     onSubmit(argument) {
-        if (this.state.loading) {
-            Toast.show('请稍后...');
+        if(this.state.data.phoneNumber == '' && this.state.data.password == ''){
+            Toast.show('手机号和密码不能为空！');
             return;
-        }
-
-        let keys = Object.keys(this.state.data).map((val, key) => {
-            if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
-        });
-        this.setState({ messages: [] });
-        argument.map((val, key) => {
-            if (keys.indexOf(val.ref) > -1) this.setState({ messages: this.state.messages.concat(val) });
-        });
-        if (this.state.messages.length > 0) {
-            console.log('message wrong' + this.state.messages.length);
+        }else if(this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1){
+            Toast.show('手机号不能为空！');
             return;
-        }
+        }else if(this.state.data.password == '' || this.state.data.password.indexOf(' ') > -1){
+            Toast.show('密码不能为空！');
+            return;
+        }else{
+            if(!/^1[34578]\d{9}$/.test(this.state.data.phoneNumber)){
+                Toast.show('请输入正确的手机号！');
+                return;
+            }
+        };
+        Toast.show(this.state.data.phoneNumber.toString() + this.state.data.password.toString());
 
         this.setState({ loading: true });
-
         UserService.loginByInfo(this.state.data, (response) => {
             if (response[0].MessageCode == '0') {
-              UserService.getUserInfo(this.state.data.phone, (response) => {
+              UserService.getUserInfo(this.state.data.phoneNumber, (response) => {
                 if (response[0].MessageCode == '0') {
                   let data = response[1];
                   data['needUpdate'] = false;
@@ -127,19 +126,19 @@ export default class Login extends Component {
                   }, 500);
                 } else {
                   console.log('获取用户数据失败' + response[0].Message);
-                  Toast.show(
-                      response[0].Message
-                  );
+                  Toast.show('获取用户数据失败'+ response[0].Message);
                   this.setState({
                     loading: false,
                   })
                 }
               })
+            }else if(response[0].MessageCode == '10001'){
+                Toast.show('手机号不存在');
+            }else if(response[0].MessageCode == '10002'){
+                Toast.show('密码错误');
             } else {
               console.log('登录失败' + response[0].Message);
-              Toast.show(
-                  response[0].Message
-              );
+              Toast.show('用户不存在，请注册！');
               this.setState({
                 loading: false,
               })

@@ -9,7 +9,7 @@ export default{
   },
 
   /* 注册获取验证码 */
-  getVerifiCode(phone,callback) {
+  getVerifiCode(phoneNumber,callback) {
     /**
      * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
      * @param  {[type]}   {'PhoneNumber':phone}             [params]
@@ -18,12 +18,12 @@ export default{
      */
       FecthService.postFecth(
         ApiConfig.USER_API.GETVERIFYCODE1,
-        {'PhoneNumber':phone},
+        {'PhoneNumber':phoneNumber},
         callback
       );
   },
   /* 找回密码获取验证码 */
-  getVerifiCode2(phone,callback) {
+  getVerifiCode2(phoneNumber,callback) {
     /**
      * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
      * @param  {[type]}   {'PhoneNumber':phone}             [params]
@@ -32,7 +32,7 @@ export default{
      */
       FecthService.postFecth(
         ApiConfig.USER_API.GETVERIFYCODE2,
-        {'PhoneNumber':phone},
+        {'PhoneNumber':phoneNumber},
         callback
       );
   },
@@ -47,9 +47,9 @@ export default{
       FecthService.postFecth(
         ApiConfig.USER_API.REGISTERUSER,
         {
-          'PhoneNumber':data.phone,
-          'PassWord':data.password,
-          'VerifyCode':data.securitycode
+          'PhoneNumber':data.phoneNumber,
+          'PassWord':data.passWord,
+          'VerifyCode':data.securityCode,
         },
         callback
       );
@@ -83,7 +83,7 @@ export default{
       FecthService.postFecth(
         ApiConfig.USER_API.LOGINUSER,
         {
-          'PhoneNumber':data.phone,
+          'PhoneNumber':data.phoneNumber,
           'PassWord':data.password,
         },
         callback
