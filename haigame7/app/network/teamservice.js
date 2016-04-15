@@ -21,6 +21,23 @@ export default{
         callback
       );
   },
+  /* 设置我的默认战队 */
+  setUserDefaultTeam(data,callback) {
+    /**
+     * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+     * @param  {[type]}   {'PhoneNumber':phone}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.TEAM_API.SETDEFAULTTEAM,
+        {
+          'CreatUserID':data.userID,
+          'TeamName':data.teamname
+        },
+        callback
+      );
+  },
   /*获取战队详情*/
   getTeambyID(data,callback){
     /**
@@ -36,6 +53,22 @@ export default{
         },
         callback
       );
+},
+/*获取我的战队列表*/
+getAllMyTeam(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.GETALLMYTEAM,
+      {
+        'CreatUserID':data.userID,
+      },
+      callback
+    );
 },
 /*创建新战队*/
 createTeam(data,callback){
@@ -257,6 +290,43 @@ getApplyUserList(data,callback){
       callback
     );
 },
-
+/*我的受邀操作【同意or拒绝】*/
+handleMyInvited(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.HANDLEMYINVITED,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+        'MessageID':data.messageID,
+        'ISOK':data.isOK,
+      },
+      callback
+    );
+},
+/*我的受邀操作【同意or拒绝】*/
+handleMyApply(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'TeamID':teamID,'UserID':userID}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.HANDLEMYAPPLY,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+        'MessageID':data.messageID,
+        'ISOK':data.isOK,
+      },
+      callback
+    );
+},
 
 }

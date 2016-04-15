@@ -317,6 +317,26 @@ var TeamStyle = StyleSheet.create({
     btndisable: {
         backgroundColor: '#484848',
     },
+    carousellist: {
+        marginLeft: 15,
+        marginRight: 15,
+    },
+    carousellistimg: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderWidth: 1,
+        borderColor: 'rgb(208, 46, 70)',
+        borderRadius: 5,
+        marginBottom: 5,
+    },
+    carousellistimgactive: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderWidth: 3,
+        borderColor: 'rgb(208, 46, 70)',
+        borderRadius: 5,
+        marginBottom: 5,
+    },
     //文本框
     recruitbox: {
         margin: 10,
@@ -399,6 +419,9 @@ var TeamStyle = StyleSheet.create({
     },
     teammanageuser: {
         marginTop: 10,
+        alignItems:'flex-start',
+        flexWrap:'wrap',
+
     },
     teammanageimg: {
         width: (Util.size.width - 20)/4 - 20,
@@ -424,6 +447,11 @@ var TeamStyle = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#D31B25',
         marginRight: 10,
+    },
+    toggle: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
     },
 });
 

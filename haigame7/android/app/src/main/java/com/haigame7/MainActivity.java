@@ -1,6 +1,9 @@
 package com.haigame7;
 
 import com.facebook.react.ReactActivity;
+import com.remobile.splashscreen.RCTSplashScreenPackage;
+import com.heng.wechat.WeChatPackage;
+import com.heng.wechat.WeChatPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -39,6 +42,8 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new RCTSplashScreenPackage(MainActivity.this),
+        new WeChatPackage(),
         new RCTDateTimePickerPackage(MainActivity.this),
         new VectorIconsPackage(),
         new ImagePickerPackage(),

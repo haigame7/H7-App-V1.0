@@ -128,10 +128,11 @@ import User from './user.js';
           //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
         }
       });
-    {/*请求我的战队信息end*/}
+    {/*招募信息列表*/}
       TeamService.getRecruitList(this.state.paraRecruit,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
            if(response[0].MessageCode == '40001'){
+             console.log('招募信息列表_服务器请求异常');
              Toast.show('服务器请求异常');
            }else if(response[0].MessageCode == '0'){
              let newData = response[1];
@@ -223,7 +224,7 @@ import User from './user.js';
       </View>
       <View style={styles.teamlistright}>
         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.RecruitTime}</Text>
-        <TouchableOpacity  onPress={()=>this.state.content.userData.UserID==0?Toast.show('请先登录'):this.applyTeam(this.state.content.userData.UserID,rowData.TeamID)} style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity  onPress={()=>this.state.content.userData.UserID==undefined?this.gotoRoute():this.applyTeam(this.state.content.userData.UserID,rowData.TeamID)} style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.teamlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '申请加入' : '已申请' } </Text>
         </TouchableOpacity>
       </View>
@@ -258,7 +259,7 @@ import User from './user.js';
             </View>
           </View>
         </View>
-        <TouchableOpacity onPress={()=>this.state.userteamid==0?Toast.show('请先创建战队'):this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>this.state.content.userData.UserID==0||this.state.content.userData.UserID==undefined||this.state.userteamid==0?this.gotoRoute():this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
         </TouchableOpacity>
       </TouchableOpacity>

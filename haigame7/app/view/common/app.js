@@ -16,6 +16,7 @@ import UserService from '../../network/userservice';
 
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
+import SplashScreen from '@remobile/react-native-splashscreen';
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
@@ -71,6 +72,7 @@ var BaseOverswipeConfig = {
   frictionByDistance: 1.5,
 };
 export default class haigame7 extends Component {
+
   componentWillMount() {
       if (Platform.OS === 'android') {
         BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
@@ -117,7 +119,6 @@ export default class haigame7 extends Component {
             // console.log(navigator.getCurrentRoutes().length);
             let config = route.sceneConfig
             if (config != undefined) {
-              console.log(navigator.getCurrentRoutes().length);
               if(navigator.getCurrentRoutes().length == 1){
                 config.gestures.jumpBack = {
                   ...BaseLeftToRightGesture,
@@ -181,7 +182,9 @@ class App extends Component {
   componentWillUpdate() {
   }
   componentDidMount() {
-
+    setTimeout(()=>{
+      SplashScreen.hide()
+    },2000)
   }
   updateLoginState(){
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
@@ -228,6 +231,7 @@ class App extends Component {
             ref="header_match"
             screenTitle='赛事'
             iconName='user'
+            iconMessage= '0'
             nextComponent={{name:'用户中心',component:User}}
             gotoRef={this.gotoRef.bind(this)}
             updateLoginState={this.updateLoginState.bind(this)}
@@ -248,6 +252,7 @@ class App extends Component {
              ref="header_fight"
              screenTitle='约战'
              iconName='user'
+             iconMessage= '0'
              nextComponent={{name:'用户中心',component:User}}
              gotoRef={this.gotoRef.bind(this)}
              updateLoginState={this.updateLoginState.bind(this)}
@@ -268,6 +273,7 @@ class App extends Component {
              ref="header_rank"
              screenTitle='排行'
              iconName='user'
+             iconMessage= '0'
              nextComponent={{name:'用户中心',component:User}}
              gotoRef={this.gotoRef.bind(this)}
              updateLoginState={this.updateLoginState.bind(this)}
@@ -288,6 +294,7 @@ class App extends Component {
               ref="header_team"
               screenTitle='组队'
               iconName='user'
+              iconMessage= '0'
               nextComponent={{name:'用户中心',component:User}}
               updateLoginState={this.updateLoginState.bind(this)}
               isPop={false}

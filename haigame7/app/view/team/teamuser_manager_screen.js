@@ -3,6 +3,10 @@ import React, {
   StyleSheet,
   Text,
   View,
+  Animated,
+  LayoutAnimation,
+  PanResponder,
+  Navigator,
   TextInput,
   Image,
   ToastAndroid,
@@ -13,75 +17,166 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 import Header from '../common/headernav';
+import Circle from './teamuseranimated';
 
-const jsonData = '[{"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}, {"title" : "标题", "content": "内容*****", "time": "2010/01/01","sendP": "naive","isRead": "false"}]';
+
 export default class extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      navigator: undefined,
-      teamName: undefined,
-      isUsed: false,
-      defaultTeamName: '请输入战队名称',
-      defaultUserAvatar: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
-      defaultAddPic: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
+  state: any;
+  props: any;
+  _onMove: (position: Point) => void;
+  constructor(props: any){
+    super(props);
+    var keys = [];
+    for (var idx = 0; idx < this.props.teamData.TeamUserPicture.length; idx++) {
+      keys.push(idx);
     }
+    this.state = {
+      keys,
+      navigator: undefined,
+      teamData: {},
+      isUsed: false,
+      restLayouts: [],
+      openVal: new Animated.Value(0),
+    };
+    this._onMove = this._onMove.bind(this);
   }
   componentDidMount(){
       this.setState({
         navigator: this.props.navigator,
+        teamData:this.props.teamData
       });
   }
   _callback(){
-    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
-    this.state.navigator.pop()
+    console.log(this.state.keys);
+  }
+  _onMove(position: Point): void {
+    var newKeys = moveToClosest(this.state, position);
+    if (newKeys !== this.state.keys) {
+      LayoutAnimation.easeInEaseOut();  // animates layout update as one batch (step3: uncomment)
+      this.setState({keys: newKeys});
+    }
+  }
+  _toNextScreen(params){
+    let _this = this;
+    this.props.navigator.push({
+      name: params.name,
+      component: params.component,
+      sceneConfig:params.sceneConfig || undefined,
+      params: {
+        ...this.props,
+        ...params,
+        teamData:this.state.teamData,
+        }
+    })
   }
 
-  render() {
-    let users = (
-      <View>
-        <View style={[commonstyle.row, styles.teammanagelist]}>
-          <View style={commonstyle.col1}>
-            <View style={commonstyle.row}>
-              <Image style={styles.teammanagelistimg} source={{uri:this.state.defaultUserAvatar}} />
-              <View style={commonstyle.col1}>
-                <Text style={commonstyle.cream}>用户名称</Text>
-                <Text style={commonstyle.yellow}>战斗力<Text style={commonstyle.red}>123123</Text></Text>
-              </View>
-            </View>
-          </View>
-          <View style={commonstyle.col1}>
-            <View style={commonstyle.row}>
-              <Image style={styles.teammanagelistimg} source={{uri:this.state.defaultUserAvatar}} />
-              <View style={commonstyle.col1}>
-                <Text style={commonstyle.cream}>用户名称</Text>
-                <Text style={commonstyle.yellow}>战斗力<Text style={commonstyle.red}>123123</Text></Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
+  renderCircle(){
+   var circles =  this.state.keys.map((key, idx) => {
+      if (key === this.state.activeKey) {
+        return (
+          <Circle key={key + 'd'} {...this.props} toggleActive={this._toNextScreen.bind(this)} teamUser={this.props.teamData.TeamUserPicture[idx]} dummy={true} />
+      );
+      } else {
+        if (!this.state.restLayouts[idx]) {
+          var onLayout = function(index, e) {
+            var layout = e.nativeEvent.layout;
+            this.setState((state) => {
+              state.restLayouts[index] = layout;
+              return state;
+            });
+          }.bind(this, idx);
+        }
+        return (
+          <Circle
+            key={key}
+            id={key}
+            teamUser={this.props.teamData.TeamUserPicture[idx]}
+            toggleActive={this._toNextScreen.bind(this)}
+            openVal={this.state.openVal}
+            {...this.props}
+            onLayout={onLayout}
+            restLayout={this.state.restLayouts[idx]}
+            onActivate={this.setState.bind(this, {
+              activeKey: key,
+              activeInitialLayout: this.state.restLayouts[idx],
+            })}
+          />
+        );
+      }
+    });
+    if (this.state.activeKey) {
+      circles.push(
+        <Animated.View key="dark" style={[styles.darkening, {opacity: this.state.openVal}]} />
+      );
+      circles.push(
+        <Circle
+          openVal={this.state.openVal}
+          key={this.state.activeKey}
+          id={this.state.activeKey}
+          restLayout={this.state.activeInitialLayout}
+          containerLayout={this.state.layout}
+          onMove={this._onMove}
+          onDeactivate={() => {this.deactive(); }}
+        />
+      );
+    }
+    return(
+      <View style={[commonstyle.row, styles.teammanageuser]}>{circles}</View>
     );
-
+  }
+  deactive(){
+  this.setState({
+    activeKey: undefined,
+  });
+}
+  render() {
+    var circles = this.renderCircle();
     return(
       <View>
-        <Header screenTitle='队员管理' isPop={true}  navigator={this.props.navigator}/>
+        <Header screenTitle='队员管理' isPop={true} iconText='完成' callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <View style={styles.teammanage}>
             <View style={[commonstyle.row, styles.teammanagelader]}>
-              <Image style={styles.teammanageimg} source={{uri:this.state.defaultUserAvatar}} />
+              <Image style={styles.teammanageimg} source={{uri:this.state.teamData.CreaterPicture}} />
             </View>
-            <View style={[commonstyle.row, styles.teammanageuser]}>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}><Image style={styles.teammanageimg} source={{uri:this.state.defaultUserAvatar}}/></View>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}><Image style={styles.teammanageimg} source={{uri:this.state.defaultUserAvatar}}/></View>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}><Image style={styles.teammanageimg} source={{uri:this.state.defaultUserAvatar}}/></View>
-              <View style={[commonstyle.col1, commonstyle.viewcenter]}><Image style={styles.teammanageimg} source={{uri:this.state.defaultUserAvatar}}/></View>
-            </View>
+           {circles}
           </View>
-          <View style={styles.teammanageline}></View>
-          <ScrollView style={styles.scrollview}>{users}</ScrollView>
         </View>
       </View>
     );
   }
+
+}
+
+
+type Point = {x: number, y: number};
+function distance(p1: Point, p2: Point): number {
+var dx = p1.x - p2.x;
+var dy = p1.y - p2.y;
+return dx * dx + dy * dy;
+}
+
+function moveToClosest({activeKey, keys, restLayouts}, position) {
+var activeIdx = -1;
+var closestIdx = activeIdx;
+var minDist = Infinity;
+var newKeys = [];
+keys.forEach((key, idx) => {
+  var dist = distance(position, restLayouts[idx]);
+  if (key === activeKey) {
+    idx = activeIdx;
+  } else {
+    newKeys.push(key);
+  }
+  if (dist < minDist) {
+    minDist = dist;
+    closestIdx = idx;
+  }
+});
+if (closestIdx === activeIdx) {
+  return keys; // nothing changed
+} else {
+  newKeys.splice(closestIdx, 0, activeKey);
+  return newKeys;
+}
 }

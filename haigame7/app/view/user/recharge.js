@@ -14,13 +14,19 @@ var {
   Navigator,
   TouchableHighlight,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  Alert,
+  Platform,
+  DeviceEventEmitter
 } = React;
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import WebService from '../../network/fetchservice';
+import Toast from '@remobile/react-native-toast';
+import WeChat from 'react-native-wechat-android';
 
+let appId = 'wxb0cb6c44afd49f5a';
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -30,10 +36,37 @@ export default class extends Component{
         certifyid:'000000',
       },
       content:undefined,
-      messages: []
+      messages: [],
+      loading: false,
+      registerWechat: false
     }
   }
 
+
+  componentDidMount() {
+    if (Platform.OS == 'android') {
+      WeChat.registerApp(appId,(err,registerOK) => {
+          // Toast.show(registerOK + '',Toast.SHORT);
+          if(registerOK) {
+            this.setState({registerWechat: true})
+          } else {
+            Toast.show('支付功能异常' + '',Toast.SHORT);
+          }
+      });
+      //  处理支付回调结果
+      DeviceEventEmitter.addListener('finishedPay',function(event){
+       var success = event.success;
+       if(success){
+        // 在此发起网络请求由服务器验证是否真正支付成功，然后做出相应的处理
+
+       }else{
+        Toast.show('支付失败',Toast.SHORT);
+       }
+      });
+    } else {
+      Toast.show('充值功能暂未提供',Toast.SHORT)
+    }
+  }
   renderMessages() {
     if (this.state.messages.length > 0) {
       let messages = this.state.messages.map((val, key) => {
@@ -52,48 +85,80 @@ export default class extends Component{
   }
 
   gotoRecharge(money,argument) {
-    console.log('reacharge');
-    let keys = Object.keys(this.state.data).map((val,key) => {
-      if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
-    });
-    this.setState({messages: []});
-    argument.map((val, key) => {
-      if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
-    });
-    if(this.state.messages.length>0){
-      console.log('message wrong'+this.state.messages.length);
-      return;
+    let _money
+    let temp
+    if (money === "" || money == null || money == undefined) {
+      temp = this.state.data.money;
+    } else {
+      temp = money;
     }
+    if (temp === "" || temp == null || temp == undefined) {
+      Toast.show("请选择或填写充值金额");
+      return
+    }
+    _money = temp.toString()
+    let type = /^[0-9]*[1-9][0-9]*$/;
+    let re = new RegExp(type);
+    if (_money.match(re) == null) {
+      Toast.show("请填写大于1的整数金额");
+      return
+    }
+    let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + _money + "&tradeType=APP";
+    let payOptions = {
+      appId: '',
+      nonceStr: '',
+      packageValue: '',
+      partnerId: '',
+      prepayId: '',
+      timeStamp: '',
+      sign: '',
+    };
+    fetch(url).then(function(res) {
+      // res instanceof Response == true.
+      if (res.ok) {
+        res.json().then(function(_data) {
+          console.log("服务器传回参数");
+          console.log(_data);
+          payOptions['appId'] = _data.appid
+          payOptions['nonceStr'] = _data.noncestr
+          payOptions['partnerId'] = _data.partnerid
+          payOptions['prepayId'] = _data.prepayid
+          payOptions['packageValue'] = _data.package
+          payOptions['timeStamp'] = _data.timestamp
+          payOptions['sign'] = _data.sign
+          console.log("发起支付请求，参数:");
+          console.log(payOptions);
+          WeChat.weChatPay(payOptions,(err,sendReqOK) => {
+            console.log('发起支付');
+            console.log(sendReqOK);
+          });
+        });
+      } else {
+        console.log("Looks like the response wasn't perfect, got status", res.status);
+      }
+    }, function(e) {
+      console.log("Fetch failed!", e);
+    });
+
     return;
   }
 
-  doRecharge() {
-    let url = 'http://wx.haigame7.com/Weixin/JsApiPay';
-    let data ={
-      'UserID':'63',
-      'TotalFee': 1,
-      'tradeType': 'APP'
-    }
-    // WebService.postFecth(url,data,(response) => {
-    //   console.log(response);
-    // })
-    // "Content-Type": "application/x-www-form-urlencoded"
-    fetch(url, {
-      	method: "POST",
-      	headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-      	},
-      	body: "UserID=63&TotalFee=1&tradeType=APP"
-      }).then(function(res) {
-      	console.log(res);
-      }, function(e) {
-        console.log('error');
-      	console.log(e);
-      });
-  }
+
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
+    let btn;
+    if(this.state.registerWechat && Platform.OS == 'android'){
+      btn = (
+       <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
+         <Text style={styles.btnfont} >{'确认充值'}</Text>
+       </TouchableHighlight>
+     )
+    } else {
+      btn = (
+        <View></View>
+      )
+    }
+
     return (
       <View >
         <Header screenTitle='充值' isPop={true}  navigator={this.props.navigator}/>
@@ -135,13 +200,7 @@ export default class extends Component{
               <Text style={this.state.data.money==5000?commonstyle.red:commonstyle.gray} >{'5000氦金'}</Text>
             </TouchableHighlight>
           </View>
-
-          <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
-            <Text style={styles.btnfont} >{'确认充值'}</Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.doRecharge()}>
-            <Text style={styles.btnfont} >{'测试统一下单'}</Text>
-          </TouchableHighlight>
+          {btn}
         </View>
       </View>
     );

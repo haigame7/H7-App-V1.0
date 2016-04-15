@@ -284,6 +284,17 @@ var CommonStyle = StyleSheet.create({
     iconnobg: {
         backgroundColor: 'rgba(0, 0, 0, 0)',
     },
+    pointred: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor:'#FFFFFF',
+        backgroundColor: '#960000',
+    },
     //刷新&加载
     loading: {
         height: 36,
