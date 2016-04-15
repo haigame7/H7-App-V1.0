@@ -32,10 +32,10 @@ export default class extends Component {
       data: {
         phoneNumber: '',
         code: '',
+        reset: false,
       },
       securityCode: '',
       loading: false,
-      messages: [],
       getCodeMsg: '获取验证码',
       isToushable: true,
     }

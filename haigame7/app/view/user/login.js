@@ -106,7 +106,6 @@ export default class Login extends Component {
                 return;
             }
         };
-        Toast.show(this.state.data.phoneNumber.toString() + this.state.data.password.toString());
 
         this.setState({ loading: true });
         UserService.loginByInfo(this.state.data, (response) => {

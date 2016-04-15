@@ -32,14 +32,13 @@ export default class extends Component {
     this.state = {
       data: {
         phoneNumber: this.props.data.phoneNumber,
-        verifyCode:this.props.data.securityCode,
+        verifyCode:this.props.data.code,
         passWord: '',
         passWordd: '',
       },
       loading:false,
       notshow: true,
-      reset:undefined,
-      messages: []
+      reset:this.props.data.reset,
     }
   };
 
@@ -77,12 +76,21 @@ export default class extends Component {
     if(isreset){
       UserService.resetPassword(this.state.data,(response) => {
         if (response[0].MessageCode == '0') {
-          AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
+          //AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
           setTimeout(() => {
             var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
             this.props.navigator.jumpTo(route);
           }, 2000);
           Toast.show("重置成功!");
+        }else if(response[0].MessageCode == '10001'){
+          Toast.show("手机号不存在");
+          return;
+        }else if(response[0].MessageCode == '10005'){
+          Toast.show("验证码错误");
+          return;
+        }else if(response[0].MessageCode == '10006'){
+          Toast.show("验证码过期");
+          return;
         } else {
           Toast.show(
               response[0].Message
@@ -126,7 +134,7 @@ export default class extends Component {
     ]
     var headerset, headtext;
     var footerset;
-    if(this.props.reset){
+    if(this.state.reset){
       headerset =  <View><Header screenTitle = '重置密码' navigator = { this.props.navigator } /><View activeOpacity={1} style={styles.titleContainer}></View></View>
       headtext = <View style={styles.loginblock}></View>
     }else{
@@ -148,7 +156,7 @@ export default class extends Component {
               <Text style={[commonstyle.cream, styles.switchtext]} >{'显示密码'}</Text>
               <Switch onValueChange={(value) =>this.showPwd(this.state.notshow)} style={styles.switchbar} value= {!this.state.notshow}/>
           </View>
-          <TouchableHighlight style={this.state.loading ? styles.btndisable : styles.btn} underlayColor={'#FF0000'} onPress={() => this.register(this.props.reset)}>
+          <TouchableHighlight style={this.state.loading ? styles.btndisable : styles.btn} underlayColor={'#FF0000'} onPress={() => this.register(this.state.reset)}>
               <Text style={styles.btnfont}>{'完成'}</Text>
           </TouchableHighlight>
           </Image>

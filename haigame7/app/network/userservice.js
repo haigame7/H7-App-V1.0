@@ -49,7 +49,7 @@ export default{
         {
           'PhoneNumber':data.phoneNumber,
           'PassWord':data.passWord,
-          'VerifyCode':data.securityCode,
+          'VerifyCode':data.verifyCode,
         },
         callback
       );
@@ -65,9 +65,9 @@ export default{
       FecthService.postFecth(
         ApiConfig.USER_API.RESETPASSWORD,
         {
-          'PhoneNumber':data.phone,
-          'PassWord':data.password,
-          'VerifyCode':data.securitycode
+          'PhoneNumber':data.PhoneNumber,
+          'PassWord':data.passWord,
+          'VerifyCode':data.verifyCode
         },
         callback
       );
