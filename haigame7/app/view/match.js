@@ -356,7 +356,7 @@ export default class extends Component{
    gotoRoute(name,params) {
     if (name == 'matchrule') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MatchRule, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: MatchRule,params:{'matchdata':params}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
     } else if (name == 'matchschedule') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -544,7 +544,7 @@ rendermatchList(){
   if(this.state.navbar==0){
     return(
       <View>
-      <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchschedule',this.state.matchdata)}>
+      <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
         <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture || default_user_pic}}  resizeMode={"stretch"} />
       </TouchableOpacity>
       <ListView

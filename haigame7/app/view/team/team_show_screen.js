@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/Iconfont';
 import CreateTeam from './team_create_screen';
 import TeamRecruit from './teamrecruit';
 import TeamUserManager from './teamuser_manager_screen';
+import TeamUser from './teamuser_show_screen';
 import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
 import Toast from '@remobile/react-native-toast';
@@ -114,6 +115,7 @@ export default class extends React.Component {
       sceneConfig:params.sceneConfig || undefined,
       params: {
         ...this.props,
+        ...params,
         teamData:this.state.teamData,
         }
     })
@@ -165,6 +167,14 @@ export default class extends React.Component {
       isOpen: false,
     });
     this._toNextScreen({"name":"队员管理","component":TeamUserManager});
+  }
+  operateTeamUser(){
+    if(this.state.teamData.Role=='teamcreater'){
+       this.setState({
+         isOpen: false,
+       });
+        this._toNextScreen({"name":"个人信息","component":TeamUser});
+    }
   }
   sendRecruit(){
     this.setState({
@@ -228,10 +238,11 @@ export default class extends React.Component {
 
 
   renderHeroImageItem(groups){
+    let that = this;
     var items = Object.keys(groups).map(function(item,key) {
     if(item<4){
       return(
-        <TouchableOpacity key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>that.operateTeamUser()} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
         <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
         </TouchableOpacity>
       );
