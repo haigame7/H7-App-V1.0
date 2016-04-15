@@ -100,6 +100,9 @@ export default class extends React.Component {
 
   _callback() {
     if(this.state.teamData.Role=='teamcreater'){
+       this.setState({
+         isOpen: false,
+       });
         this._toNextScreen({"name":"创建战队","component":CreateTeam});
     }
   }
