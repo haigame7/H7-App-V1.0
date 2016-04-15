@@ -448,6 +448,11 @@ var TeamStyle = StyleSheet.create({
         borderColor: '#D31B25',
         marginRight: 10,
     },
+    toggle: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
 });
 
 module.exports = TeamStyle;

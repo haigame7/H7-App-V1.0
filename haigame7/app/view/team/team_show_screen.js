@@ -225,13 +225,10 @@ export default class extends React.Component {
   }
   _renderMyTeamRow(rowData){
     return(
-      <View>
-
       <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
         <Image style={rowData.TeamID==this.state.navbar?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.TeamLogo}} />
         <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
       </TouchableOpacity>
-      </View>
     );
   }
   _renderFooter(){}
@@ -255,14 +252,13 @@ export default class extends React.Component {
   rendermodaldetail(){
     return(
       <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}   >
-      <View style={commonstyle.modaltitle}>
-        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>默认战队选择</Text>
-      </View>
-      <ListView
-        dataSource={this.state.myTeamDataSource}
-        renderRow={this._renderMyTeamRow.bind(this)}
-        renderFooter={this._renderFooter.bind(this)}
-      />
+        <View style={commonstyle.modaltitle}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}>默认战队选择</Text>
+        </View>
+        <ListView
+          dataSource={this.state.myTeamDataSource}
+          renderRow={this._renderMyTeamRow.bind(this)}
+        />
       </Modal>
     );
   }
@@ -291,9 +287,11 @@ export default class extends React.Component {
         <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-            <TouchableOpacity onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')} style={styles.blocktop}>
+            <TouchableOpacity style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
-              <TouchableOpacity  style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/></TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>
+              <Icon name="toggle" size={20} color={'#D31B25'} style={commonstyle.iconnobg}/>
             </TouchableOpacity>
 
             <View style={styles.blocktop}>
