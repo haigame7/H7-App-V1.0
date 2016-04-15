@@ -128,10 +128,11 @@ import User from './user.js';
           //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
         }
       });
-    {/*请求我的战队信息end*/}
+    {/*招募信息列表*/}
       TeamService.getRecruitList(this.state.paraRecruit,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
            if(response[0].MessageCode == '40001'){
+             console.log('招募信息列表_服务器请求异常');
              Toast.show('服务器请求异常');
            }else if(response[0].MessageCode == '0'){
              let newData = response[1];
