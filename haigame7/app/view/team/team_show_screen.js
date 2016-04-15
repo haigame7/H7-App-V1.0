@@ -100,6 +100,9 @@ export default class extends React.Component {
 
   _callback() {
     if(this.state.teamData.Role=='teamcreater'){
+       this.setState({
+         isOpen: false,
+       });
         this._toNextScreen({"name":"创建战队","component":CreateTeam});
     }
   }
@@ -158,7 +161,16 @@ export default class extends React.Component {
     return count;
   }
   editTeamMember(){
+    this.setState({
+      isOpen: false,
+    });
     this._toNextScreen({"name":"队员管理","component":TeamUserManager});
+  }
+  sendRecruit(){
+    this.setState({
+      isOpen: false,
+    });
+  this._toNextScreen({"name":"发布招募","component":TeamRecruit})
   }
   initTeamOdd(wincount,losecount,followcount){
     wincount = this.parseCount(wincount);
@@ -249,7 +261,7 @@ export default class extends React.Component {
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(
       <View style={styles.listviewbtnblock}>
-        <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this._toNextScreen({"name":"发布招募","component":TeamRecruit})} activeOpacity={0.8}>
+        <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this.sendRecruit()} activeOpacity={0.8}>
         <Text style = {commonstyle.black}> {'招募队员'}</Text>
         </TouchableOpacity>
         <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} onPress={()=>this.confirmDelTeam()} activeOpacity={0.8}>
