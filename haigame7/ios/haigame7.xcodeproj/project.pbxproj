@@ -23,12 +23,11 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		22CA41C7503443F2BDCAAFAA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B46EDD696964D7591A03E68 /* Entypo.ttf */; };
 		25A1E1301CA939DD004FC6FA /* Iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */; };
-		3332C9AA1CBE43150027F8BF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3332C9A81CBE43150027F8BF /* LaunchScreen.xib */; };
-		3332C9AB1CBE43150027F8BF /* dd.png in Resources */ = {isa = PBXBuildFile; fileRef = 3332C9A91CBE43150027F8BF /* dd.png */; };
-		3332C9AE1CBE439C0027F8BF /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 3332C9AD1CBE439C0027F8BF /* splash.png */; };
 		333A4AB41C8FF9D900157689 /* tabbaricon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 333A4AB31C8FF9D900157689 /* tabbaricon.ttf */; };
 		336D6AE41CA05CCB0070EB50 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 336D6AE21CA05CBA0070EB50 /* libRNImagePicker.a */; };
 		338261D01CAC1FFC00B141F5 /* libRCTHttpCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 338261C41CAC1FDD00B141F5 /* libRCTHttpCache.a */; };
+		339F537A1CC08E860036A33C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339F53781CC08E860036A33C /* LaunchScreen.xib */; };
+		339F537D1CC090810036A33C /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 339F537C1CC090810036A33C /* splash.png */; };
 		33DF19D21CA98E6500F35258 /* libRCTToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DF19CC1CA98E5800F35258 /* libRCTToast.a */; };
 		5979EE7CF586465D9CCE7CEC /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2B461DEEB048D19D8CDEA4 /* libRNVectorIcons.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -180,13 +179,12 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1B46EDD696964D7591A03E68 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Iconfont.ttf; sourceTree = "<group>"; };
-		3332C9A81CBE43150027F8BF /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		3332C9A91CBE43150027F8BF /* dd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dd.png; sourceTree = "<group>"; };
 		3332C9AC1CBE43470027F8BF /* RCTSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTSplashScreen.h; sourceTree = "<group>"; };
-		3332C9AD1CBE439C0027F8BF /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		333A4AB31C8FF9D900157689 /* tabbaricon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tabbaricon.ttf; sourceTree = "<group>"; };
 		336D6AD31CA05CBA0070EB50 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		338261BD1CAC1FDD00B141F5 /* RCTHttpCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTHttpCache.xcodeproj; path = "../node_modules/react-native-http-cache/ios/RCTHttpCache.xcodeproj"; sourceTree = "<group>"; };
+		339F53781CC08E860036A33C /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		339F537C1CC090810036A33C /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		33DF19C01CA98E5800F35258 /* RCTToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTToast.xcodeproj; path = "../node_modules/@remobile/react-native-toast/ios/RCTToast.xcodeproj"; sourceTree = "<group>"; };
 		3A2347725B0A45C38C627F4C /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		5FEF9E9467F14BF3ABA5DC4C /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -309,9 +307,8 @@
 		13B07FAE1A68108700A75B9A /* haigame7 */ = {
 			isa = PBXGroup;
 			children = (
-				3332C9AD1CBE439C0027F8BF /* splash.png */,
-				3332C9A81CBE43150027F8BF /* LaunchScreen.xib */,
-				3332C9A91CBE43150027F8BF /* dd.png */,
+				339F537C1CC090810036A33C /* splash.png */,
+				339F53781CC08E860036A33C /* LaunchScreen.xib */,
 				3332C9AC1CBE43470027F8BF /* RCTSplashScreen.h */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -707,13 +704,12 @@
 				333A4AB41C8FF9D900157689 /* tabbaricon.ttf in Resources */,
 				22CA41C7503443F2BDCAAFAA /* Entypo.ttf in Resources */,
 				E263D58E0C574F28A5CD25DC /* EvilIcons.ttf in Resources */,
+				339F537A1CC08E860036A33C /* LaunchScreen.xib in Resources */,
 				B4E061BC797940888A39B40F /* FontAwesome.ttf in Resources */,
 				CD917509B82E4FDE92DECBC9 /* Foundation.ttf in Resources */,
+				339F537D1CC090810036A33C /* splash.png in Resources */,
 				078C1D06BD6B437DA3CC2EC5 /* Ionicons.ttf in Resources */,
-				3332C9AB1CBE43150027F8BF /* dd.png in Resources */,
 				25A1E1301CA939DD004FC6FA /* Iconfont.ttf in Resources */,
-				3332C9AA1CBE43150027F8BF /* LaunchScreen.xib in Resources */,
-				3332C9AE1CBE439C0027F8BF /* splash.png in Resources */,
 				D18E5C5050DE4144BB5AA4E7 /* MaterialIcons.ttf in Resources */,
 				A90F12D0EB7940888260786D /* Octicons.ttf in Resources */,
 				AA7EB38F115641FD8DC084AE /* Zocial.ttf in Resources */,
