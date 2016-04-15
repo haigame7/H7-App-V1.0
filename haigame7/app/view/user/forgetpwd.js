@@ -13,40 +13,32 @@ import React, {
   Navigator,
   ToastAndroid
 } from 'react-native';
-var {CountDownText} = require('react-native-sk-countdown');
 
+import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Header from '../common/headernav';
-import api, {host, key} from './server';
 import Setpwd from './setpwd.js';
 import UserService from '../../network/userservice';
 import GlobalSetup from '../../constants/globalsetup';
 
+import Toast from '@remobile/react-native-toast';
+import {CountDownText} from 'react-native-sk-countdown';
 
 export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: {
-        phone: undefined,
-        securitycode: undefined
+        phoneNumber: '',
+        code: '',
+        reset:true,
       },
+      securityCode: '',
       loading: false,
-      messages: [],
       getCodeMsg: '获取验证码',
       isToushable: true,
     }
   };
-
-  renderMessages() {
-    if (this.state.messages.length > 0) {
-      let messages = this.state.messages.map((val, key) => {
-        if (val.message) return <Text style={styles.message} key={key}>{val.message}</Text>;
-      });
-
-      return messages;
-    }
-  }
 
   onFocus(argument) {
     setTimeout(() => {
@@ -56,70 +48,64 @@ export default class extends Component {
       //     );
     }, 50);
   }
-
-
+  /*下一步*/
   gotoRoute(name,argument) {
-    let keys = Object.keys(this.state.data).map((val,key) => {
-     if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
-   });
-   this.setState({messages: []});
-   argument.map((val, key) => {
-     if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
-   });
-   if(this.state.messages.length>0){
-     console.log('message wrong'+this.state.messages.length);
-     return;
-   }
-    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-      this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data,reset:true},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
-    }
-    return;
+    if (this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1) {
+      Toast.show('手机号不能为空！');
+      return;
+    }else if(this.state.data.code == '' || this.state.data.code.indexOf(' ') > -1){
+      Toast.show('验证码不能为空！');
+      return;
+    }else if(this.state.data.code != this.state.securityCode){
+      Toast.show('验证码不正确！');
+      return;
+    }else{
+      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
+        this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data,reset:false},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+      }
+      return;
+    };
   }
   /**
    * 获取验证码
    * @return {[type]} [description]
    */
   _getVerifiCode() {
-    console.log(this.state.data);
-    if (this.state.data.phone == undefined) {
-        Alert.alert('请填写手机号先');
-      //ToastAndroid.show('请填写手机号先',ToastAndroid.SHORT);
+    if (this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1) {
+      Toast.show('手机号不能为空！');
       return;
     }
-    this.setState({
-      isToushable: false,
-    });
-    UserService.getVerifiCode2(this.state.data.phone,(response) => {
-      //return:{MessageCode: 0, Message: ""}
-      // if (response !== GlobalSetup.REQUEST_SUCCESS) {
-      //   let message = '';
-      //   if(response.MessageCode == '40001'){
-      //     message = '服务器请求异常';
-      //   }else if(response.MessageCode == '10001'){
-      //     message = '手机号有误请重新输入';
-      //   }else if(response.MessageCode == '10003'){
-      //     message = '验证码获取失败';
-      //   }else if(response.MessageCode == '0'){
-      //     message = '验证码已发送，请查看';
-      //   }
-      //     //ToastAndroid.show('获取成功',ToastAndroid.SHORT);
-      // } else {
-      //   Alert.alert('请求错误');
-      //   //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
-      //   this.setState({
-      //     isToushable: true,
-      //   });
-      // }
+    if(!/^1[34578]\d{9}$/.test(this.state.data.phoneNumber)){
+      Toast.show('请输入正确的手机号！');
+      return;
+    }
+    UserService.getVerifiCode2(this.state.data.phoneNumber,(response) => {
       if (response[0].MessageCode == '0') {
-        Alert.alert('验证码已发送!');
+        this.setState({
+          securityCode: response[0].Message,
+          isToushable: false,
+        });
+        Toast.show("验证码已发送");
+      }else if(response[0].MessageCode == '10003'){
+        this.setState({
+          isToushable: true,
+        });
+        Toast.show("验证码获取失败");
+        return;
+      }else if(response[0].MessageCode == '10004'){
+        this.setState({
+          isToushable: true,
+        });
+        Toast.show("手机号已注册");
+        return;
       } else {
-        Alert.alert(response[0].Message)
+        console.log(response[0].Message)
+        Toast.show("系统问题" + response[0].MessageCode);
         this.setState({
           isToushable: true,
         });
       }
-    })
-
+    });
   }
 
   render() {
@@ -153,14 +139,13 @@ export default class extends Component {
       <View style={{ flex: 1 }}>
           <Header screenTitle = '密码找回' navigator = { this.props.navigator } />
           <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
-          <View key={'messages'}>{this.renderMessages()}</View>
 
           <View key={'phone'} style={styles.logininput}>
-              <TextInput {...fields[0]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phone = text} />
+              <TextInput {...fields[0]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.phoneNumber = text} />
           </View>
 
           <View key={'securitycode'} style={styles.logininput}>
-              <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.securitycode = text} />
+              <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.code = text} />
               {codebtn}
           </View>
           <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRoute('setnewpwd',fields)}>
