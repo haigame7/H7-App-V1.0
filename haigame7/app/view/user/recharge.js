@@ -63,6 +63,8 @@ export default class extends Component{
         Toast.show('支付失败',Toast.SHORT);
        }
       });
+    } else {
+      Toast.show('充值功能暂未提供',Toast.SHORT)
     }
   }
   renderMessages() {
@@ -145,7 +147,7 @@ export default class extends Component{
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
-    if(this.state.registerWechat){
+    if(this.state.registerWechat && Platform.OS == 'android'){
       btn = (
        <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
          <Text style={styles.btnfont} >{'确认充值'}</Text>
