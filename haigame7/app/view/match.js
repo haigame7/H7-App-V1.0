@@ -356,7 +356,7 @@ export default class extends Component{
    gotoRoute(name,params) {
     if (name == 'matchrule') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MatchRule, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: MatchRule,params:{'matchdata':params}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
     } else if (name == 'matchschedule') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -375,13 +375,11 @@ export default class extends Component{
             <Image style={styles.modalimg} source={{uri:this.state.modaData.UserPicture}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14, styles.modalfont]}>{this.state.modaData.Name}</Text>
             <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.modalfont]}>{this.state.modaData.TalkShow}</Text>
-            <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'主播名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'英雄总名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
             <View style={commonstyle.viewleft}>
-              <Text style={[commonstyle.cream, styles.modalfont]}>{'ID:      '} <Text style={commonstyle.white}>{this.state.modaData.GameID}</Text></Text>
-              <Text style={[commonstyle.cream, styles.modalfont]}>{'性别:  '} <Text style={commonstyle.white}>{this.state.modaData.Sex}</Text></Text>
-              <Text style={[commonstyle.cream, styles.modalfont]}>{'年龄:  '} <Text style={commonstyle.white}>{this.state.modaData.Age}</Text></Text>
+
               <Text style={[commonstyle.cream, styles.modalfont]}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
             {joinView}
@@ -544,7 +542,7 @@ rendermatchList(){
   if(this.state.navbar==0){
     return(
       <View>
-      <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchschedule',this.state.matchdata)}>
+      <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
         <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture || default_user_pic}}  resizeMode={"stretch"} />
       </TouchableOpacity>
       <ListView

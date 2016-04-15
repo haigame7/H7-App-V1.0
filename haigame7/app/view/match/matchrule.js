@@ -1,11 +1,12 @@
 'use strict'
 
 var React = require('react-native');
-var Headernav = require('../common/headernav'); 
+var Headernav = require('../common/headernav');
 var {
   View,
   Component,
   Text,
+  WebView,
   TextArea,
   StyleSheet,
   TextInput,
@@ -16,22 +17,23 @@ var {
 
 var commonstyle = require('../../styles/commonstyle');
 var styles = require('../../styles/matchstyle');
+
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      content:undefined,
-      textnumber:0,
-      messages: []
+      matchdata:{},
+      messages: [],
+      scalingEnabled: true,
+      urlcontent:this.props.matchdata.introduce,
     }
   }
   onChange(text){
     this.setState(
       {
-        textnumber:text.length
+        matchdata:this.props.matchdata,
       }
     );
-    console.log(text.length);
   }
 
   render(){
@@ -39,7 +41,10 @@ export default class extends Component{
       <View>
         <Headernav screenTitle='Dota2争霸赛'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
-          <View><Text style={commonstyle.cream}>比赛规则待定（图文形式）</Text></View>
+       <WebView
+         source={{html: this.state.urlcontent}}
+         scalesPageToFit={true}
+         />
         </View>
       </View>
     );
