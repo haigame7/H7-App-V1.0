@@ -63,6 +63,8 @@ export default class extends Component{
         Toast.show('支付失败',Toast.SHORT);
        }
       });
+    } else {
+      Toast.show('充值功能暂未提供',Toast.SHORT)
     }
   }
   renderMessages() {
@@ -83,17 +85,25 @@ export default class extends Component{
   }
 
   gotoRecharge(money,argument) {
+    let _money
+    let temp
     if (money === "" || money == null || money == undefined) {
+      temp = this.state.data.money;
+    } else {
+      temp = money;
+    }
+    if (temp === "" || temp == null || temp == undefined) {
       Toast.show("请选择或填写充值金额");
       return
     }
+    _money = temp.toString()
     let type = /^[0-9]*[1-9][0-9]*$/;
     let re = new RegExp(type);
-    if (money.match(re) == null) {
+    if (_money.match(re) == null) {
       Toast.show("请填写大于1的整数金额");
       return
     }
-    let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + money + "&tradeType=APP";
+    let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + _money + "&tradeType=APP";
     let payOptions = {
       appId: '',
       nonceStr: '',
@@ -137,7 +147,7 @@ export default class extends Component{
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
-    if(this.state.registerWechat){
+    if(this.state.registerWechat && Platform.OS == 'android'){
       btn = (
        <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
          <Text style={styles.btnfont} >{'确认充值'}</Text>

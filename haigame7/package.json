@@ -8,6 +8,7 @@
   "dependencies": {
     "@remobile/react-native-datetime-picker": "^1.0.3",
     "@remobile/react-native-simple-button": "^1.0.0",
+    "@remobile/react-native-splashscreen": "^1.0.3",
     "@remobile/react-native-toast": "^1.0.4",
     "react-native": "^0.20.0",
     "react-native-button": "^1.4.2",
