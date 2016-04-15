@@ -375,13 +375,11 @@ export default class extends Component{
             <Image style={styles.modalimg} source={{uri:this.state.modaData.UserPicture}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14, styles.modalfont]}>{this.state.modaData.Name}</Text>
             <Text style={[commonstyle.gray, commonstyle.fontsize12, styles.modalfont]}>{this.state.modaData.TalkShow}</Text>
-            <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'主播名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'英雄总名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
             <View style={commonstyle.viewleft}>
-              <Text style={[commonstyle.cream, styles.modalfont]}>{'ID:      '} <Text style={commonstyle.white}>{this.state.modaData.GameID}</Text></Text>
-              <Text style={[commonstyle.cream, styles.modalfont]}>{'性别:  '} <Text style={commonstyle.white}>{this.state.modaData.Sex}</Text></Text>
-              <Text style={[commonstyle.cream, styles.modalfont]}>{'年龄:  '} <Text style={commonstyle.white}>{this.state.modaData.Age}</Text></Text>
+
               <Text style={[commonstyle.cream, styles.modalfont]}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
             {joinView}
