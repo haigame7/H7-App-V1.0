@@ -19,6 +19,7 @@ import styles from '../../styles/teamstyle';
 import Header from '../common/headernav';
 import Circle from './teamuseranimated';
 
+
 export default class extends React.Component {
   state: any;
   props: any;
@@ -55,12 +56,25 @@ export default class extends React.Component {
       this.setState({keys: newKeys});
     }
   }
+  _toNextScreen(params){
+    let _this = this;
+    this.props.navigator.push({
+      name: params.name,
+      component: params.component,
+      sceneConfig:params.sceneConfig || undefined,
+      params: {
+        ...this.props,
+        ...params,
+        teamData:this.state.teamData,
+        }
+    })
+  }
 
   renderCircle(){
    var circles =  this.state.keys.map((key, idx) => {
       if (key === this.state.activeKey) {
         return (
-          <Circle key={key + 'd'} teamUser={this.props.teamData.TeamUserPicture[idx]} dummy={true} />
+          <Circle key={key + 'd'} {...this.props} toggleActive={this._toNextScreen.bind(this)} teamUser={this.props.teamData.TeamUserPicture[idx]} dummy={true} />
       );
       } else {
         if (!this.state.restLayouts[idx]) {
@@ -77,7 +91,9 @@ export default class extends React.Component {
             key={key}
             id={key}
             teamUser={this.props.teamData.TeamUserPicture[idx]}
+            toggleActive={this._toNextScreen.bind(this)}
             openVal={this.state.openVal}
+            {...this.props}
             onLayout={onLayout}
             restLayout={this.state.restLayouts[idx]}
             onActivate={this.setState.bind(this, {

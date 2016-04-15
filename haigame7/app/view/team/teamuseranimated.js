@@ -27,6 +27,8 @@ var {
 } = React;
 import commonstyle from '../../styles/commonstyle';
 import teamstyles from '../../styles/teamstyle';
+import TeamUser from './teamuser_show_screen';
+
 var Util = require('../common/util');
 
 var CIRCLE_SIZE = (Util.size.width - 20)/4 - 20;
@@ -143,8 +145,9 @@ class Circle extends React.Component {
     );
   }
   _toggleIsActive(velocity) {
-
+  this.props.toggleActive({"name":"个人信息","component":TeamUser})
   }
+
 }
 type Point = {x: number, y: number};
 function distance(p1: Point, p2: Point): number {

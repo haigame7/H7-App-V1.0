@@ -29,6 +29,7 @@ export default class extends React.Component {
     }
   }
   componentWillMount(){
+    console.log(this.props);
       this.state = {
         navigator: this.props.navigator,
       }
