@@ -28,18 +28,19 @@ export default class extends Component{
       urlcontent:this.props.matchdata.introduce,
     }
   }
-  onChange(text){
+  componentWillMount(){
     this.setState(
       {
         matchdata:this.props.matchdata,
       }
+
     );
   }
 
   render(){
     return (
       <View>
-        <Headernav screenTitle='Dota2争霸赛'  navigator={this.props.navigator}/>
+        <Headernav screenTitle={this.state.matchdata.matchname}  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
        <WebView
          source={{html: this.state.urlcontent}}
