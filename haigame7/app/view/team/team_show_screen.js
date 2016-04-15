@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/Iconfont';
 import CreateTeam from './team_create_screen';
 import TeamRecruit from './teamrecruit';
 import TeamUserManager from './teamuser_manager_screen';
+import TeamUser from './teamuser_show_screen';
 import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
 import Toast from '@remobile/react-native-toast';
@@ -100,6 +101,9 @@ export default class extends React.Component {
 
   _callback() {
     if(this.state.teamData.Role=='teamcreater'){
+       this.setState({
+         isOpen: false,
+       });
         this._toNextScreen({"name":"创建战队","component":CreateTeam});
     }
   }
@@ -111,6 +115,7 @@ export default class extends React.Component {
       sceneConfig:params.sceneConfig || undefined,
       params: {
         ...this.props,
+        ...params,
         teamData:this.state.teamData,
         }
     })
@@ -158,7 +163,24 @@ export default class extends React.Component {
     return count;
   }
   editTeamMember(){
+    this.setState({
+      isOpen: false,
+    });
     this._toNextScreen({"name":"队员管理","component":TeamUserManager});
+  }
+  operateTeamUser(){
+    if(this.state.teamData.Role=='teamcreater'){
+       this.setState({
+         isOpen: false,
+       });
+        this._toNextScreen({"name":"个人信息","component":TeamUser});
+    }
+  }
+  sendRecruit(){
+    this.setState({
+      isOpen: false,
+    });
+  this._toNextScreen({"name":"发布招募","component":TeamRecruit})
   }
   initTeamOdd(wincount,losecount,followcount){
     wincount = this.parseCount(wincount);
@@ -203,23 +225,21 @@ export default class extends React.Component {
   }
   _renderMyTeamRow(rowData){
     return(
-      <View>
-
       <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
         <Image style={rowData.TeamID==this.state.navbar?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.TeamLogo}} />
         <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
       </TouchableOpacity>
-      </View>
     );
   }
   _renderFooter(){}
 
 
   renderHeroImageItem(groups){
+    let that = this;
     var items = Object.keys(groups).map(function(item,key) {
     if(item<4){
       return(
-        <TouchableOpacity key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>that.operateTeamUser()} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
         <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
         </TouchableOpacity>
       );
@@ -232,24 +252,23 @@ export default class extends React.Component {
   rendermodaldetail(){
     return(
       <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}   >
-      <View style={commonstyle.modaltitle}>
-        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>默认战队选择</Text>
-      </View>
-      <ListView
-        dataSource={this.state.myTeamDataSource}
-        renderRow={this._renderMyTeamRow.bind(this)}
-        renderFooter={this._renderFooter.bind(this)}
-      />
+        <View style={commonstyle.modaltitle}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}>默认战队选择</Text>
+        </View>
+        <ListView
+          dataSource={this.state.myTeamDataSource}
+          renderRow={this._renderMyTeamRow.bind(this)}
+        />
       </Modal>
     );
   }
   render() {
-    var items =this.renderHeroImageItem(this.props.teamData.TeamUserPicture);
+    var items =this.renderHeroImageItem(this.state.teamData.TeamUserPicture);
     let myteammodal = this.rendermodaldetail();
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(
       <View style={styles.listviewbtnblock}>
-        <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this._toNextScreen({"name":"发布招募","component":TeamRecruit})} activeOpacity={0.8}>
+        <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this.sendRecruit()} activeOpacity={0.8}>
         <Text style = {commonstyle.black}> {'招募队员'}</Text>
         </TouchableOpacity>
         <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} onPress={()=>this.confirmDelTeam()} activeOpacity={0.8}>
@@ -268,9 +287,11 @@ export default class extends React.Component {
         <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-            <TouchableOpacity onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')} style={styles.blocktop}>
+            <TouchableOpacity style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
-              <TouchableOpacity  style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/></TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>
+              <Icon name="toggle" size={20} color={'#D31B25'} style={commonstyle.iconnobg}/>
             </TouchableOpacity>
 
             <View style={styles.blocktop}>
