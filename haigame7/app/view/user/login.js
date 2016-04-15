@@ -133,8 +133,14 @@ export default class Login extends Component {
               })
             }else if(response[0].MessageCode == '10001'){
                 Toast.show('手机号不存在');
+                this.setState({
+                    loading: false,
+                })
             }else if(response[0].MessageCode == '10002'){
                 Toast.show('密码错误');
+                this.setState({
+                    loading: false,
+                })
             } else {
               console.log('登录失败' + response[0].Message);
               Toast.show('用户不存在，请注册！');
