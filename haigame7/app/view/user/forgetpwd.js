@@ -2,16 +2,13 @@
 
 import React, {
   Component,
-  ScrollView,
   Text,
   TouchableOpacity,
   TouchableHighlight,
   View,
   Image,
-  Alert,
   TextInput,
   Navigator,
-  ToastAndroid
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -86,6 +83,12 @@ export default class extends Component {
           isToushable: false,
         });
         Toast.show("验证码已发送");
+      }else if(response[0].MessageCode == '10001'){
+        this.setState({
+          isToushable: true,
+        });
+        Toast.show("该用户不存在");
+        return;
       }else if(response[0].MessageCode == '10003'){
         this.setState({
           isToushable: true,
