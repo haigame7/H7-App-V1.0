@@ -15,7 +15,6 @@ var {
   Dimensions,
   StyleSheet,
   Component,
-  Alert,
   AsyncStorage
   } = React;
 
@@ -35,7 +34,7 @@ export default class extends Component {
       modalVisible:false,
       userData: this.props.userData,
       pickerData: {'北京':{'北京':['朝阳区']}},
-			selectedValue: ['北京', '北京', '朝阳区'],
+      selectedValue: ['北京', '北京', '朝阳区'],
       selectedValueDate:['2000', '4', '1'],
       avatarSource: {uri:this.props.userData.UserWebPicture}
     }

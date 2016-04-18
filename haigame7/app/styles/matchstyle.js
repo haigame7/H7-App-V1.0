@@ -48,7 +48,7 @@ var MatchStyle = StyleSheet.create({
         width: (Util.size.width-20)/3,
     },
     scrollview: {
-        padding: 0,
+        paddingBottom: 10,
     },
     matchbanner: {
         width: Util.size.width,
@@ -172,7 +172,9 @@ var MatchStyle = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
     modalinputfont: {
-        height: 40,
+        paddingTop: 5,
+        paddingBottom: 5,
+        height: 30,
         left: 5,
         color: '#FFFFFF',
     },

@@ -7,10 +7,8 @@ import React,
   Text,
   TextInput,
   Image,
-  ToastAndroid,
   TouchableOpacity,
   StyleSheet,
-  PixelRatio,
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -24,7 +22,7 @@ export default class extends Component {
     this.state = {
       userdata: this.props.userdata,
       iconText: '完成',
-         value: ''
+      value: ''
     }
   }
 
@@ -123,21 +121,14 @@ export default class extends Component {
       case '昵称':
           childScreen = (
             <View style={styles.infoinput}>
-              <TextInput style={[commonstyle.cream, styles.infoinputfont]} onChangeText={(text) => this.setState({value: text})} defaultvalue={this.state.userdata.UserWebNickName}/>
+              <TextInput style={[commonstyle.cream, styles.infoinputfont]} placeholder={'最多输入8个字符'} placeholderTextColor={'#C3C3C3'} onChangeText={(text) => this.setState({value: text})} defaultValue={this.state.userdata.UserWebNickName}/>
             </View>
           )
         break;
       case '个性签名':
           childScreen = (
             <View style={styles.infoinput}>
-              <TextInput style={[commonstyle.cream, styles.infoinputfont]} onChangeText={(text) => this.setState({value: text})} defaultvalue={this.state.userdata.Hobby}/>
-            </View>
-          )
-        break;
-      case '手机号':
-          childScreen = (
-            <View style={styles.infoinput}>
-              <TextInput style={[commonstyle.cream, styles.infoinputfont]} onChangeText={(text) => this.setState({value: text})} defaultvalue={this.state.userdata.PhoneNumber}/>
+              <TextInput style={[commonstyle.cream, styles.infoinputfont]} placeholder={'最多输入16个字符'} placeholderTextColor={'#C3C3C3'} onChangeText={(text) => this.setState({value: text})} defaultValue={this.state.userdata.Hobby}/>
             </View>
           )
         break;
