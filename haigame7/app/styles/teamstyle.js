@@ -337,6 +337,27 @@ var TeamStyle = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 5,
     },
+    togglelist: {
+        marginBottom: 10,
+    },
+    togglelistimg: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderWidth: 1,
+        borderColor: 'rgb(208, 46, 70)',
+        borderRadius: 5,
+        marginBottom: 5,
+        marginRight: 10,
+    },
+    togglelistimgactive: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderWidth: 3,
+        borderColor: 'rgb(208, 46, 70)',
+        borderRadius: 5,
+        marginBottom: 5,
+        marginRight: 10,
+    },
     //文本框
     recruitbox: {
         margin: 10,
