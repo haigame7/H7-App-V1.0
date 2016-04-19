@@ -53,6 +53,9 @@ var CommonStyle = StyleSheet.create({
         width: Util.size.width,
         backgroundColor: '#000000',
     },
+    viewbottom:{
+        paddingBottom: 10,
+    },
     footer: {
         backgroundColor: '#FF0009',
         position: 'absolute',

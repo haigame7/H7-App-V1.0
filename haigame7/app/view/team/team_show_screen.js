@@ -225,9 +225,13 @@ export default class extends React.Component {
   }
   _renderMyTeamRow(rowData){
     return(
-      <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
-        <Image style={rowData.TeamID==this.state.navbar?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.TeamLogo}} />
-        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
+      <TouchableOpacity style={[commonstyle.row, styles.togglelist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
+        <Image style={rowData.TeamID==this.state.navbar?styles.togglelistimgactive:styles.togglelistimg} source={{uri:rowData.TeamLogo}} />
+        <View style={commonstyle.col1}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
+          <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.ranklisttext]}>{rowData.TeamDescription}</Text>
+          <Text style={commonstyle.yellow}>{'战斗力:  '}<Text style={commonstyle.red}>{rowData.FightScore}</Text>{'  氦金:  '}<Text style={commonstyle.red}>{rowData.Asset}</Text></Text>
+        </View>
       </TouchableOpacity>
     );
   }

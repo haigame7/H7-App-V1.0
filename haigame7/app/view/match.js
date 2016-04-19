@@ -541,7 +541,7 @@ rendermyguessList(rowData){
 rendermatchList(){
   if(this.state.navbar==0){
     return(
-      <View>
+      <View style={commonstyle.viewbottom}>
       <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
         <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture || default_user_pic}}  resizeMode={"stretch"} />
       </TouchableOpacity>
