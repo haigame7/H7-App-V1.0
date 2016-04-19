@@ -88,9 +88,11 @@ export default class extends Component{
 
   }
   componentWillUnmount() {
-    if(subscription != undefined) {
-      console.log("卸载subscription");
-      subscription.remove();
+    if (Platform.OS == 'ios') {
+      if(subscription != undefined) {
+        // console.log("卸载subscription");
+        subscription.remove();
+      }
     }
   }
   renderMessages() {
