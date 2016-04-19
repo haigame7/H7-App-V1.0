@@ -378,7 +378,7 @@ export default class extends Component{
             <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'英雄总名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
-            <View style={commonstyle.viewleft}>
+            <View style={[commonstyle.modalbodybottom, commonstyle.viewleft]}>
 
               <Text style={[commonstyle.cream, styles.modalfont]}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
