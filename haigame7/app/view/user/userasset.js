@@ -50,8 +50,7 @@ export default class extends Component{
           component: Recharge,
           params:{
             ...this.props,
-          },
-          sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+          }});
       }
     }
     _onRefresh() {

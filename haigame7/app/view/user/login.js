@@ -118,6 +118,7 @@ export default class Login extends Component {
                   {/*更新appjs登录状态*/}
                   setTimeout(() => {
                     Toast.showLongCenter('登录成功');
+
                     if(this.props.updateLoginState){
                       this.props.updateLoginState();
                      }
