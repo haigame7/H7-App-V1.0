@@ -24,6 +24,12 @@
 		22CA41C7503443F2BDCAAFAA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B46EDD696964D7591A03E68 /* Entypo.ttf */; };
 		25A1E1301CA939DD004FC6FA /* Iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */; };
 		333A4AB41C8FF9D900157689 /* tabbaricon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 333A4AB31C8FF9D900157689 /* tabbaricon.ttf */; };
+		333F77F31CC4D52B00028598 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F21CC4D52B00028598 /* SystemConfiguration.framework */; };
+		333F77F51CC4D53400028598 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F41CC4D53400028598 /* CoreTelephony.framework */; };
+		333F77F71CC4D54400028598 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F61CC4D54400028598 /* libz.tbd */; };
+		333F77F91CC4D54E00028598 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */; };
+		333F77FB1CC4D55900028598 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77FA1CC4D55900028598 /* libc++.tbd */; };
+		333F77FC1CC4D59800028598 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F01CC4D4C700028598 /* libRCTWeChat.a */; };
 		336D6AE41CA05CCB0070EB50 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 336D6AE21CA05CBA0070EB50 /* libRNImagePicker.a */; };
 		338261D01CAC1FFC00B141F5 /* libRCTHttpCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 338261C41CAC1FDD00B141F5 /* libRCTHttpCache.a */; };
 		339F537A1CC08E860036A33C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339F53781CC08E860036A33C /* LaunchScreen.xib */; };
@@ -118,6 +124,13 @@
 			remoteGlobalIDString = 3245CDED1BFEE35C00EABF68;
 			remoteInfo = RCTSplashScreen;
 		};
+		333F77EF1CC4D4C700028598 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 333F77EB1CC4D4C700028598 /* RCTWeChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D38ECF511C192AC800BDD8AE;
+			remoteInfo = RCTWeChat;
+		};
 		336D6AE11CA05CBA0070EB50 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 336D6AD31CA05CBA0070EB50 /* RNImagePicker.xcodeproj */;
@@ -181,6 +194,12 @@
 		25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Iconfont.ttf; sourceTree = "<group>"; };
 		3332C9AC1CBE43470027F8BF /* RCTSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTSplashScreen.h; sourceTree = "<group>"; };
 		333A4AB31C8FF9D900157689 /* tabbaricon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tabbaricon.ttf; sourceTree = "<group>"; };
+		333F77EB1CC4D4C700028598 /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat-ios/RCTWeChat/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
+		333F77F21CC4D52B00028598 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		333F77F41CC4D53400028598 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		333F77F61CC4D54400028598 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		333F77FA1CC4D55900028598 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		336D6AD31CA05CBA0070EB50 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		338261BD1CAC1FDD00B141F5 /* RCTHttpCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTHttpCache.xcodeproj; path = "../node_modules/react-native-http-cache/ios/RCTHttpCache.xcodeproj"; sourceTree = "<group>"; };
 		339F53781CC08E860036A33C /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -210,6 +229,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				333F77FB1CC4D55900028598 /* libc++.tbd in Frameworks */,
+				333F77F91CC4D54E00028598 /* libsqlite3.0.tbd in Frameworks */,
+				333F77F71CC4D54400028598 /* libz.tbd in Frameworks */,
+				333F77F51CC4D53400028598 /* CoreTelephony.framework in Frameworks */,
+				333F77F31CC4D52B00028598 /* SystemConfiguration.framework in Frameworks */,
+				333F77FC1CC4D59800028598 /* libRCTWeChat.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -344,6 +369,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		333F77EC1CC4D4C700028598 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				333F77F01CC4D4C700028598 /* libRCTWeChat.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		336D6AD41CA05CBA0070EB50 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,6 +427,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				333F77EB1CC4D4C700028598 /* RCTWeChat.xcodeproj */,
 				338261BD1CAC1FDD00B141F5 /* RCTHttpCache.xcodeproj */,
 				33DF19C01CA98E5800F35258 /* RCTToast.xcodeproj */,
 				336D6AD31CA05CBA0070EB50 /* RNImagePicker.xcodeproj */,
@@ -424,6 +458,11 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				333F77FA1CC4D55900028598 /* libc++.tbd */,
+				333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */,
+				333F77F61CC4D54400028598 /* libz.tbd */,
+				333F77F41CC4D53400028598 /* CoreTelephony.framework */,
+				333F77F21CC4D52B00028598 /* SystemConfiguration.framework */,
 				25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */,
 				333A4AB31C8FF9D900157689 /* tabbaricon.ttf */,
 				13B07FAE1A68108700A75B9A /* haigame7 */,
@@ -497,6 +536,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 6PJNX6HMEN;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "haigame7" */;
@@ -558,6 +600,10 @@
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+				},
+				{
+					ProductGroup = 333F77EC1CC4D4C700028598 /* Products */;
+					ProjectRef = 333F77EB1CC4D4C700028598 /* RCTWeChat.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -649,6 +695,13 @@
 			fileType = archive.ar;
 			path = libRCTSplashScreen.a;
 			remoteRef = 3332C99F1CBE42F20027F8BF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		333F77F01CC4D4C700028598 /* libRCTWeChat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWeChat.a;
+			remoteRef = 333F77EF1CC4D4C700028598 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		336D6AE21CA05CBA0070EB50 /* libRNImagePicker.a */ = {
@@ -817,19 +870,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Changguan Entertainment(Beijing) Co.,Ltd (6PJNX6HMEN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zi hai (N84LFTHA3B)";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)..\node_modules@remobile\neact-native-splashscreeniosRCTSplashScreen",
+					"$(SRCROOT)..",
+					"ode_modules@remobile",
+					"eact-native-splashscreeniosRCTSplashScreen",
+					"$(SRCROOT)/../node_modules/react-native-wechat-ios/RCTWeChat/**",
 				);
 				INFOPLIST_FILE = haigame7/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.beijing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios0.1;
 				PRODUCT_NAME = haigame7;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -839,18 +895,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Changguan Entertainment(Beijing) Co.,Ltd (6PJNX6HMEN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: zi hai (N84LFTHA3B)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)..\node_modules@remobile\neact-native-splashscreeniosRCTSplashScreen",
+					"$(SRCROOT)..",
+					"ode_modules@remobile",
+					"eact-native-splashscreeniosRCTSplashScreen",
+					"$(SRCROOT)/../node_modules/react-native-wechat-ios/RCTWeChat/**",
 				);
 				INFOPLIST_FILE = haigame7/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.beijing;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios0.1;
 				PRODUCT_NAME = haigame7;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
