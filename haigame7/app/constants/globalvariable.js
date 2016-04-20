@@ -1,5 +1,8 @@
 'use strict';
 
+var sysInfo={
+  'VERSION_CODE':'1'
+}
 var userInfo = {
   'USERSESSION':'@haigame7:session',
 }
@@ -21,6 +24,7 @@ var pageInfo = {
 }
 
 module.exports = {
+  SYS_INFO:sysInfo,
   USER_INFO: userInfo,
   PAGE_INFO: pageInfo,
   FIGHT_INFO: fightInfo,
