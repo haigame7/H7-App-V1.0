@@ -116,7 +116,6 @@ export default class extends React.Component {
       params: {
         ...this.props,
         ...params,
-        teamData:this.state.teamData,
         }
     })
   }
@@ -168,19 +167,19 @@ export default class extends React.Component {
     });
     this._toNextScreen({"name":"队员管理","component":TeamUserManager});
   }
-  operateTeamUser(){
+  operateTeamUser(teamUser){
     if(this.state.teamData.Role=='teamcreater'){
        this.setState({
          isOpen: false,
        });
-        this._toNextScreen({"name":"个人信息","component":TeamUser});
+        this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":teamUser});
     }
   }
   sendRecruit(){
     this.setState({
       isOpen: false,
     });
-  this._toNextScreen({"name":"发布招募","component":TeamRecruit})
+  this._toNextScreen({"name":"发布招募","component":TeamRecruit,"teamid":this.state.teamData.TeamID,"teamrecruit":this.state.teamData.RecruitContent,"callback":this.initData.bind(this,1)});
   }
   initTeamOdd(wincount,losecount,followcount){
     wincount = this.parseCount(wincount);
@@ -243,7 +242,7 @@ export default class extends React.Component {
     var items = Object.keys(groups).map(function(item,key) {
     if(item<4){
       return(
-        <TouchableOpacity onPress={()=>that.operateTeamUser()} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>that.operateTeamUser(groups[item])} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
         <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
         </TouchableOpacity>
       );
@@ -267,7 +266,7 @@ export default class extends React.Component {
     );
   }
   render() {
-    var items =this.renderHeroImageItem(this.state.teamData.TeamUserPicture);
+    var items =this.renderHeroImageItem(this.state.teamData.TeamUser);
     let myteammodal = this.rendermodaldetail();
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(

@@ -27,7 +27,7 @@ export default class extends React.Component {
   constructor(props: any){
     super(props);
     var keys = [];
-    for (var idx = 0; idx < this.props.teamData.TeamUserPicture.length; idx++) {
+    for (var idx = 0; idx < this.props.teamData.TeamUser.length; idx++) {
       keys.push(idx);
     }
     this.state = {
@@ -74,7 +74,7 @@ export default class extends React.Component {
    var circles =  this.state.keys.map((key, idx) => {
       if (key === this.state.activeKey) {
         return (
-          <Circle key={key + 'd'} {...this.props} toggleActive={this._toNextScreen.bind(this)} teamUser={this.props.teamData.TeamUserPicture[idx]} dummy={true} />
+          <Circle key={key + 'd'} {...this.props} toggleActive={this._toNextScreen.bind(this)} teamUser={this.props.teamData.TeamUser[idx]} dummy={true} />
       );
       } else {
         if (!this.state.restLayouts[idx]) {
@@ -90,7 +90,7 @@ export default class extends React.Component {
           <Circle
             key={key}
             id={key}
-            teamUser={this.props.teamData.TeamUserPicture[idx]}
+            teamUser={this.props.teamData.TeamUser[idx]}
             toggleActive={this._toNextScreen.bind(this)}
             openVal={this.state.openVal}
             {...this.props}
