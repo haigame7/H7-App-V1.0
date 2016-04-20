@@ -1,7 +1,7 @@
 'use strict';
 
 var sysInfo={
-  'VERSION_CODE':'1'
+  'VERSION_CODE':'1.0.0'
 }
 var userInfo = {
   'USERSESSION':'@haigame7:session',

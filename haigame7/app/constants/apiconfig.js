@@ -77,6 +77,9 @@ const teamApi={
   'SETDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/SetDefaultTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
 
 }
+const otherApi={
+  'CURRENTVERSION':apiSetup.MASTER_API_PATH +'/v1/Version/CurrentVersion?accesstoken='+ apiSetup.ACCESS_TOKEN,
+}
 module.exports = {
   USER_API: userApi,
   ASSERT_API: assertApi,
@@ -85,6 +88,7 @@ module.exports = {
   MATCH_API:matchApi,
   GUESS_API:guessApi,
   TEAM_API:teamApi,
+  OTHER_API:otherApi,
 }
 
 //这样写应该也行
