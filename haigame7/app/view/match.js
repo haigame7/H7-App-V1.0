@@ -367,7 +367,7 @@ export default class extends Component{
   rendermodaldetail(){
     if(this.state.navbar==0){
       {/*获得已报名战队数*/}
-      let joinView =this.state.jointeam==''?<View></View>:<View><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛程信息,请关注'}</Text></View>
+      let joinView =this.state.jointeam==''?<View style={commonstyle.modalbodybottom}></View>:<View style={commonstyle.modalbodybottom}><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛程信息,请关注'}</Text></View>
 
       return(
         <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
@@ -378,8 +378,7 @@ export default class extends Component{
             <Text style={[commonstyle.yellow, commonstyle.fontsize14, styles.modalfont]}>{'英雄总名额  '}<Text style={commonstyle.red}>{this.state.joincount}{'/'}{this.state.modaData.Count}</Text></Text>
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
-            <View style={[commonstyle.modalbodybottom, commonstyle.viewleft]}>
-
+            <View style={commonstyle.viewleft}>
               <Text style={[commonstyle.cream, styles.modalfont]}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
             {joinView}

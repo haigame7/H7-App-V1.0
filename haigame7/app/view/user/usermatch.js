@@ -1,33 +1,33 @@
 'use strict';
 /**
- * APPs我的赛事
+ * APP 我的赛事
  * @return {[SplashScreen Component]}
  * @author Drex
  */
 
 import React, {
-    View,
-    Text,
-    Image,
-    StyleSheet,
-    Component,
-    TouchableOpacity,
-    Navigator,
-    ListView,
-    ScrollView,
-    TouchableHighlight,
-    } from 'react-native';
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Component,
+  TouchableOpacity,
+  Navigator,
+  ListView,
+  ScrollView,
+  TouchableHighlight,
+} from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/matchstyle';
-import Header from '../common/headernav';
-import Toast from '@remobile/react-native-toast';
 
-import UserMatchList from '../match/usermatchdate';
+import Header from '../common/headernav';
 import Loading from '../common/loading';
+import UserMatchList from '../match/usermatchdate';
 import MatchService from '../../network/matchservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
+import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
   constructor(props) {
@@ -158,11 +158,11 @@ export default class extends Component{
   _onLoadMore(param,data) {
     if (this.state.keyone > 0 &&param.state==GlobalVariable.MATCH_INFO.Starting) {
       this.setState({
-        footerOneMsg: "木有更多多数据了~~~~",
+        footerOneMsg: "木有更多数据了~~~~",
       });
     }else if(this.state.keytwo>0 &&param.state==GlobalVariable.MATCH_INFO.NoStart){
       this.setState({
-        footerTwoMsg: "木有更多多数据了~~~~",
+        footerTwoMsg: "木有更多数据了~~~~",
       });
     }else{
       let _ds = data;
@@ -181,16 +181,17 @@ export default class extends Component{
       MatchService.myMatchList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<1&&param.state==GlobalVariable.MATCH_INFO.Starting){
+          if(nextData.length<5&&param.state==GlobalVariable.MATCH_INFO.Starting){
             this.setState({
               keyone:1,
+              footerOneMsg: "木有更多数据了~~~~",
             });
-
-          }else if(nextData.length<1&&param.state==GlobalVariable.MATCH_INFO.NoStart){
+          }else if(nextData.length<5&&param.state==GlobalVariable.MATCH_INFO.NoStart){
             this.setState({
               keytwo:1,
+              footerTwoMsg: "木有更多数据了~~~~",
             });
-          }
+          }else{
             for(var item in nextData){
               _ds.push(nextData[item])
             }
@@ -211,7 +212,7 @@ export default class extends Component{
                 });
               }
             },1000);
-          
+          }
         } else {
           console.log('请求错误' + response[0].MessageCode);
         }
