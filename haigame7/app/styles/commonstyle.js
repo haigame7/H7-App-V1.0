@@ -132,7 +132,7 @@ var CommonStyle = StyleSheet.create({
         backgroundColor: '#1A1917',
     },
     modalbodybottom:{
-        paddingBottom: 60,
+        paddingBottom: 70,
     },
     modaltext: {
         marginTop: 30,
