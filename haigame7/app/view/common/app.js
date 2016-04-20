@@ -1,6 +1,6 @@
 'use strict';
 import React,
-{ Component, View, Text, ScrollView,AsyncStorage ,TouchableOpacity,Dimensions,Platform,Navigator,BackAndroid}
+{ Component, View, Text,Alert,Linking, ScrollView,AsyncStorage ,TouchableOpacity,Dimensions,Platform,Navigator,BackAndroid}
 from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 import Toast from '@remobile/react-native-toast';
@@ -17,6 +17,7 @@ import UserService from '../../network/userservice';
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
+var url = 'http://sso.haigame7.com/upload/bundle.zip';
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
@@ -27,7 +28,7 @@ import SplashScreen from '@remobile/react-native-splashscreen';
 //   'Birthday': '2000-01-01',
 //   'Hobby': '我干！'
 // }
-
+const localversion = GlobalVariable.SYS_INFO.VERSION_CODE;
 const glypy = glypyMapMaker({
   MatchOn: 'e623',
   Match: 'e624',
@@ -74,9 +75,21 @@ var BaseOverswipeConfig = {
 export default class haigame7 extends Component {
 
   componentWillMount() {
-      if (Platform.OS === 'android') {
+    if (Platform.OS === 'android') {
+     {/*检查版本更新*/}
+     let serverversion = 2;
+     if(localversion<serverversion){
+       Alert.alert('提示', '您的应用版本已更新,请前往下载新的版本', [
+        {text: '确定', onPress: ()=>{this.downloadUpdate()}},
+        {text: '取消',},
+      ]);
+       }
         BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
       }
+
+    }
+    downloadUpdate(){
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
     }
     componentWillUnmount() {
       if (Platform.OS === 'android') {

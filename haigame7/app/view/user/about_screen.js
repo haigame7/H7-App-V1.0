@@ -71,11 +71,7 @@ export default class extends React.Component {
               <View style={styles.listviewtextbox} ></View>
               <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]} activeOpacity={0.8}  onPress={this._update.bind(null,this)}>
-              <Text style={styles.listviewtextleft}>检查版本更新</Text>
-              <View style={styles.listviewtextbox} ></View>
-              <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
-            </TouchableOpacity>
+
 
             <View style={commonstyle.row}>
               <TouchableOpacity style={styles.aboutbtn} onPress={this._website.bind(null,this)}>
