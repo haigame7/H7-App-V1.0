@@ -18,7 +18,7 @@ import OtherService from '../../network/otherservice';
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
-var url = 'http://sso.haigame7.com/upload/bundle.zip';
+var url = 'http://sso.haigame7.com/upload/H7.apk';
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
