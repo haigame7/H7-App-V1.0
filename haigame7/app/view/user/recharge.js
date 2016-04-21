@@ -57,31 +57,52 @@ export default class extends Component{
           }
       });
       //  处理支付回调结果
-      DeviceEventEmitter.addListener('finishedPay',function(event){
-       var success = event.success;
+      DeviceEventEmitter.addListener('finishedPay',function(res){
+       var success = res.success;
+       console.log(res);//errCode
        if(success){
         // 在此发起网络请求由服务器验证是否真正支付成功，然后做出相应的处理
 
        }else{
-        this._rechargeFail()
+         if(res.errCode == 0) {
+           Toast.show('充值成功' + '',Toast.SHORT);
+         } else if(res.errCode == -1) {
+           Toast.show('支付失败,请稍后尝试' + '',Toast.SHORT);
+           this._rechargeFail()
+         } else if(res.errCode == -2) {
+           console.log("充值取消");
+           Toast.show('支付取消' + '',Toast.SHORT);
+           this._rechargeFail()
+         }
         Toast.show('支付失败',Toast.SHORT);
        }
       });
     } else {
       WeChatIOS.registerApp(appId, (res) => {
+        console.log(res);
         if(res) {
           // Toast.show(res.toString())
           this.setState({registerWechat: true})
         } else {
-          this._rechargeFail()
-          Toast.show('支付失败' + '',Toast.SHORT);
+          Toast.show('支付功能异常' + '',Toast.SHORT);
         }
       });
       subscription = NativeAppEventEmitter.addListener(
         'finishedPay',
         (res) => {
           console.log('回调的支付结果');
-          console.log(res)
+          // console.log(res.length)
+          // console.log(res.errCode);
+          if(res.errCode == 0) {
+            Toast.show('充值成功' + '',Toast.SHORT);
+          } else if(res.errCode == -1) {
+            Toast.show('支付失败,请稍后尝试' + '',Toast.SHORT);
+            this._rechargeFail()
+          } else if(res.errCode == -2) {
+            console.log("充值取消");
+            Toast.show('支付取消' + '',Toast.SHORT);
+            this._rechargeFail()
+          }
         }
       );
     }
@@ -117,7 +138,7 @@ export default class extends Component{
 
   _rechargeFail() {
     if(outTradeno != "") {
-      AssertService.deleteAssetRecord("",(response) => {
+      AssertService.deleteAssetRecord(outTradeno,(response) => {
         console.log(response[0].MessageCode);
         if (response[0].MessageCode == '0') {
           console.log("订单删除成功");
