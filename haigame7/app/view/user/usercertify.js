@@ -1,9 +1,6 @@
 'use strict'
 
-var React = require('react-native');
-var Header = require('../common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/Iconfont');
-var {
+import React, {
   View,
   Component,
   Text,
@@ -11,105 +8,116 @@ var {
   Image,
   TouchableHighlight,
   StyleSheet,
-  Alert,
-  ToastAndroid
-} = React;
+} from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
+
+import Header from '../common/headernav'; 
+import Icon from 'react-native-vector-icons/Iconfont';
 import UserService from '../../network/userservice';
+import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
     data: {
-      dota2id:undefined,
-      certifyid:'000000',
+      dota2id: '',
+      certifyid: '',
     },
-    content:undefined,
-    messages: [],
-     btn_msg: '认证',
-   fightData: this.props.fightData,
-   resultStr: ''
+    btn_msg: '申请认证',
+    fightData: this.props.fightData,
+    resultStr: '',
+    loading: false,
   }
 }
 
 componentWillMount() {
-  console.log(this.state.fightData.CertifyState);
-  let data = {'dota2id':this.state.fightData.GameID,'certifyid':this.state.fightData.CertifyName}
   if (this.state.fightData.CertifyState == '1') {
     this.setState({
       btn_msg: '重新认证',
-      dota2id: data,
-    resultStr: '已认证'
+      data:{
+        dota2id: this.state.fightData.GameID,
+        certifyid: this.state.fightData.CertifyName,
+      },
+      resultStr: '已认证'
     })
   } else if(this.state.fightData.CertifyState == '2') {
     this.setState({
+      btn_msg: '认证中',
+      data:{
+        dota2id: this.state.fightData.GameID,
+        certifyid: this.state.fightData.CertifyName,
+      },
+      resultStr: '认证中...'
+    })
+  }else if(this.state.fightData.CertifyState == '3') {
+    this.setState({
       btn_msg: '重新认证',
-      dota2id: data,
-    resultStr: '认证中...'
+      data:{
+        dota2id: this.state.fightData.GameID,
+        certifyid: this.state.fightData.CertifyName,
+      },
+      resultStr: '认证失败...'
     })
   } else {
-
+    this.setState({
+      btn_msg: '申请认证',
+      dota2id: '',
+      certifyid: '',
+      resultStr: '未认证...'
+    })
   }
 }
 componentWillUnmount() {
   this.timer && clearTimeout(this.timer);
 }
-renderMessages() {
-  if (this.state.messages.length > 0) {
-    let messages = this.state.messages.map((val, key) => {
-      if (val.message) return <Text style={styles.message} key={key}>{val.message}</Text>;
-    });
-    return messages;
-  }
-}
 gotoCertify(numberID,argument) {
-  let keys = Object.keys(this.state.data).map((val,key) => {
-    if ([null, undefined, 'null', 'undefined', ''].indexOf(this.state.data[val]) > -1) return val;
-  });
-  this.setState({messages: []});
-  argument.map((val, key) => {
-    if (keys.indexOf(val.ref) > -1) this.setState({messages: this.state.messages.concat(val)});
-  });
-  if(this.state.messages.length>0){
-    console.log('message wrong'+this.state.messages.length);
+  if(this.state.loading){
+    Toast.show('认证已提交，无需重复提交！');
     return;
   }
-  if (this.state.btn_msg == '认证') {
+  if(this.state.data.dota2id == '' || this.state.data.dota2id.indexOf(' ') > -1){
+    Toast.show('Dota2数字ID不能为空！');
+    return;
+  }else if(isNaN(this.state.data.dota2id)){
+    Toast.show('Dota2数字ID只能是数字！');
+    return;
+  }
+  if (this.state.btn_msg == '申请认证') {
     UserService.certifyGameID({'PhoneNumber':this.props.userData.PhoneNumber,'GameID': this.state.data.dota2id},(response) => {
-        console.log(response);
         if (response[0].MessageCode == '0') {
           let data = this.state.data;
           data['certifyid'] = response[0].Message;
-          this.setState({data: data,btn_msg: '重新认证'})
-          ToastAndroid.show('申请已经发出,请等待',ToastAndroid.SHORT);
-          this.props._callback('Usercertify');
-          this.timer = setTimeout(()=>{
-            this.props.navigator.pop();
-          },2000);
+          this.setState({
+            data: data,
+            btn_msg: '认证中',
+            resultStr: '认证中...',
+            loading: true,
+          })
+          Toast.show('申请已经发出,请等待');
         } else {
           console.log('认证失败');
+          Toast.show('认证失败');
         }
     });
   } else {
     UserService.updateCertifyGameID({'PhoneNumber':this.props.userData.PhoneNumber,'GameID': this.state.data.dota2id},(response) => {
-        console.log(response);
-        UserService.updateCertifyGameID({'PhoneNumber':this.props.userData.PhoneNumber,'GameID': this.state.data.dota2id},(response) => {
-          if (response[0].MessageCode == '0') {
-            let data = this.state.data;
-            data['certifyid'] = response[0].Message;
-            this.setState({data: data,btn_msg: '重新认证'})
-            ToastAndroid.show('申请已经发出,请等待',ToastAndroid.SHORT);
-            this.props._callback('Usercertify');
-            this.timer = setTimeout(()=>{
-              this.props.navigator.pop();
-            },2000);
-          } else {
-            console.log('认证失败');
-          }
+      if (response[0].MessageCode == '0') {
+        let data = this.state.data;
+        data['certifyid'] = response[0].Message;
+        this.setState({
+          data: data,
+          btn_msg: '认证中',
+          resultStr: '认证中...',
+          loading: true,
         })
+        Toast.show('申请已经发出,请等待');
+      } else {
+        console.log('认证失败');
+        Toast.show('认证失败');
+      }
     });
   }
   return;
@@ -117,7 +125,7 @@ gotoCertify(numberID,argument) {
 
 render(){
   let fields = [
-    {ref: 'dota2id', placeholder: '000000', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '数字ID必填', style: [styles.logininputfont]},
+    {ref: 'dota2id', placeholder: '请输入Dota2数字ID', keyboardType: 'numeric',placeholderTextColor: '#484848', style: [styles.logininputfont]},
     {ref: 'certifyid', editable: false, style: [styles.logininputfont]}
   ]
   let btn;
@@ -128,17 +136,17 @@ render(){
           <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
         </TouchableHighlight>
       )
-    } else if(this.state.fightData.CertifyState == '1') {
+    } else if(this.state.fightData.CertifyState == '2') {
       btn =
       (
-        <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
+        <View style={[styles.btn, styles.btndisable]} underlayColor={'#000000'}>
           <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
-        </TouchableHighlight>
+        </View>
       )
     } else {
       btn =
       (
-        <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'}>
+        <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoCertify('setpwd',fields)}>
           <Text style={styles.btnfont} >{this.state.btn_msg}</Text>
         </TouchableHighlight>
       )
@@ -148,9 +156,6 @@ render(){
     <View >
       <Header screenTitle='账号认证' navigator={this.props.navigator}/>
       <Image source = {require('../../images/loginbg.jpg')} style = {styles.loginbg} resizeMode = {"cover"}>
-      <View key={'messages'}>
-        {this.renderMessages()}
-      </View>
 
       <View style={styles.loginlabel}>
         <Text style={commonstyle.cream}>{'请输入Dota2数字ID'}</Text>
@@ -164,9 +169,9 @@ render(){
       </View>
       <View key={'certifyid'} style={styles.logininput}>
         <TextInput {...fields[1]} defaultValue={this.state.data.certifyid}/>
-        <TouchableHighlight style={styles.logininputright} underlayColor={'#000000'} onPress={()=>console.log('copy certify')}>
+        <View style={styles.logininputright} underlayColor={'#000000'} onPress={()=>console.log('copy certify')}>
           <Icon name="copy" size={30} color={'#C3C3C3'} />
-        </TouchableHighlight>
+        </View>
       </View>
       {btn}
       <View style={styles.linkblock}>

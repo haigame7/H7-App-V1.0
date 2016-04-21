@@ -13,7 +13,6 @@ var {
   Text,
   Image,
   TouchableOpacity,
-  ToastAndroid,
   Navigator,
   ScrollView,
   AsyncStorage
@@ -200,12 +199,12 @@ var User = React.createClass({
   render: function () {
     return (
       <View >
-      <Header  screenTitle='个人中心' iconName='email' iconMessage={this.state.totalMessage} nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} navigator={this.props.navigator}/>
+      <Header  screenTitle='个人中心' iconName='email' iconMessage={this.state.totalMessage} nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} userData={this.state.userData} navigator={this.props.navigator}/>
       <ScrollView style={commonstyle.bodyer}>
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserInfo","component":UserInfo})}>
             <Image style={styles.headportrait} source={{uri:this.state.userData.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <TouchableOpacity style={styles.headportraitv} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserCertify","component":UserCertify})}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg} /><Text style={styles.headportraitvfont}>未认证</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.headportraitv} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserCertify","component":UserCertify})}><Icon name="certified" size={15} color={this.state.fightData.CertifyState == 1? '#00B4FF':'#484848'} style={commonstyle.iconnobg} /><Text style={styles.headportraitvfont}>{this.state.fightData.CertifyState == 1?'已认证':'未认证'}</Text></TouchableOpacity>
           </TouchableOpacity>
 
           <View style={styles.blocktop}>

@@ -367,7 +367,7 @@ export default class extends Component{
   rendermodaldetail(){
     if(this.state.navbar==0){
       {/*获得已报名战队数*/}
-      let joinView =this.state.jointeam==''?<View></View>:<View><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛程信息,请关注'}</Text></View>
+      let joinView =this.state.jointeam==''?<View style={commonstyle.modalbodybottom}></View>:<View style={commonstyle.modalbodybottom}><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛程信息,请关注'}</Text></View>
 
       return(
         <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
@@ -379,7 +379,6 @@ export default class extends Component{
           </View>
           <ScrollView style={styles.modalscrollview} showsVerticalScrollIndicator={true} >
             <View style={commonstyle.viewleft}>
-
               <Text style={[commonstyle.cream, styles.modalfont]}>{'介绍:  '} <Text style={commonstyle.white}>{this.state.modaData.Introduce}</Text></Text>
             </View>
             {joinView}
@@ -541,7 +540,7 @@ rendermyguessList(rowData){
 rendermatchList(){
   if(this.state.navbar==0){
     return(
-      <View>
+      <View style={commonstyle.viewbottom}>
       <TouchableOpacity  style={styles.matchbanner} activeOpacity={0.8} onPress={()=>this.gotoRoute('matchrule',this.state.matchdata)}>
         <Image  style={styles.matchbannerimg}source={{uri:this.state.matchdata.showpicture || default_user_pic}}  resizeMode={"stretch"} />
       </TouchableOpacity>

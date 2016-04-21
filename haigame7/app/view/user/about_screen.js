@@ -4,11 +4,11 @@ import React, {
   Component,
   StyleSheet,
   Text,
+  Linking,
   View,
   ScrollView,
   Navigator,
   Image,
-  ToastAndroid,
   TouchableOpacity
 } from 'react-native';
 
@@ -16,6 +16,7 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Header from '../common/headernav'; //导航有问题
 import Help from './help_screen';
+import Toast from '@remobile/react-native-toast';
 var Icon = require('react-native-vector-icons/Iconfont');
 export default class extends React.Component {
   constructor(props){
@@ -24,16 +25,17 @@ export default class extends React.Component {
   }
 
   _help() {
-    ToastAndroid.show('帮助反馈',ToastAndroid.SHORT);
+    Toast.show('帮助反馈');
   }
   _update() {
     ToastAndroid.show('检查版本更新',ToastAndroid.SHORT);
   }
   _website() {
-    ToastAndroid.show('访问官网',ToastAndroid.SHORT);
+    let url = "http://sso.haigame7.com";
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
   }
   _userAgreement() {
-    ToastAndroid.show('用户协议',ToastAndroid.SHORT);
+    Toast.show('用户协议');
   }
   _toNextScreen(params){
      // Toast.show("this is a message")
@@ -71,11 +73,7 @@ export default class extends React.Component {
               <View style={styles.listviewtextbox} ></View>
               <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]} activeOpacity={0.8}  onPress={this._update.bind(null,this)}>
-              <Text style={styles.listviewtextleft}>检查版本更新</Text>
-              <View style={styles.listviewtextbox} ></View>
-              <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
-            </TouchableOpacity>
+
 
             <View style={commonstyle.row}>
               <TouchableOpacity style={styles.aboutbtn} onPress={this._website.bind(null,this)}>

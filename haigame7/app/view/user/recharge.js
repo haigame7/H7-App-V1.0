@@ -17,16 +17,19 @@ var {
   ScrollView,
   Alert,
   Platform,
-  DeviceEventEmitter
+  DeviceEventEmitter,
+  NativeAppEventEmitter
 } = React;
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import WebService from '../../network/fetchservice';
 import Toast from '@remobile/react-native-toast';
-import WeChat from 'react-native-wechat-android';
+import WeChatAndroid from 'react-native-wechat-android';
+import WeChatIOS from 'react-native-wechat-ios';
 
 let appId = 'wxb0cb6c44afd49f5a';
+var subscription = ""; //接收支付时间推送
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -42,10 +45,9 @@ export default class extends Component{
     }
   }
 
-
-  componentDidMount() {
+  componentWillMount() {
     if (Platform.OS == 'android') {
-      WeChat.registerApp(appId,(err,registerOK) => {
+      WeChatAndroid.registerApp(appId,(err,registerOK) => {
           // Toast.show(registerOK + '',Toast.SHORT);
           if(registerOK) {
             this.setState({registerWechat: true})
@@ -64,7 +66,33 @@ export default class extends Component{
        }
       });
     } else {
-      Toast.show('充值功能暂未提供',Toast.SHORT)
+      WeChatIOS.registerApp(appId, (res) => {
+        if(res) {
+          // Toast.show(res.toString())
+          this.setState({registerWechat: true})
+        } else {
+          Toast.show('支付功能异常' + '',Toast.SHORT);
+        }
+      });
+      subscription = NativeAppEventEmitter.addListener(
+        'finishedPay',
+        (res) => {
+          console.log('回调的支付结果');
+          console.log(res)
+        }
+      );
+    }
+  }
+
+  componentDidMount() {
+
+  }
+  componentWillUnmount() {
+    if (Platform.OS == 'ios') {
+      if(subscription != undefined) {
+        // console.log("卸载subscription");
+        subscription.remove();
+      }
     }
   }
   renderMessages() {
@@ -80,7 +108,7 @@ export default class extends Component{
     this.setState({
       data:{money:money},
     });
-    console.log(this.state.data.money);
+    // console.log(this.state.data.money);
     return;
   }
 
@@ -117,8 +145,8 @@ export default class extends Component{
       // res instanceof Response == true.
       if (res.ok) {
         res.json().then(function(_data) {
-          console.log("服务器传回参数");
-          console.log(_data);
+          // console.log("服务器传回参数");
+          // console.log(_data);
           payOptions['appId'] = _data.appid
           payOptions['nonceStr'] = _data.noncestr
           payOptions['partnerId'] = _data.partnerid
@@ -126,12 +154,25 @@ export default class extends Component{
           payOptions['packageValue'] = _data.package
           payOptions['timeStamp'] = _data.timestamp
           payOptions['sign'] = _data.sign
-          console.log("发起支付请求，参数:");
-          console.log(payOptions);
-          WeChat.weChatPay(payOptions,(err,sendReqOK) => {
-            console.log('发起支付');
-            console.log(sendReqOK);
-          });
+          // console.log("发起支付请求，参数:");
+          // console.log(payOptions);
+          if (Platform.OS == 'android') {
+            WeChatAndroid.weChatPay(payOptions,(err,sendReqOK) => {
+              // console.log('发起支付');
+              // console.log(sendReqOK);
+            });
+          } else {
+            WeChatIOS.weChatPay(payOptions,(res) => {
+              console.log(res);
+              if(res) {
+
+              } else {
+                Toast.show("请求支付错误,请稍后重试!")
+              }
+              Toast.show('');
+            })
+          }
+
         });
       } else {
         console.log("Looks like the response wasn't perfect, got status", res.status);
@@ -147,7 +188,7 @@ export default class extends Component{
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
-    if(this.state.registerWechat && Platform.OS == 'android'){
+    if(this.state.registerWechat){
       btn = (
        <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
          <Text style={styles.btnfont} >{'确认充值'}</Text>

@@ -1,4 +1,8 @@
 'use strict';
+/**
+ * APP 战队信息
+ * @author Drex
+ */
 import React, {
   StyleSheet,
   Text,
@@ -11,20 +15,22 @@ import React, {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import Modal from 'react-native-modalbox';
+import Icon from 'react-native-vector-icons/Iconfont';
+import Toast from '@remobile/react-native-toast';
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
-import Modal from 'react-native-modalbox';
-import Icon from 'react-native-vector-icons/Iconfont';
 import CreateTeam from './team_create_screen';
 import TeamRecruit from './teamrecruit';
+import TeamEdit from './team_edit_screen';
 import TeamUserManager from './teamuser_manager_screen';
 import TeamUser from './teamuser_show_screen';
 import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
-import Toast from '@remobile/react-native-toast';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
+
 export default class extends React.Component {
   /**
    * @param role 队长 captain | 队员：teamuser | 非本队成员: user
@@ -114,7 +120,7 @@ export default class extends React.Component {
       component: params.component,
       sceneConfig:params.sceneConfig || undefined,
       params: {
-        ...this.props,
+        ...this.state,
         ...params,
         teamData:this.state.teamData,
         }
@@ -128,13 +134,13 @@ export default class extends React.Component {
   }
   confirmDelTeam(){
     Alert.alert(
-            '删除战队',
-            '确认删除战队？',
-            [
-              {text: '取消', onPress: () => console.log('Cancel Pressed!')},
-              {text: '确认', onPress: () => this._delTeam()},
-            ]
-          )
+      '删除战队',
+      '确认删除战队？',
+      [
+        {text: '取消', onPress: () => console.log('Cancel Pressed!')},
+        {text: '确认', onPress: () => this._delTeam()},
+      ]
+    )
   }
  _delTeam(){
    let data={'creater':this.state.userData.UserID,'teamname':this.state.teamData.TeamName,'teamtype':this.state.teamData.TeamType,};
@@ -162,25 +168,31 @@ export default class extends React.Component {
     }
     return count;
   }
+  editTeam(){
+    this.setState({
+      isOpen: false,
+    });
+    this._toNextScreen({"name":"战队管理","component":TeamEdit});
+  }
   editTeamMember(){
     this.setState({
       isOpen: false,
     });
-    this._toNextScreen({"name":"队员管理","component":TeamUserManager});
+    this._toNextScreen({"name":"队员管理","component":TeamUserManager,"callback":this.initData.bind(this,1)});
   }
-  operateTeamUser(){
+  operateTeamUser(teamUser){
     if(this.state.teamData.Role=='teamcreater'){
        this.setState({
          isOpen: false,
        });
-        this._toNextScreen({"name":"个人信息","component":TeamUser});
+       this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":teamUser,"callback":this.initData.bind(this,1)});
     }
   }
   sendRecruit(){
     this.setState({
       isOpen: false,
     });
-  this._toNextScreen({"name":"发布招募","component":TeamRecruit})
+    this._toNextScreen({"name":"发布招募","component":TeamRecruit,"teamid":this.state.teamData.TeamID,"teamrecruit":this.state.teamData.RecruitContent,"callback":this.initData.bind(this,1)});
   }
   initTeamOdd(wincount,losecount,followcount){
     wincount = this.parseCount(wincount);
@@ -208,13 +220,13 @@ export default class extends React.Component {
            Toast.show('服务器请求异常');
          }else if(response[0].MessageCode == '0'){
            Toast.show('设置成功');
-           setTimeout(()=>{
-             this.initData(1);
-             this.props.updateLoginState();
              this.setState({
                navbar:nav,
                isOpen:false,
              });
+           setTimeout(()=>{
+             this.initData(1);
+             this.props.updateLoginState();
            },1000);
          }
         }else{
@@ -225,9 +237,13 @@ export default class extends React.Component {
   }
   _renderMyTeamRow(rowData){
     return(
-      <TouchableOpacity style={[commonstyle.viewcenter, styles.carousellist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
-        <Image style={rowData.TeamID==this.state.navbar?styles.carousellistimgactive:styles.carousellistimg} source={{uri:rowData.TeamLogo}} />
-        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
+      <TouchableOpacity style={[commonstyle.row, styles.togglelist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
+        <Image style={rowData.TeamID==this.state.navbar?styles.togglelistimgactive:styles.togglelistimg} source={{uri:rowData.TeamLogo}} />
+        <View style={commonstyle.col1}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
+          <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.ranklisttext]}>{rowData.TeamDescription}</Text>
+          <Text style={commonstyle.yellow}>{'战斗力:  '}<Text style={commonstyle.red}>{rowData.FightScore}</Text>{'  氦金:  '}<Text style={commonstyle.red}>{rowData.Asset}</Text></Text>
+        </View>
       </TouchableOpacity>
     );
   }
@@ -237,13 +253,13 @@ export default class extends React.Component {
   renderHeroImageItem(groups){
     let that = this;
     var items = Object.keys(groups).map(function(item,key) {
-    if(item<4){
-      return(
-        <TouchableOpacity onPress={()=>that.operateTeamUser()} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
-        <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
-        </TouchableOpacity>
-      );
-     }
+      if(item<4){
+        return(
+          <TouchableOpacity onPress={()=>that.operateTeamUser(groups[item])} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+          <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
+          </TouchableOpacity>
+        );
+      }
     });
     return(
       <View style={styles.listviewteamblock}>{items}</View>
@@ -263,7 +279,7 @@ export default class extends React.Component {
     );
   }
   render() {
-    var items =this.renderHeroImageItem(this.state.teamData.TeamUserPicture);
+    var items =this.renderHeroImageItem(this.state.teamData.TeamUser);
     let myteammodal = this.rendermodaldetail();
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(
@@ -287,7 +303,7 @@ export default class extends React.Component {
         <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-            <TouchableOpacity style={styles.blocktop}>
+            <TouchableOpacity style={styles.blocktop} onPress={()=>this.state.teamData.Role=='teamcreater'?this.editTeam():console.log('member')}>
               <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>
@@ -319,7 +335,7 @@ export default class extends React.Component {
                 <Text style={commonstyle.cream}>参赛场次  </Text>
                 <Text style={commonstyle.yellow}>{odddata.totalcount}场</Text>
                 <Text style={commonstyle.cream}>  胜率  </Text>
-                <Text style={commonstyle.red}>{odddata.odd}%</Text>
+                <Text style={commonstyle.red}>{odddata.odd.toString().substr(0, 5)}%</Text>
               </View>
             </View>
             <View style={styles.listview}>

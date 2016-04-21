@@ -117,7 +117,8 @@ export default class Login extends Component {
                   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
                   {/*更新appjs登录状态*/}
                   setTimeout(() => {
-                    Toast.showLongCenter('登陆成功');
+                    Toast.showLongCenter('登录成功');
+
                     if(this.props.updateLoginState){
                       this.props.updateLoginState();
                      }

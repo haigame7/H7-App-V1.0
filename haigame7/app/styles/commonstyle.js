@@ -53,6 +53,9 @@ var CommonStyle = StyleSheet.create({
         width: Util.size.width,
         backgroundColor: '#000000',
     },
+    viewbottom:{
+        paddingBottom: 10,
+    },
     footer: {
         backgroundColor: '#FF0009',
         position: 'absolute',
@@ -123,10 +126,13 @@ var CommonStyle = StyleSheet.create({
         borderRadius: 5,
     },
     modalbody: {
-        padding: 5,
-        marginTop: 5,
+        padding: 10,
+        marginTop: 10,
         marginBottom: 40,
         backgroundColor: '#1A1917',
+    },
+    modalbodybottom:{
+        paddingBottom: 70,
     },
     modaltext: {
         marginTop: 30,
@@ -317,6 +323,8 @@ var CommonStyle = StyleSheet.create({
         height: 22,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: 20,
+        paddingBottom: 30,
     },
     defaultview: {
         justifyContent: 'center',

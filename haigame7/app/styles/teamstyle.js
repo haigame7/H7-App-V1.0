@@ -337,6 +337,34 @@ var TeamStyle = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 5,
     },
+    toggle: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        width: 30,
+        height: 30,
+    },
+    togglelist: {
+        marginBottom: 10,
+    },
+    togglelistimg: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderWidth: 1,
+        borderColor: 'rgb(208, 46, 70)',
+        borderRadius: 5,
+        marginBottom: 5,
+        marginRight: 10,
+    },
+    togglelistimgactive: {
+        width: Util.size.width / 5,
+        height: Util.size.width / 5,
+        borderWidth: 3,
+        borderColor: 'rgb(208, 46, 70)',
+        borderRadius: 5,
+        marginBottom: 5,
+        marginRight: 10,
+    },
     //文本框
     recruitbox: {
         margin: 10,
@@ -447,11 +475,6 @@ var TeamStyle = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#D31B25',
         marginRight: 10,
-    },
-    toggle: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
     },
 });
 

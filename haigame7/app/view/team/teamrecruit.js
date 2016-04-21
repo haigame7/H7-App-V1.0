@@ -54,7 +54,10 @@ export default class extends Component{
    TeamService.sendRecruit(data,(response)=>{
      if(response[0].MessageCode == '0'){
        Toast.show('发布成功');
-       this.props.callback();
+       this.props.updateLoginState();
+       if(this.props.callback!==undefined){
+         this.props.callback();
+       }
        setTimeout(()=>{
        this.props.navigator.pop();
         },1000);
