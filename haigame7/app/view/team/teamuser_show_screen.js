@@ -3,6 +3,7 @@ import React, {
   StyleSheet,
   Text,
   View,
+  Alert,
   TextInput,
   Image,
   ScrollView,
@@ -14,7 +15,7 @@ import styles from '../../styles/teamstyle';
 import Button from 'react-native-button';
 import Header from '../common/headernav';
 import Icon from 'react-native-vector-icons/Iconfont';
-import UserService from '../../network/userservice';
+import TeamService from '../../network/teamservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 import Toast from '@remobile/react-native-toast';
@@ -29,6 +30,7 @@ export default class extends React.Component {
     this.state = {
         navigator: undefined,
         userData:{},
+        teamData:{},
   defaultTeamLogo: 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png',
              role: 'user',
     }
@@ -36,7 +38,8 @@ export default class extends React.Component {
   componentWillMount(){
       this.state = {
         navigator: this.props.navigator,
-        userData:this.props.teamuser
+        userData:this.props.teamuser,
+        teamData:this.props.teamData,
       }
 
   }
@@ -53,8 +56,39 @@ export default class extends React.Component {
        <View style={[styles.listviewright, styles.listviewhero]}>{items}</View>
     );
   }
+  confirmDelUser(){
+    Alert.alert(
+      '删除队员',
+      '确认删除战队？',
+      [
+        {text: '取消', onPress: () => console.log('Cancel Pressed!')},
+        {text: '确认', onPress: () => this.removeTeamUser()},
+      ]
+    )
+  }
   removeTeamUser(){
-    console.log('remove');
+    let data={'teamID':this.state.teamData.TeamID,'userID':this.state.userData.UserID};
+     TeamService.removeTeamUser(data,(response)=>{
+       if(response[0].MessageCode == '0'){
+         Toast.show('删除成功');
+         this.timer = setTimeout(()=>{
+             this.props._callback('TeamInfo');
+              this.props.callback();
+             if(this.props.navigator.getCurrentRoutes().length>4){
+               var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
+               this.props.navigator.jumpTo(route);
+             }else{
+               this.props.navigator.pop();
+             }
+           },1000);
+
+       }else if(response[0].MessageCode=='20009'){
+         Toast.show('您没有解散的权利');
+       }
+       else {
+         Toast.show('删除失败');
+       }
+     });
   }
   render() {
     let items = this.renderHeroImageItem(this.state.userData.HeroImage);
@@ -110,7 +144,7 @@ export default class extends React.Component {
             </View>
           </View>
 
-          <TouchableHighlight onPress={()=>this.removeTeamUser()} style = {styles.btn} underlayColor = {'#FF0000'} >
+          <TouchableHighlight onPress={()=>this.confirmDelUser()} style = {styles.btn} underlayColor = {'#FF0000'} >
             <Text style = {styles.btnfont}> {'移出战队' } </Text>
           </TouchableHighlight>
         </ScrollView>

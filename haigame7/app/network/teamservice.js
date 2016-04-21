@@ -347,5 +347,23 @@ handleMyApply(data,callback){
       callback
     );
 },
+/*加入战队*/
+removeTeamUser(data,callback){
+  /**
+   * @param  {[type]}   ApiConfig.USER_API.GETVERIFYCODE1 [api path]
+   * @param  {[type]}   {'PhoneNumber':phone}             [params]
+   * @param  {Function} callback
+   * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+   */
+    FecthService.postFecth(
+      ApiConfig.TEAM_API.REMOVEUSER,
+      {
+        'TeamID':data.teamID,
+        'UserID':data.userID,
+      },
+      callback
+    );
+},
+
 
 }
