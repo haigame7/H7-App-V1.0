@@ -236,7 +236,7 @@ export default class extends Component{
     var totalcount  = wincount+losecount+followcount;
     var odd =0;
     if(totalcount!==0){
-      odd = wincount*100/totalcount;
+      odd = Math.round(wincount*100/totalcount);
     }
     var odddata = {
       wincount:wincount,
