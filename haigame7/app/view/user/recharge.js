@@ -31,6 +31,10 @@ import WeChatIOS from 'react-native-wechat-ios';
 let appId = 'wxb0cb6c44afd49f5a';
 let outTradeno = "";
 var subscription = ""; //接收支付时间推送
+
+function show(title, msg) {
+    Toast.show(title+': '+ msg);
+}
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -42,7 +46,9 @@ export default class extends Component{
       content:undefined,
       messages: [],
       loading: false,
-      registerWechat: false
+      registerWechat: false,
+      isWXAppInstalled: true,
+      isWXAppSupportApi: true
     }
   }
 
@@ -109,7 +115,7 @@ export default class extends Component{
   }
 
   componentDidMount() {
-
+    this.isWXAppInstalled()
   }
   componentWillUnmount() {
     if (Platform.OS == 'ios') {
@@ -119,6 +125,63 @@ export default class extends Component{
       }
     }
   }
+  isWXAppInstalled() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppInstalled(
+       (err,isInstalled) => {
+         if(!isInstalled) {
+           this.setState({
+             isWXAppInstalled: false
+           })
+           Toast.show("未安装微信应用，无法使用微信充值功能")
+         } else {
+           this.isWXAppSupportApi()
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppInstalled((res) => {
+        // show('isWXAppInstalled: '+res); // true or false
+        if(!res) {
+          this.setState({
+            isWXAppInstalled: false
+          })
+          Toast.show("未安装微信应用，无法使用微信充值功能")
+        } else {
+          this.isWXAppSupportApi()
+        }
+      });
+    }
+  }
+  isWXAppSupportApi() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppSupportAPI(
+       (err,isSupport) => {
+         if(!isSupport) {
+           this.setState({
+             isWXAppSupportApi: false
+           })
+           Toast.show("微信版本过低，无法使用微信充值功能")
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppSupportApi((res) => {
+          // show('isWXAppSupportApi', res);
+          if(!res) {
+            this.setState({
+              isWXAppSupportApi: false
+            })
+            Toast.show("微信版本过低，无法使用微信充值功能")
+          }
+      });
+    }
+  }
+
+
+
+
+
   renderMessages() {
     if (this.state.messages.length > 0) {
       let messages = this.state.messages.map((val, key) => {
@@ -139,7 +202,7 @@ export default class extends Component{
   _rechargeFail() {
     if(outTradeno != "") {
       AssertService.deleteAssetRecord(outTradeno,(response) => {
-        console.log(response[0].MessageCode);
+        // console.log(response[0].MessageCode);
         if (response[0].MessageCode == '0') {
           console.log("订单删除成功");
         } else {
@@ -227,7 +290,8 @@ export default class extends Component{
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
-    if(this.state.registerWechat){
+    // console.log(this.state.registerWechat);
+    if(this.state.registerWechat && this.state.isWXAppInstalled && this.state.isWXAppSupportApi){
       btn = (
        <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this._gotoRecharge(this.state.data.money,fields)}>
          <Text style={styles.btnfont} >{'确认充值'}</Text>
