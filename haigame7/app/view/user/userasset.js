@@ -74,7 +74,7 @@ export default class extends Component{
   }
   componentDidMount() {
     AssertService.fetchAssertList(this.state.userData.PhoneNumber,(response) => {
-      console.log(response[0].MessageCode);
+      // console.log(response[0].MessageCode);
       if (response[0].MessageCode == '0') {
         let newData = response[1];
         this.setState({
