@@ -120,7 +120,7 @@ export default class extends React.Component {
       component: params.component,
       sceneConfig:params.sceneConfig || undefined,
       params: {
-        ...this.props,
+        ...this.state,
         ...params,
         }
     })
@@ -219,13 +219,13 @@ export default class extends React.Component {
            Toast.show('服务器请求异常');
          }else if(response[0].MessageCode == '0'){
            Toast.show('设置成功');
-           setTimeout(()=>{
-             this.initData(1);
-             this.props.updateLoginState();
              this.setState({
                navbar:nav,
                isOpen:false,
              });
+           setTimeout(()=>{
+             this.initData(1);
+             this.props.updateLoginState();
            },1000);
          }
         }else{
