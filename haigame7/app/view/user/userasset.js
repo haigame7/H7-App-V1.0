@@ -83,7 +83,7 @@ export default class extends Component{
           isOpen: false
         });
       } else {
-        console.log('请求错误' + response[0].Message);
+        console.log('fetchAssertList 请求错误' + response[0].Message);
         this.setState({isOpen: false})
       }
     });

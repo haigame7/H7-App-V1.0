@@ -8,7 +8,7 @@ export default {
 
   getTotalAssertAndRank(phone,callback) {
     FecthService.postFecth(
-      ApiConfig.ASSERT_API.GETASSERTANDRANK,
+      ApiConfig.ASSERT_API.GET_ASSERTANDRANK,
       {'PhoneNumber':phone},
       callback
     );
@@ -16,9 +16,17 @@ export default {
 
   fetchAssertList(phone,callback) {
     FecthService.postFecth(
-      ApiConfig.ASSERT_API.FETCHASSERTLIST,
+      ApiConfig.ASSERT_API.FETCH_ASSERTLIST,
       {'PhoneNumber':phone},
       callback
     );
   },
+
+  deleteAssetRecord(outTradeno,callback) {
+    FecthService.postFecth(
+      ApiConfig.ASSERT_API.DELETE_ASSETRECORD,
+      {'OutTradeno':outTradeno},
+      callback
+    );
+  }
 }
