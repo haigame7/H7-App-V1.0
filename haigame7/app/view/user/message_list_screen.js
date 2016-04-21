@@ -9,7 +9,7 @@ import React, {
   Navigator,
   TouchableHighlight,
   TouchableOpacity,
-  RefreshControl
+  RefreshControl,
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -28,8 +28,9 @@ export default class extends React.Component {
       data: [],
       pressTest: 0,
       loaded: false,
+      userData: {},
       listdata:{
-        userID: 62,
+        userID: this.props.userData.UserID,
         startpage: 1,
         pagecount: 5,
       },
@@ -41,9 +42,7 @@ export default class extends React.Component {
     }
   }
   componentDidMount() {
-    // this.makeData();
     this.getData();
-
   }
 
   getData() {
