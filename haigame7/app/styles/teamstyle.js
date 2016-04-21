@@ -337,6 +337,13 @@ var TeamStyle = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 5,
     },
+    toggle: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        width: 30,
+        height: 30,
+    },
     togglelist: {
         marginBottom: 10,
     },
@@ -468,11 +475,6 @@ var TeamStyle = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#D31B25',
         marginRight: 10,
-    },
-    toggle: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
     },
 });
 
