@@ -35,7 +35,6 @@ export default class extends Component{
     }
   }
   onChange(text){
-  console.log(this.props);
     this.setState(
       {
         textnumber:text.length,
