@@ -18,7 +18,8 @@ var {
   Alert,
   Platform,
   DeviceEventEmitter,
-  NativeAppEventEmitter
+  NativeAppEventEmitter,
+  ToastAndroid
 } = React;
 
 import commonstyle from '../../styles/commonstyle';
@@ -31,6 +32,10 @@ import WeChatIOS from 'react-native-wechat-ios';
 let appId = 'wxb0cb6c44afd49f5a';
 let outTradeno = "";
 var subscription = ""; //接收支付时间推送
+
+function show(title, msg) {
+    Toast.show(title+': '+ msg);
+}
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -42,11 +47,13 @@ export default class extends Component{
       content:undefined,
       messages: [],
       loading: false,
-      registerWechat: false
+      registerWechat: false,
+      isWXAppInstalled: true,
+      isWXAppSupportApi: true
     }
   }
-
   componentWillMount() {
+    let _this = this
     if (Platform.OS == 'android') {
       WeChatAndroid.registerApp(appId,(err,registerOK) => {
           // Toast.show(registerOK + '',Toast.SHORT);
@@ -59,27 +66,25 @@ export default class extends Component{
       //  处理支付回调结果
       DeviceEventEmitter.addListener('finishedPay',function(res){
        var success = res.success;
-       console.log(res);//errCode
        if(success){
         // 在此发起网络请求由服务器验证是否真正支付成功，然后做出相应的处理
 
        }else{
          if(res.errCode == 0) {
-           Toast.show('充值成功' + '',Toast.SHORT);
+           ToastAndroid.show('充值成功' + '',Toast.SHORT);
          } else if(res.errCode == -1) {
-           Toast.show('支付失败,请稍后尝试' + '',Toast.SHORT);
-           this._rechargeFail()
+           ToastAndroid.show('支付失败,请稍后尝试' + '',Toast.SHORT);
+           _this._rechargeFail()
          } else if(res.errCode == -2) {
-           console.log("充值取消");
-           Toast.show('支付取消' + '',Toast.SHORT);
-           this._rechargeFail()
+          //  Toast.show('支付取消' + '',Toast.SHORT);
+          // 这里不能用Toast不显示，如果要用需要额外写个方法，
+           ToastAndroid.show('支付取消', ToastAndroid.SHORT)
+           _this._rechargeFail()
          }
-        Toast.show('支付失败',Toast.SHORT);
        }
       });
     } else {
       WeChatIOS.registerApp(appId, (res) => {
-        console.log(res);
         if(res) {
           // Toast.show(res.toString())
           this.setState({registerWechat: true})
@@ -109,7 +114,7 @@ export default class extends Component{
   }
 
   componentDidMount() {
-
+    this.isWXAppInstalled()
   }
   componentWillUnmount() {
     if (Platform.OS == 'ios') {
@@ -119,6 +124,63 @@ export default class extends Component{
       }
     }
   }
+  isWXAppInstalled() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppInstalled(
+       (err,isInstalled) => {
+         if(!isInstalled) {
+           this.setState({
+             isWXAppInstalled: false
+           })
+           Toast.show("未安装微信应用，无法使用微信充值功能")
+         } else {
+           this.isWXAppSupportApi()
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppInstalled((res) => {
+        // show('isWXAppInstalled: '+res); // true or false
+        if(!res) {
+          this.setState({
+            isWXAppInstalled: false
+          })
+          Toast.show("未安装微信应用，无法使用微信充值功能")
+        } else {
+          this.isWXAppSupportApi()
+        }
+      });
+    }
+  }
+  isWXAppSupportApi() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppSupportAPI(
+       (err,isSupport) => {
+         if(!isSupport) {
+           this.setState({
+             isWXAppSupportApi: false
+           })
+           Toast.show("微信版本过低，无法使用微信充值功能")
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppSupportApi((res) => {
+          // show('isWXAppSupportApi', res);
+          if(!res) {
+            this.setState({
+              isWXAppSupportApi: false
+            })
+            Toast.show("微信版本过低，无法使用微信充值功能")
+          }
+      });
+    }
+  }
+
+
+
+
+
   renderMessages() {
     if (this.state.messages.length > 0) {
       let messages = this.state.messages.map((val, key) => {
@@ -137,9 +199,10 @@ export default class extends Component{
   }
 
   _rechargeFail() {
+    // console.log("outTradeno==" + outTradeno);
     if(outTradeno != "") {
       AssertService.deleteAssetRecord(outTradeno,(response) => {
-        console.log(response[0].MessageCode);
+        // console.log(response[0].MessageCode);
         if (response[0].MessageCode == '0') {
           console.log("订单删除成功");
         } else {
@@ -202,7 +265,7 @@ export default class extends Component{
             });
           } else {
             WeChatIOS.weChatPay(payOptions,(res) => {
-              console.log(res);
+              // console.log(res);
               if(res) {
 
               } else {
@@ -227,7 +290,8 @@ export default class extends Component{
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
-    if(this.state.registerWechat){
+    // console.log(this.state.registerWechat);
+    if(this.state.registerWechat && this.state.isWXAppInstalled && this.state.isWXAppSupportApi){
       btn = (
        <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this._gotoRecharge(this.state.data.money,fields)}>
          <Text style={styles.btnfont} >{'确认充值'}</Text>
