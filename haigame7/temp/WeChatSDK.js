@@ -11,10 +11,16 @@ import WeChatIOS from 'react-native-wechat-ios';
 let appId = 'wxb0cb6c44afd49f5a';
 var subscription = ""; //ios接收支付时间推送,以便卸载NativeAppEventEmitter
 
-//没想好这应该怎么写啊，好累
-export class WeChatSDK export React.Component{
+
+/**
+ * 暂时没用到
+ */
+export default class WeChatSDK extends React.Component{
   constructor(props) {
     super(props)
+    this.state = {
+      registerWechat: false
+    }
   }
   componentWillMount() {
     if (Platform.OS == 'android') {
@@ -26,8 +32,7 @@ export class WeChatSDK export React.Component{
             Toast.show('WeChatSDK 注册失败' + '',Toast.SHORT);
           }
       }
-    }
-    else if(Platform.OS == 'ios') {
+    } else if (Platform.OS == 'ios') {
       WeChatIOS.registerApp(appId, (res) => {
         if(res) {
           Toast.show(res.toString())
