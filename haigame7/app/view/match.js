@@ -64,6 +64,7 @@ export default class extends Component{
         userteamid:0,
       },
       hjData:{},
+      hjEarnData:{},
       matchdata:{
         matchID: 4,
         matchname:'',
@@ -125,6 +126,10 @@ export default class extends Component{
           let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
           this.setState({
             hjData: data,
+            hjEarnData:{
+              'totalAsset':response[1].TotalAsset,
+              'totalEarnAsset':0,
+            },
           });
         } else {
           console.log('请求错误' + response[0].Message);
@@ -193,6 +198,24 @@ export default class extends Component{
                Toast.show('请求错误');
              }
        });
+    }
+    calculateGuess(text){
+      let type = /^[0-9]*[1-9][0-9]*$/;
+      let re = new RegExp(type);
+      if (text.match(re) == null) {
+        return
+      }else{
+        var money = parseInt(text);
+        this.setState({
+          guessmoney:money,
+          hjEarnData:{
+            totalAsset:this.state.hjData.totalAsset-money,
+            totalEarnAsset:money*this.state.modaData.guessodd,
+          },
+        });
+      }
+
+      this.state.guessmoney = text
     }
     getBoBoList(matchdata){
       MatchService.getBoBoList(matchdata,(response) => {
@@ -324,6 +347,7 @@ export default class extends Component{
               Toast.show('服务器请求异常');
             }else if(response[0].MessageCode == '0'){
              Toast.showLongCenter('下注成功');
+             this.initData();
            }
            {/*更新请求*/}
            setTimeout(()=>{
@@ -421,11 +445,11 @@ export default class extends Component{
           <View style={[styles.modalheader]}>
             <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}</Text>
             <View  style = {styles.modalinput }>
-              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
+              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.calculateGuess(text)}/>
             </View>
             <View style ={commonstyle.row}>
-              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.userdata.userasset}</Text></Text></View>
-              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  预估收益:  '}<Text style={commonstyle.yellow}>{(this.state.userdata.userasset*this.state.modaData.guessodd)}</Text></Text></View>
+              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.hjEarnData.totalAsset}</Text></Text></View>
+              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  预估收益:  '}<Text style={commonstyle.yellow}>{Math.round(this.state.hjEarnData.totalEarnAsset)}</Text></Text></View>
             </View>
           </View>
 
