@@ -26,6 +26,7 @@ import MatchSchedule from './match/matchschedule';
 import MatchService from '../network/matchservice';
 import GuessService from '../network/guessservice';
 import TeamService from '../network/teamservice';
+import AssertService from '../network/assertservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -61,8 +62,8 @@ export default class extends Component{
       userdata:{
         userid:0,
         userteamid:0,
-        userasset:0
       },
+      hjData:{},
       matchdata:{
         matchID: 4,
         matchname:'',
@@ -103,7 +104,7 @@ export default class extends Component{
         }else if(response[0].MessageCode == '0'){
           this.setState({
            userdata:{
-             userid:response[1].Creater,
+            userid:response[1].Creater,
             userteamid:response[1].TeamID,
             userasset:response[1].Asset,
           },
@@ -113,10 +114,24 @@ export default class extends Component{
            Toast.show('请求错误');
        }
      });
+     this.getTotalAssertAndRank(this.state.userphone);
      this.getMatchList();
      this.getGuessList();
     }
-
+    getTotalAssertAndRank(phoneNum) {
+      AssertService.getTotalAssertAndRank(phoneNum,(response) => {
+        // console.log(response);
+        if (response[0].MessageCode == '0') {
+          let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
+          this.setState({
+            hjData: data,
+          });
+        } else {
+          console.log('请求错误' + response[0].Message);
+          this.setState({isOpen: false});
+        }
+      })
+    }
     getMatchList(){
       {/*请求赛事信息*/}
        MatchService.getMatchList((response) => {
@@ -292,6 +307,17 @@ export default class extends Component{
         });
       }else{
         params.money = parseInt(this.state.guessmoney);
+        let _money =   params.money.toString()
+        let type = /^[0-9]*[1-9][0-9]*$/;
+        let re = new RegExp(type);
+        if (_money.match(re) == null) {
+          Toast.show("请填写大于1的整数金额");
+          return
+        }
+        if(params.money>this.state.hjData.totalAsset){
+          Toast.show("没有足够的氦金");
+          return
+        }
         GuessService.doGuessBet(params,(response) => {
           if (response !== GlobalSetup.REQUEST_SUCCESS) {
             if(response[0].MessageCode == '40001'){
