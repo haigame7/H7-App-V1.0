@@ -254,7 +254,7 @@ export default class extends React.Component {
     var items = Object.keys(groups).map(function(item,key) {
       if(item<4){
         return(
-          <TouchableOpacity onPress={()=>that.operateTeamUser()} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+          <TouchableOpacity onPress={()=>that.operateTeamUser(groups[item])} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
           <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
           </TouchableOpacity>
         );
