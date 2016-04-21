@@ -100,10 +100,10 @@ editTeam(data,callback){
     FecthService.postFecth(
       ApiConfig.TEAM_API.UPDATETEAM,
       {
-        'TeamID':data.teamid,
-        'TeamName':data.teamname,
-        'TeamLogo':data.teamlogo,
-        'TeamDescription':data.teamdescription,
+        'TeamID':data.TeamID,
+        'TeamName':data.TeamName,
+        'TeamLogo':data.TeamLogo,
+        'TeamDescription':data.TeamDescription,
       },
       callback
     );
