@@ -122,6 +122,7 @@ export default class extends React.Component {
       params: {
         ...this.props,
         ...params,
+        teamData:this.state.teamData,
         }
     })
   }
@@ -177,14 +178,14 @@ export default class extends React.Component {
     this.setState({
       isOpen: false,
     });
-    this._toNextScreen({"name":"队员管理","component":TeamUserManager});
+    this._toNextScreen({"name":"队员管理","component":TeamUserManager,"callback":this.initData.bind(this,1)});
   }
   operateTeamUser(teamUser){
     if(this.state.teamData.Role=='teamcreater'){
        this.setState({
          isOpen: false,
        });
-       this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":teamUser});
+       this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":teamUser,"callback":this.initData.bind(this,1)});
     }
   }
   sendRecruit(){

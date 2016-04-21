@@ -75,7 +75,7 @@ const teamApi={
   'HANDLEMYINVITED':apiSetup.MASTER_API_PATH +'/v1/Team/HandleMyInvited?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'HANDLEMYAPPLY':apiSetup.MASTER_API_PATH +'/v1/Team/HandleMyApply?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'SETDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/SetDefaultTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,
-
+  'REMOVEUSER':apiSetup.MASTER_API_PATH +'/v1/Team/RemoveUser?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
 const otherApi={
   'CURRENTVERSION':apiSetup.MASTER_API_PATH +'/v1/Version/CurrentVersion?accesstoken='+ apiSetup.ACCESS_TOKEN,
