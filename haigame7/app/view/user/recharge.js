@@ -23,12 +23,13 @@ var {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
-import WebService from '../../network/fetchservice';
+import AssertService from '../../network/assertservice';
 import Toast from '@remobile/react-native-toast';
 import WeChatAndroid from 'react-native-wechat-android';
 import WeChatIOS from 'react-native-wechat-ios';
 
 let appId = 'wxb0cb6c44afd49f5a';
+let outTradeno = "";
 var subscription = ""; //接收支付时间推送
 export default class extends Component{
   constructor(props) {
@@ -62,6 +63,7 @@ export default class extends Component{
         // 在此发起网络请求由服务器验证是否真正支付成功，然后做出相应的处理
 
        }else{
+        this._rechargeFail()
         Toast.show('支付失败',Toast.SHORT);
        }
       });
@@ -71,7 +73,8 @@ export default class extends Component{
           // Toast.show(res.toString())
           this.setState({registerWechat: true})
         } else {
-          Toast.show('支付功能异常' + '',Toast.SHORT);
+          this._rechargeFail()
+          Toast.show('支付失败' + '',Toast.SHORT);
         }
       });
       subscription = NativeAppEventEmitter.addListener(
@@ -104,7 +107,7 @@ export default class extends Component{
     }
   }
 
-  selectRecharge(money){
+  _selectRecharge(money){
     this.setState({
       data:{money:money},
     });
@@ -112,7 +115,21 @@ export default class extends Component{
     return;
   }
 
-  gotoRecharge(money,argument) {
+  _rechargeFail() {
+    if(outTradeno != "") {
+      AssertService.deleteAssetRecord("",(response) => {
+        console.log(response[0].MessageCode);
+        if (response[0].MessageCode == '0') {
+          console.log("订单删除成功");
+        } else {
+          console.log('deleteAssetRecord 请求错误' + response[0].Message);
+        }
+      })
+    } else {
+      console.log("本页订单号错误,无法删除");
+    }
+  }
+  _gotoRecharge(money,argument) {
     let _money
     let temp
     if (money === "" || money == null || money == undefined) {
@@ -154,6 +171,7 @@ export default class extends Component{
           payOptions['packageValue'] = _data.package
           payOptions['timeStamp'] = _data.timestamp
           payOptions['sign'] = _data.sign
+          outTradeno = _data.out_trade_no
           // console.log("发起支付请求，参数:");
           // console.log(payOptions);
           if (Platform.OS == 'android') {
@@ -190,7 +208,7 @@ export default class extends Component{
     let btn;
     if(this.state.registerWechat){
       btn = (
-       <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
+       <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this._gotoRecharge(this.state.data.money,fields)}>
          <Text style={styles.btnfont} >{'确认充值'}</Text>
        </TouchableHighlight>
      )
@@ -216,28 +234,28 @@ export default class extends Component{
             <Text style={[commonstyle.cream,commonstyle.fontsize14]}>{'其他金额'}</Text>
           </View>
           <View style={[commonstyle.row, styles.rechargeview]}>
-            <TouchableHighlight onPress={() => this.selectRecharge(50)} style={[this.state.data.money==50?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(50)} style={[this.state.data.money==50?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==50?commonstyle.red:commonstyle.gray} >{'50氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(100)} style={[this.state.data.money==100?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]}>
+            <TouchableHighlight onPress={() => this._selectRecharge(100)} style={[this.state.data.money==100?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]}>
               <Text style={this.state.data.money==100?commonstyle.red:commonstyle.gray}>{'100氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(200)} style={[this.state.data.money==200?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(200)} style={[this.state.data.money==200?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==200?commonstyle.red:commonstyle.gray} >{'200氦金'}</Text>
             </TouchableHighlight>
           </View>
           <View style={[commonstyle.row, styles.rechargeview]}>
-            <TouchableHighlight onPress={() => this.selectRecharge(500)} style={[this.state.data.money==500?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(500)} style={[this.state.data.money==500?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==500?commonstyle.red:commonstyle.gray}>{'500氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(1000)} style={[this.state.data.money==1000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(1000)} style={[this.state.data.money==1000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==1000?commonstyle.red:commonstyle.gray} >{'1000氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(5000)} style={[this.state.data.money==5000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(5000)} style={[this.state.data.money==5000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==5000?commonstyle.red:commonstyle.gray} >{'5000氦金'}</Text>
             </TouchableHighlight>
           </View>
