@@ -120,7 +120,7 @@ export default class extends React.Component {
       component: params.component,
       sceneConfig:params.sceneConfig || undefined,
       params: {
-        ...this.state,
+        ...this.props,
         ...params,
         teamData:this.state.teamData,
         }
