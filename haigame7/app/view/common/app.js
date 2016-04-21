@@ -127,7 +127,7 @@ export default class haigame7 extends Component {
                   isDetachable: true,
                 }
               } else {
-                console.log('设置回退为空');
+                // console.log('设置回退为空');
                 config.gestures.jumpBack = {
                   ...BaseLeftToRightGesture,
                   overswipe: null,
