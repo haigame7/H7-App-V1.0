@@ -13,7 +13,7 @@ import React, {
   Navigator,
   AsyncStorage,
   Alert,
-  ToastAndroid
+  Platform
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -127,10 +127,10 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'phone', placeholder: '手机号',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.logininputfont]},
-      {ref: 'password', placeholder: '请您设置密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.logininputfont]},
-      {ref: 'passwordd', placeholder: '请再次确认密码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.logininputfont]},
-      {ref: 'securitycode', placeholder: '验证码',placeholderTextColor: 'white', color:'white',keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.logininputfont]}
+      {ref: 'phone', placeholder: '手机号',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', keyboardType: 'default', secureTextEntry: false, message: '* 手机号必填', style: [styles.logininputfont]},
+      {ref: 'password', placeholder: '请您设置密码',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.logininputfont]},
+      {ref: 'passwordd', placeholder: '请再次确认密码',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', keyboardType: 'default', secureTextEntry: this.state.notshow, message: '* 密码必填', style: [styles.logininputfont]},
+      {ref: 'securitycode', placeholder: '验证码',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', keyboardType: 'default', secureTextEntry: false, message: '* 验证码必填', style: [styles.logininputfont]}
     ]
     var headerset, headtext;
     var footerset;
