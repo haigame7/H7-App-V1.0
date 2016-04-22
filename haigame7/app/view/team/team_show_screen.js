@@ -120,7 +120,7 @@ export default class extends React.Component {
       component: params.component,
       sceneConfig:params.sceneConfig || undefined,
       params: {
-        ...this.state,
+        ...this.props,
         ...params,
         teamData:this.state.teamData,
         }
@@ -168,11 +168,34 @@ export default class extends React.Component {
     }
     return count;
   }
-  editTeam(){
-    this.setState({
-      isOpen: false,
+  _editTeam(property) {
+    let _this = this;
+    let tdata = _this.state.teamData
+    this.props.navigator.push({
+      name: 'editteaminfo',
+      component: TeamEdit,
+      params: {
+        teamData: this.state.teamData,
+        userData: this.state.userData,
+        setProperty(pro){
+          TeamService.editTeam(pro,(response) => {
+            if(response[0].MessageCode == '0') {
+              tdata = pro;
+              Toast.show('修改成功');
+              _this.initData();
+            }else if(response[0].MessageCode=='20001'){
+              Toast.show('已经存在同名的战队');
+            } else {
+              console.log('更新失败');
+              Toast.show('修改失败');
+            }
+          })
+          _this.timer = setTimeout(()=>{
+            _this.props._callback('TeamInfo');
+          },1000);
+        }
+      }
     });
-    this._toNextScreen({"name":"战队管理","component":TeamEdit});
   }
   editTeamMember(){
     this.setState({
@@ -303,7 +326,7 @@ export default class extends React.Component {
         <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-            <TouchableOpacity style={styles.blocktop} onPress={()=>this.state.teamData.Role=='teamcreater'?this.editTeam():console.log('member')}>
+            <TouchableOpacity style={styles.blocktop} onPress={()=>this.state.teamData.Role=='teamcreater'?this._editTeam():console.log('member')}>
               <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>

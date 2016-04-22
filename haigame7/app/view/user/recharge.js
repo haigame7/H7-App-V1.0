@@ -18,18 +18,24 @@ var {
   Alert,
   Platform,
   DeviceEventEmitter,
-  NativeAppEventEmitter
+  NativeAppEventEmitter,
+  ToastAndroid
 } = React;
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
-import WebService from '../../network/fetchservice';
+import AssertService from '../../network/assertservice';
 import Toast from '@remobile/react-native-toast';
 import WeChatAndroid from 'react-native-wechat-android';
 import WeChatIOS from 'react-native-wechat-ios';
 
 let appId = 'wxb0cb6c44afd49f5a';
+let outTradeno = "";
 var subscription = ""; //接收支付时间推送
+
+function show(title, msg) {
+    Toast.show(title+': '+ msg);
+}
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -41,11 +47,13 @@ export default class extends Component{
       content:undefined,
       messages: [],
       loading: false,
-      registerWechat: false
+      registerWechat: false,
+      isWXAppInstalled: true,
+      isWXAppSupportApi: true
     }
   }
-
   componentWillMount() {
+    let _this = this
     if (Platform.OS == 'android') {
       WeChatAndroid.registerApp(appId,(err,registerOK) => {
           // Toast.show(registerOK + '',Toast.SHORT);
@@ -56,13 +64,23 @@ export default class extends Component{
           }
       });
       //  处理支付回调结果
-      DeviceEventEmitter.addListener('finishedPay',function(event){
-       var success = event.success;
+      DeviceEventEmitter.addListener('finishedPay',function(res){
+       var success = res.success;
        if(success){
         // 在此发起网络请求由服务器验证是否真正支付成功，然后做出相应的处理
 
        }else{
-        Toast.show('支付失败',Toast.SHORT);
+         if(res.errCode == 0) {
+           ToastAndroid.show('充值成功' + '',Toast.SHORT);
+         } else if(res.errCode == -1) {
+           ToastAndroid.show('支付失败,请稍后尝试' + '',Toast.SHORT);
+           _this._rechargeFail()
+         } else if(res.errCode == -2) {
+          //  Toast.show('支付取消' + '',Toast.SHORT);
+          // 这里不能用Toast不显示，如果要用需要额外写个方法，
+           ToastAndroid.show('支付取消', ToastAndroid.SHORT)
+           _this._rechargeFail()
+         }
        }
       });
     } else {
@@ -78,14 +96,25 @@ export default class extends Component{
         'finishedPay',
         (res) => {
           console.log('回调的支付结果');
-          console.log(res)
+          // console.log(res.length)
+          // console.log(res.errCode);
+          if(res.errCode == 0) {
+            Toast.show('充值成功' + '',Toast.SHORT);
+          } else if(res.errCode == -1) {
+            Toast.show('支付失败,请稍后尝试' + '',Toast.SHORT);
+            this._rechargeFail()
+          } else if(res.errCode == -2) {
+            console.log("充值取消");
+            Toast.show('支付取消' + '',Toast.SHORT);
+            this._rechargeFail()
+          }
         }
       );
     }
   }
 
   componentDidMount() {
-
+    this.isWXAppInstalled()
   }
   componentWillUnmount() {
     if (Platform.OS == 'ios') {
@@ -95,6 +124,63 @@ export default class extends Component{
       }
     }
   }
+  isWXAppInstalled() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppInstalled(
+       (err,isInstalled) => {
+         if(!isInstalled) {
+           this.setState({
+             isWXAppInstalled: false
+           })
+           Toast.show("未安装微信应用，无法使用微信充值功能")
+         } else {
+           this.isWXAppSupportApi()
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppInstalled((res) => {
+        // show('isWXAppInstalled: '+res); // true or false
+        if(!res) {
+          this.setState({
+            isWXAppInstalled: false
+          })
+          Toast.show("未安装微信应用，无法使用微信充值功能")
+        } else {
+          this.isWXAppSupportApi()
+        }
+      });
+    }
+  }
+  isWXAppSupportApi() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppSupportAPI(
+       (err,isSupport) => {
+         if(!isSupport) {
+           this.setState({
+             isWXAppSupportApi: false
+           })
+           Toast.show("微信版本过低，无法使用微信充值功能")
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppSupportApi((res) => {
+          // show('isWXAppSupportApi', res);
+          if(!res) {
+            this.setState({
+              isWXAppSupportApi: false
+            })
+            Toast.show("微信版本过低，无法使用微信充值功能")
+          }
+      });
+    }
+  }
+
+
+
+
+
   renderMessages() {
     if (this.state.messages.length > 0) {
       let messages = this.state.messages.map((val, key) => {
@@ -104,7 +190,7 @@ export default class extends Component{
     }
   }
 
-  selectRecharge(money){
+  _selectRecharge(money){
     this.setState({
       data:{money:money},
     });
@@ -112,7 +198,22 @@ export default class extends Component{
     return;
   }
 
-  gotoRecharge(money,argument) {
+  _rechargeFail() {
+    // console.log("outTradeno==" + outTradeno);
+    if(outTradeno != "") {
+      AssertService.deleteAssetRecord(outTradeno,(response) => {
+        // console.log(response[0].MessageCode);
+        if (response[0].MessageCode == '0') {
+          console.log("订单删除成功");
+        } else {
+          console.log('deleteAssetRecord 请求错误' + response[0].Message);
+        }
+      })
+    } else {
+      console.log("本页订单号错误,无法删除");
+    }
+  }
+  _gotoRecharge(money,argument) {
     let _money
     let temp
     if (money === "" || money == null || money == undefined) {
@@ -154,6 +255,7 @@ export default class extends Component{
           payOptions['packageValue'] = _data.package
           payOptions['timeStamp'] = _data.timestamp
           payOptions['sign'] = _data.sign
+          outTradeno = _data.out_trade_no
           // console.log("发起支付请求，参数:");
           // console.log(payOptions);
           if (Platform.OS == 'android') {
@@ -163,7 +265,7 @@ export default class extends Component{
             });
           } else {
             WeChatIOS.weChatPay(payOptions,(res) => {
-              console.log(res);
+              // console.log(res);
               if(res) {
 
               } else {
@@ -188,9 +290,10 @@ export default class extends Component{
   render(){
     let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
-    if(this.state.registerWechat){
+    // console.log(this.state.registerWechat);
+    if(this.state.registerWechat && this.state.isWXAppInstalled && this.state.isWXAppSupportApi){
       btn = (
-       <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRecharge(this.state.data.money,fields)}>
+       <TouchableHighlight style={styles.btn} underlayColor={'#FF0000'} onPress={() => this._gotoRecharge(this.state.data.money,fields)}>
          <Text style={styles.btnfont} >{'确认充值'}</Text>
        </TouchableHighlight>
      )
@@ -216,28 +319,28 @@ export default class extends Component{
             <Text style={[commonstyle.cream,commonstyle.fontsize14]}>{'其他金额'}</Text>
           </View>
           <View style={[commonstyle.row, styles.rechargeview]}>
-            <TouchableHighlight onPress={() => this.selectRecharge(50)} style={[this.state.data.money==50?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(50)} style={[this.state.data.money==50?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==50?commonstyle.red:commonstyle.gray} >{'50氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(100)} style={[this.state.data.money==100?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]}>
+            <TouchableHighlight onPress={() => this._selectRecharge(100)} style={[this.state.data.money==100?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]}>
               <Text style={this.state.data.money==100?commonstyle.red:commonstyle.gray}>{'100氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(200)} style={[this.state.data.money==200?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(200)} style={[this.state.data.money==200?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==200?commonstyle.red:commonstyle.gray} >{'200氦金'}</Text>
             </TouchableHighlight>
           </View>
           <View style={[commonstyle.row, styles.rechargeview]}>
-            <TouchableHighlight onPress={() => this.selectRecharge(500)} style={[this.state.data.money==500?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(500)} style={[this.state.data.money==500?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==500?commonstyle.red:commonstyle.gray}>{'500氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(1000)} style={[this.state.data.money==1000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(1000)} style={[this.state.data.money==1000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==1000?commonstyle.red:commonstyle.gray} >{'1000氦金'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
-            <TouchableHighlight onPress={() => this.selectRecharge(5000)} style={[this.state.data.money==5000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
+            <TouchableHighlight onPress={() => this._selectRecharge(5000)} style={[this.state.data.money==5000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
               <Text style={this.state.data.money==5000?commonstyle.red:commonstyle.gray} >{'5000氦金'}</Text>
             </TouchableHighlight>
           </View>

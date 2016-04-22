@@ -117,12 +117,6 @@ export default class extends Component{
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"重置密码","component":ReSetPwd})}>
-            <Text style={styles.listviewtextleft}>更改密码</Text>
-            <View style={styles.listviewtextbox} ></View>
-            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
-          </TouchableOpacity>
-
           <View style={styles.listbox}></View>
 
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}  onPress={this._toNextScreen.bind(this,{"name":"关于H7","component":About})}>

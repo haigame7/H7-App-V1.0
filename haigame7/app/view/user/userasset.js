@@ -74,7 +74,7 @@ export default class extends Component{
   }
   componentDidMount() {
     AssertService.fetchAssertList(this.state.userData.PhoneNumber,(response) => {
-      console.log(response[0].MessageCode);
+      // console.log(response[0].MessageCode);
       if (response[0].MessageCode == '0') {
         let newData = response[1];
         this.setState({
@@ -83,7 +83,7 @@ export default class extends Component{
           isOpen: false
         });
       } else {
-        console.log('请求错误' + response[0].Message);
+        console.log('fetchAssertList 请求错误' + response[0].Message);
         this.setState({isOpen: false})
       }
     });

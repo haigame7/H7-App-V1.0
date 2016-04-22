@@ -26,6 +26,7 @@ import MatchSchedule from './match/matchschedule';
 import MatchService from '../network/matchservice';
 import GuessService from '../network/guessservice';
 import TeamService from '../network/teamservice';
+import AssertService from '../network/assertservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -61,8 +62,9 @@ export default class extends Component{
       userdata:{
         userid:0,
         userteamid:0,
-        userasset:0
       },
+      hjData:{},
+      hjEarnData:{},
       matchdata:{
         matchID: 4,
         matchname:'',
@@ -103,7 +105,7 @@ export default class extends Component{
         }else if(response[0].MessageCode == '0'){
           this.setState({
            userdata:{
-             userid:response[1].Creater,
+            userid:response[1].Creater,
             userteamid:response[1].TeamID,
             userasset:response[1].Asset,
           },
@@ -113,10 +115,28 @@ export default class extends Component{
            Toast.show('请求错误');
        }
      });
+     this.getTotalAssertAndRank(this.state.userphone);
      this.getMatchList();
      this.getGuessList();
     }
-
+    getTotalAssertAndRank(phoneNum) {
+      AssertService.getTotalAssertAndRank(phoneNum,(response) => {
+        // console.log(response);
+        if (response[0].MessageCode == '0') {
+          let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
+          this.setState({
+            hjData: data,
+            hjEarnData:{
+              'totalAsset':response[1].TotalAsset,
+              'totalEarnAsset':0,
+            },
+          });
+        } else {
+          console.log('请求错误' + response[0].Message);
+          this.setState({isOpen: false});
+        }
+      })
+    }
     getMatchList(){
       {/*请求赛事信息*/}
        MatchService.getMatchList((response) => {
@@ -178,6 +198,24 @@ export default class extends Component{
                Toast.show('请求错误');
              }
        });
+    }
+    calculateGuess(text){
+      let type = /^[0-9]*[1-9][0-9]*$/;
+      let re = new RegExp(type);
+      if (text.match(re) == null) {
+        return
+      }else{
+        var money = parseInt(text);
+        this.setState({
+          guessmoney:money,
+          hjEarnData:{
+            totalAsset:this.state.hjData.totalAsset-money,
+            totalEarnAsset:money*this.state.modaData.guessodd,
+          },
+        });
+      }
+
+      this.state.guessmoney = text
     }
     getBoBoList(matchdata){
       MatchService.getBoBoList(matchdata,(response) => {
@@ -292,12 +330,24 @@ export default class extends Component{
         });
       }else{
         params.money = parseInt(this.state.guessmoney);
+        let _money =   params.money.toString()
+        let type = /^[0-9]*[1-9][0-9]*$/;
+        let re = new RegExp(type);
+        if (_money.match(re) == null) {
+          Toast.show("请填写大于1的整数金额");
+          return
+        }
+        if(params.money>this.state.hjData.totalAsset){
+          Toast.show("没有足够的氦金");
+          return
+        }
         GuessService.doGuessBet(params,(response) => {
           if (response !== GlobalSetup.REQUEST_SUCCESS) {
             if(response[0].MessageCode == '40001'){
               Toast.show('服务器请求异常');
             }else if(response[0].MessageCode == '0'){
              Toast.showLongCenter('下注成功');
+             this.initData();
            }
            {/*更新请求*/}
            setTimeout(()=>{
@@ -395,11 +445,11 @@ export default class extends Component{
           <View style={[styles.modalheader]}>
             <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}</Text>
             <View  style = {styles.modalinput }>
-              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.state.guessmoney = text }/>
+              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.calculateGuess(text)}/>
             </View>
             <View style ={commonstyle.row}>
-              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.userdata.userasset}</Text></Text></View>
-              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  预估收益:  '}<Text style={commonstyle.yellow}>{(this.state.userdata.userasset*this.state.modaData.guessodd)}</Text></Text></View>
+              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.hjEarnData.totalAsset}</Text></Text></View>
+              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  预估收益:  '}<Text style={commonstyle.yellow}>{Math.round(this.state.hjEarnData.totalEarnAsset)}</Text></Text></View>
             </View>
           </View>
 

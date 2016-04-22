@@ -308,7 +308,7 @@ export default class extends Component{
           </View>
 
           <View style={styles.userlistteambox}>
-            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{this.state.userteamdata.odd}{'%'}</Text>
+            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{this.state.userteamdata.odd.toString().substr(0, 5)}{'%'}</Text>
             <Progress.Bar progress={this.state.userteamdata.odd/100} width={120} color={'#F39533'} unfilledColor={'#484848'} style={styles.userlistprogress} />
           </View>
 
@@ -358,7 +358,7 @@ export default class extends Component{
           </View>
 
           <View style={styles.userlistteambox}>
-            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{oddsdata.odd}{'%'}</Text>
+            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{oddsdata.odd.toString().substr(0, 5)}{'%'}</Text>
             <Progress.Bar progress={(oddsdata.odd/100)} width={120} color={'#F39533'} unfilledColor={'#484848'} style={styles.userlistprogress} />
           </View>
 
