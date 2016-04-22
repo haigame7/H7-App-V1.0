@@ -168,31 +168,6 @@ export default class extends React.Component {
     }
     return count;
   }
-  editTeam(){
-    this.setState({
-      isOpen: false,
-    });
-    this._toNextScreen({"name":"战队管理","component":TeamEdit});
-    TeamService.editTeam({'teamid':this.state.TeamID,'teamname':this.state.TeamName,'teamlogo':this.state.TeamLogo,'teamdescription':this.state.TeamDescription,},(response)=>{
-        if(response[0].MessageCode == '0'){
-          Toast.show('修改成功');
-          this.timer = setTimeout(()=>{
-            this.props._callback('TeamInfo');
-            this.props.updateLoginState();
-            if(this.props.navigator.getCurrentRoutes().length>3){
-              var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-2];
-              this.props.navigator.jumpTo(route);
-            }else{
-              this.props.navigator.pop();
-            }
-          },1000);
-        }else if(response[0].MessageCode=='20001'){
-          Toast.show('已经存在同名的战队');
-        }else{
-          Toast.show('修改失败');
-        }
-      });
-  }
   _editTeam(property) {
     let _this = this;
     let tdata = _this.state.teamData
@@ -207,10 +182,7 @@ export default class extends React.Component {
             if(response[0].MessageCode == '0') {
               tdata = pro;
               Toast.show('修改成功');
-              // _this.setState({
-              //   teamData: tdata
-              // })
-              Toast.show(tdata.TeamName);
+              _this.initData();
             }else if(response[0].MessageCode=='20001'){
               Toast.show('已经存在同名的战队');
             } else {
