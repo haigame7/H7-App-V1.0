@@ -18,7 +18,7 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         height: 48,
-        marginLeft: (Platform.OS === 'ios') ? 0 : 15,
+        marginLeft: (Platform.OS === 'ios') ? -10 : 15,
     },
     headertext: {
         justifyContent: 'center',
@@ -36,7 +36,7 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
         height: 48,
-        marginRight: (Platform.OS === 'ios') ? 0 : 15,
+        marginRight: (Platform.OS === 'ios') ? -10 : 15,
     },
     headertextright: {
         fontSize: 14,
