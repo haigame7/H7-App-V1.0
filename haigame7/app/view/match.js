@@ -420,7 +420,7 @@ export default class extends Component{
       let joinView =this.state.jointeam==''?<View style={commonstyle.modalbodybottom}></View>:<View style={commonstyle.modalbodybottom}><Text style={[commonstyle.red,commonstyle.fontsize12]}>{'您已加入'}{this.state.jointeam}{',报名结束后为您生成赛程信息,请关注'}</Text></View>
 
       return(
-        <Modal isOpen={this.state.isOpen}  swipeToClose={false}  style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
+        <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal,commonstyle.modalbig]}  position={"top"} >
           <View style={styles.modalheader}>
             <Image style={styles.modalimg} source={{uri:this.state.modaData.UserPicture}} />
             <Text style={[commonstyle.white, commonstyle.fontsize14, styles.modalfont]}>{this.state.modaData.Name}</Text>
