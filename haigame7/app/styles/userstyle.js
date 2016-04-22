@@ -99,13 +99,13 @@ export default StyleSheet.create({
         marginTop: 20,
         marginLeft: 36,
         marginRight: 36,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        backgroundColor: (Platform.OS === 'ios') ?'rgba(0, 0, 0, 0.6)':'rgba(211, 27, 37, 0.8)',
     },
     logininputfont: {
         height: 40,
         left: 5,
         width: Util.size.width - 72,
-        color: '#FFFFFF',
+        color: (Platform.OS === 'ios') ?'#FFFFFF':'#000000',
     },
     logininputright: {
         position: 'absolute',

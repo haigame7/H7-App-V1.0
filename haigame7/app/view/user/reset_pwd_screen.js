@@ -7,8 +7,7 @@ import React, {
   View,
   Platform,
   Navigator,
-  TextInput,
-  ToastAndroid
+  TextInput
 } from 'react-native';
 // var Header = require('../common/headernav');
 
@@ -30,9 +29,9 @@ export default class extends React.Component {
 
   render() {
     let fields = [
-        { ref: 'passwordold', placeholder: '请输入原始密码', placeholderTextColor: '#484848', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填'},
-        { ref: 'passwordnew', placeholder: '请您设置新密码', placeholderTextColor: '#484848', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填'},
-        { ref: 'passwordrepeat', placeholder: '请再次确认密码', placeholderTextColor: '#484848', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填'},
+        { ref: 'passwordold', placeholder: '请输入原始密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填'},
+        { ref: 'passwordnew', placeholder: '请您设置新密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填'},
+        { ref: 'passwordrepeat', placeholder: '请再次确认密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填'},
     ];
     return(
       <View>

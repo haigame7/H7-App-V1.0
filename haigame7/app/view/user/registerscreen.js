@@ -12,7 +12,7 @@ import React, {
   TextInput,
   Alert,
   Navigator,
-  ToastAndroid
+  Platform
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -108,8 +108,8 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'phone', placeholder: '手机号', keyboardType: 'numeric',placeholderTextColor: 'white', underlineColorAndroid: 'rgba(0, 0, 0, 0)', message: '* 手机号必填', style: [styles.logininputfont]},
-      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'numeric',placeholderTextColor: 'white', underlineColorAndroid: 'rgba(0, 0, 0, 0)', message: '* 验证码必填', style: [styles.logininputfont]}
+      {ref: 'phone', placeholder: '手机号', keyboardType: 'numeric',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', message: '* 手机号必填', style: [styles.logininputfont]},
+      {ref: 'securitycode', placeholder: '验证码',keyboardType: 'numeric',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', message: '* 验证码必填', style: [styles.logininputfont]}
     ]
     var codebtn;
     if (this.state.isToushable) {
