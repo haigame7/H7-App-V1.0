@@ -4,11 +4,11 @@ import React, {
   Component,
   StyleSheet,
   Text,
+  Linking,
   View,
   ScrollView,
   Navigator,
   Image,
-  ToastAndroid,
   TouchableOpacity
 } from 'react-native';
 
@@ -16,6 +16,7 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Header from '../common/headernav'; //导航有问题
 import Help from './help_screen';
+import Toast from '@remobile/react-native-toast';
 var Icon = require('react-native-vector-icons/Iconfont');
 export default class extends React.Component {
   constructor(props){
@@ -24,16 +25,19 @@ export default class extends React.Component {
   }
 
   _help() {
-    ToastAndroid.show('帮助反馈',ToastAndroid.SHORT);
+    Toast.show('帮助反馈');
   }
   _update() {
     ToastAndroid.show('检查版本更新',ToastAndroid.SHORT);
   }
   _website() {
-    ToastAndroid.show('访问官网',ToastAndroid.SHORT);
+    Toast.show('正在建设...');
+    return;
+    let url = "http://sso.haigame7.com";
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
   }
   _userAgreement() {
-    ToastAndroid.show('用户协议',ToastAndroid.SHORT);
+    Toast.show('用户协议');
   }
   _toNextScreen(params){
      // Toast.show("this is a message")
@@ -57,12 +61,13 @@ export default class extends React.Component {
               <Image style = {{width: 80, height: 80, }} source = { require('../../images/logo.png') }/>
             </View>
             <View style={styles.abouttext}>
-              <Text style={commonstyle.cream}>        今大可乐手机初期作为小众手机，圈了一批忠实用户。在2014年12月9日进行的京东众筹中，更是以25分钟1650万的金额刷新国内众筹的最高金额纪录和最快速度纪录。</Text>
-              <Text style={commonstyle.cream}>        众筹会的一个亮点是“免费”模式，大可乐采用了“一次众筹 终身免费换新”的方式，开创了行业首个免费模式：一万名参与众筹的用户，将实现每年一次免费换新机，并参与大可乐今后每款旗舰产品的打造，可谓一“筹”成名。借力京东金融众筹的平台，和“免费”换机的噱头，大可乐手机成功吸引了大批消费者的关注。不过此次众筹看起来更像是一次手机的预售营销活动。</Text>
-              <Text style={commonstyle.cream}>        以众筹的名义，借免费换新的由头，让消费者们提前预付。</Text>
-              <Text style={commonstyle.cream}>        今大可乐手机初期作为小众手机，圈了一批忠实用户。在2014年12月9日进行的京东众筹中，更是以25分钟1650万的金额刷新国内众筹的最高金额纪录和最快速度纪录。</Text>
-              <Text style={commonstyle.cream}>        众筹会的一个亮点是“免费”模式，大可乐采用了“一次众筹 终身免费换新”的方式，开创了行业首个免费模式：一万名参与众筹的用户，将实现每年一次免费换新机，并参与大可乐今后每款旗舰产品的打造，可谓一“筹”成名。借力京东金融众筹的平台，和“免费”换机的噱头，大可乐手机成功吸引了大批消费者的关注。不过此次众筹看起来更像是一次手机的预售营销活动。</Text>
-              <Text style={commonstyle.cream}>        以众筹的名义，借免费换新的由头，让消费者们提前预付。</Text>
+              <Text style={commonstyle.cream}>        氦7互娱，以不分等级、不看背景、全民电竞、全民娱乐为宗旨，力争打造全国最优秀的非职业电子竞技约战平台。为广大电子竞技爱好者提供一个全新的以促进电竞社交、分享电竞经验、提高电竞水平为目的的互动交流平台。</Text>
+              <Text style={commonstyle.cream}>        氦7互娱以草根电竞、全民电竞的理念为基础，致力为中国电竞崛起做贡献，为中国职业电竞输送人才，传播电竞正能量。</Text>
+              <Text style={commonstyle.cream}>        氦7互娱始终坚持以“诚信、创新、沟通”为团队宗旨，服务于中国电子竞技行业。奉行“质量第一，信誉第一”的原则。开拓创新，积极进取，做中国最好的电子竞技约战平台。</Text>
+              <Text style={commonstyle.cream}>        氦7互娱更是会不定期的举办各种赛事。最专业、最权威，是我们的比赛理念。</Text>
+              <Text style={commonstyle.cream}>        电竞已经成为时尚，电竞已经成为风向。热爱电竞执着电竞的玩家，氦7互娱将帮助你完成梦想，实现价值！</Text>
+              <Text style={commonstyle.cream}>        如果你对我们感兴趣，也是热爱电竞的小伙伴，可以联系我们。</Text>
+              <Text style={commonstyle.cream}>        我们的联系方式：yoyo.liu@haigame7.com</Text>
             </View>
 
             <View style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]}></View>
@@ -71,11 +76,7 @@ export default class extends React.Component {
               <View style={styles.listviewtextbox} ></View>
               <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]} activeOpacity={0.8}  onPress={this._update.bind(null,this)}>
-              <Text style={styles.listviewtextleft}>检查版本更新</Text>
-              <View style={styles.listviewtextbox} ></View>
-              <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
-            </TouchableOpacity>
+
 
             <View style={commonstyle.row}>
               <TouchableOpacity style={styles.aboutbtn} onPress={this._website.bind(null,this)}>

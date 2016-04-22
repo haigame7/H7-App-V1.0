@@ -178,8 +178,9 @@ import User from './user.js';
         });
       }else{
         if (name == 'teamrecruit') {
+          console.log(this.props);
             if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-                this.props.navigator.push({ name: name, component: TeamRecruit,params:{'teamid':params.teamid,'teamrecruit':params.teamrecruit,'callback':this.initData.bind(this)},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+                this.props.navigator.push({ name: name, component: TeamRecruit,params:{'teamid':params.teamid,'teamrecruit':params.teamrecruit,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
             }
         } else if (name == 'playerinfo') {
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {

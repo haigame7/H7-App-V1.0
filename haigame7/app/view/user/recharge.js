@@ -18,7 +18,8 @@ var {
   Alert,
   Platform,
   DeviceEventEmitter,
-  NativeAppEventEmitter
+  NativeAppEventEmitter,
+  ToastAndroid
 } = React;
 
 import commonstyle from '../../styles/commonstyle';
@@ -51,8 +52,8 @@ export default class extends Component{
       isWXAppSupportApi: true
     }
   }
-
   componentWillMount() {
+    let _this = this
     if (Platform.OS == 'android') {
       WeChatAndroid.registerApp(appId,(err,registerOK) => {
           // Toast.show(registerOK + '',Toast.SHORT);
@@ -65,27 +66,25 @@ export default class extends Component{
       //  处理支付回调结果
       DeviceEventEmitter.addListener('finishedPay',function(res){
        var success = res.success;
-       console.log(res);//errCode
        if(success){
         // 在此发起网络请求由服务器验证是否真正支付成功，然后做出相应的处理
 
        }else{
          if(res.errCode == 0) {
-           Toast.show('充值成功' + '',Toast.SHORT);
+           ToastAndroid.show('充值成功' + '',Toast.SHORT);
          } else if(res.errCode == -1) {
-           Toast.show('支付失败,请稍后尝试' + '',Toast.SHORT);
-           this._rechargeFail()
+           ToastAndroid.show('支付失败,请稍后尝试' + '',Toast.SHORT);
+           _this._rechargeFail()
          } else if(res.errCode == -2) {
-           console.log("充值取消");
-           Toast.show('支付取消' + '',Toast.SHORT);
-           this._rechargeFail()
+          //  Toast.show('支付取消' + '',Toast.SHORT);
+          // 这里不能用Toast不显示，如果要用需要额外写个方法，
+           ToastAndroid.show('支付取消', ToastAndroid.SHORT)
+           _this._rechargeFail()
          }
-        Toast.show('支付失败',Toast.SHORT);
        }
       });
     } else {
       WeChatIOS.registerApp(appId, (res) => {
-        console.log(res);
         if(res) {
           // Toast.show(res.toString())
           this.setState({registerWechat: true})
@@ -200,6 +199,7 @@ export default class extends Component{
   }
 
   _rechargeFail() {
+    // console.log("outTradeno==" + outTradeno);
     if(outTradeno != "") {
       AssertService.deleteAssetRecord(outTradeno,(response) => {
         // console.log(response[0].MessageCode);
@@ -265,7 +265,7 @@ export default class extends Component{
             });
           } else {
             WeChatIOS.weChatPay(payOptions,(res) => {
-              console.log(res);
+              // console.log(res);
               if(res) {
 
               } else {

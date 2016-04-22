@@ -18,7 +18,7 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         height: 48,
-        marginLeft: (Platform.OS === 'ios') ? 0 : 15,
+        marginLeft: (Platform.OS === 'ios') ? -10 : 15,
     },
     headertext: {
         justifyContent: 'center',
@@ -36,7 +36,7 @@ var CommonStyle = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
         height: 48,
-        marginRight: (Platform.OS === 'ios') ? 0 : 15,
+        marginRight: (Platform.OS === 'ios') ? -10 : 15,
     },
     headertextright: {
         fontSize: 14,
@@ -126,10 +126,13 @@ var CommonStyle = StyleSheet.create({
         borderRadius: 5,
     },
     modalbody: {
-        padding: 5,
-        marginTop: 5,
+        padding: 10,
+        marginTop: 10,
         marginBottom: 40,
         backgroundColor: '#1A1917',
+    },
+    modalbodybottom:{
+        paddingBottom: 70,
     },
     modaltext: {
         marginTop: 30,
@@ -320,6 +323,8 @@ var CommonStyle = StyleSheet.create({
         height: 22,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: 20,
+        paddingBottom: 30,
     },
     defaultview: {
         justifyContent: 'center',

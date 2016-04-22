@@ -18,6 +18,7 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 import Header from '../common/headernav';
 import Circle from './teamuseranimated';
+import TeamUser from './teamuser_show_screen';
 
 
 export default class extends React.Component {
@@ -27,7 +28,7 @@ export default class extends React.Component {
   constructor(props: any){
     super(props);
     var keys = [];
-    for (var idx = 0; idx < this.props.teamData.TeamUserPicture.length; idx++) {
+    for (var idx = 0; idx < this.props.teamData.TeamUser.length; idx++) {
       keys.push(idx);
     }
     this.state = {
@@ -59,13 +60,12 @@ export default class extends React.Component {
   _toNextScreen(params){
     let _this = this;
     this.props.navigator.push({
-      name: params.name,
-      component: params.component,
+      name:'个人信息',
+      component: TeamUser,
       sceneConfig:params.sceneConfig || undefined,
       params: {
         ...this.props,
         ...params,
-        teamData:this.state.teamData,
         }
     })
   }
@@ -74,7 +74,7 @@ export default class extends React.Component {
    var circles =  this.state.keys.map((key, idx) => {
       if (key === this.state.activeKey) {
         return (
-          <Circle key={key + 'd'} {...this.props} toggleActive={this._toNextScreen.bind(this)} teamUser={this.props.teamData.TeamUserPicture[idx]} dummy={true} />
+          <Circle key={key + 'd'} {...this.props} toggleActive={this._toNextScreen.bind(this,{'teamuser':this.props.teamData.TeamUser[idx]})} teamUser={this.props.teamData.TeamUser[idx]} dummy={true} />
       );
       } else {
         if (!this.state.restLayouts[idx]) {
@@ -90,8 +90,8 @@ export default class extends React.Component {
           <Circle
             key={key}
             id={key}
-            teamUser={this.props.teamData.TeamUserPicture[idx]}
-            toggleActive={this._toNextScreen.bind(this)}
+            teamUser={this.props.teamData.TeamUser[idx]}
+            toggleActive={this._toNextScreen.bind(this,{'teamuser':this.props.teamData.TeamUser[idx]})}
             openVal={this.state.openVal}
             {...this.props}
             onLayout={onLayout}
