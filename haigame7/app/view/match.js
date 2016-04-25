@@ -163,7 +163,7 @@ export default class extends Component{
        });
     }
     getGuessList(){
-      {/*请求赛事信息*/}
+      {/*请求竞猜列表*/}
        GuessService.getGuessList((response) => {
          if (response !== GlobalSetup.REQUEST_SUCCESS) {
            if(response[0].MessageCode == '40001'){

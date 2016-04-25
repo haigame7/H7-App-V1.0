@@ -55,7 +55,7 @@ var User = React.createClass({
       modalOpen:false,
       teamData:{},
       hjData: {'totalAsset': 0,'myRank': 1},
-      fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":1,"CertifyName":""}
+      fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":0,"CertifyName":""}
     };
   },
   componentWillReceiveProps(nextProps,nextState) {
@@ -107,7 +107,7 @@ var User = React.createClass({
       if (response[0].MessageCode == '0' || response[0].MessageCode == '10008') {
         if(response[0].MessageCode == '10008') {
           // console.log(response[0].Message);
-          this.setState({fightData: {"UserID":64,"GameID":"173032376","GamePower":"无数据","CertifyState":1,"CertifyName":"氦七G9SJkIJQ8l+uZP4BJEVZ+aHEtLY="}})
+          // this.setState({fightData: {"UserID":64,"GameID":"173032376","GamePower":"无数据","CertifyState":1,"CertifyName":"氦七G9SJkIJQ8l+uZP4BJEVZ+aHEtLY="}})
         } else {
           let data = {"UserID":response[1].UserID,"GameID":response[1].GameID,"GamePower":response[1].GamePower,"CertifyState":response[1].CertifyState,"CertifyName":response[1].CertifyName};
           // console.log(data);
@@ -115,7 +115,7 @@ var User = React.createClass({
         }
       } else {
         console.log('获取用户数据失败' + response[0].Message);
-        Alert.alert(response[0].Message);
+        Toast.show(response[0].Message);
       }
     })
   },
