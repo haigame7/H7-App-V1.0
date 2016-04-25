@@ -260,7 +260,7 @@ export default class extends Component{
           Toast.show('请求错误');
         }
       });
-      MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userdata.userteamid},(response2) => {
+      MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userdata.userteamid,phonenumber:this.state.userphone},(response2) => {
         if (response2 !== GlobalSetup.REQUEST_SUCCESS) {
           if(response2[0].MessageCode == '50001'){
             this.setState({
