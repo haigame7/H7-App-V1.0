@@ -13,7 +13,7 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 
-import Header from '../common/headernav'; 
+import Header from '../common/headernav';
 import Icon from 'react-native-vector-icons/Iconfont';
 import UserService from '../../network/userservice';
 import Toast from '@remobile/react-native-toast';
@@ -45,7 +45,7 @@ componentWillMount() {
     })
   } else if(this.state.fightData.CertifyState == '2') {
     this.setState({
-      btn_msg: '认证中',
+      btn_msg: '认证中...',
       data:{
         dota2id: this.state.fightData.GameID,
         certifyid: this.state.fightData.CertifyName,
@@ -73,6 +73,9 @@ componentWillMount() {
 componentWillUnmount() {
   this.timer && clearTimeout(this.timer);
 }
+componentWillUnmount() {
+  this.timer && clearTimeout(this.timer);
+}
 gotoCertify(numberID,argument) {
   if(this.state.loading){
     Toast.show('认证已提交，无需重复提交！');
@@ -92,11 +95,14 @@ gotoCertify(numberID,argument) {
           data['certifyid'] = response[0].Message;
           this.setState({
             data: data,
-            btn_msg: '认证中',
+            btn_msg: '认证中...',
             resultStr: '认证中...',
             loading: true,
           })
-          Toast.show('申请已经发出,请等待');
+          this.timer = setTimeout(()=>{
+            this.props._callback('Usercertify');
+            Toast.show('申请已经发出,请等待');
+          },1000);
         } else {
           console.log('认证失败');
           Toast.show('认证失败');
@@ -109,11 +115,15 @@ gotoCertify(numberID,argument) {
         data['certifyid'] = response[0].Message;
         this.setState({
           data: data,
-          btn_msg: '认证中',
+          btn_msg: '认证中...',
           resultStr: '认证中...',
           loading: true,
         })
-        Toast.show('申请已经发出,请等待');
+        this.timer = setTimeout(()=>{
+          this.props._callback('Usercertify');
+          Toast.show('申请已经发出,请等待');
+        },1000);
+
       } else {
         console.log('认证失败');
         Toast.show('认证失败');
