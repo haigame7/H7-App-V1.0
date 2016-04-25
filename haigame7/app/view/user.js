@@ -66,7 +66,7 @@ var User = React.createClass({
    }
   },
   componentDidMount() {
-    // console.log("555555555");
+    console.log("555555555");
     this.setState({
       isOpen: true
     })
@@ -120,10 +120,13 @@ var User = React.createClass({
       }
     })
   },
-  getUserTeamInfo(phoneNum) {
-    TeamService.getUserDefaultTeam(phoneNum,(response) => {
+  getUserTeamInfo(creatUserID) {
+    TeamService.getUserDefaultTeam(creatUserID,(response) => {
+      // console.log(creatUserID);
       if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
-              this.setState({teamData: response[1]});
+        // console.log(getUserTeamInfo);
+        // console.log(response[1]);
+        this.setState({teamData: response[1]});
       }else{
         console.log('请求错误' + response[0].Message);
         this.setState({teamData:{}});
