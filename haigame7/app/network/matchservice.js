@@ -65,6 +65,24 @@ export default{
         callback
       );
   },
+  /*取消报名*/
+  quitMatch(data,callback){
+    /**
+     * @param  {[type]}   {'MatchID':matchid}             [params]
+     * @param  {Function} callback
+     * @return response content {MessageCode: 0, Message: ""}                       [回调方法]
+     */
+      FecthService.postFecth(
+        ApiConfig.MATCH_API.QUITMATCH,
+        {
+          'MatchID':data.matchID,
+          'BoboID':data.boboID,
+          'TeamID':data.teamID,
+          'PhoneNumber':data.phone,
+        },
+        callback
+      );
+  },
   /*我的报名赛事*/
   myJoinMatch(data,callback){
     /**
