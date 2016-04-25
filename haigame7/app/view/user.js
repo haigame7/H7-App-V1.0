@@ -66,6 +66,7 @@ var User = React.createClass({
    }
   },
   componentDidMount() {
+    // console.log("555555555");
     this.setState({
       isOpen: true
     })
@@ -179,11 +180,11 @@ var User = React.createClass({
               });
             break;
           case 'Usercertify':
-              console.log('认证回调');
+              // console.log('认证回调');
               _this.getUserGameInfo(_this.state.userData.PhoneNumber)
             break;
           case 'MyMsg':
-              console.log('消息回调');
+              // console.log('消息回调');
               _this.getUserMessage(_this.state.userData.UserID)
             break;
           case 'TeamInfo':
