@@ -162,12 +162,15 @@ export default class extends Component {
           switch (key) {
             case '昵称':
               UserService.updateUserInfo({"PhoneNumber":_this.state.userData.PhoneNumber,'UserWebNickName':pro},(response) => {
+                // console.log(response[0].MessageCode);
                 if(response[0].MessageCode == '0') {
                   udata['UserWebNickName'] = pro
                   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(udata));
+                } else if(response[0].MessageCode == '10007') {
+                  Toast.show('昵称已经存在，换个呗:)');
                 } else {
                   console.log('更新失败');
-                  Alert.alert(response[0].Message);
+                  Toast.show('更新失败');
                 }
               })
               break;
