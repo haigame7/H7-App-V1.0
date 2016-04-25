@@ -266,6 +266,7 @@ export default class extends Component{
             this.setState({
               isOpen: true,
               modaData:rowData,
+              jointeam: '',
             });
           }else if(response2[0].MessageCode == '0'){
             this.setState({
@@ -362,9 +363,6 @@ export default class extends Component{
         params:{'userData':this.state.content.userData,'openmodal':true},
         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
-    }
-    else if(params.jointeam!==''){
-      Toast.showLongCenter('您已报名'+params.jointeam+'!');
     }else{
       MatchService.joinMatch(params,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -434,7 +432,7 @@ export default class extends Component{
           </ScrollView>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone})} >{this.state.jointeam==''?'报名参赛':'取消报名'}</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone})} >{this.state.jointeam==''?'报名参赛':'取消报名'}</Button>
           </View>
         </Modal>
       );
