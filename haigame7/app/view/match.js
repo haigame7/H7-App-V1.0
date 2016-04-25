@@ -434,7 +434,7 @@ export default class extends Component{
           </ScrollView>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone})} >{this.state.jointeam==''?'报名参赛':'取消报名'}{this.state.modaData.MatchID}{this.state.modaData.BoBoID}{this.state.userdata.userteamid}{this.state.userphone}</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone})} >{this.state.jointeam==''?'报名参赛':'取消报名'}</Button>
           </View>
         </Modal>
       );
