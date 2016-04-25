@@ -183,7 +183,7 @@
 		12E2D73286004D48883E6A9F /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* haigame7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = haigame7.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* H71.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = H71.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = haigame7/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = haigame7/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = haigame7/Images.xcassets; sourceTree = "<group>"; };
@@ -478,7 +478,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* haigame7.app */,
+				13B07F961A680F5B00A75B9A /* H71.0.app */,
 				00E356EE1AD99517003FC87E /* haigame7Tests.xctest */,
 			);
 			name = Products;
@@ -520,7 +520,7 @@
 			);
 			name = haigame7;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* haigame7.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* H71.0.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -885,8 +885,8 @@
 				INFOPLIST_FILE = haigame7/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios0.1;
-				PRODUCT_NAME = haigame7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios1.0;
+				PRODUCT_NAME = H71.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -909,8 +909,8 @@
 				INFOPLIST_FILE = haigame7/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios0.1;
-				PRODUCT_NAME = haigame7;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios1.0;
+				PRODUCT_NAME = H71.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
