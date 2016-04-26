@@ -113,7 +113,6 @@ export default class extends React.Component {
     );
   }
   _onLoadMore() {
-
     if (this.state.keykey > 0) {
       this.setState({
         footerMsg: "木有更多数据了..."
@@ -132,23 +131,26 @@ export default class extends React.Component {
           if(nextData.length<5){
             this.setState({
               keykey:1,
+              footerMsg: "木有更多数据了...",
             });
-          }
+          }else{
+            this.setState({
+              footerMsg: "点击加载更多",
+            });
+          };
           for(var item in nextData){
             _ds.push(nextData[item])
           }
+          setTimeout(()=>{
+            this.setState({
+              dataSource: this.state.dataSource.cloneWithRows(_ds),
+              loaded: true,
+            });
+          },1000);
         } else {
           console.log('请求错误' + response[0].MessageCide);
         }
       });
-      //这等到有api在搞吧
-      setTimeout(()=>{
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(_ds),
-          loaded: true,
-          footerMsg: "点击加载更多",
-        });
-      },1000);
     }
 
   }
