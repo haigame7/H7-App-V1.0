@@ -52,10 +52,10 @@ var UserMatchList = React.createClass({
               <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
             </View>
           </View>
-          <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.EndTime}</Text></View>
-          <TouchableOpacity activeOpacity={0.8}  onPress = {this.gotoRoute.bind(this,{"name":"matchdetail","matchID":this.props.rowData.MatchID})}>
+          <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.EndTime.toString().substr(0, 10)}</Text></View>
+          <View style={styles.schedulelisttime} activeOpacity={0.8} onPress = {this.gotoRoute.bind(this,{"name":"matchdetail","matchID":this.props.rowData.MatchID})}>
             <Text style={commonstyle.red}>查看详情</Text>
-          </TouchableOpacity>
+          </View>
         </View>
       );
     }else if(this.props.rowData.Result=='客队胜'){
@@ -72,7 +72,10 @@ var UserMatchList = React.createClass({
               <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
             </View>
           </View>
-          <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.EndTime}</Text></View>
+          <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.EndTime.toString().substr(0, 10)}</Text></View>
+          <View style={styles.schedulelisttime} activeOpacity={0.8}  onPress = {this.gotoRoute.bind(this,{"name":"matchdetail","matchID":this.props.rowData.MatchID})}>
+            <Text style={commonstyle.red}>查看详情</Text>
+          </View>
         </View>
       );
     }else{
@@ -83,7 +86,7 @@ var UserMatchList = React.createClass({
               <Text style={[commonstyle.gray, commonstyle.fontsize18]}>{'VS'}</Text>
             </View>
           </View>
-          <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'未开始'}</Text></View>
+          <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.Result}</Text><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.EndTime.toString().substr(0, 10)}</Text></View>
         </View>
       );
     }
