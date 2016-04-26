@@ -66,7 +66,7 @@ var User = React.createClass({
    }
   },
   componentDidMount() {
-    console.log("555555555");
+    // console.log("555555555");
     this.setState({
       isOpen: true
     })

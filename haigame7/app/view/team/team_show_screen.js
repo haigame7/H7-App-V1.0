@@ -57,7 +57,7 @@ export default class extends React.Component {
   componentWillMount(){
     this.initData(0);
   }
-  initData(flag){
+  _getAllMyTeam(){
     let requestData = {'userID':this.props.userData.UserID};
     TeamService.getAllMyTeam(requestData,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -65,7 +65,6 @@ export default class extends React.Component {
            Toast.show('服务器请求异常');
          }else if(response[0].MessageCode == '0'){
            let newData = response[1];
-
            this.setState({
              myTeamDataSource: this.state.myTeamDataSource.cloneWithRows(newData),
              myTeams:newData,
@@ -75,34 +74,35 @@ export default class extends React.Component {
             Toast.show('请求错误');
         }
       });
-      if(flag==0){
-        this.setState({
-          navigator: this.props.navigator,
-          teamData:this.props.teamData,
-          userData:this.props.userData,
-          navbar:this.props.teamData.TeamID,
-        });
-      }
-      else{
-        TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
-          if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
-                this.setState({
-                navigator: this.props.navigator,
-                teamData: response[1],
-                userData:this.props.userData,
-                navbar:response[1].TeamID,
-                });
-          }else{
-            console.log('请求错误' + response[0].Message);
-          }
-        });
-      }
-
-      if (this.state.role != 'captain') {
-        this.setState({
-          iconText: undefined,
-        });
-      }
+  }
+  initData(flag){
+    this._getAllMyTeam()
+    if(flag==0){
+      this.setState({
+        navigator: this.props.navigator,
+        teamData:this.props.teamData,
+        userData:this.props.userData,
+        navbar:this.props.teamData.TeamID,
+      });
+    } else {
+      TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
+        if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
+              this.setState({
+              navigator: this.props.navigator,
+              teamData: response[1],
+              userData:this.props.userData,
+              navbar:response[1].TeamID,
+              });
+        }else{
+          console.log('请求错误' + response[0].Message);
+        }
+      });
+    }
+    if (this.state.role != 'captain') {
+      this.setState({
+        iconText: undefined,
+      });
+    }
   }
 
   _callback() {
