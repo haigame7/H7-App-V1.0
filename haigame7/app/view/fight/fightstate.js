@@ -116,7 +116,7 @@ export default class extends React.Component {
 
     if (this.state.keykey > 0) {
       this.setState({
-        footerMsg: "木有更多多数据了~~~~"
+        footerMsg: "木有更多数据了..."
       });
     }else{
       let _ds = this.state.db;

@@ -406,11 +406,11 @@ import User from './user.js';
   _onLoadMore(param,data) {
     if (this.state.keyone > 0 &&param.state==0) {
       this.setState({
-        footerOneMsg: "木有更多多数据了~~~~"
+        footerOneMsg: "木有更多数据了..."
       });
     }else if(this.state.keytwo>0 &&param.state==1){
       this.setState({
-        footerTwoMsg: "木有更多多数据了~~~~"
+        footerTwoMsg: "木有更多数据了..."
       });
     }else{
       let _ds = data;
@@ -445,12 +445,12 @@ import User from './user.js';
       if(nextData.length<5&&state==0){
         this.setState({
           keyone:1,
-          footerOneMsg: "木有更多多数据了~~~~",
+          footerOneMsg: "木有更多数据了...",
         });
       }else if(nextData.length<5&&state==1){
         this.setState({
           keytwo:1,
-          footerTwoMsg: "木有更多多数据了~~~~",
+          footerTwoMsg: "木有更多数据了...",
         });
       }
      if(nextData.length==0){

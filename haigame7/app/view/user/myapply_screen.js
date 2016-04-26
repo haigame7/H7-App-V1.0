@@ -104,7 +104,7 @@ export default class extends React.Component {
   _onLoadMore() {
     if (this.state.keykey > 0) {
       this.setState({
-        footerMsg: "木有更多多数据了~~~~"
+        footerMsg: "木有更多数据了..."
       });
     }else{
       let _ds = this.state.myapplyList;
@@ -120,7 +120,7 @@ export default class extends React.Component {
           if(nextData.length<3){
             this.setState({
               keykey:1,
-              footerMsg: "木有更多多数据了~~~~"
+              footerMsg: "木有更多数据了..."
             });
           }
           for(var item in nextData){

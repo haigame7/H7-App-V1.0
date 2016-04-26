@@ -164,11 +164,11 @@ export default class extends Component{
   _onLoadMore(param,data) {
     if (this.state.keyone > 0 &&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend) {
       this.setState({
-        footerOneMsg: "木有更多多数据了~~~~"
+        footerOneMsg: "木有更多数据了..."
       });
     }else if(this.state.keytwo>0 &&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
       this.setState({
-        footerTwoMsg: "木有更多多数据了~~~~"
+        footerTwoMsg: "木有更多数据了..."
       });
     }else{
       let _ds = data;
@@ -190,12 +190,12 @@ export default class extends Component{
           if(nextData.length<5&&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
             this.setState({
               keyone:1,
-              footerOneMsg: "木有更多多数据了~~~~"
+              footerOneMsg: "木有更多数据了..."
             });
           }else if(nextData.length<5&&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
             this.setState({
               keytwo:1,
-              footerTwoMsg: "木有更多多数据了~~~~"
+              footerTwoMsg: "木有更多数据了..."
             });
           }
           if(nextData.length==0){
