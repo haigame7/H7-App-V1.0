@@ -41,7 +41,6 @@ var CommonStyle = StyleSheet.create({
     headertextright: {
         fontSize: 14,
         color: '#fff',
-        right: 10,
     },
     bodyer: {
         height: (Platform.OS === 'ios') ? Util.size.height - 64 : Util.size.height - 48,

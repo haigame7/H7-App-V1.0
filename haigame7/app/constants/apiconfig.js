@@ -46,6 +46,7 @@ const matchApi = {
   'GETBOBOLIST':apiSetup.MASTER_API_PATH +'v1/Match/BoBoList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'GETBOBOCOUNT':apiSetup.MASTER_API_PATH +'v1/Match/BoBoCount?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'JOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/JoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'QUITMATCH':apiSetup.MASTER_API_PATH +'v1/Match/QuitMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYJOINMATCH':apiSetup.MASTER_API_PATH +'v1/Match/MyJoinMatch?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MYMATCHLIST':apiSetup.MASTER_API_PATH +'v1/Match/MyMatchList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'MATCHDATELIST':apiSetup.MASTER_API_PATH +'v1/Match/MatchDateList?accesstoken='+ apiSetup.ACCESS_TOKEN,
