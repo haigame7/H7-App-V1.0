@@ -153,7 +153,7 @@ export default class extends Component{
   _onLoadTeam(param,data) {
     if (this.state.keyone > 0) {
       this.setState({
-        footerOneMsg: "木有更多数据了~~~~",
+        footerOneMsg: "木有更多数据了...",
       });
     }else{
       let _ds = data;
@@ -169,7 +169,7 @@ export default class extends Component{
           if(nextData.length<1){
             this.setState({
               keyone:1,
-              footerOneMsg: "木有更多数据了~~~~",
+              footerOneMsg: "木有更多数据了...",
             });
           }else{
             for(var item in nextData){
@@ -194,7 +194,7 @@ export default class extends Component{
   _onLoadUser(param,data) {
     if (this.state.keytwo > 0) {
       this.setState({
-        footerTwoMsg: "木有更多数据了~~~~",
+        footerTwoMsg: "木有更多数据了...",
       });
     }else{
       let _ds = data;
@@ -210,7 +210,7 @@ export default class extends Component{
           if(nextData.length<1){
             this.setState({
               keytwo:1,
-              footerTwoMsg: "木有更多数据了~~~~",
+              footerTwoMsg: "木有更多数据了...",
             });
           }else{
             for(var item in nextData){

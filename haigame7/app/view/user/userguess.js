@@ -135,7 +135,7 @@ export default class extends Component{
   _onLoadMore() {
     if (this.state.keykey > 0) {
       this.setState({
-        footerMsg: "木有更多多数据了~~~~"
+        footerMsg: "木有更多数据了..."
       });
     }else{
       let _ds = this.state.dataguess;
@@ -151,7 +151,7 @@ export default class extends Component{
           if(nextData.length<1){
             this.setState({
               keykey:1,
-              footerMsg: "木有更多多数据了~~~~",
+              footerMsg: "木有更多数据了...",
             });
           }else{
             for(var item in nextData){

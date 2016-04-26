@@ -394,7 +394,7 @@ export default class extends Component{
   _onLoadMore() {
     if (this.state.keykey > 0) {
       this.setState({
-        footerMsg: "木有更多多数据了~~~~"
+        footerMsg: "木有更多数据了..."
       });
     }else{
       let _ds = this.state.teamlist;
@@ -415,7 +415,7 @@ export default class extends Component{
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(_ds),
                 loaded: true,
-                footerMsg: "木有更多多数据了~~~~",
+                footerMsg: "木有更多数据了...",
               });
             },1000);
           }else{

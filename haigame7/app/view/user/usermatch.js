@@ -158,11 +158,11 @@ export default class extends Component{
   _onLoadMore(param,data) {
     if (this.state.keyone > 0 &&param.state==GlobalVariable.MATCH_INFO.Starting) {
       this.setState({
-        footerOneMsg: "木有更多数据了~~~~",
+        footerOneMsg: "木有更多数据了...",
       });
     }else if(this.state.keytwo>0 &&param.state==GlobalVariable.MATCH_INFO.NoStart){
       this.setState({
-        footerTwoMsg: "木有更多数据了~~~~",
+        footerTwoMsg: "木有更多数据了...",
       });
     }else{
       let _ds = data;
@@ -184,12 +184,12 @@ export default class extends Component{
           if(nextData.length<5&&param.state==GlobalVariable.MATCH_INFO.Starting){
             this.setState({
               keyone:1,
-              footerOneMsg: "木有更多数据了~~~~",
+              footerOneMsg: "木有更多数据了...",
             });
           }else if(nextData.length<5&&param.state==GlobalVariable.MATCH_INFO.NoStart){
             this.setState({
               keytwo:1,
-              footerTwoMsg: "木有更多数据了~~~~",
+              footerTwoMsg: "木有更多数据了...",
             });
           }else{
             for(var item in nextData){
