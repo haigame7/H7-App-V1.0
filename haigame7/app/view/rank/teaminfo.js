@@ -47,7 +47,7 @@ export default class extends Component{
       return that.renderUserImageItem(that.state.teaminfo.UserImage[item],key);
     });
     var total = this.state.teaminfo.WinCount + this.state.teaminfo.LoseCount;
-    var winning = this.state.teaminfo.WinCount/total*100;
+    var winning = (this.state.teaminfo.WinCount/total*100).toString().substr(0, 2);
 
     return (
       <View>

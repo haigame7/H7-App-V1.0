@@ -195,17 +195,17 @@ export default class extends Component{
     let type = /^[0-9]*[1-9][0-9]*$/;
     let re = new RegExp(type);
     if (text.match(re) == null) {
-      return
+      var money = 0;
     }else{
       var money = parseInt(text);
-      this.setState({
-        guessmoney:money,
-        hjEarnData:{
-          totalAsset:this.state.hjData.totalAsset-money,
-          totalEarnAsset:money*this.state.modaData.guessodd,
-        },
-      });
     }
+    this.setState({
+      guessmoney:money,
+      hjEarnData:{
+        totalAsset:this.state.hjData.totalAsset-money,
+        totalEarnAsset:money*this.state.modaData.guessodd,
+      },
+    });
     this.state.guessmoney = text
   }
   getBoBoList(matchdata){
