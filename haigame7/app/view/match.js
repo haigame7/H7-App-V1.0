@@ -300,6 +300,16 @@ export default class extends Component{
   }
   _closeModa() {
     this.setState({isOpen: false});
+    if(this.state.navbar==1){
+      let money = 0;
+      this.setState({
+        guessmoney:money,
+        hjEarnData:{
+          totalAsset:this.state.hjData.totalAsset-money,
+          totalEarnAsset:money*this.state.modaData.guessodd,
+        },
+      });
+    };
   }
   _doBet(params){
     if(this.state.content.userData.UserID==undefined){
