@@ -44,13 +44,21 @@ export default class extends Component{
     }
   }
     gotoRecharge(name) {
-      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
-        this.props.navigator.push({
-          name: name,
-          component: Recharge,
-          params:{
-            ...this.props,
-          }});
+      this.props.navigator.push({
+        name: name,
+        component: Recharge,
+        params:{
+          ...this.props,
+        _userAssetCallback: this._userAssetCallback.bind(this)
+        }});
+    }
+    _userAssetCallback(key,params){
+      switch (key) {
+        case 'TotalAssertAndRank':
+          this._getTotalAssertAndRank()
+          this.props._callback('TotalAssertAndRank') //回调user的callback方法
+          this._fetchAssertList()
+          break;
       }
     }
     _onRefresh() {
@@ -73,6 +81,12 @@ export default class extends Component{
       }
   }
   componentDidMount() {
+    this._fetchAssertList()
+  }
+
+  componentWillReceiveProps(nextProps){
+  }
+  _fetchAssertList(){
     AssertService.fetchAssertList(this.state.userData.PhoneNumber,(response) => {
       // console.log(response[0].MessageCode);
       if (response[0].MessageCode == '0') {
@@ -87,6 +101,19 @@ export default class extends Component{
         this.setState({isOpen: false})
       }
     });
+  }
+  _getTotalAssertAndRank() {
+    AssertService.getTotalAssertAndRank(this.props.userData.PhoneNumber,(response) => {
+      // console.log(response);
+      if (response[0].MessageCode == '0') {
+        let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
+        this.setState({
+          hjData: data
+        });
+      } else {
+        console.log('请求错误' + response[0].Message);
+      }
+    })
   }
   _renderRow(rowData, sectionID, rowID) {
     return(
