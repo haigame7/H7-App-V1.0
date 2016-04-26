@@ -358,7 +358,7 @@ export default class extends React.Component {
                 <Text style={commonstyle.cream}>参赛场次  </Text>
                 <Text style={commonstyle.yellow}>{odddata.totalcount}场</Text>
                 <Text style={commonstyle.cream}>  胜率  </Text>
-                <Text style={commonstyle.red}>{odddata.odd.toString().substr(0, 5)}%</Text>
+                <Text style={commonstyle.red}>{Math.round(odddata.odd)}%</Text>
               </View>
             </View>
             <View style={styles.listview}>
