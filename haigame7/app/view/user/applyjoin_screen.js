@@ -156,7 +156,7 @@ export default class extends React.Component {
             _ds.push(nextData[item])
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+          Toast.show('请求错误' + response[0].Message);
         }
       });
       //这等到有api在搞吧
