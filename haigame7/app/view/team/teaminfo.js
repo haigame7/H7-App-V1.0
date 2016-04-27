@@ -75,7 +75,7 @@ export default class extends Component{
   }
   render(){
     var that = this;
-    if(that.state.teamData.TeamUser ==''){
+    if(that.state.teamData.TeamUser !='' && that.state.teamData.TeamUser != null){
       var userimage =Object.keys(that.state.teamData.TeamUser).map(function(item,key) {
         return that.renderUserImageItem(that.state.teamData.TeamUser[item],key);
       });
