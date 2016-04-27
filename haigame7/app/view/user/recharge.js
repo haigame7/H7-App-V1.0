@@ -54,7 +54,6 @@ export default class extends Component{
   }
   componentWillMount() {
     let _this = this
-    this.props._userAssetCallback('TotalAssertAndRank')
     if (Platform.OS == 'android') {
       WeChatAndroid.registerApp(appId,(err,registerOK) => {
           // Toast.show(registerOK + '',Toast.SHORT);
@@ -73,7 +72,7 @@ export default class extends Component{
        }else{
          if(res.errCode == 0) {
            ToastAndroid.show('充值成功' + '',Toast.SHORT);
-           _this.props._userAssetCallback('TotalAssertAndRank')
+           _this.props._userAssetCallback('TotalAssertAndRank',1)
          } else if(res.errCode == -1) {
            ToastAndroid.show('支付失败,请稍后尝试' + '',Toast.SHORT);
            _this._rechargeFail()
@@ -102,7 +101,7 @@ export default class extends Component{
           // console.log(res.errCode);
           if(res.errCode == 0) {
             Toast.show('充值成功' + '',Toast.SHORT);
-            _this.props._userAssetCallback('TotalAssertAndRank')
+            _this.props._userAssetCallback('TotalAssertAndRank',{'startPage':1})
           } else if(res.errCode == -1) {
             Toast.show('支付失败,请稍后尝试' + '',Toast.SHORT);
             this._rechargeFail()
@@ -277,7 +276,6 @@ export default class extends Component{
               Toast.show('');
             })
           }
-
         });
       } else {
         console.log("Looks like the response wasn't perfect, got status", res.status);

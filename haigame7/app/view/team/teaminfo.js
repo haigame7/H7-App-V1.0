@@ -51,6 +51,7 @@ export default class extends Component{
          Toast.show('成功发出申请');
       } else {
         console.log('请求错误' + response[0].MessageCide);
+        Toast.show('请求错误')
       }
     });
   }
