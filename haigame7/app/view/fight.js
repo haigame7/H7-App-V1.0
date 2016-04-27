@@ -162,7 +162,7 @@ export default class extends Component{
           teamlist:newData,
         });
       } else {
-        console.log('请求错误' + response[0].MessageCide);
+        Toast.show(response[0].Message);
       }
     });
       }
@@ -216,7 +216,7 @@ export default class extends Component{
         this.getTeamList(this.state.teamlistRequestData);
       }
       else {
-        Toast.show('请求错误');
+        Toast.show(response[0].Message);
         //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
       }
     });
@@ -432,7 +432,7 @@ export default class extends Component{
             },1000);
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+          Toast.show(response[0].Message);
         }
       });
     }

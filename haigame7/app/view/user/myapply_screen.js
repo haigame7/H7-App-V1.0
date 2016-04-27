@@ -58,7 +58,7 @@ export default class extends React.Component {
        });
      }
     }else{
-        Toast.show('请求错误');
+        Toast.show(response[0].Message);
     }
   });
  }
@@ -137,7 +137,7 @@ export default class extends React.Component {
             });
           },1000);
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+        Toast.show(response[0].Message);
         }
       });
     }

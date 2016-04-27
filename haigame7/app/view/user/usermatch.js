@@ -74,7 +74,7 @@ export default class extends Component{
         });
       }
       else {
-        console.log('请求错误' + response[0].MessageCode);
+        Toast.show(response[0].Message);
       }
     });
   }
@@ -89,7 +89,7 @@ export default class extends Component{
         });
       }
       else {
-        console.log('请求错误' + response[0].MessageCode);
+        Toast.show(response[0].Message);
       }
     });
   }
@@ -97,7 +97,6 @@ export default class extends Component{
     this.setState({isOpen: true});
   }
   _closeModa() {
-    console.log('******');
      this.setState({isOpen: false});
   }
   _switchNavbar(nav){
@@ -214,7 +213,7 @@ export default class extends Component{
             },1000);
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+          Toast.show(response[0].Message);
         }
       });
 

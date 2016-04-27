@@ -120,11 +120,9 @@ export default class extends Component {
         return response.json();
       })
       .then((responseData) => {
-        console.log(responseData);
         ToastAndroid.show(JSON.stringify(responseData), ToastAndroid.LONG);
       })
       .catch((error) => {
-        console.log(error);
         ToastAndroid.show(String(error).replace('Error: ',''), ToastAndroid.LONG);
       })
       .done(() => {

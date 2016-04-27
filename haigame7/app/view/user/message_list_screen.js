@@ -55,7 +55,7 @@ export default class extends React.Component {
           loaded: true,
         });
       } else {
-        console.log('请求错误' + response[0].Message);
+        Toast.show('请求错误' + response[0].Message);
       }
     })
   }
@@ -66,7 +66,7 @@ export default class extends React.Component {
         if (response[0].MessageCode == '0') {
           console.log('设置成功' + response[0].Message);
         } else {
-          console.log('请求错误' + response[0].Message);
+          Toast.show('请求错误' + response[0].Message);
         }
       })
     }
@@ -91,7 +91,6 @@ _onRefresh() {
   this.setState({
     isRefreshing: true
   });
-  console.log("下拉刷新");
   setTimeout(()=>{
     this.setState({
       isRefreshing: false
@@ -144,7 +143,7 @@ _onRefresh() {
             },1000);
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+          Toast.show('请求错误' + response[0].Message);
         }
       });
     }

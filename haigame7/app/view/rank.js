@@ -8,6 +8,7 @@ var Icon = require('react-native-vector-icons/Iconfont');
 import RankService from '../network/rankservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
+import Toast from '@remobile/react-native-toast';
 
 import React, {
     View,
@@ -88,7 +89,7 @@ export default class extends Component{
         });
       }
       else {
-        console.log('请求错误' + response[0].MessageCode);
+        Toast.show(response[0].Message);
       }
     });
   }
@@ -106,7 +107,7 @@ export default class extends Component{
         });
       }
       else {
-        console.log('请求错误' + response[0].MessageCode);
+        Toast.show(response[0].Message);
       }
     });
   }
@@ -185,7 +186,7 @@ export default class extends Component{
             },1000);
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+        Toast.show(response[0].Message);
         }
       });
     }
@@ -226,7 +227,7 @@ export default class extends Component{
             },1000);
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+          Toast.show(response[0].Message);
         }
       });
     }

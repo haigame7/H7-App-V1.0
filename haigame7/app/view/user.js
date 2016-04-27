@@ -115,7 +115,6 @@ var User = React.createClass({
           this.setState({fightData: data})
         }
       } else {
-        console.log('获取用户数据失败' + response[0].Message);
         Toast.show(response[0].Message);
       }
     })
@@ -128,7 +127,7 @@ var User = React.createClass({
         // console.log(response[1]);
         this.setState({teamData: response[1]});
       }else{
-        console.log('请求错误' + response[0].Message);
+        Toast.show(response[0].Message);
         this.setState({teamData:{}});
       }
     });
@@ -143,7 +142,7 @@ var User = React.createClass({
           isOpen: false
         });
       } else {
-        console.log('请求错误' + response[0].Message);
+        Toast.show('请求错误' + response[0].Message);
         this.setState({isOpen: false});
       }
     })
@@ -155,7 +154,7 @@ var User = React.createClass({
           totalMessage: response[0].Message,
         });
       } else {
-        console.log('请求错误' + response[0].Message);
+        Toast.show('请求错误' + response[0].Message);
       }
     })
   },

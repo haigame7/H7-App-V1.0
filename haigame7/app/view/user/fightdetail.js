@@ -59,7 +59,7 @@ export default class extends Component{
         this.props.navigator.pop();
       },1000);
        } else {
-         console.log('请求错误' + response[0].MessageCode);
+         Toast.show(response[0].Message);
        }
     }else {
         Toast.showLongCenter('请求错误');
@@ -78,7 +78,7 @@ export default class extends Component{
         this.props.navigator.pop();
       },1000);
        } else {
-         console.log('请求错误' + response[0].MessageCode);
+         Toast.show(response[0].Message);
        }
     }else {
         Toast.showLongCenter('请求错误');
@@ -111,7 +111,7 @@ export default class extends Component{
         this.props.navigator.pop();
       },1000);
        } else {
-         console.log('请求错误' + response[0].MessageCode);
+         Toast.show(response[0].Message);
        }
     }else {
         Toast.showLongCenter('请求错误');
