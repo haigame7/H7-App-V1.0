@@ -46,8 +46,8 @@ export default class extends Component{
     var userimage =Object.keys(that.state.teaminfo.UserImage).map(function(item,key) {
       return that.renderUserImageItem(that.state.teaminfo.UserImage[item],key);
     });
-    var total = this.state.teaminfo.WinCount + this.state.teaminfo.LoseCount;
-    var winning = this.state.teaminfo.WinCount/total*100;
+    var total = this.state.teaminfo.WinCount + this.state.teaminfo.LoseCount + this.state.teaminfo.FollowCount;
+    var winning = Math.round(this.state.teaminfo.WinCount/total*100);
 
     return (
       <View>

@@ -51,10 +51,10 @@ export default class Login extends Component {
 
     render() {
         let fields = [
-            { ref: 'phone', placeholder: '手机号码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'numeric', secureTextEntry: false, style: [styles.logininputfont] },
-            { ref: 'password', placeholder: '请您设置密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
-            { ref: 'passwordd', placeholder: '请再次确认密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
-            { ref: 'password', placeholder: '输入密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', secureTextEntry: true, selectionColor: '#FF0000', style: [styles.logininputfont] },
+            { ref: 'phone', placeholder: '手机号码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'numeric', maxLength: 11, secureTextEntry: false, style: [styles.logininputfont] },
+            { ref: 'password', placeholder: '请您设置密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', maxLength: 20, secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
+            { ref: 'passwordd', placeholder: '请再次确认密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', maxLength: 20, secureTextEntry: true, message: '* 密码必填', style: [styles.logininputfont] },
+            { ref: 'password', placeholder: '输入密码', placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'default', maxLength: 20, secureTextEntry: true, selectionColor: '#FF0000', style: [styles.logininputfont] },
         ];
         return (
             <View style = {{ flex: 1 }}>

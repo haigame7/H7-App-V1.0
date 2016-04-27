@@ -282,7 +282,6 @@ export default class extends Component{
           </View>
         </ScrollView>
         <View style={[commonstyle.row, commonstyle.modalbtn]}>
-          <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
           <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >已阅读</Button>
         </View>
       </Modal>
@@ -310,7 +309,7 @@ export default class extends Component{
           </View>
 
           <View style={styles.userlistteambox}>
-            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{this.state.userteamdata.odd.toString().substr(0, 5)}{'%'}</Text>
+            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{Math.round(this.state.userteamdata.odd)}{'%'}</Text>
             <Progress.Bar progress={this.state.userteamdata.odd/100} width={120} color={'#F39533'} unfilledColor={'#484848'} style={styles.userlistprogress} />
           </View>
 
@@ -360,7 +359,7 @@ export default class extends Component{
           </View>
 
           <View style={styles.userlistteambox}>
-            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{oddsdata.odd.toString().substr(0, 5)}{'%'}</Text>
+            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>{'胜率: '}{Math.round(oddsdata.odd)}{'%'}</Text>
             <Progress.Bar progress={(oddsdata.odd/100)} width={120} color={'#F39533'} unfilledColor={'#484848'} style={styles.userlistprogress} />
           </View>
 
@@ -396,7 +395,7 @@ export default class extends Component{
   _onLoadMore() {
     if (this.state.keykey > 0) {
       this.setState({
-        footerMsg: "木有更多多数据了~~~~"
+        footerMsg: "木有更多数据了..."
       });
     }else{
       let _ds = this.state.teamlist;
@@ -417,7 +416,7 @@ export default class extends Component{
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(_ds),
                 loaded: true,
-                footerMsg: "木有更多多数据了~~~~",
+                footerMsg: "木有更多数据了...",
               });
             },1000);
           }else{

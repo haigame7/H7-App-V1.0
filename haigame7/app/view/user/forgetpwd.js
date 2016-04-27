@@ -114,8 +114,8 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'phone', placeholder: '请输入手机号',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'numeric', secureTextEntry: false, message: '* 手机号必填', style: [styles.logininputfont]},
-      {ref: 'securitycode', placeholder: '请输入验证码',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'numeric', secureTextEntry: false, message: '* 验证码必填', style: [styles.logininputfont]}
+      {ref: 'phone', placeholder: '请输入手机号',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'numeric', maxLength: 11, secureTextEntry: false, message: '* 手机号必填', style: [styles.logininputfont]},
+      {ref: 'securitycode', placeholder: '请输入验证码',placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', keyboardType: 'numeric', maxLength: 6, secureTextEntry: false, message: '* 验证码必填', style: [styles.logininputfont]}
     ]
     var codebtn;
     if (this.state.isToushable) {

@@ -289,7 +289,7 @@ export default class extends Component{
 
 
   render(){
-    let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric',placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
+    let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric', maxLength: 10,placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
     // console.log(this.state.registerWechat);
     if(this.state.registerWechat && this.state.isWXAppInstalled && this.state.isWXAppSupportApi){

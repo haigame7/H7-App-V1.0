@@ -121,14 +121,14 @@ export default class extends Component {
       case '昵称':
           childScreen = (
             <View style={styles.infoinput}>
-              <TextInput style={[commonstyle.cream, styles.infoinputfont]} placeholder={'最多输入8个字符'} placeholderTextColor={'#C3C3C3'} onChangeText={(text) => this.setState({value: text})} defaultValue={this.state.userdata.UserWebNickName}/>
+              <TextInput style={[commonstyle.cream, styles.infoinputfont]} placeholder={'最多输入8个字符'} placeholderTextColor={'#C3C3C3'} maxLength={8} onChangeText={(text) => this.setState({value: text})} defaultValue={this.state.userdata.UserWebNickName}/>
             </View>
           )
         break;
       case '个性签名':
           childScreen = (
             <View style={styles.infoinput}>
-              <TextInput style={[commonstyle.cream, styles.infoinputfont]} placeholder={'最多输入16个字符'} placeholderTextColor={'#C3C3C3'} onChangeText={(text) => this.setState({value: text})} defaultValue={this.state.userdata.Hobby}/>
+              <TextInput style={[commonstyle.cream, styles.infoinputfont]} placeholder={'最多输入16个字符'} placeholderTextColor={'#C3C3C3'} maxLength={16} onChangeText={(text) => this.setState({value: text})} defaultValue={this.state.userdata.Hobby}/>
             </View>
           )
         break;

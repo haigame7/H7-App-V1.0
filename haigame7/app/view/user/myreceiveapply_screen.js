@@ -113,7 +113,7 @@ export default class extends React.Component {
   _onLoadMore() {
     if (this.state.keykey > 0) {
       this.setState({
-        footerMsg: "木有更多多数据了~~~~"
+        footerMsg: "木有更多数据了..."
       });
     }else{
       let _ds = this.state.myinvitedList;
@@ -126,26 +126,28 @@ export default class extends React.Component {
       TeamService.myApplyTeamList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<3){
+          if(nextData.length<5){
             this.setState({
               keykey:1,
-              footerMsg: "木有更多多数据了~~~~"
+              footerMsg: "木有更多数据了..."
             });
-          }
+          }else{
+            this.setState({
+              footerMsg: "点击加载更多"
+            });
+          };
           for(var item in nextData){
             _ds.push(nextData[item])
           }
+          setTimeout(()=>{
+            this.setState({
+              dataSource: this.state.dataSource.cloneWithRows(_ds),
+            });
+          },1000);
         } else {
           console.log('请求错误' + response[0].MessageCode);
         }
       });
-      //这等到有api在搞吧
-      setTimeout(()=>{
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(_ds),
-          footerMsg: "点击加载更多",
-        });
-      },1000);
     }
   }
 

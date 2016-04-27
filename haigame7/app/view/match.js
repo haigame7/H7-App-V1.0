@@ -194,17 +194,17 @@ export default class extends Component{
     let type = /^[0-9]*[1-9][0-9]*$/;
     let re = new RegExp(type);
     if (text.match(re) == null) {
-      return
+      var money = 0;
     }else{
       var money = parseInt(text);
-      this.setState({
-        guessmoney:money,
-        hjEarnData:{
-          totalAsset:this.state.hjData.totalAsset-money,
-          totalEarnAsset:money*this.state.modaData.guessodd,
-        },
-      });
     }
+    this.setState({
+      guessmoney:money,
+      hjEarnData:{
+        totalAsset:this.state.hjData.totalAsset-money,
+        totalEarnAsset:money*this.state.modaData.guessodd,
+      },
+    });
     this.state.guessmoney = text
   }
   getBoBoList(matchdata){
@@ -259,12 +259,13 @@ export default class extends Component{
           Toast.show('请求错误');
         }
       });
-      MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userdata.userteamid},(response2) => {
+      MatchService.myJoinMatch({matchID:rowData.MatchID,teamID:this.state.userdata.userteamid,phonenumber:this.state.userphone},(response2) => {
         if (response2 !== GlobalSetup.REQUEST_SUCCESS) {
           if(response2[0].MessageCode == '50001'){
             this.setState({
               isOpen: true,
               modaData:rowData,
+              jointeam: '',
             });
           }else if(response2[0].MessageCode == '0'){
             this.setState({
@@ -298,6 +299,16 @@ export default class extends Component{
   }
   _closeModa() {
     this.setState({isOpen: false});
+    if(this.state.navbar==1){
+      let money = 0;
+      this.setState({
+        guessmoney:money,
+        hjEarnData:{
+          totalAsset:this.state.hjData.totalAsset-money,
+          totalEarnAsset:money*this.state.modaData.guessodd,
+        },
+      });
+    };
   }
   _doBet(params){
     if(this.state.content.userData.UserID==undefined){
@@ -361,9 +372,6 @@ export default class extends Component{
         params:{'userData':this.state.content.userData,'openmodal':true},
         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
-    }
-    else if(params.jointeam!==''){
-      Toast.showLongCenter('您已报名'+params.jointeam+'!');
     }else{
       MatchService.joinMatch(params,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -433,7 +441,7 @@ export default class extends Component{
           </ScrollView>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone})} >{this.state.jointeam==''?'报名参赛':'取消报名'}</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone})} >{this.state.jointeam==''?'报名参赛':'取消报名'}</Button>
           </View>
         </Modal>
       );
@@ -443,7 +451,7 @@ export default class extends Component{
           <View style={[styles.modalheader]}>
             <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}</Text>
             <View  style = {styles.modalinput }>
-              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.calculateGuess(text)}/>
+              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric' maxLength={11} onChangeText = {(text) => this.calculateGuess(text)}/>
             </View>
             <View style ={commonstyle.row}>
               <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.hjEarnData.totalAsset}</Text></Text></View>

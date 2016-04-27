@@ -73,7 +73,7 @@ export default class extends Component{
         <Headernav screenTitle='发布招募'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <View style={styles.recruitbox}>
-            <TextInput style={styles.recruitinput} multiline={true} defaultValue={this.state.teamrecruit} placeholder='此处为填写招募队员信息...' placeholderTextColor='#C3C3C3' {...this.props} onChangeText={(text) => this.onChange(text)} value={this.state.value} maxLength={200}/>
+            <TextInput style={styles.recruitinput} multiline={true} defaultValue={this.state.teamrecruit} placeholder='此处为填写招募队员信息...' placeholderTextColor='#C3C3C3' onChangeText={(text) => this.onChange(text)} value={this.state.value} maxLength={200}/>
             <Text style={styles.recruitnumber}>{this.state.textnumber}/200</Text>
           </View>
           <View style={styles.recruitbtnblock}>
