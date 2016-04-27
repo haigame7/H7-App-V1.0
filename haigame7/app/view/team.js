@@ -221,7 +221,7 @@ import User from './user.js';
       <View style={styles.teamlistcenter}>
         <Text style={[commonstyle.yellow, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.TeamDescription}</Text>
-        <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.RecruitContent}</Text>
+        <Text style={[commonstyle.cream, commonstyle.fontsize14]} numberOfLines={2}>{rowData.RecruitContent}</Text>
       </View>
       <View style={styles.teamlistright}>
         <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.RecruitTime}</Text>
