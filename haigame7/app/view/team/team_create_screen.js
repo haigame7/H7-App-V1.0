@@ -34,6 +34,9 @@ export default class extends React.Component {
     }
 
   }
+  componentWillMount() {
+    // this.props.previousCallback();
+  }
   selectPhotoTapped() {
       let options = {
           title: '选择照片',
@@ -84,11 +87,18 @@ export default class extends React.Component {
       return;
     }else{
       TeamService.createTeam(teamData,(response)=>{
+        // console.log(response[0].MessageCode);
         if(response[0].MessageCode == '0'){
           Toast.show('创建成功');
           this.timer = setTimeout(()=>{
               this.props._callback('TeamInfo');
-              this.props.updateLoginState();
+              // this.props.previousCallback();
+              if(this.props.updateLoginState){
+                this.props.updateLoginState();
+              }
+              if(this.props.fightCallback){
+                this.props.fightCallback();
+              }
              if(this.props.navigator.getCurrentRoutes().length>3){
                var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
                this.props.navigator.jumpTo(route);

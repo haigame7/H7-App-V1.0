@@ -74,10 +74,10 @@ var User = React.createClass({
       let jsondata = JSON.parse(value);
       this.setState({userData: jsondata})
       setTimeout(() => {
-        this.getUserGameInfo(jsondata.PhoneNumber)
-        this.getUserTeamInfo(jsondata.UserID)
-        this.getUserMessage(jsondata.UserID)
-        this.getTotalAssertAndRank(jsondata.PhoneNumber)
+        this.getUserGameInfo()
+        this.getUserTeamInfo()
+        this.getUserMessage()
+        this.getTotalAssertAndRank()
       },400)
     });
   },
@@ -103,8 +103,8 @@ var User = React.createClass({
     }
    this.props.navigator.pop();
   },
-  getUserGameInfo(phoneNum) {
-    UserService.getUserGameInfo(phoneNum,(response) =>　{
+  getUserGameInfo() {
+    UserService.getUserGameInfo(this.state.userData.PhoneNumber,(response) =>　{
       if (response[0].MessageCode == '0' || response[0].MessageCode == '10008') {
         if(response[0].MessageCode == '10008') {
           // console.log(response[0].Message);
@@ -120,18 +120,21 @@ var User = React.createClass({
       }
     })
   },
-  getUserTeamInfo(phoneNum) {
-    TeamService.getUserDefaultTeam(phoneNum,(response) => {
+  getUserTeamInfo() {
+    TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
+      // console.log(creatUserID);
       if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
-              this.setState({teamData: response[1]});
+        // console.log(getUserTeamInfo);
+        // console.log(response[1]);
+        this.setState({teamData: response[1]});
       }else{
         console.log('请求错误' + response[0].Message);
         this.setState({teamData:{}});
       }
     });
   },
-  getTotalAssertAndRank(phoneNum) {
-    AssertService.getTotalAssertAndRank(phoneNum,(response) => {
+  getTotalAssertAndRank() {
+    AssertService.getTotalAssertAndRank(this.state.userData.PhoneNumber,(response) => {
       // console.log(response);
       if (response[0].MessageCode == '0') {
         let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
@@ -145,8 +148,8 @@ var User = React.createClass({
       }
     })
   },
-  getUserMessage(userMessage){
-    UserService.getUserMessage(userMessage,(response) =>{
+  getUserMessage(){
+    UserService.getUserMessage(this.state.userData.UserID,(response) =>{
       if (response[0].MessageCode == '0') {
         this.setState({
           totalMessage: response[0].Message,
@@ -156,7 +159,6 @@ var User = React.createClass({
       }
     })
   },
-
   _toNextScreen(params){
     // Toast.show("this is a message")
     // console.log(this.state.fightData);
@@ -171,6 +173,7 @@ var User = React.createClass({
         hjData: this.state.hjData,
         teamData:this.state.teamData,
         fightData: this.state.fightData,
+        //更新user.js 传递的props数据流 各种用户信息
         _callback(key,params){
         switch (key) {
           case 'UserInfo':
@@ -181,15 +184,18 @@ var User = React.createClass({
             break;
           case 'Usercertify':
               // console.log('认证回调');
-              _this.getUserGameInfo(_this.state.userData.PhoneNumber)
+              _this.getUserGameInfo()
             break;
           case 'MyMsg':
               // console.log('消息回调');
-              _this.getUserMessage(_this.state.userData.UserID)
+              _this.getUserMessage()
             break;
           case 'TeamInfo':
-              _this.getUserTeamInfo(_this.state.userData.UserID);
+              _this.getUserTeamInfo();
               _this.setState({modalOpen: false});
+              break;
+          case 'TotalAssertAndRank':
+              _this.getTotalAssertAndRank()
               break;
           default:
 

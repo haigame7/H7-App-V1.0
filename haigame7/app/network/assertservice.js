@@ -14,10 +14,14 @@ export default {
     );
   },
 
-  fetchAssertList(phone,callback) {
+  fetchAssertList(data,callback) {
     FecthService.postFecth(
       ApiConfig.ASSERT_API.FETCH_ASSERTLIST,
-      {'PhoneNumber':phone},
+      {
+        'UserID': data.userID,
+        'StartPage':data.startPage,
+        'PageCount':data.pageCount
+      },
       callback
     );
   },
