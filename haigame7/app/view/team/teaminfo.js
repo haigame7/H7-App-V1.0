@@ -64,7 +64,6 @@ export default class extends Component{
       else if (response[0].MessageCode == '0') {
          Toast.show('成功发出申请');
       } else {
-
         Toast.show(response[0].Message);
       }
     });
