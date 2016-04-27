@@ -7,7 +7,6 @@ import React, {
   StyleSheet,
   Text,
   View,
-  TextInput,
   Image,
   ScrollView,
   ListView,

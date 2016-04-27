@@ -7,7 +7,6 @@ import React, {
   LayoutAnimation,
   PanResponder,
   Navigator,
-  TextInput,
   Image,
   ToastAndroid,
   ListView,

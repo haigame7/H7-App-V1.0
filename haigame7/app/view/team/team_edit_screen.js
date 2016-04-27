@@ -108,10 +108,10 @@ export default class extends React.Component {
               </TouchableOpacity>
             </View>
             <View style={[commonstyle.btnborderred, styles.teamcreateinput]}>
-            <TextInput placeholder={'请输入战队名称'} defaultValue={this.state.TeamName} placeholderTextColor={'#484848'} style={[commonstyle.cream, styles.teamcreateinputfont]} onChangeText={(text) => this.setState({TeamName: text})} />
+            <TextInput placeholder={'请输入战队名称'} defaultValue={this.state.TeamName} placeholderTextColor={'#484848'} maxLength={8} style={[commonstyle.cream, styles.teamcreateinputfont]} onChangeText={(text) => this.setState({TeamName: text})} />
             </View>
             <View style={[commonstyle.btnborderred, styles.teamcreateinput]}>
-            <TextInput placeholder={'请输入战队宣言'} defaultValue={this.state.TeamDescription} placeholderTextColor={'#484848'} style={[commonstyle.cream, styles.teamcreateinputfont]} onChangeText={(text) => this.setState({TeamDescription: text})} />
+            <TextInput placeholder={'请输入战队宣言'} defaultValue={this.state.TeamDescription} placeholderTextColor={'#484848'} maxLength={16} style={[commonstyle.cream, styles.teamcreateinputfont]} onChangeText={(text) => this.setState({TeamDescription: text})} />
             </View>
             <View style={commonstyle.viewleft}>
               <Text style={commonstyle.gray}>温馨提示：战队宣言请限制在16个字以内！</Text>
