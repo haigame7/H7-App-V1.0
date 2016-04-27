@@ -4,7 +4,6 @@ import React, {
   Text,
   View,
   Alert,
-  TextInput,
   Image,
   ScrollView,
   TouchableHighlight

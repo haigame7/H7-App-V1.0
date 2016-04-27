@@ -34,8 +34,8 @@ export default class extends Component {
 
   render() {
     let fields = [
-      {ref: 'email', placeholder: 'Email', keyboardType: 'email-address', secureTextEntry: false, style: [styles.inputText]},
-      {ref: 'password', placeholder: 'Password', keyboardType: 'default', secureTextEntry: true, style: [styles.inputText]},
+      {ref: 'email', placeholder: 'Email', keyboardType: 'email-address', maxLength: 11, secureTextEntry: false, style: [styles.inputText]},
+      {ref: 'password', placeholder: 'Password', keyboardType: 'default', maxLength: 20, secureTextEntry: true, style: [styles.inputText]},
     ];
 
     return (

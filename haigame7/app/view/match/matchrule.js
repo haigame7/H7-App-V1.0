@@ -9,7 +9,6 @@ var {
   WebView,
   TextArea,
   StyleSheet,
-  TextInput,
   Navigator,
   TouchableOpacity,
   ScrollView

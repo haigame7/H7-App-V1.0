@@ -135,7 +135,7 @@ gotoCertify(numberID,argument) {
 
 render(){
   let fields = [
-    {ref: 'dota2id', placeholder: '请输入Dota2数字ID', keyboardType: 'numeric',placeholderTextColor: '#484848', style: [styles.logininputfont]},
+    {ref: 'dota2id', placeholder: '请输入Dota2数字ID', keyboardType: 'numeric', maxLength: 10,placeholderTextColor: '#484848', style: [styles.logininputfont]},
     {ref: 'certifyid', editable: false, style: [styles.logininputfont]}
   ]
   let btn;
