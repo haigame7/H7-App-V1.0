@@ -47,7 +47,7 @@ export default class extends Component{
       else if (response[0].MessageCode == '0') {
          Toast.show('成功发出邀请');
       } else {
-        console.log('请求错误' + response[0].MessageCide);
+        Toast.show(response[0].Message);
       }
     });
   }
@@ -62,7 +62,6 @@ export default class extends Component{
     var items =Object.keys(that.state.playerinfo.HeroImage).map(function(item,key) {
       return that.renderHeroImageItem(that.state.playerinfo.HeroImage[item],key);
     });
-    console.log(this.state.playerinfo);
     return (
       <View>
         <Header screenTitle='个人信息'   navigator={this.props.navigator}/>

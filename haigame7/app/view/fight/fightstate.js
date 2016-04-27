@@ -13,6 +13,7 @@ import React, {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/fightstyle';
+import Toast from '@remobile/react-native-toast';
 import Header from '../common/headernav';
 import FightService from '../../network/fightservice';
 import GlobalVariable from '../../constants/globalvariable'
@@ -64,7 +65,7 @@ export default class extends React.Component {
           loaded: true
         });
       } else {
-        console.log('请求错误' + response[0].MessageCode);
+        Toast.show(response[0].Message);
       }
     });
 
@@ -91,7 +92,6 @@ export default class extends React.Component {
     this.setState({
       isRefreshing: true
     });
-    console.log("下拉刷新");
     setTimeout(()=>{
       this.setState({
         isRefreshing: false
@@ -148,7 +148,7 @@ export default class extends React.Component {
             });
           },1000);
         } else {
-          console.log('请求错误' + response[0].MessageCide);
+          Toast.show(response[0].Message);
         }
       });
     }

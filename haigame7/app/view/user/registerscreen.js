@@ -97,8 +97,7 @@ export default class extends Component {
         Toast.show("手机号已注册");
         return;
       } else {
-        console.log(response[0].Message)
-        Toast.show("系统问题" + response[0].MessageCode);
+        Toast.show("系统问题" + response[0].Message);
         this.setState({
           isToushable: true,
         });

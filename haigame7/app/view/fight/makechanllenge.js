@@ -86,7 +86,7 @@ export default class extends Component{
          if (response[0].MessageCode == '0') {
           Toast.showLongCenter('约战请求已发出,请在我的约战中查看对方回复');
          } else {
-           console.log('请求错误' + response[0].MessageCode);
+           Toast.show(response[0].Message);
          }
       }else {
           Alert.alert('请求错误');

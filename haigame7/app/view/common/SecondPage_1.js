@@ -12,7 +12,6 @@ module.exports = React.createClass({
         };
     },
   componentWillReceiveProps(nextProps) {
-    console.log('es5 接收到nextProps');
     if (nextProps.name != this.props.name) {
       this.setState({
         name: nextProps.name

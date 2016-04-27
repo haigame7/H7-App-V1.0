@@ -86,7 +86,7 @@ export default class extends Component{
          }
        }
         else{
-            Toast.show('请求错误');
+            Toast.show(response[0].Message);
           }
     });
   }
@@ -111,7 +111,7 @@ export default class extends Component{
          }
        }
         else{
-            Toast.show('请求错误');
+            Toast.show(response[0].Message);
           }
     });
   }
@@ -130,7 +130,7 @@ export default class extends Component{
          }
        }
         else{
-            Toast.show('请求错误');
+            Toast.show(response[0].Message);
           }
     });
   }
