@@ -102,34 +102,6 @@ export default class extends React.Component {
         iconText: undefined,
       });
     }
-      if(flag==0){
-        this.setState({
-          navigator: this.props.navigator,
-          teamData:this.props.teamData,
-          userData:this.props.userData,
-          navbar:this.props.teamData.TeamID,
-        });
-      }
-      else{
-        TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
-          if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
-                this.setState({
-                navigator: this.props.navigator,
-                teamData: response[1],
-                userData:this.props.userData,
-                navbar:response[1].TeamID,
-                });
-          }else{
-            Toast.show(response[0].Message);
-          }
-        });
-      }
-
-      if (this.state.role != 'captain') {
-        this.setState({
-          iconText: undefined,
-        });
-      }
   }
 
   _callback() {

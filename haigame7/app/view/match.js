@@ -128,6 +128,7 @@ export default class extends Component{
           },
         });
       } else {
+        console.log('getTotalAssertAndRank 请求错误' + response[0].Message); //可能是数据直接添加的用
         Toast.show(response[0].Message);
         this.setState({isOpen: false});
       }
