@@ -73,7 +73,6 @@ export default class extends React.Component {
             Toast.show('请求错误');
         }
       });
-<<<<<<< Updated upstream
   }
   initData(flag){
     this._getAllMyTeam()
@@ -103,7 +102,6 @@ export default class extends React.Component {
         iconText: undefined,
       });
     }
-=======
       if(flag==0){
         this.setState({
           navigator: this.props.navigator,
@@ -132,7 +130,6 @@ export default class extends React.Component {
           iconText: undefined,
         });
       }
->>>>>>> Stashed changes
   }
 
   _callback() {

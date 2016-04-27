@@ -64,12 +64,8 @@ export default class extends Component{
       else if (response[0].MessageCode == '0') {
          Toast.show('成功发出申请');
       } else {
-<<<<<<< Updated upstream
-        console.log('请求错误' + response[0].MessageCide);
-        Toast.show('请求错误')
-=======
+
         Toast.show(response[0].Message);
->>>>>>> Stashed changes
       }
     });
   }

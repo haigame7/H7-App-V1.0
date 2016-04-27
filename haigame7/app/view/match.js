@@ -128,11 +128,7 @@ export default class extends Component{
           },
         });
       } else {
-<<<<<<< Updated upstream
-        console.log('getTotalAssertAndRank 请求错误' + response[0].Message); //可能是数据直接添加的用户
-=======
         Toast.show(response[0].Message);
->>>>>>> Stashed changes
         this.setState({isOpen: false});
       }
     })
