@@ -126,7 +126,6 @@ export default class Login extends Component {
                      this.props.navigator.pop();
                   }, 500);
                 } else {
-                  console.log('获取用户数据失败' + response[0].Message);
                   Toast.show('获取用户数据失败'+ response[0].Message);
                   this.setState({
                     loading: false,
@@ -144,7 +143,6 @@ export default class Login extends Component {
                     loading: false,
                 })
             } else {
-              console.log('登录失败' + response[0].Message);
               Toast.show('用户不存在，请注册！');
               this.setState({
                 loading: false,

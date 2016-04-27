@@ -118,7 +118,6 @@ export default class extends Component{
   }
   getTotalAssertAndRank(phoneNum) {
     AssertService.getTotalAssertAndRank(phoneNum,(response) => {
-      // console.log(response);
       if (response[0].MessageCode == '0') {
         let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
         this.setState({
@@ -129,7 +128,7 @@ export default class extends Component{
           },
         });
       } else {
-        console.log('请求错误' + response[0].Message);
+        Toast.show(response[0].Message);
         this.setState({isOpen: false});
       }
     })

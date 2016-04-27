@@ -58,8 +58,6 @@ export default class extends Component{
       Toast.show('清除缓存成功');
       await this.getData();
     } catch(err){
-      console.log(err);
-      // Toast.show(err)
       alert('清除失败', err.message);
     }
   }

@@ -19,7 +19,7 @@ import React, {
 
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
-import Header from '../common/headernav'; 
+import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
@@ -64,7 +64,8 @@ export default class extends Component{
       else if (response[0].MessageCode == '0') {
          Toast.show('成功发出申请');
       } else {
-        console.log('请求错误' + response[0].MessageCide);
+
+        Toast.show(response[0].Message);
       }
     });
   }
@@ -82,7 +83,7 @@ export default class extends Component{
     }else{
       var userimage = <View></View>
     };
-    
+
     var total = this.state.teamData.WinCount + this.state.teamData.LoseCount + this.state.teamData.FollowCount;
     var winning = Math.round(this.state.teamData.WinCount/total*100);
 

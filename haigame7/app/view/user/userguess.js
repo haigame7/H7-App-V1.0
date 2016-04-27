@@ -23,6 +23,7 @@ import styles from '../../styles/matchstyle';
 import Header from '../common/headernav';
 import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
+import Toast from '@remobile/react-native-toast';
 import GuessService from '../../network/guessservice';
 import TeamService from '../../network/teamservice';
 import GlobalSetup from '../../constants/globalsetup';
@@ -167,7 +168,7 @@ export default class extends Component{
             },1000);
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+          Toast.show(response[0].Message);
         }
       });
     }

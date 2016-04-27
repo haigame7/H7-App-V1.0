@@ -46,6 +46,7 @@ module.exports = React.createClass({
   componentWillMount() {
   },
   componentDidMount(){
+    // console.log(this.state.icon_name);
     if (this.state.icon_name != undefined){
       this.setState({
         navigator: this.props.navigator,
@@ -60,7 +61,7 @@ module.exports = React.createClass({
     }
   },
   componentWillReceiveProps(nextProps,nextState) {
-  
+
   },
 
   componentWillUnmount() {

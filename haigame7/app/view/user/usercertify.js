@@ -104,7 +104,6 @@ gotoCertify(numberID,argument) {
             Toast.show('申请已经发出,请等待');
           },1000);
         } else {
-          console.log('认证失败');
           Toast.show('认证失败');
         }
     });
@@ -125,7 +124,6 @@ gotoCertify(numberID,argument) {
         },1000);
 
       } else {
-        console.log('认证失败');
         Toast.show('认证失败');
       }
     });

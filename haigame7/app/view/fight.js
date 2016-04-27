@@ -95,6 +95,7 @@ export default class extends Component{
      this.setState({isOpen: false});
   }
   gotoRoute(name,userteamid,fightteamid){
+    this.initData();
     {/*先判断登录*/}
     if(this.state.content.userData.UserID==undefined&&name !== 'fightstate'){
       this.props.navigator.push({
@@ -107,7 +108,7 @@ export default class extends Component{
       this.props.navigator.push({
         name:'user',
         component:User,
-        params:{'userData':this.state.content.userData,'openmodal':true},
+        params:{'userData':this.state.content.userData,'openmodal':true,"fightCallback":this.initData.bind(this)},
         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }else{
@@ -161,11 +162,12 @@ export default class extends Component{
           teamlist:newData,
         });
       } else {
-        console.log('请求错误' + response[0].MessageCide);
+        Toast.show(response[0].Message);
       }
     });
       }
   initData(){
+    // console.log('更新战队信息');
     {/*请求我的战队信息*/}
     TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -214,7 +216,7 @@ export default class extends Component{
         this.getTeamList(this.state.teamlistRequestData);
       }
       else {
-        Toast.show('请求错误');
+        Toast.show(response[0].Message);
         //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
       }
     });
@@ -263,7 +265,7 @@ export default class extends Component{
 
              {'3.	如果想要加注或者更改约战日期，必须经过双方的同意，无法单方私自修改任何已经双方定好的约战内容；\n\n'}
 
-             {'4.	每支战队同一天之内的24小时之内只能约战一次；\n\n'}
+             {'4.	每支战队24小时之内只能约战一次；\n\n'}
 
              {'5.	发起约战之后需要等待对方回应，如果发起约战的时间对方不同意，则双方协商修改，待时间修改完成，双方确认，约战正式生成；\n\n'}
 
@@ -430,7 +432,7 @@ export default class extends Component{
             },1000);
           }
         } else {
-          console.log('请求错误' + response[0].MessageCode);
+          Toast.show(response[0].Message);
         }
       });
     }
