@@ -183,7 +183,7 @@ export default class extends Component{
             setTimeout(()=>{
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(_ds),
-                loaded: true,
+                loaded:false,
                 footerMsg: "木有更多数据了...",
               });
             },1000);
