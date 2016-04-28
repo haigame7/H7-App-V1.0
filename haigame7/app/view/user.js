@@ -4,11 +4,7 @@
  * @return {[SplashScreen Component]}
  * @author aran.hu
  */
-var React = require('react-native');
-var Header = require('./common/headernav'); // 主屏
-var Icon = require('react-native-vector-icons/Iconfont');
-import Colors from '../components/common/colors';
-var {
+import React, {
   View,
   Text,
   Image,
@@ -16,11 +12,15 @@ var {
   Navigator,
   ScrollView,
   AsyncStorage
-  } = React;
-
-
+  } from 'react-native';
+import Icon from 'react-native-vector-icons/Iconfont';
+import Modal from 'react-native-modalbox';
+import Button from 'react-native-button';
+import Toast from '@remobile/react-native-toast';
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/userstyle';
+
+import Header from './common/headernav'; 
 import UserInfo from './user/userinfo';
 import Setting from './user/setting';
 import UserSign from './user/usersign';
@@ -40,11 +40,6 @@ import UserService from '../network/userservice';
 import TeamService from '../network/teamservice';
 import AssertService from '../network/assertservice';
 import GlobalVariable from '../constants/globalvariable';
-
-import Toast from '@remobile/react-native-toast';
-import Modal from 'react-native-modalbox';
-import Button from 'react-native-button';
-//试试ES6的类属性
 
 var User = React.createClass({
   getInitialState() {
