@@ -173,8 +173,6 @@ export default class extends Component{
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');
-        }else if(response.MessageCode == '40002'){
-          Toast.show('token过期');
         }else if(response[0].MessageCode == '20003'){
           this.setState({
             userteamname:'还没有创建战队',
@@ -212,12 +210,13 @@ export default class extends Component{
                 pagecount:GlobalVariable.PAGE_INFO.PageCount-1,
             },
           });
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
         this.getTeamList(this.state.teamlistRequestData);
       }
       else {
-        Toast.show(response[0].Message);
-        //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
+        ToastAndroid.show('请求错误',ToastAndroid.SHORT);
       }
     });
   {/*请求我的战队信息end*/}
