@@ -1,6 +1,6 @@
 'use strict';
 /**
- * APPs我的赛事
+ * APP 赛事
  * @return {[SplashScreen Component]}
  * @author aran.hu
  */
@@ -18,23 +18,25 @@ import React, {
   ScrollView,
   TouchableHighlight,
 } from 'react-native';
-var Icon = require('react-native-vector-icons/Iconfont');
-var commonstyle = require('../styles/commonstyle');
-var styles = require('../styles/matchstyle');
+
+import Icon from 'react-native-vector-icons/Iconfont';
+import Spinner from 'react-native-loading-spinner-overlay';
+import Modal from 'react-native-modalbox';
+import Button from 'react-native-button';
+import Toast from '@remobile/react-native-toast';
+import commonstyle from '../styles/commonstyle';
+import styles from '../styles/matchstyle';
+
 import MatchRule from './match/matchrule';
 import MatchSchedule from './match/matchschedule';
+import Login from './user/login';
+import User from './user.js';
 import MatchService from '../network/matchservice';
 import GuessService from '../network/guessservice';
 import TeamService from '../network/teamservice';
 import AssertService from '../network/assertservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
-import Spinner from 'react-native-loading-spinner-overlay';
-import Modal from 'react-native-modalbox';
-import Toast from '@remobile/react-native-toast';
-import Button from 'react-native-button';
-import Login from './user/login';
-import User from './user.js';
 
 const default_user_pic = 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'
 export default class extends Component{
@@ -74,6 +76,7 @@ export default class extends Component{
       modaData:"",
     }
   }
+  //获取app.js传值
   updateContentData(content){
     this.setState({
       content: content,
@@ -88,35 +91,34 @@ export default class extends Component{
     });
     this.initData();
   }
+  //加载组件
   componentWillMount() {
     this.setState({loaded: true})
-  }
-  componentDidMount(){
   }
   initData(){
     {/*请求我的战队信息*/}
     TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
-    if (response !== GlobalSetup.REQUEST_SUCCESS) {
-      if(response[0].MessageCode == '40001'){
-        Toast.show('服务器请求异常');
-      }else if(response[0].MessageCode == '0'){
-        this.setState({
-         userdata:{
-          userid:response[1].Creater,
-          userteamid:response[1].TeamID,
-          userasset:response[1].Asset,
-        },
-        });
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          this.setState({
+            userdata:{
+              userid:response[1].Creater,
+              userteamid:response[1].TeamID,
+              userasset:response[1].Asset,
+            },
+          });
+        }else{
+        //  Toast.showLongCenter(response[0].Message);
+        }
       }else{
-      //  Toast.showLongCenter(response[0].Message);
+        Toast.show('请求错误');
       }
-     }else{
-         Toast.show('请求错误');
-     }
-   });
-   this.getTotalAssertAndRank(this.state.userphone);
-   this.getMatchList();
-   this.getGuessList();
+    });
+    this.getTotalAssertAndRank(this.state.userphone);
+    this.getMatchList();
+    this.getGuessList();
   }
   getTotalAssertAndRank(phoneNum) {
     AssertService.getTotalAssertAndRank(phoneNum,(response) => {

@@ -1,14 +1,9 @@
 'use strict';
 /**
- * 组队模块
- * 整体包括
- *
- * 加入战队组件，战队招募组件
+ * APP 组队
  * @return {[Team Component]}
  * @author aran.hu
  */
-var Loading = require('./common/loading');
-var Icon = require('react-native-vector-icons/Iconfont');
 
 import React, {
   View,
@@ -23,8 +18,11 @@ import React, {
   TouchableHighlight,
   } from 'react-native';
 
+import Spinner from 'react-native-loading-spinner-overlay';
+import Toast from '@remobile/react-native-toast';
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/teamstyle';
+
 import TeamRecruit from './team/teamrecruit';
 import PlayerInfo from './team/playerinfo';
 import TeamInfo from './team/teaminfo';
@@ -32,194 +30,198 @@ import MyApply from './user/myapply_screen';
 import MyReceiveApply from './user/myreceiveapply_screen';
 import MySendApply from './user/mysendapply_screen';
 import ApplyJoin from './user/applyjoin_screen';
+import Login from './user/login';
+import User from './user.js';
 import TeamService from '../network/teamservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
-import Toast from '@remobile/react-native-toast';
-import Login from './user/login';
-import User from './user.js';
-  export default class extends Component{
-    constructor(props) {
-      super(props);
-      var dataRecruit = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      var dataInvite = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {
-        navbar: 0,
-        invite:0,
-        login:0,
-        userteamname:'',
-        userteamid:0,
-        dataRecruitSource: dataRecruit.cloneWithRows(['row1']),
-        dataInviteSource:dataInvite.cloneWithRows(['row1']),
-        recruitlist:[],
-        invitelist:[],
-        paraRecruit:{},
-        userteamdata:{
-          phone:'',
-          asset:0,
-          teamlogo:'',
-          fightscore:0,
-          recruit:'',
-        },
-        data:{
-            subnavbarone:'我的申请',
-            subnavbartwo:'我的受邀',
-        },
-        keyone:0,
-        keytwo:0,
-        footerOneMsg:'点击加载更多',
-        footerTwoMsg:'点击加载更多',
-        content:{
-          userData:{},
-        },
-      }
-    }
-    componentDidMount() {
-    }
-    updateContentData(content){
-      this.setState({
-        content: content,
-        paraRecruit:{
-          userID:content.userData.UserID,
-          startpage:GlobalVariable.PAGE_INFO.StartPage,
-          pagecount:GlobalVariable.PAGE_INFO.PageCount,
-          state:0,
-        },
-        paraInvite:{
-          startpage:GlobalVariable.PAGE_INFO.StartPage,
-          pagecount:GlobalVariable.PAGE_INFO.PageCount,
-          state:1,
-        },
-      });
-      this.initData();
-    }
-    initData(){
-      {/*请求我的战队信息*/}
-      TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
-        if (response !== GlobalSetup.REQUEST_SUCCESS) {
-          if(response[0].MessageCode == '40001'){
-            Toast.show('服务器请求异常');
-          }else if(response[0].MessageCode == '20003'){
-            this.setState({
-              userteamname:'还没有创建战队',
-            });
-          }else if(response[0].MessageCode=='10001'){
-            this.setState({
-             userteamname:'还没有登录',
-            });
-          }
-          else if(response[0].MessageCode == '0'){
-            this.setState({
-              userteamname:response[1].TeamName,
-              userteamid:response[1].TeamID,
-              userteamdata:{
-                phone:this.state.userteamdata.phone,
-                asset:response[1].Asset,
-                teamlogo:response[1].TeamLogo,
-                fightscore:response[1].FightScore,
-                recruit:response[1].RecruitContent,
-              },
-              login:1,
-            });
-          }else{
-            Toast.showLongCenter(response[0].Message);
-          }
-        }
-        else {
-          Toast.show('请求错误');
-          //ToastAndroid.show('请求错误',ToastAndroid.SHORT);
-        }
-      });
-    {/*招募信息列表*/}
-      TeamService.getRecruitList(this.state.paraRecruit,(response) => {
-        if (response !== GlobalSetup.REQUEST_SUCCESS) {
-           if(response[0].MessageCode == '40001'){
-             console.log('招募信息列表_服务器请求异常');
-             Toast.show('服务器请求异常');
-           }else if(response[0].MessageCode == '0'){
-             let newData = response[1];
-             this.setState({
-               dataRecruitSource: this.state.dataRecruitSource.cloneWithRows(newData),
-               recruitlist:newData,
-             });
-           }else{
-             Toast.show(response[0].Message);
-           }
-          }else{
-              Toast.show('请求错误');
-          }
-        });
-        TeamService.getInviteUserList(this.state.paraInvite,(response) => {
-          if (response !== GlobalSetup.REQUEST_SUCCESS) {
-             if(response[0].MessageCode == '40001'){
-               Toast.show('服务器请求异常');
-             }else if(response[0].MessageCode == '0'){
-               let newData = response[1];
-               this.setState({
-                 dataInviteSource: this.state.dataInviteSource.cloneWithRows(newData),
-                 invitelist:newData,
-               });
-             }else{
-                Toast.show(response[0].Message);
-             }
-            }else{
-                Toast.show('请求错误');
-            }
-          });
-    }
-    gotoRoute(name,params) {
-      if(this.state.content.userData.UserID==undefined){
-        this.props.navigator.push({
-          name:'login',
-          component:Login,
-          params:{...this.props},
-         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-        });
-      }else if(this.state.userteamid==0&&this.state.navbar!==0){
-        this.props.navigator.push({
-          name:'user',
-          component:User,
-          params:{'userData':this.state.content.userData,'openmodal':true},
-          sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-        });
-      }else{
-        if (name == 'teamrecruit') {
-          console.log(this.props);
-            if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-                this.props.navigator.push({ name: name, component: TeamRecruit,params:{'teamid':params.teamid,'teamrecruit':params.teamrecruit,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-            }
-        } else if (name == 'playerinfo') {
-          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.userteamid,'playerinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-          }
-        }else if (name == 'teaminfo') {
-          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-          }
-        }
-        else if (name == 'myapply') {
 
-          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: MyApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-          }
+export default class extends Component{
+  constructor(props) {
+    super(props);
+    var dataRecruit = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var dataInvite = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      navbar: 0,
+      invite:0,
+      login:0,
+      userteamname:'',
+      userteamid:0,
+      dataRecruitSource: dataRecruit.cloneWithRows(['row1']),
+      dataInviteSource:dataInvite.cloneWithRows(['row1']),
+      recruitlist:[],
+      invitelist:[],
+      paraRecruit:{},
+      userteamdata:{
+        phone:'',
+        asset:0,
+        teamlogo:'',
+        fightscore:0,
+        recruit:'',
+      },
+      data:{
+          subnavbarone:'我的申请',
+          subnavbartwo:'我的受邀',
+      },
+      keyone:0,
+      keytwo:0,
+      footerOneMsg:'点击加载更多',
+      footerTwoMsg:'点击加载更多',
+      content:{
+        userData:{},
+      },
+      loaded: false,
+    }
+  }
+  //加载完组件后操作
+  componentWillMount() {
+    this.setState({loaded: true})
+  }
+  updateContentData(content){
+    this.setState({
+      content: content,
+      paraRecruit:{
+        userID:content.userData.UserID,
+        startpage:GlobalVariable.PAGE_INFO.StartPage,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount,
+        state:0,
+      },
+      paraInvite:{
+        startpage:GlobalVariable.PAGE_INFO.StartPage,
+        pagecount:GlobalVariable.PAGE_INFO.PageCount,
+        state:1,
+      },
+    });
+    this.initData();
+  }
+  initData(){
+    {/*请求我的战队信息*/}
+    TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '20003'){
+          this.setState({
+            userteamname:'还没有创建战队',
+          });
+        }else if(response[0].MessageCode=='10001'){
+          this.setState({
+           userteamname:'还没有登录',
+          });
+        }else if(response[0].MessageCode == '0'){
+          this.setState({
+            userteamname:response[1].TeamName,
+            userteamid:response[1].TeamID,
+            userteamdata:{
+              phone:this.state.userteamdata.phone,
+              asset:response[1].Asset,
+              teamlogo:response[1].TeamLogo,
+              fightscore:response[1].FightScore,
+              recruit:response[1].RecruitContent,
+            },
+            login:1,
+          });
+        }else{
+          Toast.show(response[0].Message);
         }
-        else if (name == 'myreceiveapply') {
-          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: MyReceiveApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-          }
+      }
+      else {
+        Toast.show('请求错误');
+      }
+    });
+    {/*招募信息列表*/}
+    TeamService.getRecruitList(this.state.paraRecruit,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          console.log('招募信息列表_服务器请求异常');
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          let newData = response[1];
+          this.setState({
+            dataRecruitSource: this.state.dataRecruitSource.cloneWithRows(newData),
+            recruitlist:newData,
+          });
+        }else{
+          Toast.show(response[0].Message);
         }
-        else if (name == 'mysendapply') {
-          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: MySendApply,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-          }
+      }else{
+        Toast.show('请求错误');
+      }
+    });
+    TeamService.getInviteUserList(this.state.paraInvite,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          let newData = response[1];
+          this.setState({
+            dataInviteSource: this.state.dataInviteSource.cloneWithRows(newData),
+            invitelist:newData,
+          });
+        }else{
+          Toast.show(response[0].Message);
         }
-        else if (name == 'applyjoin') {
+      }else{
+        Toast.show('请求错误');
+      }
+    });
+    this.setState({
+      loaded:false,
+    });
+  }
+  gotoRoute(name,params) {
+    if(this.state.content.userData.UserID==undefined){
+      this.props.navigator.push({
+        name:'login',
+        component:Login,
+        params:{...this.props},
+       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      });
+    }else if(this.state.userteamid==0&&this.state.navbar!==0){
+      this.props.navigator.push({
+        name:'user',
+        component:User,
+        params:{'userData':this.state.content.userData,'openmodal':true},
+        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+      });
+    }else{
+      if (name == 'teamrecruit') {
+        console.log(this.props);
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-              this.props.navigator.push({ name: name, component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
+      } else if (name == 'playerinfo') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.userteamid,'playerinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }else if (name == 'teaminfo') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }
+      else if (name == 'myapply') {
+
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: MyApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }
+      else if (name == 'myreceiveapply') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: MyReceiveApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }
+      else if (name == 'mysendapply') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: MySendApply,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }
+      else if (name == 'applyjoin') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
       }
     }
+  }
   _renderRecruitRow(rowData){
     return(
     <TouchableOpacity style={styles.teamlist} activeOpacity={0.8} onPress={()=>this.gotoRoute('teaminfo',rowData)}>
@@ -330,40 +332,6 @@ import User from './user.js';
     }
   }
 
-  render()
-  {
-    let teamlist = this.renderteamList();
-    return (
-      <View style={commonstyle.viewbodyer}>
-        <View style={styles.nav}>
-          <View style={styles.navtab}>
-            <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
-              <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>加入战队</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-              <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>招募队员</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.navsub}>
-            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbarone=='我的申请'?'myapply':'mysendapply')}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbarone}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
-            </TouchableOpacity>
-
-            <View style={styles.navsubline}></View>
-
-            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbartwo=='我的受邀'?'myreceiveapply':'applyjoin')}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbartwo}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <ScrollView style={[styles.scrollview]}>
-          {teamlist}
-        </ScrollView>
-     </View>
-    );
-  }
   _switchNavbar(nav){
  var nameone ='我的申请';
  var nametwo = '我的受邀';
@@ -484,5 +452,39 @@ import User from './user.js';
      }else{
         Toast.show(response[0].Message);
      }
+  }
+  render(){
+    let teamlist = this.renderteamList();
+    return (
+      <View style={commonstyle.viewbodyer}>
+        <View style={styles.nav}>
+          <View style={styles.navtab}>
+            <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
+              <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>加入战队</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
+              <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>招募队员</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.navsub}>
+            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbarone=='我的申请'?'myapply':'mysendapply')}>
+              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbarone}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
+            </TouchableOpacity>
+
+            <View style={styles.navsubline}></View>
+
+            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute(this.state.data.subnavbartwo=='我的受邀'?'myreceiveapply':'applyjoin')}>
+              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{this.state.data.subnavbartwo}</Text>
+              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <ScrollView style={[styles.scrollview]}>
+          {teamlist}
+        </ScrollView>
+        <Spinner visible={this.state.loaded} />
+     </View>
+    );
   }
 }
