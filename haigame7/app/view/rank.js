@@ -275,7 +275,7 @@ export default class extends Component{
 
             <View style={styles.navsubline}></View>
 
-            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'FightScore','team':'FightScore'})}>
+            <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'GamePower','team':'FightScore'})}>
               <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
               <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
