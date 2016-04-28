@@ -135,11 +135,11 @@ var UserFightList = React.createClass({
     return(
       <View style={[commonstyle.col1, commonstyle.viewcenter]}>
       <View style={commonstyle.row}>
-      <View style={[commonstyle.btnbordercyan, styles.userlisttexticon]}>
+      <View style={[commonstyle.btnbordercyan, styles.fightlisttexticon]}>
         <Text style={[commonstyle.cyan, commonstyle.fontsize12]}>{'负'}</Text>
       </View>
         <Text style={[commonstyle.blue, commonstyle.fontsize22]}>{'VS'}</Text>
-        <View style={[commonstyle.btnborderorange, styles.userlisttexticon]}>
+        <View style={[commonstyle.btnborderorange, styles.fightlisttexticon]}>
          <Text style={[commonstyle.orange, commonstyle.fontsize12]}>{'胜'}</Text>
         </View>
       </View>
