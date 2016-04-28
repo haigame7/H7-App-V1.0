@@ -1,6 +1,6 @@
 'use strict';
 /**
- * APPs我的赛事
+ * APP 我的任务
  * @return {[SplashScreen Component]}
  * @author aran.hu
  */
@@ -59,14 +59,14 @@ export default class extends Component{
           <View style={styles.listviewiconleft}>
             <Icon name="modify" size={30} color={'#D31B25'} />
           </View>
-          <Text style={styles.listviewtext}>{'完善资料  '}<Text style={commonstyle.red}>{'+50氦金'}</Text></Text>
+          <Text style={styles.listviewtext}>{'完善资料  '}</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} onPress={()=>this.gotoRoute('usercertify')}  activeOpacity={0.8}>
           <View style={styles.listviewiconleft}>
             <Icon name="task" size={30} color={'#D31B25'} />
           </View>
-          <Text style={styles.listviewtext}>{'通过认证  '}<Text style={commonstyle.red}>{'+50氦金'}</Text></Text>
+          <Text style={styles.listviewtext}>{'通过认证  '}</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
       </View>
