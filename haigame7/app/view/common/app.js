@@ -1,7 +1,19 @@
 'use strict';
-import React,
-{ Component, View, Text,Alert,Linking, ScrollView,AsyncStorage ,TouchableOpacity,Dimensions,Platform,Navigator,BackAndroid}
-from 'react-native';
+import React,{
+  Component,
+  View,
+  Text,
+  Alert,
+  Linking,
+  ScrollView,
+  AsyncStorage,
+  TouchableOpacity,
+  Dimensions,
+  Platform,
+  Navigator,
+  BackAndroid,
+  NetInfo
+} from 'react-native';
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 import Toast from '@remobile/react-native-toast';
 import Headernav from './headernav';
@@ -94,6 +106,20 @@ export default class haigame7 extends Component {
      });
         BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
       }
+    }
+    componentDidMount() {
+      NetInfo.isConnected.fetch().done((isConnected) => {
+        console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+      });
+      NetInfo.isConnected.addEventListener(
+        'change',
+        (res) => {
+          if(!res){
+            Toast.showLongCenter("无网络连接")
+          }
+
+        }
+      );
     }
     compareVersion(local,server){
       var result = false;

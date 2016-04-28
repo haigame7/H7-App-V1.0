@@ -110,7 +110,7 @@ export default class extends Component {
   }
 
   beContent(str){
-    const list = ['北京','上海'];
+    const list = ['北京','上海','天津','重庆'];
     return list.indexOf(str) === -1?false: true;
   }
   createDateData(){
