@@ -92,6 +92,16 @@ var UserFightList = React.createClass({
          <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'-'}{this.props.rowData.Money}{'氦金'}</Text>
        </TouchableOpacity>
      );
+   }else if(this.props.rowData.CurrentState=='守擂成功'&&this.props.fightstate=='send'){
+     return(
+       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnbordergray]}  >
+         <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'-'}{this.props.rowData.Money}{'氦金'}</Text>
+       </TouchableOpacity>
+     );
+   }else if(this.props.rowData.CurrentState=='守擂成功'&&this.props.fightstate=='receive'){
+     <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]}  >
+       <Text style={[commonstyle.red, commonstyle.fontsize14]}>{'+'}{this.props.rowData.Money}{'氦金'}</Text>
+     </TouchableOpacity>
    }
    else{
      return(
