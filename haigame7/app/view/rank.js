@@ -1,16 +1,10 @@
 'use strict';
 /**
- * 排行
+ * APP 排行
  * @return {[rank Component]}
  * @author aran.hu
  */
-var Icon = require('react-native-vector-icons/Iconfont');
-import RankService from '../network/rankservice';
-import GlobalSetup from '../constants/globalsetup';
-import GlobalVariable from '../constants/globalvariable';
-import Toast from '@remobile/react-native-toast';
-
-import React, {
+ import React, {
     View,
     Text,
     Image,
@@ -22,16 +16,17 @@ import React, {
     TouchableOpacity,
     TouchableHighlight,
     } from 'react-native';
-
-//引用样式文件
+import Icon from 'react-native-vector-icons/Iconfont';
+import Spinner from 'react-native-loading-spinner-overlay';
+import Toast from '@remobile/react-native-toast';
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/rankstyle';
-//正在加载组件
-import Loading from './common/loading';
-//引用个人排行组件
+
 import UserRankList from './rank/userranklist';
-//引用团队排行组件
 import TeamRankList from './rank/teamranklist';
+import RankService from '../network/rankservice';
+import GlobalSetup from '../constants/globalsetup';
+import GlobalVariable from '../constants/globalvariable';
 
 var NAVBAR_DATA={first:"荣耀团队",second:"名人堂"};
 var NAVSUBBAR_TEAM={first:"热度",second:"战斗力",third:"氦金"};
@@ -63,7 +58,8 @@ export default class extends Component{
     }
   }
   //加载完组件后操作
-  componentDidMount() {
+  componentWillMount() {
+    this.setState({loaded: true})
   }
   updateContentData(content){
       this.setState({
@@ -74,6 +70,9 @@ export default class extends Component{
       });
       this.fetchUserData();
       this.fetchTeamData();
+      this.setState({
+        loaded: false
+      });
   }
   //获取个人排行数据
   fetchUserData() {
@@ -83,9 +82,6 @@ export default class extends Component{
         this.setState({
           dataUserSource: this.state.dataUserSource.cloneWithRows(newData),
           dataUser:newData,
-        });
-        this.setState({
-          loaded: true
         });
       }
       else {
@@ -101,9 +97,6 @@ export default class extends Component{
         this.setState({
           dataTeamSource: this.state.dataTeamSource.cloneWithRows(newData),
           dataTeam:newData,
-        });
-        this.setState({
-          loaded: true
         });
       }
       else {
@@ -180,7 +173,7 @@ export default class extends Component{
               this.setState({
                 dataTeamSource: this.state.dataTeamSource.cloneWithRows(_ds),
                 dateTeam:_ds,
-                loaded: true,
+                loaded: false,
                 footerOneMsg: "点击加载更多",
               });
             },1000);
@@ -221,7 +214,7 @@ export default class extends Component{
               this.setState({
                 dataUserSource: this.state.dataUserSource.cloneWithRows(_ds),
                 dateUser:_ds,
-                loaded: true,
+                loaded: false,
                 footerTwoMsg: "点击加载更多",
               });
             },1000);
@@ -257,51 +250,11 @@ export default class extends Component{
   render() {
     let navdata=NAVBAR_DATA;
     let navsubdata=this.renderSubData();
-    if(this.state.loaded==false){
-      return (<Loading/>);
-    }
-
+    let listviewdata = '';
     if(this.state.navbar==1){
-      return(
-        <View style={commonstyle.viewbodyer}>
-          <View style={styles.nav}>
-            <View style={styles.navtab}>
-              <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)} >
-                <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>{navdata.first}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-                <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>{navdata.second}</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.navsub}>
-              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1,{'user':'GameGrade','team':'HotScore'})}>
-                <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
-                <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
-              </TouchableOpacity>
-
-              <View style={styles.navsubline}></View>
-
-              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'GamePower','team':'FightScore'})}>
-                <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
-                <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
-              </TouchableOpacity>
-
-              <View style={styles.navsubline}></View>
-
-              <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3,{'user':'Asset','team':'Asset'})}>
-                <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
-                <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <ScrollView style={styles.scrollview}>
-            <ListView
-              dataSource={this.state.dataUserSource}
-              renderRow={this.renderUserRankList.bind(this)}
-              renderFooter={this._renderFooter.bind(this)}
-            />
-          </ScrollView>
-        </View>);
+      listviewdata = <ListView dataSource={this.state.dataUserSource} renderRow={this.renderUserRankList.bind(this)} renderFooter={this._renderFooter.bind(this)}/>
+    }else{
+      listviewdata = <ListView dataSource={this.state.dataTeamSource} renderRow={this.renderTeamRankList.bind(this)} renderFooter={this._renderFooter.bind(this)}/>
     }
     return (
       <View style={commonstyle.viewbodyer}>
@@ -336,12 +289,9 @@ export default class extends Component{
           </View>
         </View>
         <ScrollView style={styles.scrollview}>
-        <ListView
-          dataSource={this.state.dataTeamSource}
-          renderRow={this.renderTeamRankList.bind(this)}
-          renderFooter={this._renderFooter.bind(this)}
-        />
+        {listviewdata}
         </ScrollView>
+        <Spinner visible={this.state.loaded} />
       </View>
     );
   }
