@@ -145,7 +145,7 @@ export default class extends Component{
       <View>
         <View style={styles.fightdetail}>
           <Icon name="war" size={60}  style={commonstyle.red}/>
-          <Text style={[commonstyle.white,styles.fightdetailtext]}>{this.props.fightstate=='send'?'['+this.state.content.ETeamName:'['+this.state.content.STeamName+'] 战队联系人电话: '+this.state.content.PhoneNumber}</Text>
+          <Text style={[commonstyle.white,styles.fightdetailtext]}>{this.props.fightstate=='send'?this.state.content.ETeamName:this.state.content.STeamName+' 战队联系人电话: '+this.state.content.PhoneNumber}</Text>
           <Text style={[commonstyle.red,commonstyle.fontsize14,styles.fightdetailtext]}>{'压注金额'+this.state.content.Money+'氦金'}</Text>
           <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'约战时间: '+this.state.content.FightTime}</Text>
           <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'对方确认房间号: '}{this.state.fightstate=='send'?this.state.content.EFightAddress:this.state.content.SFightAddress}</Text>
