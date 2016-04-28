@@ -12,12 +12,13 @@ import React, {
   RefreshControl,
 } from 'react-native';
 
+import Spinner from 'react-native-loading-spinner-overlay';
+import Icon from 'react-native-vector-icons/Iconfont';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import ShowMsg from './message_show_screen';
 import Header from '../common/headernav';
 import UserService from '../../network/userservice';
-import Icon from 'react-native-vector-icons/Iconfont';
 
 export default class extends React.Component {
   constructor(props){
@@ -41,6 +42,9 @@ export default class extends React.Component {
       footerMsg: "点击加载更多"
     }
   }
+  componentWillMount() {
+    this.setState({loaded: true})
+  }
   componentDidMount() {
     this.getData();
   }
@@ -52,7 +56,7 @@ export default class extends React.Component {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(newData),
           data:newData,
-          loaded: true,
+          loaded: false,
         });
       } else {
         Toast.show('请求错误' + response[0].Message);
@@ -71,43 +75,15 @@ export default class extends React.Component {
       })
     }
   }
-  render() {
-    if(!this.state.loaded){
-      return this.renderLoadingView();
-    }
-    return this.renderList();
-  }
-
-  renderLoadingView() {
-    return (
-      <View style={commonstyle.loading}>
-        <Text>
-          Loading ...
-        </Text>
-      </View>
-    );
-  }
-_onRefresh() {
-  this.setState({
-    isRefreshing: true
-  });
-  setTimeout(()=>{
+  _onRefresh() {
     this.setState({
-      isRefreshing: false
+      isRefreshing: true
     });
-  },1000);
-}
-  renderList() {
-    return(
-      <View style={styles.container}>
-        <Header screenTitle='我的消息' isPop={true} navigator={this.props.navigator}/>
-        <ListView style={commonstyle.bodyer}
-          dataSource={this.state.dataSource}
-          renderRow= {this._renderRow.bind(this)}
-          renderFooter={this._renderFooter.bind(this)}
-        />
-      </View>
-    );
+    setTimeout(()=>{
+      this.setState({
+        isRefreshing: false
+      });
+    },1000);
   }
   _onLoadMore(param,data) {
     if (this.state.keykey > 0) {
@@ -137,7 +113,7 @@ _onRefresh() {
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(_ds),
                 date:_ds,
-                loaded: true,
+                loaded: false,
                 footerMsg: "点击加载更多",
               });
             },1000);
@@ -176,6 +152,19 @@ _onRefresh() {
           <Text style={[commonstyle.gray, commonstyle.fontsize12]}>内容：{rowData.Content}</Text>
         </View>
       </TouchableOpacity>
+    );
+  }
+  render() {
+    return(
+      <View style={styles.container}>
+        <Header screenTitle='我的消息' isPop={true} navigator={this.props.navigator}/>
+        <ListView style={commonstyle.bodyer}
+          dataSource={this.state.dataSource}
+          renderRow= {this._renderRow.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
+        <Spinner visible={this.state.loaded} />
+      </View>
     );
   }
 }
