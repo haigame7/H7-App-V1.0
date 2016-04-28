@@ -89,7 +89,7 @@ export default class extends Component{
   confirmResult(fightaddress){
    if(this.state.fightaddress!==fightaddress){
      Alert.alert(
-             '确认房间号',
+             '确认比赛ID号',
              '您跟对方输入不一致，确认输入结果？',
              [
                {text: '取消', onPress: () => console.log('Cancel Pressed!')},
@@ -145,12 +145,12 @@ export default class extends Component{
       <View>
         <View style={styles.fightdetail}>
           <Icon name="war" size={60}  style={commonstyle.red}/>
-          <Text style={[commonstyle.white,styles.fightdetailtext]}>{this.props.fightstate=='send'?'['+this.state.content.ETeamName:'['+this.state.content.STeamName+'] 战队联系人电话: '+this.state.content.PhoneNumber}</Text>
+          <Text style={[commonstyle.white,styles.fightdetailtext]}>{this.props.fightstate=='send'?this.state.content.ETeamName:this.state.content.STeamName+' 战队联系人电话: '+this.state.content.PhoneNumber}</Text>
           <Text style={[commonstyle.red,commonstyle.fontsize14,styles.fightdetailtext]}>{'压注金额'+this.state.content.Money+'氦金'}</Text>
           <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'约战时间: '+this.state.content.FightTime}</Text>
-          <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'对方确认房间号: '}{this.state.fightstate=='send'?this.state.content.EFightAddress:this.state.content.SFightAddress}</Text>
+          <Text style={[commonstyle.yellow,styles.fightdetailtext]}>{'对方确认比赛ID号: '}{this.state.fightstate=='send'?this.state.content.EFightAddress:this.state.content.SFightAddress}</Text>
           <View  style = {matchstyles.modalinput }>
-            <TextInput placeholder={'请输入比赛房间号'} placeholderTextColor='#484848' style={matchstyles.modalinputfont} keyboardType='numeric'   defaultValue={this.state.fightstate=='send'?this.state.content.SFightAddress:this.state.content.EFightAddress}  onChangeText = {(text) => this.state.fightaddress = text }/>
+            <TextInput placeholder={'请输入比赛ID号'} placeholderTextColor='#484848' style={matchstyles.modalinputfont} keyboardType='numeric'   defaultValue={this.state.fightstate=='send'?this.state.content.SFightAddress:this.state.content.EFightAddress}  onChangeText = {(text) => this.state.fightaddress = text }/>
           </View>
           <View style={styles.detailbtnblock}>
             <TouchableOpacity style = {[commonstyle.btnredwhite, styles.detailbtn]} onPress={()=>this.confirmResult(this.state.fightstate=='send'?this.state.content.EFightAddress:this.state.content.SFightAddress)} activeOpacity={0.8}>
