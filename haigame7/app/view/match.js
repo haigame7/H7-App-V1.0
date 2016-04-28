@@ -107,6 +107,8 @@ export default class extends Component{
           userasset:response[1].Asset,
         },
         });
+      }else{
+        Toast.showLongCenter(response[0].Message);
       }
      }else{
          Toast.show('请求错误');
@@ -151,6 +153,8 @@ export default class extends Component{
           });
           this.getMatchState(this.state.matchdata);
           this.getBoBoList(this.state.matchdata);
+        }else{
+          Toast.showLongCenter(reponse[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -169,6 +173,8 @@ export default class extends Component{
             dataguessSource: this.state.dataguessSource.cloneWithRows(newData),
             guesslist:newData,
           });
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -185,6 +191,8 @@ export default class extends Component{
           this.setState({
             matchstate:response[1].MatchState,
           });
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -221,7 +229,9 @@ export default class extends Component{
             bobolist:newData,
             loaded:false,
           });
-         }
+        }else{
+          Toast.showLongCenter(response[0].Message);
+        }
        }else{
         Toast.show('请求错误');
       }
@@ -255,6 +265,8 @@ export default class extends Component{
             this.setState({
               joincount:response[1].JoinCount,
             });
+          }else{
+           Toast.showLongCenter(response[0].Message);
           }
         }else{
           Toast.show('请求错误');
@@ -275,6 +287,8 @@ export default class extends Component{
               jointeam:response2[1].Name,
               jointime:response2[1].ApplyTime,
             });
+          }else{
+            Toast.showLongCenter(response[0].Message);
           }
         }
       });
@@ -292,6 +306,8 @@ export default class extends Component{
             isOpen: true,
             modaData:rowData
           });
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -338,6 +354,9 @@ export default class extends Component{
       if(params.money>this.state.hjData.totalAsset){
         Toast.show("没有足够的氦金");
         return
+      }else if(params.money<10){
+        Toast.show("最小押注10氦金");
+        return
       }
       GuessService.doGuessBet(params,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -346,6 +365,8 @@ export default class extends Component{
           }else if(response[0].MessageCode == '0'){
             Toast.showLongCenter('下注成功');
             this.initData();
+          }else{
+            Toast.showLongCenter(response[0].Message);
           }
           {/*更新请求*/}
           setTimeout(()=>{
@@ -381,6 +402,8 @@ export default class extends Component{
           }else if(response[0].MessageCode == '0'){
            Toast.showLongCenter('报名成功');
             this.setState({isOpen: false});
+         }else{
+           Toast.showLongCenter(response[0].Message);
          }
        }
         else{
@@ -398,9 +421,11 @@ export default class extends Component{
         }else if(response[0].MessageCode == '0'){
           Toast.showLongCenter('取消成功');
           this.setState({isOpen: false});
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
-        Toast.show('请求错误');
+        Toast.show(response[0].Message);
       }
     });
   }
