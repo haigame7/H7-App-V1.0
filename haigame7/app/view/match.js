@@ -108,7 +108,7 @@ export default class extends Component{
         },
         });
       }else{
-        Toast.showLongCenter(response[0].Message);
+      //  Toast.showLongCenter(response[0].Message);
       }
      }else{
          Toast.show('请求错误');
@@ -295,7 +295,7 @@ export default class extends Component{
     }
   }
   _openGuessModa(rowData) {
-    GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount*20},(response) => {
+    GuessService.myGuessList({userID:this.state.content.userData.UserID,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount*20},(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');
@@ -487,7 +487,7 @@ export default class extends Component{
 
           <View style={commonstyle.row}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >取消关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._doBet.bind(this,{'guessID':this.state.modaData.guessid,'userID':this.state.userdata.userid,'teamID':this.state.modaData.guessteamid,'money':0,'odds':this.state.modaData.guessodd})} >确认下注</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._doBet.bind(this,{'guessID':this.state.modaData.guessid,'userID':this.state.content.userData.UserID,'teamID':this.state.modaData.guessteamid,'money':0,'odds':this.state.modaData.guessodd})} >确认下注</Button>
           </View>
 
           <View style={styles.modalfooter}>

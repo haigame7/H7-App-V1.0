@@ -121,6 +121,8 @@ import User from './user.js';
               },
               login:1,
             });
+          }else{
+            Toast.showLongCenter(response[0].Message);
           }
         }
         else {
@@ -140,6 +142,8 @@ import User from './user.js';
                dataRecruitSource: this.state.dataRecruitSource.cloneWithRows(newData),
                recruitlist:newData,
              });
+           }else{
+             Toast.show(response[0].Message);
            }
           }else{
               Toast.show('请求错误');
@@ -155,6 +159,8 @@ import User from './user.js';
                  dataInviteSource: this.state.dataInviteSource.cloneWithRows(newData),
                  invitelist:newData,
                });
+             }else{
+                Toast.show(response[0].Message);
              }
             }else{
                 Toast.show('请求错误');
@@ -475,6 +481,8 @@ import User from './user.js';
               }
             },1000);
        }
+     }else{
+        Toast.show(response[0].Message);
      }
   }
 }
