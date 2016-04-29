@@ -177,7 +177,7 @@ export default class extends Component{
         params:{...this.props},
        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
-    }else if(this.state.userteamid==0&&this.state.navbar!==0){
+    }else if(this.state.userteamid==0&&this.state.navbar!==0||this.state.userteamname=='还没有创建战队'&&this.state.navbar!==0){
       this.props.navigator.push({
         name:'user',
         component:User,
@@ -186,9 +186,9 @@ export default class extends Component{
       });
     }else{
       if (name == 'teamrecruit') {
-        console.log(this.props);
+        console.log(this.state);
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: TeamRecruit, params:{'teamrecruit':this.state.userteamdata.recruit,'teamid':this.state.userteamid,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
           }
       } else if (name == 'playerinfo') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
