@@ -489,7 +489,7 @@ export default class extends Component{
           <View style={[styles.modalheader]}>
             <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}</Text>
             <View  style = {styles.modalinput }>
-              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric' maxLength={11} onChangeText = {(text) => this.calculateGuess(text)}/>
+              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} maxLength={8} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.calculateGuess(text)}/>
             </View>
             <View style ={commonstyle.row}>
               <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.hjEarnData.totalAsset}</Text></Text></View>
