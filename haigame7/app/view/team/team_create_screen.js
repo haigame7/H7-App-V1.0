@@ -129,7 +129,7 @@ export default class extends React.Component {
     }else{
       return(
         <View>
-          <TouchableOpacity style={commonstyle.viewcenter} activeOpacity={0.8}>
+          <TouchableOpacity onPress={()=> this.selectPhotoTapped()} style={commonstyle.viewcenter} activeOpacity={0.8}>
             <Image style={styles.teamcreateportrait} source={{uri:this.state.value||'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
           </TouchableOpacity>
         </View>
