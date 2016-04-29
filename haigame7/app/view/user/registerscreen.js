@@ -35,6 +35,7 @@ export default class extends Component {
         reset: false,
       },
       securityCode: '',
+      codeState: 0,
       loading: false,
       getCodeMsg: '获取验证码',
       isToushable: true,
@@ -56,6 +57,9 @@ export default class extends Component {
       return;
     }else if(this.state.data.code == '' || this.state.data.code.indexOf(' ') > -1){
       Toast.show('验证码不能为空！');
+      return;
+    }else if(this.state.codeState == 1){
+      Toast.show('验证码已失效！');
       return;
     }else if(this.state.data.code != this.state.securityCode){
       Toast.show('验证码不正确！');
@@ -82,8 +86,14 @@ export default class extends Component {
         this.setState({
           securityCode: response[0].Message,
           isToushable: false,
+          codeState: 0,
         });
         Toast.show("验证码已发送");
+        setTimeout(()=>{
+          this.setState({
+            codeState: 1,
+          });
+        },300000);
       }else if(response[0].MessageCode == '10003'){
         this.setState({
           isToushable: true,
