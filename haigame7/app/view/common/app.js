@@ -213,6 +213,7 @@ class App extends Component {
     this.toggle = false;
     this.state = {
                userData: {},
+               refnavbar:0,
     }
   }
   componentWillMount() {
@@ -270,8 +271,9 @@ class App extends Component {
       }
     });
   }
-  gotoRef(toggle){
+  gotoRef(toggle,navbar){
       this.refs['myTabbar'].gotoTab(toggle);
+      this.refs.content_team._switchNavbar(navbar);
   }
 
   tabbarToggle() {
@@ -319,6 +321,7 @@ class App extends Component {
              navigator={this.props.navigator} {...this.state}/>
            <Fight
              ref="content_fight"
+             gotoRef={this.gotoRef.bind(this)}
              updateLoginState={this.updateLoginState.bind(this)}
              navigator={this.props.navigator} {...this.state}/>
           </View>

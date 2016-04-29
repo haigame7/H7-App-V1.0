@@ -228,6 +228,12 @@ export default class extends Component{
           Toast.showLongCenter('您不是队长无法发起约战');
         }else if(this.state.userteamdata.usercount<4){
           Toast.showLongCenter('战队成员不够5人无法发起约战');
+            Toast.showLongCenter('战队成员不够5人无法发起约战');
+            if(this.props.gotoRef){
+             setTimeout(()=>{
+              this.props.gotoRef("组队",1);
+            },1000);
+          }
         }else{
           if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
             this.props.navigator.push({
@@ -255,7 +261,7 @@ export default class extends Component{
             params:{
               userData:this.state.content.userData,
             },
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom, 
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
           });
         }
       }
