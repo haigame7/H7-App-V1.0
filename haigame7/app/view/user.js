@@ -61,7 +61,15 @@ var User = React.createClass({
    }
   },
   componentDidMount() {
-    // console.log("555555555");
+    NetInfo.isConnected.addEventListener(
+      'change',
+      (res) => {
+        if(!res){
+          Toast.showLongCenter("无网络连接")
+        }
+
+      }
+    );
     this.setState({
       isOpen: true
     })

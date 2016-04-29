@@ -13,7 +13,8 @@ import React, {
   Navigator,
   AsyncStorage,
   Alert,
-  Platform
+  Platform,
+  NetInfo
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -43,8 +44,14 @@ export default class extends Component {
   };
 
   componentDidMount() {
-    // this.setState({reset:this.props.reset});
-    //这里获取从FirstPageComponent传递过来的参数: id
+    NetInfo.isConnected.addEventListener(
+      'change',
+      (res) => {
+        if(!res){
+          Toast.showLongCenter("无网络连接")
+        }
+      }
+    );
   }
 
   onFocus(argument) {

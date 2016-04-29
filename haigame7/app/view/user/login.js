@@ -17,7 +17,8 @@ import React, {
     AsyncStorage,
     Navigator,
     Image,
-    Platform
+    Platform,
+    NetInfo
 } from 'react-native';
 var Icon = require('react-native-vector-icons/Iconfont');
 
@@ -32,22 +33,30 @@ import GlobalSetup from '../../constants/globalsetup';
 import Toast from '@remobile/react-native-toast';
 
 export default class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: {
-                phoneNumber: '',
-                password: '',
-                role: 0
-            },
-            loading: false,
-            login: false
-        };
-    }
-
-    componentWillMount() {
-
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        phoneNumber: '',
+        password: '',
+        role: 0
+      },
+      loading: false,
+      login: false
+    };
+  }
+  componentWillMount() {
+  }
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener(
+      'change',
+      (res) => {
+        if(!res){
+          Toast.showLongCenter("无网络连接")
+        }
+      }
+    );
+  }
 
     render() {
         let fields = [

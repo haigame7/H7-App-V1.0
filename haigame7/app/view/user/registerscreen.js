@@ -12,7 +12,8 @@ import React, {
   TextInput,
   Alert,
   Navigator,
-  Platform
+  Platform,
+  NetInfo
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -40,6 +41,16 @@ export default class extends Component {
       getCodeMsg: '获取验证码',
       isToushable: true,
     }
+  }
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener(
+      'change',
+      (res) => {
+        if(!res){
+          Toast.showLongCenter("无网络连接")
+        }
+      }
+    );
   }
 
   onFocus(argument) {
