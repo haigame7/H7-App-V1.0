@@ -121,9 +121,7 @@ export default class extends Component{
     this.getGuessList();
   }
   getTotalAssertAndRank(phoneNum) {
-    console.log(phoneNum);
     AssertService.getTotalAssertAndRank(phoneNum,(response) => {
-      console.log(response);
       if (response[0].MessageCode == '0') {
         let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
         this.setState({

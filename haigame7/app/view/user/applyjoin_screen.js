@@ -70,7 +70,11 @@ export default class extends React.Component {
       if(response[0].MessageCode == '40001'){
         Toast.show('服务器请求异常');
       }else if(response[0].MessageCode == '0'){
-        Toast.showLongCenter(response[1]);
+        if(isok==0){
+          Toast.showLongCenter('已同意');
+        }else{
+          Toast.showLongCenter('已拒绝');
+        }   
         setTimeout(()=>{
           this.initData();
           },1000);
