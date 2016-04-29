@@ -42,6 +42,14 @@ export default class extends Component{
       }
     );
   }
+  componentDidMount(){
+    if(this.state.teamrecruit != undefined) {
+      this.setState({
+        content: this.state.teamrecruit,
+        textnumber: this.state.teamrecruit.length
+      })
+    }
+  }
  cancelRecruit(){
    this.props.navigator.pop();
  }

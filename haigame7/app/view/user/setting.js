@@ -49,7 +49,7 @@ export default class extends Component{
         allcache: Math.round((await httpCache.getSize()/1024)/1024*10)/10 + 'M',
       });
     } catch(err){
-      alert('获取错误', err.message);
+      Toast('获取错误', err.message);
     }
   }
   async clearCache(){
@@ -58,7 +58,7 @@ export default class extends Component{
       Toast.show('清除缓存成功');
       await this.getData();
     } catch(err){
-      alert('清除失败', err.message);
+      Toast('清除失败', err.message);
     }
   }
 
@@ -95,6 +95,13 @@ export default class extends Component{
   }
 
   render(){
+    //分享功能能
+    // <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"分享","component":Share})}>
+    //   <Text style={styles.listviewtextleft}>分享H7给朋友们</Text>
+    //   <View style={styles.listviewtextbox} ></View>
+    //   <Text style={styles.listviewtextright}>微信</Text>
+    //   <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
+    // </TouchableOpacity>
 
     return (
       <View >
@@ -123,11 +130,6 @@ export default class extends Component{
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"分享","component":Share})}>
-            <Text style={styles.listviewtextleft}>分享H7给朋友们</Text>
-            <View style={styles.listviewtextbox} ></View>
-            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
-          </TouchableOpacity>
 
           <TouchableHighlight style = {this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} onPress = {() => this.onLoginout() } underlayColor = {'#FF0000'}  >
              <Text style = {styles.btnfont}> { '退出登录'}</Text>

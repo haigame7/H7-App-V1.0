@@ -6,8 +6,8 @@ import React, {
   StyleSheet,
   Text,
   View,
-  ToastAndroid
 } from 'react-native';
+import Toast from '@remobile/react-native-toast';
 import GlobalSetup from '../constants/globalsetup';
 /** 网络请求 */
 export default{
@@ -16,7 +16,7 @@ export default{
     if(response.status >= 200 && response.status <=300) {
       return Promise.resolve(response);
     } else {
-      console.log('请求错误');
+      Toast.show('网络请求错误');
       return Promise.reject(new Error(response.statusText));
     }
   },
@@ -110,7 +110,7 @@ export default{
       callback(responseText)
     })
     .catch((error) => {
-      console.log(error);
+      Toast.show(error);
       throw new Error(error);
     })
     .done()

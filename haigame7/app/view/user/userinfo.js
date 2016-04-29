@@ -190,12 +190,14 @@ export default class extends Component {
               break;
             case '头像':
               UserService.updateUserInfo({"PhoneNumber":_this.state.userData.PhoneNumber,'UserWebPicture':pro},(response) => {
+                console.log(response[0]);
+                console.log('***************&&&&');
                 if(response[0].MessageCode == '0') {
                   udata['UserWebPicture'] = 'data:image/jpeg;base64,' + pro
                   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(udata));
                 } else {
                   console.log('更新失败');
-                  Alert.alert(response[0].Message);
+                  Toast.show(response[0].Message);
                 }
               })
                break;
@@ -232,7 +234,7 @@ export default class extends Component {
         })
       } else {
         console.log('更新失败');
-        Alert.alert(response[0].Message);
+        Toast.show(response[0].Message);
       }
     })
   }
@@ -253,7 +255,7 @@ export default class extends Component {
         })
       } else {
         console.log('更新失败');
-        Alert.alert(response[0].Message);
+        Toast.show(response[0].Message);
       }
     })
   }
@@ -270,7 +272,7 @@ export default class extends Component {
         })
       } else {
         console.log('更新失败');
-        Alert.alert(response[0].Message);
+        Toast.show(response[0].Message);
       }
     })
   }
