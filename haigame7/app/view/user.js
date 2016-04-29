@@ -11,7 +11,8 @@ import React, {
   TouchableOpacity,
   Navigator,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  NetInfo
   } from 'react-native';
 import Icon from 'react-native-vector-icons/Iconfont';
 import Modal from 'react-native-modalbox';
