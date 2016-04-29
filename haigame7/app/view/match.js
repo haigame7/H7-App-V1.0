@@ -1,6 +1,6 @@
 'use strict';
 /**
- * APPs我的赛事
+ * APP 赛事
  * @return {[SplashScreen Component]}
  * @author aran.hu
  */
@@ -18,23 +18,25 @@ import React, {
   ScrollView,
   TouchableHighlight,
 } from 'react-native';
-var Icon = require('react-native-vector-icons/Iconfont');
-var commonstyle = require('../styles/commonstyle');
-var styles = require('../styles/matchstyle');
+
+import Icon from 'react-native-vector-icons/Iconfont';
+import Spinner from 'react-native-loading-spinner-overlay';
+import Modal from 'react-native-modalbox';
+import Button from 'react-native-button';
+import Toast from '@remobile/react-native-toast';
+import commonstyle from '../styles/commonstyle';
+import styles from '../styles/matchstyle';
+
 import MatchRule from './match/matchrule';
 import MatchSchedule from './match/matchschedule';
+import Login from './user/login';
+import User from './user.js';
 import MatchService from '../network/matchservice';
 import GuessService from '../network/guessservice';
 import TeamService from '../network/teamservice';
 import AssertService from '../network/assertservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
-import Spinner from 'react-native-loading-spinner-overlay';
-import Modal from 'react-native-modalbox';
-import Toast from '@remobile/react-native-toast';
-import Button from 'react-native-button';
-import Login from './user/login';
-import User from './user.js';
 
 const default_user_pic = 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'
 export default class extends Component{
@@ -74,6 +76,7 @@ export default class extends Component{
       modaData:"",
     }
   }
+  //获取app.js传值
   updateContentData(content){
     this.setState({
       content: content,
@@ -88,33 +91,34 @@ export default class extends Component{
     });
     this.initData();
   }
+  //加载组件
   componentWillMount() {
     this.setState({loaded: true})
-  }
-  componentDidMount(){
   }
   initData(){
     {/*请求我的战队信息*/}
     TeamService.getUserDefaultTeam(this.state.content.userData.UserID,(response) => {
-    if (response !== GlobalSetup.REQUEST_SUCCESS) {
-      if(response[0].MessageCode == '40001'){
-        Toast.show('服务器请求异常');
-      }else if(response[0].MessageCode == '0'){
-        this.setState({
-         userdata:{
-          userid:response[1].Creater,
-          userteamid:response[1].TeamID,
-          userasset:response[1].Asset,
-        },
-        });
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          this.setState({
+            userdata:{
+              userid:response[1].Creater,
+              userteamid:response[1].TeamID,
+              userasset:response[1].Asset,
+            },
+          });
+        }else{
+        //  Toast.showLongCenter(response[0].Message);
+        }
+      }else{
+        Toast.show('请求错误');
       }
-     }else{
-         Toast.show('请求错误');
-     }
-   });
-   this.getTotalAssertAndRank(this.state.userphone);
-   this.getMatchList();
-   this.getGuessList();
+    });
+    this.getTotalAssertAndRank(this.state.userphone);
+    this.getMatchList();
+    this.getGuessList();
   }
   getTotalAssertAndRank(phoneNum) {
     AssertService.getTotalAssertAndRank(phoneNum,(response) => {
@@ -151,6 +155,8 @@ export default class extends Component{
           });
           this.getMatchState(this.state.matchdata);
           this.getBoBoList(this.state.matchdata);
+        }else{
+          Toast.showLongCenter(reponse[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -169,6 +175,8 @@ export default class extends Component{
             dataguessSource: this.state.dataguessSource.cloneWithRows(newData),
             guesslist:newData,
           });
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -185,6 +193,8 @@ export default class extends Component{
           this.setState({
             matchstate:response[1].MatchState,
           });
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -221,7 +231,9 @@ export default class extends Component{
             bobolist:newData,
             loaded:false,
           });
-         }
+        }else{
+          Toast.showLongCenter(response[0].Message);
+        }
        }else{
         Toast.show('请求错误');
       }
@@ -255,6 +267,8 @@ export default class extends Component{
             this.setState({
               joincount:response[1].JoinCount,
             });
+          }else{
+           Toast.showLongCenter(response[0].Message);
           }
         }else{
           Toast.show('请求错误');
@@ -275,13 +289,15 @@ export default class extends Component{
               jointeam:response2[1].Name,
               jointime:response2[1].ApplyTime,
             });
+          }else{
+            Toast.showLongCenter(response[0].Message);
           }
         }
       });
     }
   }
   _openGuessModa(rowData) {
-    GuessService.myGuessList({userID:this.state.userdata.userid,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount*20},(response) => {
+    GuessService.myGuessList({userID:this.state.content.userData.UserID,guessID:rowData.guessid,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount*20},(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
           Toast.show('服务器请求异常');
@@ -292,6 +308,8 @@ export default class extends Component{
             isOpen: true,
             modaData:rowData
           });
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
         Toast.show('请求错误');
@@ -338,6 +356,9 @@ export default class extends Component{
       if(params.money>this.state.hjData.totalAsset){
         Toast.show("没有足够的氦金");
         return
+      }else if(params.money<10){
+        Toast.show("最小押注10氦金");
+        return
       }
       GuessService.doGuessBet(params,(response) => {
         if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -346,6 +367,8 @@ export default class extends Component{
           }else if(response[0].MessageCode == '0'){
             Toast.showLongCenter('下注成功');
             this.initData();
+          }else{
+            Toast.showLongCenter(response[0].Message);
           }
           {/*更新请求*/}
           setTimeout(()=>{
@@ -381,6 +404,8 @@ export default class extends Component{
           }else if(response[0].MessageCode == '0'){
            Toast.showLongCenter('报名成功');
             this.setState({isOpen: false});
+         }else{
+           Toast.showLongCenter(response[0].Message);
          }
        }
         else{
@@ -398,9 +423,11 @@ export default class extends Component{
         }else if(response[0].MessageCode == '0'){
           Toast.showLongCenter('取消成功');
           this.setState({isOpen: false});
+        }else{
+          Toast.showLongCenter(response[0].Message);
         }
       }else{
-        Toast.show('请求错误');
+        Toast.show(response[0].Message);
       }
     });
   }
@@ -462,7 +489,7 @@ export default class extends Component{
 
           <View style={commonstyle.row}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >取消关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._doBet.bind(this,{'guessID':this.state.modaData.guessid,'userID':this.state.userdata.userid,'teamID':this.state.modaData.guessteamid,'money':0,'odds':this.state.modaData.guessodd})} >确认下注</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._doBet.bind(this,{'guessID':this.state.modaData.guessid,'userID':this.state.content.userData.UserID,'teamID':this.state.modaData.guessteamid,'money':0,'odds':this.state.modaData.guessodd})} >确认下注</Button>
           </View>
 
           <View style={styles.modalfooter}>

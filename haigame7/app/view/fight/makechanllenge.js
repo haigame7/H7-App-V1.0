@@ -133,7 +133,7 @@ export default class extends Component{
               <TextInput style={[commonstyle.cream, styles.fightviewinputfont]} placeholder={'请输入压注金额'} maxLength={11} underlineColorAndroid = 'transparent' placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
             </View>
             <View style={styles.fightviewinput}>
-              <TextInput style={commonstyle.white} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.fighttime = text} defaultValue={this.formatDate(this.state.fighttime.toString())}  />
+              <TextInput style={[commonstyle.white, styles.fightviewinputfont]} placeholder={'请选择约战日期'}  placeholderTextColor={'#484848'} editable={false} onChangeText={(text) => this.state.fighttime = text} defaultValue={this.formatDate(this.state.fighttime.toString())}  />
               <TouchableOpacity style={styles.fightviewinputicon} activeOpacity={0.8} onPress={this.showDatePicker.bind(this)}>
                 <Icon name="date" size={16}  color={'#484848'}/>
               </TouchableOpacity>

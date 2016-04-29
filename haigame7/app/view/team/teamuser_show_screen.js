@@ -126,6 +126,10 @@ export default class extends React.Component {
               <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.userData.Sex}</Text></View>
             </View>
             <View style={styles.listview}>
+              <View style={styles.listviewleft}><Text style={commonstyle.gray}>电话</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.userData.PhoneNumber}</Text></View>
+            </View>
+            <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>地区</Text></View>
               <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.userData.Address}</Text></View>
             </View>

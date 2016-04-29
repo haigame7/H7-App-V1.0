@@ -4,22 +4,17 @@
  * @return {[Loading Component]}
  * @author zaki.zi
  */
-var React = require('react-native');
-
-var {
+import React , {
   View,
   Text,
   Image
-  } = React;
+  } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 var Loading = React.createClass({
   render: function () {
     return (
-    <View>
-      <Text>
-        Loading...
-      </Text>
-    </View>
+    <Spinner visible={true} />
     );
   }
 });
