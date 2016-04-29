@@ -109,7 +109,12 @@ export default class extends React.Component {
        this.setState({
          isOpen: false,
        });
-        this._toNextScreen({"name":"创建战队","component":CreateTeam});
+       if(this.state.myTeams.length>=2){
+         Toast.show('一位队长只能创建两只以下战队');
+       }
+       else{
+         this._toNextScreen({"name":"创建战队","component":CreateTeam});
+       }
     }
   }
   _toNextScreen(params){
