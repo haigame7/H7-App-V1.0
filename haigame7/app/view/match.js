@@ -121,7 +121,9 @@ export default class extends Component{
     this.getGuessList();
   }
   getTotalAssertAndRank(phoneNum) {
+    console.log(phoneNum);
     AssertService.getTotalAssertAndRank(phoneNum,(response) => {
+      console.log(response);
       if (response[0].MessageCode == '0') {
         let data = {'totalAsset': response[1].TotalAsset,'myRank': response[1].MyRank}
         this.setState({
@@ -133,8 +135,16 @@ export default class extends Component{
         });
       } else {
         console.log('getTotalAssertAndRank 请求错误' + response[0].Message); //可能是数据直接添加的用
-        Toast.show(response[0].Message);
-        this.setState({isOpen: false});
+        this.setState({
+          isOpen: false,
+          hjData:{
+            totalAsset:0,
+          },
+          hjEarnData:{
+          totalAsset:0,
+          totalEarnAsset:0,
+        }
+        });
       }
     })
   }
