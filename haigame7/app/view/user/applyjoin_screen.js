@@ -70,7 +70,11 @@ export default class extends React.Component {
       if(response[0].MessageCode == '40001'){
         Toast.show('服务器请求异常');
       }else if(response[0].MessageCode == '0'){
-        Toast.showLongCenter(response[1]);
+        if(isok==0){
+          Toast.showLongCenter('已同意');
+        }else{
+          Toast.showLongCenter('已拒绝');
+        }   
         setTimeout(()=>{
           this.initData();
           },1000);
@@ -92,7 +96,9 @@ export default class extends React.Component {
    });
    let state;
    if(rowData.State=="加入战队"){
-     state=  <View style={styles.listblocktext}><Button  onPress={()=>this.handleApply(rowData,0)} containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button  onPress={()=>this.handleApply(rowData,1)} containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
+     state=  <View style={styles.listblocktext}><Button  onPress={()=>this.handleApply(rowData,0)} containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button  onPress={()=>this.  setTimeout(()=>{
+         this.initData();
+         },1000);(rowData,1)} containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
    }else if(rowData.State=="加入成功"){
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnborderred, styles.listblockbutton]} style={[commonstyle.red, commonstyle.fontsize12]} activeOpacity={0.8}>已同意</Button></View>;
    }else if(rowData.State=="加入失败"){
