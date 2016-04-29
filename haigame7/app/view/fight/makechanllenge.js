@@ -61,6 +61,9 @@ export default class extends Component{
     let datetomorrow = new Date().getTime()+1000*60*60*24;
     let datenextweek = new Date().getTime()+1000*60*60*24*7;
     let datefight = new Date(this.state.fighttime).getTime();
+    let type = /^[0-9]*[1-9][0-9]*$/;
+    let re = new RegExp(type);
+
     if(this.state.fighttime==''){
         Toast.showLongCenter('请输入日期');
     }
@@ -68,6 +71,8 @@ export default class extends Component{
           Toast.showLongCenter('战队资产不够');
     }else if(this.state.money<50){
         Toast.showLongCenter('请输入大于50氦金的正整数');
+    }else if(this.state.money.match(re) == null) {
+      Toast.showLongCenter("请填写大于1的整数金额");
     }else if(datefight<datetomorrow){
         Toast.showLongCenter('约战日期应在一天以后');
     }else if(datefight>datenextweek){
@@ -156,7 +161,7 @@ export default class extends Component{
               <Text style = {commonstyle.white}> {'发送挑战'}</Text>
             </TouchableOpacity>
           </View>
-          <View style={{top:Util.size.height/12}}>
+          <View style={{top:-Util.size.height*19/50}}>
             <DateTimePicker  ref={(picker)=>{this.picker=picker}}/>
           </View>
         </View>
