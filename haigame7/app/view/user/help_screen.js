@@ -30,11 +30,11 @@ export default class extends React.Component {
         textnumber:text.length
       }
     );
-    console.log(text.length);
+    // console.log(text.length);
   }
 
   _callback() {
-    ToastAndroid.show("回调方法",ToastAndroid.SHORT)
+    ToastAndroid.show("发送成功！",ToastAndroid.SHORT)
     this.state.navigator.pop()
   }
 

@@ -17,11 +17,15 @@ import styles from '../../styles/userstyle';
 import Header from '../common/headernav'; //导航有问题
 import Help from './help_screen';
 import Toast from '@remobile/react-native-toast';
-var Icon = require('react-native-vector-icons/Iconfont');
+import Modal from 'react-native-modalbox';
+import Icon from 'react-native-vector-icons/Iconfont';
+import Button from 'react-native-button';
 export default class extends React.Component {
   constructor(props){
     super(props);
-
+    this.state = {
+      isOpen: false
+    }
   }
 
   _help() {
@@ -39,6 +43,42 @@ export default class extends React.Component {
   _userAgreement() {
     Toast.show('用户协议');
   }
+  _openModa() {
+    this.setState({isOpen: true});
+  }
+  _closeModa() {
+     this.setState({isOpen: false});
+  }
+
+  _agreementView(){
+    return(
+      <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalbig]} position={"top"} >
+        <View style={commonstyle.modaltitle}>
+          <Text style={[commonstyle.cream, commonstyle.fontsize14]}>用户协议</Text>
+        </View>
+        <ScrollView style={commonstyle.modalbody}  showsVerticalScrollIndicator={true} >
+          <View style={commonstyle.modalbodybottom}>
+            <Text style={[commonstyle.cream, commonstyle.fontsize12]}>
+             {'1. 向对方发起约战，必须填写押注金额，押注金额最低为50氦金，不设立上限；\n\n'}
+             {'2. 向对方发起约战，必须填写约战日期，双方战队需在所选日期24小时之内进行比赛；\n\n'}
+             {'3. 如果想要加注或者更改约战日期，必须经过双方的同意，无法单方私自修改任何已经双方定好的约战内容；\n\n'}
+             {'4. 每支战队24小时之内只能约战一次；\n\n'}
+             {'5. 发起约战之后需要等待对方回应，如果发起约战的时间对方不同意，则双方协商修改，待时间修改完成，双方确认，约战正式生成；\n\n'}
+             {'6. 如果被约战队伍因任何原因拒绝约战，则视为“认怂”计入战队档案；\n\n'}
+             {'7. 被约战战队需在24小时的回应时间，如果在24小时之内未回复，则视为“认怂”，记入档案；\n\n'}
+             {'8. 当约战生成之后，双方需要在约定日期进行约战。如果有一方在规定日期未上线进行比赛则视为该战队“认怂”记入档案；\n\n'}
+             {'9. 比赛之后，胜负双方必须上传比赛ID，如果有一方未上传比赛ID则视为该队比赛失利，如果双方均未上传比赛ID，则视为双方均“认怂”记入档案。如果双方上传的比赛ID不一样，经核实之后，上传虚假比赛ID一方的队长永久取消比赛资格，没收所有个人氦金和该战队氦金；\n\n'}
+             {'10.  双方正常上传比赛ID之后，由氦7平台判断胜负。一切该比赛的所有权和解释权归氦7平台所有。'}
+            </Text>
+          </View>
+        </ScrollView>
+        <View style={[commonstyle.row, commonstyle.modalbtn]}>
+          <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >已阅读</Button>
+        </View>
+      </Modal>
+    );
+  }
+
   _toNextScreen(params){
      // Toast.show("this is a message")
      let _this = this;
@@ -52,6 +92,7 @@ export default class extends React.Component {
      })
    }
   render() {
+    let agreementView = this._agreementView();
     return(
       <View >
         <Header screenTitle='关于H7'  navigator={this.props.navigator}/>
@@ -82,7 +123,7 @@ export default class extends React.Component {
               <TouchableOpacity style={styles.aboutbtn} onPress={this._website.bind(null,this)}>
                 <Text style={commonstyle.red}>官方网站</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.aboutbtn} onPress={this._userAgreement.bind(null,this)}>
+              <TouchableOpacity style={styles.aboutbtn} onPress={this._openModa.bind(this)}>
                 <Text style={commonstyle.red}>用户协议</Text>
               </TouchableOpacity>
             </View>
@@ -90,6 +131,7 @@ export default class extends React.Component {
             <View style={[styles.listbox, {backgroundColor: 'rgba(0, 0, 0, 0)',}]}></View>
           </ScrollView>
         </Image>
+        {agreementView}
       </View>
     );
   }

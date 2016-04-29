@@ -54,7 +54,7 @@ var UserMatchList = React.createClass({
           </View>
           <View style={styles.schedulelisttime}><Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.props.rowData.EndTime.toString().substr(0, 10)}</Text></View>
           <View style={styles.schedulelisttime} activeOpacity={0.8} onPress = {this.gotoRoute.bind(this,{"name":"matchdetail","matchID":this.props.rowData.MatchID})}>
-            <Text style={commonstyle.red}>查看详情</Text>
+            <Text style={commonstyle.red}></Text>
           </View>
         </View>
       );

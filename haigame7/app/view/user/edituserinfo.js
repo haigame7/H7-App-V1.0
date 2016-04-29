@@ -22,15 +22,34 @@ export default class extends Component {
     this.state = {
       userdata: this.props.userdata,
       iconText: '完成',
-      value: ''
+      value: '', //存储变更数据用
+      imgSrc: '' //更改头像临时存储使用
     }
   }
 
   componentDidMount(){
     if (this.props.screenTitle == '头像'){
-      this.setState({
-        iconText: ''
-      })
+
+    }
+    switch (this.props.screenTitle) {
+      case '头像':
+        this.setState({
+          iconText: '',
+          imgSrc: this.props.userdata.UserWebPicture
+        })
+        break;
+      case '昵称':
+        this.setState({
+          value: this.props.userdata.UserWebNickName
+        })
+        break;
+      case '个性签名':
+        this.setState({
+          value: this.props.userdata.Hobby
+        })
+        break;
+      default:
+
     }
   }
 
@@ -84,7 +103,7 @@ export default class extends Component {
         };
 
       ImagePickerManager.showImagePicker(options, (response) => {
-        console.log('Response = ', response);
+        // console.log('Response = ', response);
 
         if (response.didCancel) {
           console.log('User cancelled photo picker');
@@ -99,12 +118,13 @@ export default class extends Component {
           // You can display the image using either:
           let source = 'data:image/jpeg;base64,' + response.data;
           // let source = {uri: response.uri.replace('file://', ''), isStatic: true};
-          let data = this.state.userdata;
-          data['UserWebPicture'] = source
+          // let data = this.state.userdata;
+          //这里出发了上个界面的componentWillReceiveProps 传入了新的props
+          // data['UserWebPicture'] = data //这里就是这里,搞好了可就爽了
           this.setState({
             value: response.data,
             iconText: '确定',
-            userdata: data,
+            imgSrc: source,
           });
         }
       });
@@ -137,7 +157,7 @@ export default class extends Component {
             <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
               <View style={styles.avatarblock}>
               { this.state.UserWebPicture === null ? <Text>Select a Photo</Text> :
-                <Image style={styles.avatar} source={{uri:this.state.userdata.UserWebPicture || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+                <Image style={styles.avatar} source={{uri: this.state.imgSrc || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
               }
               </View>
             </TouchableOpacity>
