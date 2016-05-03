@@ -79,7 +79,7 @@ module.exports = React.createClass({
    }else if( this.state.icon_text != undefined){
      icon = <Text style={CommonStyle.headertextright}>{this.props.iconText}</Text>;
    }
-   else if(this.state.icon_message != 0){
+   else if(this.props.iconMessage != 0){
      icon = <View><Icon name={this.state.icon_name} size={this.state.icon_size} color={this.state.icon_color} /><View style={CommonStyle.pointred}></View></View>;
    }
    else{
