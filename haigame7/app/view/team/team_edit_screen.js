@@ -28,7 +28,7 @@ export default class extends React.Component {
       creater:0,
       TeamID: this.props.teamData.TeamID,
       TeamName:this.props.teamData.TeamName,
-      TeamLogo: '',
+      TeamLogo: this.props.teamData.TeamLogo,
       TeamDescription: this.props.teamData.TeamDescription,
       teamname:'',
       navigator: undefined,
@@ -64,10 +64,9 @@ export default class extends React.Component {
         // You can display the image using either:
         let source = 'data:image/jpeg;base64,' + response.data;
         this.setState({
-          value: source,
-          jsonvalue:response.data,
           imgnull:1,
-          TeamLogo: response.data,
+          showLogo: response.data,
+          TeamLogo: source,
         });
       }
     });
@@ -82,7 +81,7 @@ export default class extends React.Component {
       Toast.show('请填写战队宣言');
       return;
     }else{
-      value = {TeamID: this.state.TeamID,TeamName:this.state.TeamName,TeamLogo: this.state.TeamLogo,TeamDescription: this.state.TeamDescription,};
+      value = {TeamID: this.state.TeamID,TeamName:this.state.TeamName,TeamLogo: this.state.imgnull==1? this.state.showLogo: '',TeamDescription: this.state.TeamDescription,};
     };
     this.props.setProperty(value);
     if(this.props.navigator) {
@@ -104,7 +103,7 @@ export default class extends React.Component {
           <View style={styles.teamcreate}>
             <View style={styles.teamcreateimg}>
               <TouchableOpacity style={commonstyle.viewcenter} activeOpacity={0.8} onPress={()=> this.selectPhotoTapped()}>
-                <Image style={styles.teamcreateportrait} source={{uri:this.props.teamData.TeamLogo}} />
+                <Image style={styles.teamcreateportrait} source={{uri:this.state.TeamLogo}} />
               </TouchableOpacity>
             </View>
             <View style={[commonstyle.btnborderred, styles.teamcreateinput]}>

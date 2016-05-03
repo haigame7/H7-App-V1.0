@@ -47,7 +47,7 @@ export default class extends React.Component {
     let that = this;
     var items = Object.keys(groups).map(function(item,key) {
         return(
-            <Image style={styles.listviewheroimg} source={{uri:groups[item].UserPicture}} />
+            <Image  key={key} style={styles.listviewheroimg} source={{uri:groups[item].UserPicture}} />
         );
 
     });
