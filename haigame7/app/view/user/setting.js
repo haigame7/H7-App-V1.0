@@ -103,18 +103,17 @@ export default class extends Component{
     //   <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
     // </TouchableOpacity>
 
+    // <View style={styles.listview}>
+    //   <Text style={styles.listviewtextleft}>系统消息提示音</Text>
+    //   <View style={styles.listviewtextbox} >
+    //     <Switch onValueChange={(value) =>this.openalert(this.state.alertvoice)} style={[styles.switchSetting]} value= {this.state.alertvoice}/>
+    //   </View>
+    // </View>
     return (
       <View >
         <Header screenTitle='系统设置' navigator={this.props.navigator}/>
 
         <ScrollView style={commonstyle.bodyer}>
-          <View style={styles.listview}>
-            <Text style={styles.listviewtextleft}>系统消息提示音</Text>
-            <View style={styles.listviewtextbox} >
-              <Switch onValueChange={(value) =>this.openalert(this.state.alertvoice)} style={[styles.switchSetting]} value= {this.state.alertvoice}/>
-            </View>
-          </View>
-
           <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this.clearCache.bind(this)}>
             <Text style={styles.listviewtextleft}>清空缓存</Text>
             <View style={styles.listviewtextbox} ></View>
