@@ -19,6 +19,7 @@ import styles from '../../styles/userstyle';
 import ShowMsg from './message_show_screen';
 import Header from '../common/headernav';
 import UserService from '../../network/userservice';
+import Toast from '@remobile/react-native-toast';
 
 export default class extends React.Component {
   constructor(props){
@@ -66,9 +67,10 @@ export default class extends React.Component {
   gotoRoute(params) {
     if (this.props.navigator) {
       this.props.navigator.push({ component: ShowMsg, params:{'messagedata':params}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-      UserService.setMessageRead(params.MessageID,(response) =>{
+      UserService.setMessageRead({'messageID':params.MessageID},(response) =>{
         if (response[0].MessageCode == '0') {
           console.log('设置成功' + response[0].Message);
+        
         } else {
           Toast.show('请求错误' + response[0].Message);
         }

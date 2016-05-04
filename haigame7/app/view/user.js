@@ -11,7 +11,8 @@ import React, {
   TouchableOpacity,
   Navigator,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  NetInfo
   } from 'react-native';
 import Icon from 'react-native-vector-icons/Iconfont';
 import Modal from 'react-native-modalbox';
@@ -20,7 +21,7 @@ import Toast from '@remobile/react-native-toast';
 import commonstyle from '../styles/commonstyle';
 import styles from '../styles/userstyle';
 
-import Header from './common/headernav'; 
+import Header from './common/headernav';
 import UserInfo from './user/userinfo';
 import Setting from './user/setting';
 import UserSign from './user/usersign';
@@ -61,7 +62,15 @@ var User = React.createClass({
    }
   },
   componentDidMount() {
-    // console.log("555555555");
+    NetInfo.isConnected.addEventListener(
+      'change',
+      (res) => {
+        if(!res){
+          Toast.showLongCenter("无网络连接")
+        }
+
+      }
+    );
     this.setState({
       isOpen: true
     })
@@ -156,6 +165,7 @@ var User = React.createClass({
   _toNextScreen(params){
     // Toast.show("this is a message")
     // console.log(this.state.fightData);
+    this._closeModa();
     let _this = this;
     this.state._navigator.push({
       name: params.name,
