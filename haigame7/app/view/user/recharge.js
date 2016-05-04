@@ -28,7 +28,7 @@ import AssertService from '../../network/assertservice';
 import Toast from '@remobile/react-native-toast';
 import WeChatAndroid from 'react-native-wechat-android';
 import WeChatIOS from 'react-native-wechat-ios';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 let appId = 'wxb0cb6c44afd49f5a';
 let outTradeno = "";
 var subscription = ""; //接收支付时间推送
@@ -49,7 +49,8 @@ export default class extends Component{
       loading: false,
       registerWechat: false,
       isWXAppInstalled: true,
-      isWXAppSupportApi: true
+      isWXAppSupportApi: true,
+      loaded: false
     }
   }
   componentWillMount() {
@@ -96,7 +97,8 @@ export default class extends Component{
       subscription = NativeAppEventEmitter.addListener(
         'finishedPay',
         (res) => {
-          console.log('回调的支付结果');
+          // console.log('回调的支付结果');
+
           // console.log(res.length)
           // console.log(res.errCode);
           if(res.errCode == 0) {
@@ -273,7 +275,6 @@ export default class extends Component{
               } else {
                 Toast.show("请求支付错误,请稍后重试!")
               }
-              Toast.show('');
             })
           }
         });
@@ -347,6 +348,7 @@ export default class extends Component{
           </View>
           {btn}
         </View>
+        <Spinner visible={this.state.loaded} />
       </View>
     );
   }

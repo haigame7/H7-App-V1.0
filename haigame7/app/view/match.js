@@ -343,14 +343,12 @@ export default class extends Component{
         name:'login',
         component:Login,
         params:{...this.props},
-        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }else if(this.state.userdata.userteamid==0){
       this.props.navigator.push({
         name:'user',
         component:User,
         params:{'userData':this.state.content.userData,'openmodal':true},
-        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }else{
       params.money = parseInt(this.state.guessmoney);
@@ -395,14 +393,12 @@ export default class extends Component{
         name:'login',
         component:Login,
         params:{...this.props},
-       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }else if(this.state.userdata.userteamid==0){
       this.props.navigator.push({
         name:'user',
         component:User,
         params:{'userData':this.state.content.userData,'openmodal':true},
-        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }else{
       MatchService.joinMatch(params,(response) => {
@@ -448,11 +444,11 @@ export default class extends Component{
   gotoRoute(name,params) {
     if (name == 'matchrule') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-        this.props.navigator.push({ name: name, component: MatchRule,params:{'matchdata':params}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        this.props.navigator.push({ name: name, component: MatchRule,params:{'matchdata':params}});
       }
     } else if (name == 'matchschedule') {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-        this.props.navigator.push({ name: name, component: MatchSchedule, params:{'matchdata':params,'boboID':this.state.boboid, 'userdata':this.state.userdata}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        this.props.navigator.push({ name: name, component: MatchSchedule, params:{'matchdata':params,'boboID':this.state.boboid, 'userdata':this.state.userdata} });
       }
     }
   }

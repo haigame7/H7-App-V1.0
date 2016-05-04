@@ -72,7 +72,7 @@ export default class extends React.Component {
       });
     },1000);
   }
-  
+
   _onLoadMore() {
     if (this.state.keykey > 0) {
       this.setState({
@@ -89,6 +89,13 @@ export default class extends React.Component {
       FightService.getAllFightInfo(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
+          for(var item in nextData){
+            _ds.push(nextData[item])
+          }
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(_ds),
+            loaded: false,
+          });
           if(nextData.length<5){
             this.setState({
               keykey:1,
@@ -99,21 +106,11 @@ export default class extends React.Component {
               footerMsg: "点击加载更多",
             });
           };
-          for(var item in nextData){
-            _ds.push(nextData[item])
-          }
-          setTimeout(()=>{
-            this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(_ds),
-              loaded: false,
-            });
-          },1000);
         } else {
           Toast.show(response[0].Message);
         }
       });
     }
-
   }
 
   _renderFooter() {

@@ -190,8 +190,8 @@ export default class extends Component {
               break;
             case '头像':
               UserService.updateUserInfo({"PhoneNumber":_this.state.userData.PhoneNumber,'UserWebPicture':pro},(response) => {
-                console.log(response[0]);
-                console.log('***************&&&&');
+                // console.log(response[0]);
+                // console.log('***************&&&&');
                 if(response[0].MessageCode == '0') {
                   udata['UserWebPicture'] = 'data:image/jpeg;base64,' + pro
                   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(udata));
