@@ -412,7 +412,7 @@ export default StyleSheet.create({
     },
     //资产
     assetbg: {
-        height: 160,
+        height: (Platform.OS === 'ios') ?115 : 160,
         width: Util.size.width,
     },
     assetblock: {

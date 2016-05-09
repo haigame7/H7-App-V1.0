@@ -14,7 +14,8 @@ import React,
     ListView,
     RefreshControl,
     Alert,
-    ScrollView
+    ScrollView,
+    Platform
   } from 'react-native';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
@@ -45,6 +46,10 @@ export default class extends Component{
     }
   }
     gotoRecharge(name) {
+      if (Platform.OS == 'ios') {
+        Toast.showShortCenter('充值功能暂未提供...')
+        return
+      }
       this.props.navigator.push({
         name: name,
         component: Recharge,
@@ -59,8 +64,8 @@ export default class extends Component{
           this._getTotalAssertAndRank()
           this.props._callback('TotalAssertAndRank') //回调user的callback方法
           if('startPage' in params){
-            console.log('&&&&&&&&&&&');
-            console.log('回调更新');
+            // console.log('&&&&&&&&&&&');
+            // console.log('回调更新');
             this.setState({
               assetData: []
             })
@@ -104,7 +109,7 @@ export default class extends Component{
     if(startPage != undefined) {
       requestParams['startPage'] = startPage;
     }
-    console.log(requestParams);
+    // console.log(requestParams);
     AssertService.fetchAssertList(requestParams,(response) => {
       if (response[0].MessageCode == '0') {
         let newData = response[1];
@@ -175,6 +180,16 @@ export default class extends Component{
     );
   }
   render(){
+    let RechargeView;
+    if (Platform.OS == 'ios') {
+
+    } else {
+      RechargeView = (
+        <TouchableHighlight style={[styles.btn, commonstyle.btnwhitered]} underlayColor={'#FFFFFF'} onPress={() => this.gotoRecharge('recharge')}>
+          <Text style={commonstyle.red} >{'氦金充值'}</Text>
+        </TouchableHighlight>
+      )
+    }
     return (
       <View>
         <Header screenTitle='我的资产' isPop={true}  navigator={this.props.navigator}/>
@@ -200,9 +215,7 @@ export default class extends Component{
             </TouchableOpacity>
           </View>
 
-          <TouchableHighlight style={[styles.btn, commonstyle.btnwhitered]} underlayColor={'#FFFFFF'} onPress={() => this.gotoRecharge('recharge')}>
-            <Text style={commonstyle.red} >{'氦金充值'}</Text>
-          </TouchableHighlight>
+          {RechargeView}
           </Image>
 
           <ScrollView style={styles.assetlistblock}>
