@@ -26,6 +26,7 @@ import GlobalVariable from '../../constants/globalvariable'
 import Toast from '@remobile/react-native-toast';
 
 import * as httpCache from '../../components/common/cache'
+import PrivacyAgreement from './privacy_agreement'
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -123,6 +124,11 @@ export default class extends Component{
 
           <View style={styles.listbox}></View>
 
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8}  onPress={this._toNextScreen.bind(this,{"name":"隐私协议","component":PrivacyAgreement})}>
+            <Text style={styles.listviewtextleft}>隐私协议</Text>
+            <View style={styles.listviewtextbox} ></View>
+            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
+          </TouchableOpacity>
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}  onPress={this._toNextScreen.bind(this,{"name":"关于H7","component":About})}>
             <Text style={styles.listviewtextleft}>关于H7</Text>
             <View style={styles.listviewtextbox} ></View>

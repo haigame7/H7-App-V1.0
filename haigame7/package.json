@@ -13,6 +13,7 @@
     "react-native": "^0.20.0",
     "react-native-button": "^1.4.2",
     "react-native-carousel": "^0.4.5",
+    "react-native-checkbox": "^1.0.8",
     "react-native-complex-user-register": "^1.0.3",
     "react-native-gifted-listview": "0.0.13",
     "react-native-http-cache": "^0.1.1",
