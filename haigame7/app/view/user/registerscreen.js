@@ -181,16 +181,19 @@ export default class extends Component {
               <TextInput {...fields[1]} onFocus={() => this.onFocus({...fields[0]})} onChangeText={(text) => this.state.data.code = text} />
               {codebtn}
           </View>
+          <View style={[commonstyle.row,styles.checkview]}>
+            <CheckBox
+              label=''
+              checked={this.state.isAgreed}
+              onChange={(checked) =>{this.setState({isAgreed: checked})}}
+            />
+            <TouchableHighlight style={commonstyle.col1} underlayColor={'rgba(0, 0, 0, 0)'} onPress={this._showServiceAgreement.bind(this)}>
+              <Text style={commonstyle.blue}>用户注册及服务协议</Text>
+            </TouchableHighlight>
+          </View>
+          
           <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRoute('setpwd',fields)}>
               <Text style={styles.btnfont} >{'下一步'}</Text>
-          </TouchableHighlight>
-          <CheckBox
-            label=''
-            checked={this.state.isAgreed}
-            onChange={(checked) =>{this.setState({isAgreed: checked})}}
-          />
-          <TouchableHighlight onPress={this._showServiceAgreement.bind(this)}>
-            <Text style={{color:'red'}}>用户注册及服务协议</Text>
           </TouchableHighlight>
       </Image>
       </View>
