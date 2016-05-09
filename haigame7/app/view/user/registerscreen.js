@@ -25,7 +25,8 @@ import GlobalSetup from '../../constants/globalsetup';
 
 import Toast from '@remobile/react-native-toast';
 import {CountDownText} from 'react-native-sk-countdown';
-
+import UserServiceAgreement from './user_service_agreement';
+import CheckBox from 'react-native-checkbox';
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +41,7 @@ export default class extends Component {
       loading: false,
       getCodeMsg: '获取验证码',
       isToushable: true,
+      isAgreed: false
     }
   }
   componentDidMount() {
@@ -63,7 +65,7 @@ export default class extends Component {
   }
   /*下一步*/
   gotoRoute(name,argument) {
-    if (this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1) {
+    if(this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1){
       Toast.show('手机号不能为空！');
       return;
     }else if(this.state.data.code == '' || this.state.data.code.indexOf(' ') > -1){
@@ -75,7 +77,10 @@ export default class extends Component {
     }else if(this.state.data.code != this.state.securityCode){
       Toast.show('验证码不正确！');
       return;
-    }else{
+    }else if(!this.state.isAgreed){
+      Toast.show('请阅读并勾选注册服务协议！');
+      return;
+    }else {
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
         this.props.navigator.push({name: name,component: Setpwd,params:{data:this.state.data,reset:false},sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
       }
@@ -126,6 +131,16 @@ export default class extends Component {
     })
   }
 
+  _showServiceAgreement(){
+    this.props.navigator.push({
+      name: '用户注册及服务协议',
+      component: UserServiceAgreement,
+      params:{
+        data:this.state.data,reset:false
+      },
+      sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+  }
+
   render() {
     let fields = [
       {ref: 'phone', placeholder: '手机号', keyboardType: 'numeric', maxLength: 11,placeholderTextColor: (Platform.OS === 'ios') ?'white':'block', underlineColorAndroid: 'rgba(0, 0, 0, 0)', message: '* 手机号必填', style: [styles.logininputfont]},
@@ -169,9 +184,16 @@ export default class extends Component {
           <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRoute('setpwd',fields)}>
               <Text style={styles.btnfont} >{'下一步'}</Text>
           </TouchableHighlight>
+          <CheckBox
+            label=''
+            checked={this.state.isAgreed}
+            onChange={(checked) =>{this.setState({isAgreed: checked})}}
+          />
+          <TouchableHighlight onPress={this._showServiceAgreement.bind(this)}>
+            <Text style={{color:'red'}}>用户注册及服务协议</Text>
+          </TouchableHighlight>
       </Image>
       </View>
-
     );
   }
 }

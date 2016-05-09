@@ -226,14 +226,14 @@ export default class extends Component{
       temp = money;
     }
     if (temp === "" || temp == null || temp == undefined) {
-      Toast.show("请选择或填写充值金额");
+      Toast.show("请选择或填写充值氦金数量");
       return
     }
     _money = temp.toString()
     let type = /^[0-9]*[1-9][0-9]*$/;
     let re = new RegExp(type);
     if (_money.match(re) == null) {
-      Toast.show("请填写大于1的整数金额");
+      Toast.show("请填写大于1的整数氦金数量");
       return
     }
     let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + _money + "&tradeType=APP";
@@ -290,7 +290,7 @@ export default class extends Component{
 
 
   render(){
-    let fields = [{ref: 'money', placeholder: '请输入充值金额', keyboardType: 'numeric', maxLength: 10,placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
+    let fields = [{ref: 'money', placeholder: '请输入充值氦金数量', keyboardType: 'numeric', maxLength: 10,placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
     // console.log(this.state.registerWechat);
     if(this.state.registerWechat && this.state.isWXAppInstalled && this.state.isWXAppSupportApi){

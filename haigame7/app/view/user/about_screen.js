@@ -20,6 +20,7 @@ import Toast from '@remobile/react-native-toast';
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/Iconfont';
 import Button from 'react-native-button';
+import UserServiceAgreement from './user_service_agreement';
 export default class extends React.Component {
   constructor(props){
     super(props);
@@ -49,7 +50,15 @@ export default class extends React.Component {
   _closeModa() {
      this.setState({isOpen: false});
   }
-
+  _showServiceAgreement(){
+    this.props.navigator.push({
+      name: '用户注册及服务协议',
+      component: UserServiceAgreement,
+      params:{
+        data:this.state.data,reset:false
+      },
+      sceneConfig:Navigator.SceneConfigs.FloatFromBottom});
+  }
   _agreementView(){
     return(
       <Modal isOpen={this.state.isOpen}  swipeToClose={false} onClosed={this._closeModa.bind(this)} style={[commonstyle.modal, commonstyle.modalbig]} position={"top"} >
@@ -134,7 +143,6 @@ export default class extends React.Component {
      })
    }
   render() {
-    let agreementView = this._agreementView();
     return(
       <View >
         <Header screenTitle='关于H7'  navigator={this.props.navigator}/>
@@ -165,7 +173,7 @@ export default class extends React.Component {
               <TouchableOpacity style={styles.aboutbtn} onPress={this._website.bind(null,this)}>
                 <Text style={commonstyle.red}>官方网站</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.aboutbtn} onPress={this._openModa.bind(this)}>
+              <TouchableOpacity style={styles.aboutbtn} onPress={this._showServiceAgreement.bind(this)}>
                 <Text style={commonstyle.red}>用户协议</Text>
               </TouchableOpacity>
             </View>
@@ -173,7 +181,6 @@ export default class extends React.Component {
             <View style={[styles.listbox, {backgroundColor: 'rgba(0, 0, 0, 0)',}]}></View>
           </ScrollView>
         </Image>
-        {agreementView}
       </View>
     );
   }
