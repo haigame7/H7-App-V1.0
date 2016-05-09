@@ -288,6 +288,20 @@ export default StyleSheet.create({
     pickerview: {
         backgroundColor: '#FFFFFF',
     },
+    //选择框
+    checkview: {
+        height: 30,
+        width: Util.size.width - 72,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        marginLeft: 36,
+        marginRight: 36,
+    },
+    checkbox: {
+        width: 30,
+        height: 30,
+    },
     //滑块
     switchblock: {
         flexDirection: 'row',
