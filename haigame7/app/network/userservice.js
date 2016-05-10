@@ -169,6 +169,14 @@ export default{
       callback
     );
   },
+  /*查看签到*/
+  isSignIn(UserID,callback){
+    FecthService.postFecth(
+      ApiConfig.USER_API.IS_SIGN_IN,
+      {'UserID':UserID},
+      callback
+    );
+  },
   _urlForQueryAndPage(query: string, pageNumber: number): string {
     // var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     // if (query) {
