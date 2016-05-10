@@ -263,6 +263,10 @@ export default StyleSheet.create({
         backgroundColor: '#484848',
         marginTop: -1,
     },
+    listboxfooter: {
+        height: (Platform.OS === 'ios') ? 2 : 25,
+        marginTop: -1,
+    },
     listviewlable: {
         justifyContent: 'center',
         width: 80,

@@ -20,6 +20,8 @@ import React,
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Header from '../common/headernav';
+import Modal from 'react-native-modalbox';
+import Button from 'react-native-button';
 import Icon from 'react-native-vector-icons/Iconfont';
 import Recharge from './recharge';
 import AssertService from '../../network/assertservice';
@@ -39,61 +41,13 @@ export default class extends Component{
       isFetchData: true,
       keykey: 0,
       isOpen: true,
+      modalOpen:false,
       footerMsg: "点击加载",
       startPage: 1,
       isTotalData: false,
       assetData: []
     }
   }
-    gotoRecharge(name) {
-      if (Platform.OS == 'ios') {
-        Toast.showShortCenter('充值功能暂未提供...')
-        return
-      }
-      this.props.navigator.push({
-        name: name,
-        component: Recharge,
-        params:{
-          ...this.props,
-        _userAssetCallback: this._userAssetCallback.bind(this)
-        }});
-    }
-    _userAssetCallback(key,params){
-      switch (key) {
-        case 'TotalAssertAndRank':
-          this._getTotalAssertAndRank()
-          this.props._callback('TotalAssertAndRank') //回调user的callback方法
-          if('startPage' in params){
-            // console.log('&&&&&&&&&&&');
-            // console.log('回调更新');
-            this.setState({
-              assetData: []
-            })
-            this._fetchAssertList(params['startPage'])
-          }
-          break;
-      }
-    }
-
-  //   _onRefresh() {
-  //     this.setState({
-  //       isRefreshing: true
-  //     });
-  //     console.log("下拉刷新");
-  //     setTimeout(()=>{
-  //       this.setState({
-  //         isRefreshing: false
-  //       });
-  //     },1000);
-  //   }
-  //   _onLoadMore() {
-  //     if (this.state.keykey > 3) {
-  //       this.setState({
-  //         footerMsg: "木有更多多数据了~~~~"
-  //       });
-  //     }else{
-  //     }
-  // }
   componentDidMount() {
     this._fetchAssertList()
   }
@@ -157,6 +111,62 @@ export default class extends Component{
       }
     })
   }
+
+  _closeModa() {
+     this.setState({modalOpen: false});
+  }
+  _openModa() {
+     this.setState({modalOpen: true});
+  }
+  gotoRecharge(name) {
+    if (Platform.OS == 'ios') {
+      Toast.showShortCenter('充值功能暂未提供...')
+      return
+    }
+    this.props.navigator.push({
+      name: name,
+      component: Recharge,
+      params:{
+        ...this.props,
+      _userAssetCallback: this._userAssetCallback.bind(this)
+      }});
+  }
+  _userAssetCallback(key,params){
+    switch (key) {
+      case 'TotalAssertAndRank':
+        this._getTotalAssertAndRank()
+        this.props._callback('TotalAssertAndRank') //回调user的callback方法
+        if('startPage' in params){
+          // console.log('&&&&&&&&&&&');
+          // console.log('回调更新');
+          this.setState({
+            assetData: []
+          })
+          this._fetchAssertList(params['startPage'])
+        }
+        break;
+    }
+  }
+
+  //   _onRefresh() {
+  //     this.setState({
+  //       isRefreshing: true
+  //     });
+  //     console.log("下拉刷新");
+  //     setTimeout(()=>{
+  //       this.setState({
+  //         isRefreshing: false
+  //       });
+  //     },1000);
+  //   }
+  //   _onLoadMore() {
+  //     if (this.state.keykey > 3) {
+  //       this.setState({
+  //         footerMsg: "木有更多多数据了~~~~"
+  //       });
+  //     }else{
+  //     }
+  // }
   _renderRow(rowData, sectionID, rowID) {
     return(
       <View style={[commonstyle.row, styles.assetlist]}>
@@ -192,7 +202,7 @@ export default class extends Component{
     }
     return (
       <View>
-        <Header screenTitle='我的资产' isPop={true}  navigator={this.props.navigator}/>
+        <Header screenTitle='我的资产' iconText='氦金说明' isPop={true}  navigator={this.props.navigator} icon_onPress={this._openModa.bind(this)}/>
         <View style={commonstyle.bodyer}>
           <Image source = {require('../../images/assetbg.jpg')} style={styles.assetbg} resizeMode = {"cover"}>
           <View style={[commonstyle.row, styles.assetblock]}>
@@ -224,9 +234,21 @@ export default class extends Component{
               renderRow= {this._renderRow.bind(this)}
               renderFooter={this._renderFooter.bind(this)}
             />
-            <View style={styles.listboxfoot}></View>
+            <View style={styles.listboxfooter}></View>
           </ScrollView>
         </View>
+        <Modal isOpen={this.state.modalOpen}  style={[commonstyle.modal, commonstyle.modalmiddle]} position={"center"}>
+          <View style={commonstyle.modalclose}><Button onPress={this._closeModa.bind(this)} ><Icon name="error" size={20} color={'#FF0000'} /></Button></View>
+          <View style={commonstyle.modaltext}>
+            <Text style={commonstyle.cream}>1）什么是氦金？</Text>
+            <Text style={commonstyle.cream}>氦金是氦7约战平台通用的虚拟货币，可用于约战、竞猜时使用。</Text>
+            <Text style={commonstyle.cream}>2）氦金的获取方式？</Text>
+            <Text style={commonstyle.cream}>注册用户送50氦金，每日签到送1氦金。</Text>
+          </View>
+          <View style={[commonstyle.row, commonstyle.modalbtn]}>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} activeOpacity={0.8}  onPress={this._closeModa.bind(this)} style={commonstyle.white}>关闭</Button>
+          </View>
+        </Modal>
       </View>
     );
   }
