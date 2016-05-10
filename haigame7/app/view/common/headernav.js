@@ -37,7 +37,7 @@ module.exports = React.createClass({
       icon_text: this.props.iconText,
       current_title: this.props.screenTitle,
       navigator: undefined,
-      icon_onPress: null,
+      icon_onPress: this.props.icon_onPress == undefined ? null : this.props.icon_onPress,
       icon_message: this.props.iconMessage,
       next_component: null,
       isPop: this.props.isPop == undefined ? true : this.props.isPop,
