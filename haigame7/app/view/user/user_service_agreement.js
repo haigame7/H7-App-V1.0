@@ -89,6 +89,9 @@ let htmlStr = '<p class="MsoNormal" style="text-align:center;text-indent:21.1pt;
 <p class="MsoNormal" style="text-align:left;text-indent:21.0pt;background:white;" align="left">\
 	<span style="line-height:150%;font-family:宋体;color:#333333;">3.6</span><span style="line-height:150%;font-family:宋体;color:#333333;">您同意：根据法律法规及司法、行政机关的强制性要求，本司有权使用您的注册信息、用户名、密码等信息，登陆进入您的注册账户，进行证据保全，包括但不限于公证、见证、协助司法机关进行调查取证等。<span></span></span>\
 </p>\
+<p class="MsoNormal" style="text-align:left;text-indent:21.0pt;background:white;" align="left">\
+	<a name="OLE_LINK2"></a><a name="OLE_LINK1"></a><span><span style="line-height:150%;font-family:宋体;">3.7 APP</span></span><span><span><span style="line-height:150%;font-family:宋体;">中“排行”功能会收集并上传您的对战数据、战斗力数据及氦金数据到我们的服务器中，用于名次排名。<span></span></span></span></span>\
+</p>\
 <p class="MsoNormal" style="text-align:left;text-indent:21.1pt;background:white;" align="left">\
 	<b><span style="line-height:150%;font-family:宋体;color:#333333;">第<span>4</span>条 用户依法言行义务<span></span></span></b>\
 </p>\
