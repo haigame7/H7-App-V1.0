@@ -55,6 +55,10 @@ let htmlStr = '<p class="MsoNormal" style="text-align:center;" align="center">\
 	<span style="line-height:150%;font-family:宋体;">3.4</span><span style="line-height:150%;font-family:宋体;">您一旦接受本协议，即表明您主动将您在任何时间段在本站发表的任何形式的信息内的财产性权利等任何可转让的权利等，全部独家且不可撤销地转让给本司所有，您同意本司有权就任何主体侵权而单独提起诉讼。<span></span></span>\
 </p>\
 <p class="MsoNormal" style="text-align:left;text-indent:21.0pt;background:white;" align="left">\
+	<span style="line-height:150%;font-family:宋体;">3.5\
+APP</span><span style="line-height:150%;font-family:宋体;">中“排行”功能会收集并上传您的对战数据、战斗力数据及氦金数据到我们的服务器中，用于名次排名。<span></span></span>\
+</p>\
+<p class="MsoNormal" style="text-align:left;text-indent:21.0pt;background:white;" align="left">\
 	<span style="line-height:150%;font-family:宋体;">第<span>4</span>条 账户使用<span></span></span>\
 </p>\
 <p class="MsoNormal" style="text-align:left;text-indent:21.0pt;background:white;" align="left">\
