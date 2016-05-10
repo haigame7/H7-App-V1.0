@@ -4,6 +4,7 @@ var React = require('react-native');
 var Header = require('../common/headernav'); // 主屏
 var Icon = require('react-native-vector-icons/Iconfont');
 var Util = require('../common/util');
+var dismissKeyboard = require('dismissKeyboard')
 var {
   View,
   Component,
@@ -218,6 +219,7 @@ export default class extends Component{
     }
   }
   _gotoRecharge(money,argument) {
+    dismissKeyboard()
     let _money
     let temp
     if (money === "" || money == null || money == undefined) {
