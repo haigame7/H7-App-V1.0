@@ -39,7 +39,14 @@ export default class extends Component{
   }
 
   componentWillMount(){
-    
+    UserService.isSignIn(this.props.userData.UserID,(response) => {
+      if (response[0].MessageCode == '60002') {
+        this.setState({
+          signInMsg:'已签到'
+        })
+      }else{
+      }
+    })
   }
 
   gotoRoute(name,params) {
@@ -99,7 +106,7 @@ export default class extends Component{
           <View style={styles.listviewiconleft}>
             <Icon name="task" size={30} color={'#D31B25'} />
           </View>
-          <Text style={styles.listviewtext}>{'签到  '}</Text>
+          <Text style={styles.listviewtext}>{'签到  +1氦金'}</Text>
           <Text style={styles.listviewtextright}>{this.state.signInMsg}</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
