@@ -23,18 +23,25 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
 import Certify from './usercertify';
 import UserInfo from './userinfo';
-
+import UserService from '../../network/userservice';
+import Toast from '@remobile/react-native-toast';
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
       navbar: 0,
+      signInMsg: '未签到',
       data:{
           subnavbar:1,
           subnavbarname:'热度',
       },
     }
   }
+
+  componentWillMount(){
+    
+  }
+
   gotoRoute(name,params) {
     if(name=='usercertify'){
       this.props.navigator.push({
@@ -52,6 +59,25 @@ export default class extends Component{
       });
     }
   }
+  _signIn(){
+    if(this.state.signInMsg == '已签到'){
+      Toast.show('今日已签到！')
+      return
+    } else {
+      UserService.signIn(this.props.userData.UserID,(response) => {
+        if (response[0].MessageCode == '0') {
+            Toast.show('签到成功！')
+            this.setState({
+              signInMsg:'已签到'
+            })
+        }else if(response[0].MessageCode == '60002'){
+            Toast.show('今日已签到！')
+        } else{
+          Toast.show('签到异常')
+        }
+      })
+    }
+  }
   rendertaskList(){
     return(
       <View>
@@ -67,6 +93,14 @@ export default class extends Component{
             <Icon name="task" size={30} color={'#D31B25'} />
           </View>
           <Text style={styles.listviewtext}>{'通过认证  '}</Text>
+          <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.listview} onPress={this._signIn.bind(this)}  activeOpacity={0.8}>
+          <View style={styles.listviewiconleft}>
+            <Icon name="task" size={30} color={'#D31B25'} />
+          </View>
+          <Text style={styles.listviewtext}>{'签到  '}</Text>
+          <Text style={styles.listviewtextright}>{this.state.signInMsg}</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
       </View>
