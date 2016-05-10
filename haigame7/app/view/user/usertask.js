@@ -104,9 +104,9 @@ export default class extends Component{
         </TouchableOpacity>
         <TouchableOpacity style={styles.listview} onPress={this._signIn.bind(this)}  activeOpacity={0.8}>
           <View style={styles.listviewiconleft}>
-            <Icon name="task" size={30} color={'#D31B25'} />
+            <Icon name="date" size={30} color={'#D31B25'} />
           </View>
-          <Text style={styles.listviewtext}>{'签到  +1氦金'}</Text>
+          <Text style={styles.listviewtext}>{'签到'}<Text style={commonstyle.red}>{'  +1氦金'}</Text></Text>
           <Text style={styles.listviewtextright}>{this.state.signInMsg}</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>
