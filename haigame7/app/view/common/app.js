@@ -30,6 +30,7 @@ import OtherService from '../../network/otherservice';
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
+import HotUpdate from '../../../temp/HotUpdate'
 var url = 'http://sso.haigame7.com/upload/H7.apk';
 /*暂时留着*/
 // let userdata = {
@@ -365,6 +366,14 @@ class App extends Component {
              ref="content_team"
              updateLoginState={this.updateLoginState.bind(this)}
              navigator={this.props.navigator} {...this.state}/>
+          </View>
+          </RawContent>
+        </Tab>
+        <Tab name="更新">
+          <IconWithBar label="更新" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
+          <RawContent>
+          <View>
+            <HotUpdate />
           </View>
           </RawContent>
         </Tab>
