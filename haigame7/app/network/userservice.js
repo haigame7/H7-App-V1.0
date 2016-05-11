@@ -161,6 +161,22 @@ export default{
       callback
     );
   },
+  /*签到*/
+  signIn(UserID,callback){
+    FecthService.postFecth(
+      ApiConfig.USER_API.SIGN_IN,
+      {'UserID':UserID},
+      callback
+    );
+  },
+  /*查看签到*/
+  isSignIn(UserID,callback){
+    FecthService.postFecth(
+      ApiConfig.USER_API.IS_SIGN_IN,
+      {'UserID':UserID},
+      callback
+    );
+  },
   _urlForQueryAndPage(query: string, pageNumber: number): string {
     // var apiKey = API_KEYS[this.state.queryNumber % API_KEYS.length];
     // if (query) {

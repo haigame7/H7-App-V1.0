@@ -263,6 +263,10 @@ export default StyleSheet.create({
         backgroundColor: '#484848',
         marginTop: -1,
     },
+    listboxfooter: {
+        height: (Platform.OS === 'ios') ? 2 : 25,
+        marginTop: -1,
+    },
     listviewlable: {
         justifyContent: 'center',
         width: 80,
@@ -287,6 +291,20 @@ export default StyleSheet.create({
     //模态框
     pickerview: {
         backgroundColor: '#FFFFFF',
+    },
+    //选择框
+    checkview: {
+        height: 30,
+        width: Util.size.width - 72,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        marginLeft: 36,
+        marginRight: 36,
+    },
+    checkbox: {
+        width: 30,
+        height: 30,
     },
     //滑块
     switchblock: {
@@ -412,7 +430,7 @@ export default StyleSheet.create({
     },
     //资产
     assetbg: {
-        height: 160,
+        height: (Platform.OS === 'ios') ?115 : 160,
         width: Util.size.width,
     },
     assetblock: {
