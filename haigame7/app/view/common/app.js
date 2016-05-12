@@ -14,6 +14,19 @@ import React,{
   BackAndroid,
   NetInfo
 } from 'react-native';
+
+import {
+  isFirstTime,
+  isRolledBack,
+  packageVersion,
+  currentVersion,
+  checkUpdate,
+  downloadUpdate,
+  switchVersion,
+  switchVersionLater,
+  markSuccess,
+} from 'react-native-update';
+
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 import Toast from '@remobile/react-native-toast';
 import Headernav from './headernav';
@@ -30,7 +43,6 @@ import OtherService from '../../network/otherservice';
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
-import HotUpdate from '../../../temp/HotUpdate'
 var url = 'http://sso.haigame7.com/upload/H7.apk';
 /*暂时留着*/
 // let userdata = {
@@ -142,6 +154,26 @@ export default class haigame7 extends Component {
       if (Platform.OS === 'android') {
         BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
       }
+    }
+
+    _checkUpdate(){
+      checkUpdate(appKey).then(info => {
+        console.log(info);
+        if (info.expired) {
+          Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
+            {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
+          ]);
+        } else if (info.upToDate) {
+          // Alert.alert('提示', '您的应用版本已是最新.');
+        } else {
+          Alert.alert('提示', '检查到新的版本'+info.name+',是否下载?\n'+ info.description, [
+            {text: '是', onPress: ()=>{this.doUpdate(info)}},
+            {text: '否',},
+          ]);
+        }
+      }).catch(err => {
+        Alert.alert('提示', '更新失败.');
+      });
     }
     onBackAndroid(){
       const nav = _navigator;
@@ -366,14 +398,6 @@ class App extends Component {
              ref="content_team"
              updateLoginState={this.updateLoginState.bind(this)}
              navigator={this.props.navigator} {...this.state}/>
-          </View>
-          </RawContent>
-        </Tab>
-        <Tab name="更新">
-          <IconWithBar label="更新" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
-          <RawContent>
-          <View>
-            <HotUpdate />
           </View>
           </RawContent>
         </Tab>
