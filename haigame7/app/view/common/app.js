@@ -101,6 +101,7 @@ var BaseOverswipeConfig = {
 export default class haigame7 extends Component {
 
   componentWillMount() {
+    this._checkUpdate()
     if (Platform.OS === 'android') {
      {/*检查版本更新*/}
      OtherService.getCurrentVersion({},(response) => {
@@ -156,6 +157,17 @@ export default class haigame7 extends Component {
       }
     }
 
+    _doUpdate(info){
+      downloadUpdate(info).then(hash => {
+        Alert.alert('提示', '下载完毕,是否重启应用?', [
+          {text: '是', onPress: ()=>{switchVersion(hash);}},
+          {text: '否',},
+          {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
+        ]);
+      }).catch(err => {
+        Alert.alert('提示', '更新失败.');
+      });
+    };
     _checkUpdate(){
       checkUpdate(appKey).then(info => {
         console.log(info);
@@ -167,7 +179,7 @@ export default class haigame7 extends Component {
           // Alert.alert('提示', '您的应用版本已是最新.');
         } else {
           Alert.alert('提示', '检查到新的版本'+info.name+',是否下载?\n'+ info.description, [
-            {text: '是', onPress: ()=>{this.doUpdate(info)}},
+            {text: '是', onPress: ()=>{this._doUpdate(info)}},
             {text: '否',},
           ]);
         }
