@@ -14,6 +14,19 @@ import React,{
   BackAndroid,
   NetInfo
 } from 'react-native';
+
+import {
+  isFirstTime,
+  isRolledBack,
+  packageVersion,
+  currentVersion,
+  checkUpdate,
+  downloadUpdate,
+  switchVersion,
+  switchVersionLater,
+  markSuccess,
+} from 'react-native-update';
+
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 import Toast from '@remobile/react-native-toast';
 import Headernav from './headernav';
@@ -30,7 +43,11 @@ import OtherService from '../../network/otherservice';
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
+import _updateConfig from '../../../update.json';
+
+const {appKey} = _updateConfig[Platform.OS];
 var url = 'http://sso.haigame7.com/upload/H7.apk';
+
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
@@ -88,6 +105,7 @@ var BaseOverswipeConfig = {
 export default class haigame7 extends Component {
 
   componentWillMount() {
+    this._checkUpdate()
     if (Platform.OS === 'android') {
      {/*检查版本更新*/}
      OtherService.getCurrentVersion({},(response) => {
@@ -141,6 +159,38 @@ export default class haigame7 extends Component {
       if (Platform.OS === 'android') {
         BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
       }
+    }
+
+    _doUpdate(info){
+      downloadUpdate(info).then(hash => {
+        Alert.alert('提示', '下载完毕,是否重启应用?', [
+          {text: '是', onPress: ()=>{switchVersion(hash);}},
+          {text: '否',},
+          {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
+        ]);
+      }).catch(err => {
+        Alert.alert('提示', '更新失败.');
+      });
+    };
+    _checkUpdate(){
+      checkUpdate(appKey).then(info => {
+        // Toast.show("检查更新")
+        // console.log(info);
+        if (info.expired) {
+          Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
+            {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
+          ]);
+        } else if (info.upToDate) {
+          // Alert.alert('提示', '您的应用版本已是最新.');
+        } else {
+          Alert.alert('提示', '检查到新的版本'+info.name+',是否下载?\n'+ info.description, [
+            {text: '是', onPress: ()=>{this._doUpdate(info)}},
+            {text: '否',},
+          ]);
+        }
+      }).catch(err => {
+        Alert.alert('提示', '更新失败.');
+      });
     }
     onBackAndroid(){
       const nav = _navigator;

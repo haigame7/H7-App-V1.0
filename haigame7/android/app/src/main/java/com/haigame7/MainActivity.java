@@ -1,6 +1,7 @@
 package com.haigame7;
 
 import com.facebook.react.ReactActivity;
+import cn.reactnative.modules.update.UpdatePackage;
 import com.remobile.splashscreen.RCTSplashScreenPackage;
 import com.heng.wechat.WeChatPackage;
 import com.heng.wechat.WeChatPackage;
@@ -14,6 +15,7 @@ import cn.reactnative.httpcache.HttpCachePackage;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.reactnative.modules.update.UpdateContext;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -42,6 +44,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new UpdatePackage(),
         new RCTSplashScreenPackage(MainActivity.this),
         new WeChatPackage(),
         new RCTDateTimePickerPackage(MainActivity.this),
@@ -50,5 +53,11 @@ public class MainActivity extends ReactActivity {
         new RCTToastPackage(),
         new HttpCachePackage()
       );
+    }
+
+    /*热更新*/
+    @Override
+    protected String getJSBundleFile() {
+        return UpdateContext.getBundleUrl(this);
     }
 }
