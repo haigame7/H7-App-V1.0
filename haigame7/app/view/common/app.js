@@ -43,7 +43,11 @@ import OtherService from '../../network/otherservice';
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
+import _updateConfig from '../../../update.json';
+
+const {appKey} = _updateConfig[Platform.OS];
 var url = 'http://sso.haigame7.com/upload/H7.apk';
+
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
@@ -170,7 +174,8 @@ export default class haigame7 extends Component {
     };
     _checkUpdate(){
       checkUpdate(appKey).then(info => {
-        console.log(info);
+        // Toast.show("检查更新")
+        // console.log(info);
         if (info.expired) {
           Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
             {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
