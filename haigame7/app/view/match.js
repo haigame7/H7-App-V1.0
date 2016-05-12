@@ -398,7 +398,7 @@ export default class extends Component{
       this.props.navigator.push({
         name:'user',
         component:User,
-        params:{'userData':this.state.content.userData,'openmodal':true},
+        params:{'userData':this.state.content.userData,'openmodal':true,...this.props},
       });
     }else{
       MatchService.joinMatch(params,(response) => {
