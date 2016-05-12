@@ -350,6 +350,7 @@ class App extends Component {
             navigator={this.props.navigator} {...this.state}/>
            <Match
             ref="content_match"
+            gotoRef={this.gotoRef.bind(this)}
             updateLoginState={this.updateLoginState.bind(this)}
             navigator={this.props.navigator} {...this.state}/>
           </View>
