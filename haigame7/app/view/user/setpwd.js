@@ -78,16 +78,16 @@ export default class extends Component {
   register(isreset) {
 
     if (this.state.data.passWord == '') {
-      Toast.show('请输入密码');
+      Toast.showShortCenter('请输入密码');
       return;
-    }else if(!/^[a-zA-Z]\w{5,17}$/.test(this.state.data.passWord)){
-      Toast.show('密码为6-16位字母数字组合');
+    }else if(!/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{6,16}$/.test(this.state.data.passWord)){
+      Toast.showShortCenter('密码为6-16位字母数字组合');
       return;
     }else if (this.state.data.passWordd == '') {
-      Toast.show('请再次输入密码');
+      Toast.showShortCenter('请再次输入密码');
       return;
     }else if (this.state.data.passWord !== this.state.data.passWordd) {
-      Toast.show('两次密码输入不一致');
+      Toast.showShortCenter('两次密码输入不一致');
       return;
     }
     if(isreset){
@@ -98,15 +98,15 @@ export default class extends Component {
             var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
             this.props.navigator.jumpTo(route);
           }, 2000);
-          Toast.show("重置成功!");
+          Toast.showShortCenter("重置成功!");
         }else if(response[0].MessageCode == '10001'){
-          Toast.show("手机号不存在");
+          Toast.showShortCenter("手机号不存在");
           return;
         }else if(response[0].MessageCode == '10005'){
-          Toast.show("验证码错误");
+          Toast.showShortCenter("验证码错误");
           return;
         }else if(response[0].MessageCode == '10006'){
-          Toast.show("验证码过期");
+          Toast.showShortCenter("验证码过期");
           return;
         } else {
           Toast.show(
@@ -122,15 +122,15 @@ export default class extends Component {
             var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
             this.props.navigator.jumpTo(route);
           }, 2000);
-          Toast.show('注册成功!')
+          Toast.showShortCenter('注册成功!')
         }else if(response[0].MessageCode == '10004'){
-          Toast.show("手机号已存在");
+          Toast.showShortCenter("手机号已存在");
           return;
         }else if(response[0].MessageCode == '10005'){
-          Toast.show("验证码错误");
+          Toast.showShortCenter("验证码错误");
           return;
         }else if(response[0].MessageCode == '10006'){
-          Toast.show("验证码过期");
+          Toast.showShortCenter("验证码过期");
           return;
         } else {
           Toast.show(
