@@ -34,9 +34,6 @@
    * `inet` value under `en0:`) and make sure your computer and iOS device are
    * on the same Wi-Fi network.
    */
-//
-  
-
   /**
    * OPTION 2
    * Load from pre-bundled file on disk. The static bundle is automatically
@@ -72,9 +69,9 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  
+
   return [[RCTWeChat shareInstance] handleOpenURL: url];
-  
+
 }
 
 @end

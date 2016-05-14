@@ -14,7 +14,10 @@ var {
   Navigator,
   Switch,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  Platform,
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
   } = React;
 
 import commonstyle from '../../styles/commonstyle';
@@ -27,13 +30,19 @@ import Toast from '@remobile/react-native-toast';
 
 import * as httpCache from '../../components/common/cache'
 import PrivacyAgreement from './privacy_agreement'
+
+import WeChatAndroid from 'react-native-wechat-android';
+import WeChatIOS from 'react-native-wechat-ios';
+let appId = 'wxb0cb6c44afd49f5a';
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
       alertvoice:false,
       messages: [],
-      allcache: 0
+      allcache: 0,
+      registerWechat: false,
+      isWXAppInstalled: true,
     }
   }
 
@@ -41,9 +50,66 @@ export default class extends Component{
     this.getData()
   }
   componentDidMount() {
-
+    // this.isWXAppInstalled()
+    if (Platform.OS == 'android') {
+      WeChatAndroid.registerApp(appId,(err,registerOK) => {
+          if(registerOK) {
+            this.setState({registerWechat: true})
+          } else {
+            // Toast.show('分享功能异常');
+          }
+      });
+      DeviceEventEmitter.addListener('finishedShare',function(event){
+       var success = event.success;
+       if(success){
+        Toast.show('分享成功');
+       }else{
+        Toast.show('分享失败');
+       }
+      });
+    } else if(Platform.OS == 'ios') {
+      WeChatIOS.registerApp(appId, (res) => {
+        if(res) {
+          // Toast.show(res.toString())
+          this.setState({registerWechat: true})
+        } else {
+          // Toast.show('分享功能异常');
+        }
+      });
+      //ios未添加分享回调
+    } else {
+      console.log('Unknow Platform');
+    }
+    this.isWXAppInstalled()
   }
-
+  isWXAppInstalled() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppInstalled(
+       (err,isInstalled) => {
+         if(!isInstalled) {
+           this.setState({
+             isWXAppInstalled: false
+           })
+          //  Toast.show("未安装微信应用，无法使用微信充值功能")
+         } else {
+           this.isWXAppSupportApi()
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppInstalled((res) => {
+        // show('isWXAppInstalled: '+res); // true or false
+        if(!res) {
+          this.setState({
+            isWXAppInstalled: false
+          })
+          // Toast.show("未安装微信应用，无法使用微信充值功能")
+        } else {
+          this.isWXAppSupportApi()
+        }
+      });
+    }
+  }
   async getData(){
     try {
       this.setState({
@@ -72,15 +138,13 @@ export default class extends Component{
   return this.state.notshow;
 }
  onLoginout(){
-
-       AsyncStorage.removeItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
-         Toast.show("退出登录");
-         if(this.props.updateLoginState){
-           this.props.updateLoginState();
-          }
-       });
-         this.props.navigator.popToTop();
-
+   AsyncStorage.removeItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+     Toast.show("退出登录");
+     if(this.props.updateLoginState){
+       this.props.updateLoginState();
+      }
+   });
+     this.props.navigator.popToTop();
  }
  _toNextScreen(params){
     // Toast.show("this is a message")
@@ -93,6 +157,39 @@ export default class extends Component{
         ...this.props,
       }
     })
+  }
+
+  _share(){
+    if(this.state.registerWechat || !this.state.isWXAppInstalled) {
+      Toast.show('分享功能异常,未安装微信')
+      return
+    }
+    if (Platform.OS == 'android') {
+      let webpageOptions = {
+        title: '分享这个网页给你',
+        desc: '我发现这个网页很有趣，特意分享给你',
+        thumbSize: 150,
+        scene: 0,
+        type: 3,
+        webpageUrl: 'https://github.com/beefe/react-native-wechat-android',
+        thumbImage: 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg',
+      }
+      WeChatAndroid.sendReq(webpageOptions,(err,sendOK) => {
+        console.log(sendOK);
+      });
+    } else if(Platform.OS == 'ios') {
+      WeChatIOS.sendLinkURL({
+        link: 'https://www.qianlonglaile.com/web/activity/share?uid=d1NrTmtrdVNFNzVmelVCQitpaEZxZz09&date=1449818774&from=groupmessage&isappinstalled=0#!/',
+        tagName: '钱隆',
+        title: '哈哈哈哈哈哈  ',
+        desc: '噢噢噢噢哦哦哦哦哦哦',
+        thumbImage: 'https://dn-qianlonglaile.qbox.me/static/pcQianlong/images/buy_8e82463510d2c7988f6b16877c9a9e39.png',
+        scene: 1
+      });
+    } else {
+      console.log('unknown platform');
+    }
+
   }
 
   render(){
@@ -124,6 +221,12 @@ export default class extends Component{
 
           <View style={styles.listbox}></View>
 
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._share.bind(this)}>
+            <Text style={styles.listviewtextleft}>分享H7给朋友们</Text>
+            <View style={styles.listviewtextbox} ></View>
+            <Text style={styles.listviewtextright}>微信</Text>
+            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
+          </TouchableOpacity>
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}  onPress={this._toNextScreen.bind(this,{"name":"隐私协议","component":PrivacyAgreement})}>
             <Text style={styles.listviewtextleft}>隐私协议</Text>
             <View style={styles.listviewtextbox} ></View>
