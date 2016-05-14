@@ -51,7 +51,8 @@ public class MainActivity extends ReactActivity {
         new VectorIconsPackage(),
         new ImagePickerPackage(),
         new RCTToastPackage(),
-        new HttpCachePackage()
+        new HttpCachePackage(),
+           new    MyPacket()
       );
     }
 

@@ -12,7 +12,9 @@ import React,{
   Platform,
   Navigator,
   BackAndroid,
-  NetInfo
+  NetInfo,
+  ToastAndroid,
+  NativeModules ,
 } from 'react-native';
 
 import {
@@ -102,6 +104,7 @@ var BaseOverswipeConfig = {
   frictionConstant: 1,
   frictionByDistance: 1.5,
 };
+var lastBackPressed = 0;
 export default class haigame7 extends Component {
 
   componentWillMount() {
@@ -192,10 +195,10 @@ export default class haigame7 extends Component {
         Alert.alert('提示', '更新失败.');
       });
     }
+
     onBackAndroid(){
       const nav = _navigator;
       const routers = nav.getCurrentRoutes();
-      var lastBackPressed = Date.now();
       if (routers.length > 1) {
         nav.pop();
         return true;
@@ -205,7 +208,8 @@ export default class haigame7 extends Component {
           return false;
         }
         lastBackPressed = Date.now();
-        ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
+        // ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
+        NativeModules.ToastA.show('再按一次退出应用');
         return true;
       }
     }

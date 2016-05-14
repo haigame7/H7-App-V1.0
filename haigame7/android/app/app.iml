@@ -125,6 +125,7 @@
     <orderEntry type="module" module-name="react-native-datetime-picker" exported="" />
     <orderEntry type="module" module-name="RCTHttpCache" exported="" />
     <orderEntry type="library" exported="" name="@remobile/react-native-splashscreen-unspecified" level="project" />
+    <orderEntry type="module" module-name="react-native-update" exported="" />
     <orderEntry type="module" module-name="react-native-wechat-android" exported="" />
     <orderEntry type="module" module-name="react-native-vector-icons" exported="" />
     <orderEntry type="module" module-name="react-native-toast" exported="" />
