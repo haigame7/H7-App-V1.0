@@ -8,6 +8,7 @@ import React, {
   Image,
   TouchableHighlight,
   StyleSheet,
+  ScrollView
 } from 'react-native';
 
 import commonstyle from '../../styles/commonstyle';
@@ -185,10 +186,13 @@ render(){
       <View style={styles.linkblock}>
       <Text style={commonstyle.cream}>认证结果：{this.state.resultStr}</Text>
       </View>
-      <View style={styles.linkblock}>
-        <Text style={commonstyle.cream}>{'规则文字内容:\n'}</Text>
-        <Text style={commonstyle.cream}>{'1、请在输入框内输入您的DOTA数字ID;\n2、输入数字ID后，请点击”认证“按钮;\n3、点击”认证“按钮后，会在ID生成框内自动生成一个名字ID\n4、用户需在DOTA2客户端内，将自己的DOTA2ID，修改成由氦7平台提供的ID；\n5、修改完成后，我们将在3个工作日内，完成审核工作确认无误后，予以认证'}</Text>
-      </View>
+      <ScrollView>
+        <View style={styles.linkblock}>
+          <Text style={commonstyle.cream}>{'规则文字内容:\n'}</Text>
+          <Text style={commonstyle.cream}>{'1、请在输入框内输入您的DOTA数字ID;\n2、输入数字ID后，请点击”认证“按钮;\n3、点击”认证“按钮后，会在ID生成框内自动生成一个名字ID\n4、用户需在DOTA2客户端内，将自己的DOTA2ID，修改成由氦7平台提供的ID；\n5、修改完成后，我们将在3个工作日内，完成审核工作确认无误后，予以认证'}</Text>
+        </View>
+      </ScrollView>
+
       </Image>
     </View>
    );
