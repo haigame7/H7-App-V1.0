@@ -33,7 +33,13 @@ import PrivacyAgreement from './privacy_agreement'
 
 import WeChatAndroid from 'react-native-wechat-android';
 import WeChatIOS from 'react-native-wechat-ios';
+import ActionSheet from 'react-native-actionsheet';
 let appId = 'wxb0cb6c44afd49f5a';
+
+const buttons = ['取消', '分享给朋友', '分享到朋友圈'];
+const CANCEL_INDEX = 0;
+const DESTRUCTIVE_INDEX = 1;
+
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -92,7 +98,7 @@ export default class extends Component{
            })
           //  Toast.show("未安装微信应用，无法使用微信充值功能")
          } else {
-           this.isWXAppSupportApi()
+          //  this.isWXAppSupportApi()
          }
        }
       );
@@ -105,7 +111,7 @@ export default class extends Component{
           })
           // Toast.show("未安装微信应用，无法使用微信充值功能")
         } else {
-          this.isWXAppSupportApi()
+          // this.isWXAppSupportApi()
         }
       });
     }
@@ -159,17 +165,14 @@ export default class extends Component{
     })
   }
 
-  _share(){
-    if(this.state.registerWechat || !this.state.isWXAppInstalled) {
-      Toast.show('分享功能异常,未安装微信')
-      return
-    }
+  _share(type){
+    // console.log();
     if (Platform.OS == 'android') {
       let webpageOptions = {
         title: '分享这个网页给你',
         desc: '我发现这个网页很有趣，特意分享给你',
         thumbSize: 150,
-        scene: 0,
+        scene: type,
         type: 3,
         webpageUrl: 'https://github.com/beefe/react-native-wechat-android',
         thumbImage: 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg',
@@ -184,13 +187,38 @@ export default class extends Component{
         title: '哈哈哈哈哈哈  ',
         desc: '噢噢噢噢哦哦哦哦哦哦',
         thumbImage: 'https://dn-qianlonglaile.qbox.me/static/pcQianlong/images/buy_8e82463510d2c7988f6b16877c9a9e39.png',
-        scene: 1
+        scene: type
       });
     } else {
       console.log('unknown platform');
     }
 
   }
+  _handlePress(index) {
+    // let type;
+    // switch (index) {
+    //   case 1:
+    //     type = 0
+    //     break;
+    //   case 2:
+    //     type = 1
+    //     break;
+    //   default:
+    //     break;
+    //
+    // }
+    this._share(index -1)
+   }
+
+   _showActionSheet() {
+     console.log(this.state.registerWechat);
+     console.log(this.state.isWXAppInstalled);
+     if(this.state.registerWechat && !this.state.isWXAppInstalled) {
+       Toast.show('分享功能异常,未安装微信')
+       return
+     }
+     this.ActionSheet.show();
+   }
 
   render(){
     //分享功能能
@@ -221,7 +249,7 @@ export default class extends Component{
 
           <View style={styles.listbox}></View>
 
-          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._share.bind(this)}>
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._showActionSheet.bind(this)}>
             <Text style={styles.listviewtextleft}>分享H7给朋友们</Text>
             <View style={styles.listviewtextbox} ></View>
             <Text style={styles.listviewtextright}>微信</Text>
@@ -243,6 +271,13 @@ export default class extends Component{
              <Text style = {styles.btnfont}> { '退出登录'}</Text>
           </TouchableHighlight>
         </ScrollView>
+        <ActionSheet
+            ref={(o) => this.ActionSheet = o}
+            title="分享到微信"
+            options={buttons}
+            cancelButtonIndex={CANCEL_INDEX}
+            onPress={this._handlePress.bind(this)}
+        />
     </View>
     );
   }

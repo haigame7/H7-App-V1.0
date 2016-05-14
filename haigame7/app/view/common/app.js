@@ -177,9 +177,9 @@ export default class haigame7 extends Component {
         // Toast.show("检查更新")
         // console.log(info);
         if (info.expired) {
-          Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
-            {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
-          ]);
+          // Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
+          //   {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
+          // ]);
         } else if (info.upToDate) {
           // Alert.alert('提示', '您的应用版本已是最新.');
         } else {
