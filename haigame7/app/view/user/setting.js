@@ -40,6 +40,8 @@ const buttons = ['取消', '分享给朋友', '分享到朋友圈'];
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 1;
 
+let shareLink = 'https://github.com/beefe/react-native-wechat-android'
+let thumbImage = 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg'
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -136,13 +138,13 @@ export default class extends Component{
   }
 
   openalert(alertvoice){
-  if(alertvoice){
-      this.setState({alertvoice: false});
-   }else{
-      this.setState({alertvoice: true});
-   }
-  return this.state.notshow;
-}
+    if(alertvoice){
+        this.setState({alertvoice: false});
+     }else{
+        this.setState({alertvoice: true});
+     }
+    return this.state.notshow;
+  }
  onLoginout(){
    AsyncStorage.removeItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
      Toast.show("退出登录");
@@ -174,19 +176,20 @@ export default class extends Component{
         thumbSize: 150,
         scene: type,
         type: 3,
-        webpageUrl: 'https://github.com/beefe/react-native-wechat-android',
-        thumbImage: 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg',
+        webpageUrl: shareLink,
+        thumbImage: thumbImage,
       }
       WeChatAndroid.sendReq(webpageOptions,(err,sendOK) => {
+        console.log('调用分享结果')
         console.log(sendOK);
       });
     } else if(Platform.OS == 'ios') {
       WeChatIOS.sendLinkURL({
-        link: 'https://www.qianlonglaile.com/web/activity/share?uid=d1NrTmtrdVNFNzVmelVCQitpaEZxZz09&date=1449818774&from=groupmessage&isappinstalled=0#!/',
+        link: shareLink,
         tagName: '钱隆',
         title: '哈哈哈哈哈哈  ',
         desc: '噢噢噢噢哦哦哦哦哦哦',
-        thumbImage: 'https://dn-qianlonglaile.qbox.me/static/pcQianlong/images/buy_8e82463510d2c7988f6b16877c9a9e39.png',
+        thumbImage: thumbImage,
         scene: type
       });
     } else {
@@ -207,13 +210,15 @@ export default class extends Component{
     //     break;
     //
     // }
+    // console.log(typeof(index) === 'Object');
+    if(typeof(index) !== 'number'){
+      return
+    }
     this._share(index -1)
    }
 
    _showActionSheet() {
-     console.log(this.state.registerWechat);
-     console.log(this.state.isWXAppInstalled);
-     if(this.state.registerWechat && !this.state.isWXAppInstalled) {
+     if(!this.state.registerWechat || !this.state.isWXAppInstalled) {
        Toast.show('分享功能异常,未安装微信')
        return
      }

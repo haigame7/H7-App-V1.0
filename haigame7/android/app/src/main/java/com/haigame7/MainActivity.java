@@ -1,16 +1,19 @@
 package com.haigame7;
 
+import android.view.KeyEvent;
+import android.widget.Toast;
+
 import com.facebook.react.ReactActivity;
 import cn.reactnative.modules.update.UpdatePackage;
 import com.remobile.splashscreen.RCTSplashScreenPackage;
-import com.heng.wechat.WeChatPackage;
 import com.heng.wechat.WeChatPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.remobile.datetimepicker.*;
 import com.imagepicker.ImagePickerPackage;
-import com.remobile.toast.*;
+import com.remobile.toast.RCTToastPackage;
+
 import cn.reactnative.httpcache.HttpCachePackage;
 import java.util.Arrays;
 import java.util.List;

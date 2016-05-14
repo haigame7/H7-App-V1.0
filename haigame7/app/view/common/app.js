@@ -122,7 +122,7 @@ export default class haigame7 extends Component {
         }
        }
        else {
-         Toast.shwo(response[0].Message);
+         Toast.show(response[0].Message);
        }
      });
         BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
