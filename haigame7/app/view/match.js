@@ -356,14 +356,14 @@ export default class extends Component{
       let type = /^[0-9]*[1-9][0-9]*$/;
       let re = new RegExp(type);
       if (_money.match(re) == null) {
-        Toast.show("请填写大于1的整数金额");
+        Toast.showShortCenter("请填写大于1的整数金额");
         return
       }
       if(params.money>this.state.hjData.totalAsset){
-        Toast.show("没有足够的氦金");
+        Toast.showShortCenter("没有足够的氦金");
         return
       }else if(params.money<10){
-        Toast.show("最小押注10氦金");
+        Toast.showShortCenter("最小押注10氦金");
         return
       }
       GuessService.doGuessBet(params,(response) => {

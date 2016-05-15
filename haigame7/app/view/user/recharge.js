@@ -62,7 +62,7 @@ export default class extends Component{
           if(registerOK) {
             this.setState({registerWechat: true})
           } else {
-            Toast.show('支付功能异常' + '',Toast.SHORT);
+            Toast.showShortCenter('支付功能异常' + '',Toast.SHORT);
           }
       });
       //  处理支付回调结果
@@ -92,7 +92,7 @@ export default class extends Component{
           // Toast.show(res.toString())
           this.setState({registerWechat: true})
         } else {
-          Toast.show('支付功能异常' + '',Toast.SHORT);
+          Toast.showShortCenter('支付功能异常' + '',Toast.SHORT);
         }
       });
       subscription = NativeAppEventEmitter.addListener(
@@ -103,14 +103,14 @@ export default class extends Component{
           // console.log(res.length)
           // console.log(res.errCode);
           if(res.errCode == 0) {
-            Toast.show('充值成功' + '',Toast.SHORT);
+            Toast.showShortCenter('充值成功' + '',Toast.SHORT);
             _this.props._userAssetCallback('TotalAssertAndRank',{'startPage':1})
           } else if(res.errCode == -1) {
-            Toast.show('支付失败,请稍后尝试' + '',Toast.SHORT);
+            Toast.showShortCenter('支付失败,请稍后尝试' + '',Toast.SHORT);
             this._rechargeFail()
           } else if(res.errCode == -2) {
             console.log("充值取消");
-            Toast.show('支付取消' + '',Toast.SHORT);
+            Toast.showShortCenter('支付取消' + '',Toast.SHORT);
             this._rechargeFail()
           }
         }

@@ -60,7 +60,7 @@ export default class extends Component {
       case '昵称':
         value = this.state.value;
         if(value == '' || value.indexOf(" ") >=0){
-          Toast.show("用户名不能为空！");
+          Toast.showShortCenter("用户名不能为空！");
           return;
         }else{
           break;
@@ -68,7 +68,7 @@ export default class extends Component {
       case '个性签名':
         value = this.state.value;
         if(value == '' || value.indexOf(" ") >=0){
-          Toast.show("个性签名不能为空！");
+          Toast.showShortCenter("个性签名不能为空！");
           return;
         }else{
           break;
