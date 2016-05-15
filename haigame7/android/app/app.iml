@@ -105,8 +105,8 @@
     <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
     <orderEntry type="library" exported="" name="stetho-okhttp-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.5.0" level="project" />
-    <orderEntry type="library" exported="" name="stetho-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="jsr305-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="stetho-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.2.3" level="project" />
     <orderEntry type="library" exported="" name="fbcore-0.8.1" level="project" />
     <orderEntry type="library" exported="" name="commons-cli-1.2" level="project" />
@@ -125,6 +125,7 @@
     <orderEntry type="module" module-name="react-native-datetime-picker" exported="" />
     <orderEntry type="module" module-name="RCTHttpCache" exported="" />
     <orderEntry type="library" exported="" name="@remobile/react-native-splashscreen-unspecified" level="project" />
+    <orderEntry type="module" module-name="react-native-update" exported="" />
     <orderEntry type="module" module-name="react-native-wechat-android" exported="" />
     <orderEntry type="module" module-name="react-native-vector-icons" exported="" />
     <orderEntry type="module" module-name="react-native-toast" exported="" />

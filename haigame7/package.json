@@ -11,6 +11,7 @@
     "@remobile/react-native-splashscreen": "^1.0.3",
     "@remobile/react-native-toast": "^1.0.4",
     "react-native": "^0.20.0",
+    "react-native-actionsheet": "^0.1.4",
     "react-native-button": "^1.4.2",
     "react-native-carousel": "^0.4.5",
     "react-native-checkbox": "^1.0.8",

@@ -77,6 +77,7 @@ export default class extends Component{
             this.setState({
               signInMsg:'已签到'
             })
+            this.props._callback('TotalAssertAndRank')
         }else if(response[0].MessageCode == '60002'){
             Toast.show('今日已签到！')
         } else{
