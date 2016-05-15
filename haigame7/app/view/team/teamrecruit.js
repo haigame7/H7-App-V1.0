@@ -55,7 +55,7 @@ export default class extends Component{
  }
  sendRecruit(){
    if(this.state.textnumber<5){
-     Toast.show('至少输入5个字符');
+     Toast.showShortCenter('至少输入5个字符');
      return;
    }
    var data = {'teamID':this.state.teamID,'content':this.state.content};
@@ -71,7 +71,7 @@ export default class extends Component{
         },1000);
      }
      else {
-       Toast.show('发布失败');
+       Toast.showShortCenter('发布失败');
      }
    });
  }

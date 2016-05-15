@@ -81,10 +81,10 @@ export default class extends React.Component {
     'teamtype':'DOTA2',
     };
     if(teamData.teamname==''){
-      Toast.show('请填写战队名称');
+      Toast.showShortCenter('请填写战队名称');
       return;
     }else if(teamData.teamlogo==''){
-      Toast.show('请上传战队图片');
+      Toast.showShortCenter('请上传战队图片');
       return;
     }else{
       TeamService.createTeam(teamData,(response)=>{
@@ -108,10 +108,10 @@ export default class extends React.Component {
              }
             },1000);
         }else if(response[0].MessageCode=='20001'){
-          Toast.show('已经存在同名的战队');
+          Toast.showShortCenter('已经存在同名的战队');
         }
         else {
-          Toast.show('创建失败');
+          Toast.showShortCenter('创建失败');
         }
       });
     }

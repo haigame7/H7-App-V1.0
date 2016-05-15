@@ -356,14 +356,14 @@ export default class extends Component{
       let type = /^[0-9]*[1-9][0-9]*$/;
       let re = new RegExp(type);
       if (_money.match(re) == null) {
-        Toast.show("请填写大于1的整数金额");
+        Toast.showShortCenter("请填写大于1的整数金额");
         return
       }
       if(params.money>this.state.hjData.totalAsset){
-        Toast.show("没有足够的氦金");
+        Toast.showShortCenter("没有足够的氦金");
         return
       }else if(params.money<10){
-        Toast.show("最小押注10氦金");
+        Toast.showShortCenter("最小押注10氦金");
         return
       }
       GuessService.doGuessBet(params,(response) => {
@@ -656,10 +656,10 @@ export default class extends Component{
         <View style={styles.nav}>
           <View style={styles.navtab}>
             <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
-              <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>比赛赛事</Text>
+              <Text style={[this.state.navbar==0?commonstyle.red:commonstyle.white, commonstyle.fontsize14]}>比赛赛事</Text>
             </TouchableOpacity>
             <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-              <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>赛事竞猜</Text>
+              <Text style={[this.state.navbar==0?commonstyle.white:commonstyle.red, commonstyle.fontsize14]}>赛事竞猜</Text>
             </TouchableOpacity>
           </View>
         </View>

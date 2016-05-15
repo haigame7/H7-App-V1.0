@@ -21,6 +21,8 @@ import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
+import UserService from '../../network/userservice';
+import UserInfo from '../rank/userinfo';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 import Toast from '@remobile/react-native-toast';
@@ -33,6 +35,7 @@ export default class extends Component{
       userID:this.props.userID,
       messages: [],
       teamData:[],
+      creatUser:[],
     }
   }
   componentWillMount(){
@@ -46,10 +49,25 @@ export default class extends Component{
           this.setState({
             teamData: newData,
           });
+          UserService.getUserInfoByUserID(newData.Creater, (response) => {
+            if (response[0].MessageCode == '0') {
+              let data = response[1];
+              this.setState({
+                creatUser: data,
+              })
+            } else {
+              Toast.show('获取用户数据失败'+ response[0].Message);
+              this.setState({
+                loading: false,
+              })
+            }
+          });
         }else{
           Toast.show(response[0].MessageCode);
         };
     });
+
+
   }
 
   applyTeam(userID,teamID){
@@ -59,7 +77,7 @@ export default class extends Component{
         Toast.show('您已经加入其他战队');
       }
       else if (response[0].MessageCode == '20007') {
-         Toast.show('您已向其他发出申请');
+         Toast.show('您已向该战队发出申请');
       }
       else if (response[0].MessageCode == '0') {
          Toast.show('成功发出申请');
@@ -68,9 +86,16 @@ export default class extends Component{
       }
     });
   }
+  gotoRoute(name,params) {
+    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+      this.props.navigator.push({ name: name, component: UserInfo, params:{'userinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+    }
+  }
   renderUserImageItem(rowData,key){
     return(
-      <Image key={key} style={styles.listviewteamimg} source={{uri:rowData.UserPicture}} />
+      <TouchableOpacity key={key}  onPress={()=>this.gotoRoute('userinfo',rowData)}>
+      <Image style={styles.listviewteamimg} source={{uri:rowData.UserPicture}} />
+      </TouchableOpacity>
     );
   }
   render(){
@@ -84,7 +109,7 @@ export default class extends Component{
     };
 
     var total = this.state.teamData.WinCount + this.state.teamData.LoseCount + this.state.teamData.FollowCount;
-    var winning = Math.round(this.state.teamData.WinCount/total*100);
+    var winning = Math.round(this.state.teamData.WinCount/(!isNaN(total)?1:total*100));
 
     return (
       <View>
@@ -136,7 +161,9 @@ export default class extends Component{
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
               <View style={styles.listviewright}>
                 <View style={styles.listviewteam}>
-                  <Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} />
+                <TouchableOpacity  onPress={()=>this.gotoRoute('userinfo',this.state.creatUser)}>
+                   <Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} />
+                 </TouchableOpacity>
                   <View style={styles.listviewteamblock}>
                     {userimage}
                   </View>

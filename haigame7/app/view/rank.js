@@ -145,11 +145,7 @@ export default class extends Component{
   }
   //加载团队
   _onLoadTeam(param,data) {
-    if (this.state.keyone > 0) {
-      this.setState({
-        footerOneMsg: "木有更多数据了...",
-      });
-    }else{
+
       let _ds = data;
       let _params = param;
       _params.startpage = _params.startpage+1;
@@ -161,10 +157,12 @@ export default class extends Component{
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
           if(nextData.length<1){
-            this.setState({
-              keyone:1,
-              footerOneMsg: "木有更多数据了...",
-            });
+            setTimeout(()=>{
+           Toast.show("木有更多数据了...");
+           this.setState({
+              footerOneMsg: "点击加载更多团队",
+          });
+        },1000);
           }else{
             for(var item in nextData){
               _ds.push(nextData[item])
@@ -182,15 +180,10 @@ export default class extends Component{
         Toast.show(response[0].Message);
         }
       });
-    }
+
   }
   //加载用户
   _onLoadUser(param,data) {
-    if (this.state.keytwo > 0) {
-      this.setState({
-        footerTwoMsg: "木有更多数据了...",
-      });
-    }else{
       let _ds = data;
       let _params = param;
       _params.startpage = _params.startpage+1;
@@ -202,10 +195,12 @@ export default class extends Component{
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
           if(nextData.length<1){
-            this.setState({
-              keytwo:1,
-              footerTwoMsg: "木有更多数据了...",
+              setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+             this.setState({
+                footerTwoMsg: "点击加载更多名人",
             });
+          },1000);
           }else{
             for(var item in nextData){
               _ds.push(nextData[item])
@@ -223,7 +218,6 @@ export default class extends Component{
           Toast.show(response[0].Message);
         }
       });
-    }
   }
 
   renderSubData(){
@@ -261,10 +255,10 @@ export default class extends Component{
         <View style={styles.nav}>
           <View style={styles.navtab}>
             <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)} >
-              <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>{navdata.first}</Text>
+              <Text style={[this.state.navbar==0?commonstyle.red:commonstyle.white, commonstyle.fontsize14]}>{navdata.first}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-              <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>{navdata.second}</Text>
+              <Text style={[this.state.navbar==0?commonstyle.white:commonstyle.red, commonstyle.fontsize14]}>{navdata.second}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.navsub}>

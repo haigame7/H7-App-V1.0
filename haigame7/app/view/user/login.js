@@ -102,17 +102,17 @@ export default class Login extends Component {
 
     onSubmit(argument) {
         if(this.state.data.phoneNumber == '' && this.state.data.password == ''){
-            Toast.show('手机号和密码不能为空！');
+            Toast.showShortCenter('手机号和密码不能为空！');
             return;
         }else if(this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1){
-            Toast.show('手机号不能为空！');
+            Toast.showShortCenter('手机号不能为空！');
             return;
         }else if(this.state.data.password == '' || this.state.data.password.indexOf(' ') > -1){
-            Toast.show('密码不能为空！');
+            Toast.showShortCenter('密码不能为空！');
             return;
         }else{
             if(!/^1[34578]\d{9}$/.test(this.state.data.phoneNumber)){
-                Toast.show('请输入正确的手机号！');
+                Toast.showShortCenter('请输入正确的手机号！');
                 return;
             }
         };
@@ -135,24 +135,24 @@ export default class Login extends Component {
                      this.props.navigator.pop();
                   }, 500);
                 } else {
-                  Toast.show('获取用户数据失败'+ response[0].Message);
+                  Toast.showShortCenter('获取用户数据失败'+ response[0].Message);
                   this.setState({
                     loading: false,
                   })
                 }
               })
             }else if(response[0].MessageCode == '10001'){
-                Toast.show('手机号不存在');
+                Toast.showShortCenter('手机号不存在');
                 this.setState({
                     loading: false,
                 })
             }else if(response[0].MessageCode == '10002'){
-                Toast.show('密码错误');
+                Toast.showShortCenter('密码错误');
                 this.setState({
                     loading: false,
                 })
             } else {
-              Toast.show('用户不存在，请注册！');
+              Toast.showShortCenter('用户不存在，请注册！');
               this.setState({
                 loading: false,
               })

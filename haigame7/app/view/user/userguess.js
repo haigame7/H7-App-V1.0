@@ -36,7 +36,7 @@ export default class extends Component{
     this.state = {
       navbar: 0,
       userID:this.props.userData.UserID,
-      dataguessSource:dataguess.cloneWithRows(['row1']),
+      dataguessSource:dataguess.cloneWithRows([]),
       guesslist:[],
       keykey:0,
       footerMsg: "点击加载更多",
@@ -134,11 +134,6 @@ export default class extends Component{
     );
   }
   _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = this.state.dataguess;
       let _params = this.state.requestData;
       _params.startpage = _params.startpage+1;
@@ -150,10 +145,12 @@ export default class extends Component{
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
           if(nextData.length<1){
-            this.setState({
-              keykey:1,
-              footerMsg: "木有更多数据了...",
-            });
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerMsg: "点击加载更多..."
+             });
+          },1000);
           }else{
             for(var item in nextData){
               _ds.push(nextData[item])
@@ -171,7 +168,6 @@ export default class extends Component{
           Toast.show(response[0].Message);
         }
       });
-    }
   }
   render() {
     return (

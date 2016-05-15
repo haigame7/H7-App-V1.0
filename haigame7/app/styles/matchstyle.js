@@ -52,11 +52,11 @@ var MatchStyle = StyleSheet.create({
     },
     matchbanner: {
         width: Util.size.width,
-        height: 120,
+        height: Util.size.width*2/5,
     },
     matchbannerimg: {
         width: Util.size.width,
-        height: 120,
+        height: Util.size.width*2/5,
     },
     //列表
     anchorlistblock: {

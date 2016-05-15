@@ -155,15 +155,6 @@ export default class extends Component{
     }
   }
   _onLoadMore(param,data) {
-    if (this.state.keyone > 0 &&param.state==GlobalVariable.MATCH_INFO.Starting) {
-      this.setState({
-        footerOneMsg: "木有更多数据了...",
-      });
-    }else if(this.state.keytwo>0 &&param.state==GlobalVariable.MATCH_INFO.NoStart){
-      this.setState({
-        footerTwoMsg: "木有更多数据了...",
-      });
-    }else{
       let _ds = data;
       let _params = param;
       _params.startpage = _params.startpage+1;
@@ -181,15 +172,19 @@ export default class extends Component{
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
           if(nextData.length<5&&param.state==GlobalVariable.MATCH_INFO.Starting){
-            this.setState({
-              keyone:1,
-              footerOneMsg: "木有更多数据了...",
-            });
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerOneMsg: "点击加载更多..."
+             });
+          },1000);
           }else if(nextData.length<5&&param.state==GlobalVariable.MATCH_INFO.NoStart){
-            this.setState({
-              keytwo:1,
-              footerTwoMsg: "木有更多数据了...",
-            });
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerTwoMsg: "点击加载更多..."
+             });
+          },1000);
           }else{
             for(var item in nextData){
               _ds.push(nextData[item])
@@ -216,8 +211,6 @@ export default class extends Component{
           Toast.show(response[0].Message);
         }
       });
-
-    }
   }
   render() {
     let matchlist = this.rendermatchList();

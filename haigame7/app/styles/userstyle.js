@@ -480,12 +480,13 @@ export default StyleSheet.create({
         height: Util.size.width,
     },
     infoinput: {
-        width: Util.size.width - 40,
+        width: Util.size.width - 20,
         height: 30,
-        marginLeft: 20,
-        marginRight: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#484848',
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        borderRadius: 2,
+        backgroundColor: '#484848',
     },
     infoinputfont: {
         height: 40,

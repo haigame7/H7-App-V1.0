@@ -28,7 +28,7 @@ var UserRankList = React.createClass({
   getInitialState() {
     return {
       user: this.props.user,
-      userteamid: this.props.userteamid, 
+      userteamid: this.props.userteamid,
       navigator:this.props.navigator,
     }
   },

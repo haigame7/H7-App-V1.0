@@ -49,13 +49,13 @@ export default class extends Component {
   /*下一步*/
   gotoRoute(name,argument) {
     if (this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1) {
-      Toast.show('手机号不能为空！');
+      Toast.showShortCenter('手机号不能为空！');
       return;
     }else if(this.state.data.code == '' || this.state.data.code.indexOf(' ') > -1){
-      Toast.show('验证码不能为空！');
+      Toast.showShortCenter('验证码不能为空！');
       return;
     }else if(this.state.data.code != this.state.securityCode){
-      Toast.show('验证码不正确！');
+      Toast.showShortCenter('验证码不正确！');
       return;
     }else{
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-1].name != name) {
@@ -70,11 +70,11 @@ export default class extends Component {
    */
   _getVerifiCode() {
     if (this.state.data.phoneNumber == '' || this.state.data.phoneNumber.indexOf(' ') > -1) {
-      Toast.show('手机号不能为空！');
+      Toast.showShortCenter('手机号不能为空！');
       return;
     }
     if(!/^1[34578]\d{9}$/.test(this.state.data.phoneNumber)){
-      Toast.show('请输入正确的手机号！');
+      Toast.showShortCenter('请输入正确的手机号！');
       return;
     }
     UserService.getVerifiCode2(this.state.data.phoneNumber,(response) => {
@@ -83,24 +83,24 @@ export default class extends Component {
           securityCode: response[0].Message,
           isToushable: false,
         });
-        Toast.show("验证码已发送");
+        Toast.showShortCenter("验证码已发送");
       }else if(response[0].MessageCode == '10001'){
         this.setState({
           isToushable: true,
         });
-        Toast.show("该用户不存在");
+        Toast.showShortCenter("该用户不存在");
         return;
       }else if(response[0].MessageCode == '10003'){
         this.setState({
           isToushable: true,
         });
-        Toast.show("验证码获取失败");
+        Toast.showShortCenter("验证码获取失败");
         return;
       }else if(response[0].MessageCode == '10004'){
         this.setState({
           isToushable: true,
         });
-        Toast.show("手机号已注册");
+        Toast.showShortCenter("手机号已注册");
         return;
       } else {
         Toast.show(response[0].Message);

@@ -161,11 +161,6 @@ export default class extends Component{
      this.setState({isOpen: false});
   }
   _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = this.state.teamlist;
       let _params = this.state.teamlistRequestData;
       _params.startpage = _params.startpage+1;
@@ -176,16 +171,14 @@ export default class extends Component{
       TeamService.getTeamList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<4){
-            this.setState({
-              keykey:1,
-            });
+          if(nextData.length<1){
             setTimeout(()=>{
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(_ds),
                 loaded:false,
-                footerMsg: "木有更多数据了...",
+                footerMsg: "点击加载更多",
               });
+              Toast.show("木有更多数据了...");
             },1000);
           }else{
             for(var item in nextData){
@@ -203,7 +196,7 @@ export default class extends Component{
           Toast.show(response[0].Message);
         }
       });
-    }
+    
   }
   gotoRoute(name,userteamid,fightteamid){
     this.initData();
@@ -444,15 +437,13 @@ export default class extends Component{
         <View style={styles.nav}>
           <View style={styles.navsub}>
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('userfight',this.state.userteamid,0)}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'我的约战'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
+              <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'我的约战'}</Text>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('fightstate',this.state.userteamid,0)}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'约战动态'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
+              <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'约战动态'}</Text>
             </TouchableOpacity>
           </View>
         </View>
