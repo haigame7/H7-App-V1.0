@@ -109,7 +109,7 @@ export default class extends Component {
           Toast.showShortCenter("验证码过期");
           return;
         } else {
-          Toast.show(
+          Toast.showShortCenter(
               response[0].Message
           );
         }
@@ -133,7 +133,7 @@ export default class extends Component {
           Toast.showShortCenter("验证码过期");
           return;
         } else {
-          Toast.show(
+          Toast.showShortCenter(
               response[0].Message
           );
         }

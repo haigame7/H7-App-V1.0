@@ -109,8 +109,8 @@ export default class extends React.Component {
        this.setState({
          isOpen: false,
        });
-       if(this.state.myTeams.length>=2){
-         Toast.show('一位队长只能创建两只以下战队');
+       if(this.state.myTeams.length>=1){
+         Toast.showLongCenter('您已建立战队');
        }
        else{
          this._toNextScreen({"name":"创建战队","component":CreateTeam});
@@ -153,6 +153,7 @@ export default class extends React.Component {
        Toast.show('解散成功');
        this.timer = setTimeout(()=>{
            this.props._callback('TeamInfo');
+           this.props.updateLoginState();
            this.props.navigator.pop();
          },1000);
 
@@ -306,6 +307,7 @@ export default class extends React.Component {
     );
   }
   render() {
+
     var items =this.renderHeroImageItem(this.state.teamData.TeamUser);
     let myteammodal = this.rendermodaldetail();
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
@@ -333,10 +335,11 @@ export default class extends React.Component {
             <TouchableOpacity style={styles.blocktop} onPress={()=>this.state.teamData.Role=='teamcreater'?this._editTeam():console.log('member')}>
               <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>
+            {/*
+              <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>
               <Icon name="toggle" size={20} color={'#D31B25'} style={commonstyle.iconnobg}/>
-            </TouchableOpacity>
-
+              </TouchableOpacity>
+              */}
             <View style={styles.blocktop}>
               <Text style={[styles.headname, commonstyle.white]}>{this.state.teamData.TeamName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>

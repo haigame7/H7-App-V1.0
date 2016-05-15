@@ -352,7 +352,7 @@ export default class extends Component{
         Toast.show('您已经加入其他战队');
       }
       else if (response[0].MessageCode == '20007') {
-         Toast.show('您已向其他发出申请');
+         Toast.show('您已向该战队发出申请');
       }
       else if (response[0].MessageCode == '0') {
          Toast.show('成功发出申请');

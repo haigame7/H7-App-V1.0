@@ -79,14 +79,14 @@ componentWillUnmount() {
 }
 gotoCertify(numberID,argument) {
   if(this.state.loading){
-    Toast.show('认证已提交，无需重复提交！');
+    Toast.showShortCenter('认证已提交，无需重复提交！');
     return;
   }
   if(this.state.data.dota2id == '' || this.state.data.dota2id.indexOf(' ') > -1){
-    Toast.show('Dota2数字ID不能为空！');
+    Toast.showShortCenter('Dota2数字ID不能为空！');
     return;
   }else if(isNaN(this.state.data.dota2id)){
-    Toast.show('Dota2数字ID只能是数字！');
+    Toast.showShortCenter('Dota2数字ID只能是数字！');
     return;
   }
   if (this.state.btn_msg == '申请认证') {
@@ -102,10 +102,10 @@ gotoCertify(numberID,argument) {
           })
           this.timer = setTimeout(()=>{
             this.props._callback('Usercertify');
-            Toast.show('申请已经发出,请等待');
+            showShortCenter.show('申请已经发出,请等待');
           },1000);
         } else {
-          Toast.show('认证失败');
+          Toast.showShortCenter('认证失败');
         }
     });
   } else {
@@ -121,11 +121,11 @@ gotoCertify(numberID,argument) {
         })
         this.timer = setTimeout(()=>{
           this.props._callback('Usercertify');
-          Toast.show('申请已经发出,请等待');
+          Toast.showShortCenter('申请已经发出,请等待');
         },1000);
 
       } else {
-        Toast.show('认证失败');
+        Toast.showShortCenter('认证失败');
       }
     });
   }
