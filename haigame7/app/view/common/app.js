@@ -12,8 +12,23 @@ import React,{
   Platform,
   Navigator,
   BackAndroid,
-  NetInfo
+  NetInfo,
+  ToastAndroid,
+  NativeModules ,
 } from 'react-native';
+
+import {
+  isFirstTime,
+  isRolledBack,
+  packageVersion,
+  currentVersion,
+  checkUpdate,
+  downloadUpdate,
+  switchVersion,
+  switchVersionLater,
+  markSuccess,
+} from 'react-native-update';
+
 import Tabbar, { Tab, RawContent, IconWithBar, glypyMapMaker } from 'react-native-tabbar';
 import Toast from '@remobile/react-native-toast';
 import Headernav from './headernav';
@@ -30,7 +45,11 @@ import OtherService from '../../network/otherservice';
 import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
+import _updateConfig from '../../../update.json';
+
+const {appKey} = _updateConfig[Platform.OS];
 var url = 'http://sso.haigame7.com/upload/H7.apk';
+
 /*暂时留着*/
 // let userdata = {
 //   'PhoneNumber': '15101075739',
@@ -85,9 +104,11 @@ var BaseOverswipeConfig = {
   frictionConstant: 1,
   frictionByDistance: 1.5,
 };
+var lastBackPressed = 0;
 export default class haigame7 extends Component {
 
   componentWillMount() {
+    // this._checkUpdate()
     if (Platform.OS === 'android') {
      {/*检查版本更新*/}
      OtherService.getCurrentVersion({},(response) => {
@@ -101,7 +122,7 @@ export default class haigame7 extends Component {
         }
        }
        else {
-         Toast.shwo(response[0].Message);
+         Toast.show(response[0].Message);
        }
      });
         BackAndroid.addEventListener('hardwareBackPress', this.onBackAndroid);
@@ -142,10 +163,42 @@ export default class haigame7 extends Component {
         BackAndroid.removeEventListener('hardwareBackPress', this.onBackAndroid);
       }
     }
+
+    _doUpdate(info){
+      downloadUpdate(info).then(hash => {
+        Alert.alert('提示', '下载完毕,是否重启应用?', [
+          {text: '是', onPress: ()=>{switchVersion(hash);}},
+          {text: '否',},
+          {text: '下次启动时', onPress: ()=>{switchVersionLater(hash);}},
+        ]);
+      }).catch(err => {
+        Alert.alert('提示', '更新失败.');
+      });
+    };
+    _checkUpdate(){
+      checkUpdate(appKey).then(info => {
+        // Toast.show("检查更新")
+        // console.log(info);
+        if (info.expired) {
+          Alert.alert('提示', '您的应用版本已更新,请前往应用商店下载新的版本', [
+            {text: '确定', onPress: ()=>{info.downloadUrl && Linking.openURL(info.downloadUrl)}},
+          ]);
+        } else if (info.upToDate) {
+          // Alert.alert('提示', '您的应用版本已是最新.');
+        } else {
+          Alert.alert('提示', '检查到新的版本'+info.name+',是否下载?\n'+ info.description, [
+            {text: '是', onPress: ()=>{this._doUpdate(info)}},
+            {text: '否',},
+          ]);
+        }
+      }).catch(err => {
+        Alert.alert('提示', '更新失败.');
+      });
+    }
+
     onBackAndroid(){
       const nav = _navigator;
       const routers = nav.getCurrentRoutes();
-      var lastBackPressed = Date.now();
       if (routers.length > 1) {
         nav.pop();
         return true;
@@ -155,7 +208,8 @@ export default class haigame7 extends Component {
           return false;
         }
         lastBackPressed = Date.now();
-        ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
+        // ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
+        NativeModules.ToastA.show('再按一次退出应用');
         return true;
       }
     }
@@ -300,6 +354,7 @@ class App extends Component {
             navigator={this.props.navigator} {...this.state}/>
            <Match
             ref="content_match"
+            gotoRef={this.gotoRef.bind(this)}
             updateLoginState={this.updateLoginState.bind(this)}
             navigator={this.props.navigator} {...this.state}/>
           </View>

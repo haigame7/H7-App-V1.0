@@ -14,7 +14,10 @@ var {
   Navigator,
   Switch,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  Platform,
+  DeviceEventEmitter,
+  NativeAppEventEmitter,
   } = React;
 
 import commonstyle from '../../styles/commonstyle';
@@ -27,13 +30,27 @@ import Toast from '@remobile/react-native-toast';
 
 import * as httpCache from '../../components/common/cache'
 import PrivacyAgreement from './privacy_agreement'
+
+import WeChatAndroid from 'react-native-wechat-android';
+import WeChatIOS from 'react-native-wechat-ios';
+import ActionSheet from 'react-native-actionsheet';
+let appId = 'wxb0cb6c44afd49f5a';
+
+const buttons = ['取消', '分享给朋友', '分享到朋友圈'];
+const CANCEL_INDEX = 0;
+const DESTRUCTIVE_INDEX = 1;
+
+let shareLink = 'https://github.com/beefe/react-native-wechat-android'
+let thumbImage = 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg'
 export default class extends Component{
   constructor(props) {
     super(props);
     this.state = {
       alertvoice:false,
       messages: [],
-      allcache: 0
+      allcache: 0,
+      registerWechat: false,
+      isWXAppInstalled: true,
     }
   }
 
@@ -41,9 +58,66 @@ export default class extends Component{
     this.getData()
   }
   componentDidMount() {
-
+    // this.isWXAppInstalled()
+    if (Platform.OS == 'android') {
+      WeChatAndroid.registerApp(appId,(err,registerOK) => {
+          if(registerOK) {
+            this.setState({registerWechat: true})
+          } else {
+            // Toast.show('分享功能异常');
+          }
+      });
+      DeviceEventEmitter.addListener('finishedShare',function(event){
+       var success = event.success;
+       if(success){
+        Toast.show('分享成功');
+       }else{
+        Toast.show('分享失败');
+       }
+      });
+    } else if(Platform.OS == 'ios') {
+      WeChatIOS.registerApp(appId, (res) => {
+        if(res) {
+          // Toast.show(res.toString())
+          this.setState({registerWechat: true})
+        } else {
+          // Toast.show('分享功能异常');
+        }
+      });
+      //ios未添加分享回调
+    } else {
+      console.log('Unknow Platform');
+    }
+    this.isWXAppInstalled()
   }
-
+  isWXAppInstalled() {
+    if (Platform.OS == 'android') {
+      WeChatAndroid.isWXAppInstalled(
+       (err,isInstalled) => {
+         if(!isInstalled) {
+           this.setState({
+             isWXAppInstalled: false
+           })
+          //  Toast.show("未安装微信应用，无法使用微信充值功能")
+         } else {
+          //  this.isWXAppSupportApi()
+         }
+       }
+      );
+    } else {
+      WeChatIOS.isWXAppInstalled((res) => {
+        // show('isWXAppInstalled: '+res); // true or false
+        if(!res) {
+          this.setState({
+            isWXAppInstalled: false
+          })
+          // Toast.show("未安装微信应用，无法使用微信充值功能")
+        } else {
+          // this.isWXAppSupportApi()
+        }
+      });
+    }
+  }
   async getData(){
     try {
       this.setState({
@@ -64,23 +138,21 @@ export default class extends Component{
   }
 
   openalert(alertvoice){
-  if(alertvoice){
-      this.setState({alertvoice: false});
-   }else{
-      this.setState({alertvoice: true});
-   }
-  return this.state.notshow;
-}
+    if(alertvoice){
+        this.setState({alertvoice: false});
+     }else{
+        this.setState({alertvoice: true});
+     }
+    return this.state.notshow;
+  }
  onLoginout(){
-
-       AsyncStorage.removeItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
-         Toast.show("退出登录");
-         if(this.props.updateLoginState){
-           this.props.updateLoginState();
-          }
-       });
-         this.props.navigator.popToTop();
-
+   AsyncStorage.removeItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{
+     Toast.show("退出登录");
+     if(this.props.updateLoginState){
+       this.props.updateLoginState();
+      }
+   });
+     this.props.navigator.popToTop();
  }
  _toNextScreen(params){
     // Toast.show("this is a message")
@@ -94,6 +166,64 @@ export default class extends Component{
       }
     })
   }
+
+  _share(type){
+    // console.log();
+    if (Platform.OS == 'android') {
+      let webpageOptions = {
+        title: '分享这个网页给你',
+        desc: '我发现这个网页很有趣，特意分享给你',
+        thumbSize: 150,
+        scene: type,
+        type: 3,
+        webpageUrl: shareLink,
+        thumbImage: thumbImage,
+      }
+      WeChatAndroid.sendReq(webpageOptions,(err,sendOK) => {
+        console.log('调用分享结果')
+        console.log(sendOK);
+      });
+    } else if(Platform.OS == 'ios') {
+      WeChatIOS.sendLinkURL({
+        link: shareLink,
+        tagName: '钱隆',
+        title: '哈哈哈哈哈哈  ',
+        desc: '噢噢噢噢哦哦哦哦哦哦',
+        thumbImage: thumbImage,
+        scene: type
+      });
+    } else {
+      console.log('unknown platform');
+    }
+
+  }
+  _handlePress(index) {
+    // let type;
+    // switch (index) {
+    //   case 1:
+    //     type = 0
+    //     break;
+    //   case 2:
+    //     type = 1
+    //     break;
+    //   default:
+    //     break;
+    //
+    // }
+    // console.log(typeof(index) === 'Object');
+    if(typeof(index) !== 'number'){
+      return
+    }
+    this._share(index -1)
+   }
+
+   _showActionSheet() {
+     if(!this.state.registerWechat || !this.state.isWXAppInstalled) {
+       Toast.show('分享功能异常,未安装微信')
+       return
+     }
+     this.ActionSheet.show();
+   }
 
   render(){
     //分享功能能
@@ -124,6 +254,12 @@ export default class extends Component{
 
           <View style={styles.listbox}></View>
 
+          <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._showActionSheet.bind(this)}>
+            <Text style={styles.listviewtextleft}>分享H</Text>
+            <View style={styles.listviewtextbox} ></View>
+            <Text style={styles.listviewtextright}>微信</Text>
+            <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
+          </TouchableOpacity>
           <TouchableOpacity style={styles.listview} activeOpacity={0.8}  onPress={this._toNextScreen.bind(this,{"name":"隐私协议","component":PrivacyAgreement})}>
             <Text style={styles.listviewtextleft}>隐私协议</Text>
             <View style={styles.listviewtextbox} ></View>
@@ -140,6 +276,13 @@ export default class extends Component{
              <Text style = {styles.btnfont}> { '退出登录'}</Text>
           </TouchableHighlight>
         </ScrollView>
+        <ActionSheet
+            ref={(o) => this.ActionSheet = o}
+            title="分享到微信"
+            options={buttons}
+            cancelButtonIndex={CANCEL_INDEX}
+            onPress={this._handlePress.bind(this)}
+        />
     </View>
     );
   }

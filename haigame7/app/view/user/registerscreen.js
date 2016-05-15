@@ -191,7 +191,7 @@ export default class extends Component {
               <Text style={commonstyle.blue}>用户注册及服务协议</Text>
             </TouchableHighlight>
           </View>
-          
+
           <TouchableHighlight style={this.state.loading ? [styles.btn, styles.btndisable] : styles.btn} underlayColor={'#FF0000'} onPress={() => this.gotoRoute('setpwd',fields)}>
               <Text style={styles.btnfont} >{'下一步'}</Text>
           </TouchableHighlight>
