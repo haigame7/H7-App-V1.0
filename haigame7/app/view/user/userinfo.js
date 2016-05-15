@@ -196,8 +196,9 @@ export default class extends Component {
                   udata['UserWebPicture'] = 'data:image/jpeg;base64,' + pro
                   AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(udata));
                 } else {
-                  console.log('更新失败');
-                  Toast.show(response[0].Message);
+                  console.log(response[0].Message);
+                  //api没有限制,暂时或者永远这么写了就
+                  Toast.show("更新失败，图片过大");
                 }
               })
                break;

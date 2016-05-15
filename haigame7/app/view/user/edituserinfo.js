@@ -94,9 +94,10 @@ export default class extends Component {
           cancelButtonTitle: '取消',
           takePhotoButtonTitle: '拍照',
           chooseFromLibraryButtonTitle: '从相册选择',
-          quality: 0.5,
           maxWidth: 300,
           maxHeight: 300,
+          quality: 1,
+          allowsEditing: true,
           storageOptions: {
             skipBackup: true
           }

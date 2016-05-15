@@ -65,9 +65,8 @@ export default{
       FecthService.postFecth(
         ApiConfig.USER_API.RESETPASSWORD,
         {
-          'PhoneNumber':data.PhoneNumber,
-          'PassWord':data.passWord,
-          'VerifyCode':data.verifyCode
+          'PhoneNumber':data.phoneNumber,
+          'PassWord':data.passWord
         },
         callback
       );

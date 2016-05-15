@@ -26,7 +26,7 @@ import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable'
 
 import Toast from '@remobile/react-native-toast';
-
+import App from '../common/app.js'
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -91,13 +91,11 @@ export default class extends Component {
       return;
     }
     if(isreset){
+      console.log('重置data');
       UserService.resetPassword(this.state.data,(response) => {
+        console.log(response[0]);
         if (response[0].MessageCode == '0') {
-          //AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
-          setTimeout(() => {
-            var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
-            this.props.navigator.jumpTo(route);
-          }, 2000);
+          this._toNextScreen()
           Toast.showShortCenter("重置成功!");
         }else if(response[0].MessageCode == '10001'){
           Toast.showShortCenter("手机号不存在");
@@ -118,10 +116,7 @@ export default class extends Component {
       UserService.registerByInfo(this.state.data,(response) => {
         if (response[0].MessageCode == '0') {
           // AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION,JSON.stringify(this.state.data));
-          setTimeout(() => {
-            var route =this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length-3];
-            this.props.navigator.jumpTo(route);
-          }, 2000);
+          this._toNextScreen()
           Toast.showShortCenter('注册成功!')
         }else if(response[0].MessageCode == '10004'){
           Toast.showShortCenter("手机号已存在");
@@ -141,6 +136,27 @@ export default class extends Component {
     }
   }
 
+  _toNextScreen(){
+    UserService.getUserInfo(this.state.data.phoneNumber, (response) => {
+      if (response[0].MessageCode == '0') {
+        let data = response[1];
+        AsyncStorage.setItem(GlobalVariable.USER_INFO.USERSESSION, JSON.stringify(data));
+        {/*更新appjs登录状态*/}
+        setTimeout(() => {
+          if(this.props.updateLoginState){
+            this.props.updateLoginState();
+           }
+           this.props.navigator.replace({
+             name:'AppComponent',
+             component: App
+           });
+        }, 500);
+      } else {
+        console.log('自动登录失败');
+        console.log(response);
+      }
+    })
+  }
 
   render() {
     let fields = [

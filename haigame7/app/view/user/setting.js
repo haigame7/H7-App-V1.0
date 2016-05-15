@@ -255,7 +255,7 @@ export default class extends Component{
           <View style={styles.listbox}></View>
 
           <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this._showActionSheet.bind(this)}>
-            <Text style={styles.listviewtextleft}>分享H</Text>
+            <Text style={styles.listviewtextleft}>分享</Text>
             <View style={styles.listviewtextbox} ></View>
             <Text style={styles.listviewtextright}>微信</Text>
             <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
