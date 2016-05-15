@@ -15,7 +15,7 @@ var FightStyle = StyleSheet.create({
     },
     //Tab选择
     nav: {
-        height: 30,
+        height: 40,
     },
     navtab: {
         flexDirection: 'row',
@@ -41,7 +41,7 @@ var FightStyle = StyleSheet.create({
     },
     navsub: {
         flexDirection: 'row',
-        height: 30,
+        height: 40,
         paddingLeft: 10,
         paddingRight: 10,
     },
@@ -55,9 +55,9 @@ var FightStyle = StyleSheet.create({
     },
     navsubline: {
         width: 1,
-        height: 14,
-        marginTop: 8,
-        marginBottom: 8,
+        height: 20,
+        marginTop: 10,
+        marginBottom: 10,
         backgroundColor: '#484848',
     },
     //滚动列表

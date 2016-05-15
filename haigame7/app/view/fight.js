@@ -444,15 +444,13 @@ export default class extends Component{
         <View style={styles.nav}>
           <View style={styles.navsub}>
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('userfight',this.state.userteamid,0)}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'我的约战'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
+              <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'我的约战'}</Text>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress={()=>this.gotoRoute('fightstate',this.state.userteamid,0)}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'约战动态'}</Text>
-              <Text style={[commonstyle.red, commonstyle.fontsize12]}>{''}</Text>
+              <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{'约战动态'}</Text>
             </TouchableOpacity>
           </View>
         </View>
