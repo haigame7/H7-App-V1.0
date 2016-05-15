@@ -115,6 +115,7 @@ export default class extends Component{
             userteamdata:{
               phone:this.state.userteamdata.phone,
               asset:response[1].Asset,
+              role:response[1].Role,
               teamlogo:response[1].TeamLogo,
               fightscore:response[1].FightScore,
               recruit:response[1].RecruitContent,
@@ -317,7 +318,7 @@ export default class extends Component{
               <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
             </View>
             <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.gotoRoute('teamrecruit',{'teamid':this.state.userteamid,'teamrecruit':this.state.userteamdata.recruit})} >
+            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.state.userteamdata.role=="teamcreater"?this.gotoRoute('teamrecruit',{'teamid':this.state.userteamid,'teamrecruit':this.state.userteamdata.recruit}):Toast.showLongCenter("队员无法发布招募")} >
               <Text style = {commonstyle.white}> {'发布招募'} </Text>
             </TouchableOpacity>
           </View>
