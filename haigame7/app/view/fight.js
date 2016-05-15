@@ -161,11 +161,6 @@ export default class extends Component{
      this.setState({isOpen: false});
   }
   _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = this.state.teamlist;
       let _params = this.state.teamlistRequestData;
       _params.startpage = _params.startpage+1;
@@ -176,16 +171,14 @@ export default class extends Component{
       TeamService.getTeamList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<4){
-            this.setState({
-              keykey:1,
-            });
+          if(nextData.length<1){
             setTimeout(()=>{
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(_ds),
                 loaded:false,
-                footerMsg: "木有更多数据了...",
+                footerMsg: "点击加载更多",
               });
+              Toast.show("木有更多数据了...");
             },1000);
           }else{
             for(var item in nextData){
@@ -203,7 +196,7 @@ export default class extends Component{
           Toast.show(response[0].Message);
         }
       });
-    }
+    
   }
   gotoRoute(name,userteamid,fightteamid){
     this.initData();
