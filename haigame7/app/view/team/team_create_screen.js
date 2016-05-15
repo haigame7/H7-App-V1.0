@@ -43,9 +43,10 @@ export default class extends React.Component {
           cancelButtonTitle: '取消',
           takePhotoButtonTitle: '拍照',
           chooseFromLibraryButtonTitle: '从相册选择',
-          quality: 0.5,
+          quality: 1,
           maxWidth: 300,
           maxHeight: 300,
+          allowsEditing: true,
           storageOptions: {
             skipBackup: true
           }

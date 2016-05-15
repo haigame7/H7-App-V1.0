@@ -209,7 +209,7 @@ export default class haigame7 extends Component {
         }
         lastBackPressed = Date.now();
         // ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);
-        NativeModules.ToastA.show('再按一次退出应用');
+        // NativeModules.ToastA.show('再按一次退出应用');
         return true;
       }
     }

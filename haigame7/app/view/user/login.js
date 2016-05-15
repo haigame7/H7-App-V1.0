@@ -181,7 +181,7 @@ export default class Login extends Component {
             }
         } else if (name == 'register') {
             if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-                this.props.navigator.push({ name: name, component: Register, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+                this.props.navigator.push({ name: name, component: Register, sceneConfig: Navigator.SceneConfigs.FloatFromBottom, params:{...this.props}});
             }
         }
     }
