@@ -102,11 +102,6 @@ export default class extends React.Component {
     );
   }
   _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = this.state.myapplyList;
       let _params ={userID:this.state.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2};
       _params.startpage = _params.startpage+1;
@@ -117,11 +112,13 @@ export default class extends React.Component {
       TeamService.myApplyTeamList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<5){
-            this.setState({
-              keykey:1,
-              footerMsg: "木有更多数据了..."
-            });
+          if(nextData.length<1){
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerMsg: "点击加载更多..."
+             });
+          },1000);
           }
           else{
             this.setState({
@@ -140,7 +137,6 @@ export default class extends React.Component {
         Toast.show(response[0].Message);
         }
       });
-    }
   }
   _renderFooter() {
     return (
