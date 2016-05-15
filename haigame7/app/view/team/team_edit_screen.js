@@ -75,10 +75,10 @@ export default class extends React.Component {
     let property = this.props.screenTitle;
     let value;
     if(this.state.TeamName==''){
-      Toast.show('请填写战队名称');
+      Toast.showShortCenter('请填写战队名称');
       return;
     }else if(this.state.TeamDescription==''){
-      Toast.show('请填写战队宣言');
+      Toast.showShortCenter('请填写战队宣言');
       return;
     }else{
       value = {TeamID: this.state.TeamID,TeamName:this.state.TeamName,TeamLogo: this.state.imgnull==1? this.state.showLogo: '',TeamDescription: this.state.TeamDescription,};
