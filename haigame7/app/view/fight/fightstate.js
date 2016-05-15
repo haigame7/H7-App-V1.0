@@ -74,11 +74,6 @@ export default class extends React.Component {
   }
 
   _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = this.state.db;
       let _params = this.state.initData;
       _params.startpage = _params.startpage+1;
@@ -96,11 +91,17 @@ export default class extends React.Component {
             dataSource: this.state.dataSource.cloneWithRows(_ds),
             loaded: false,
           });
-          if(nextData.length<5){
+          if(nextData.length<1){
             this.setState({
               keykey:1,
-              footerMsg: "木有更多数据了...",
+
             });
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerMsg: "点击加载更多..."
+             });
+          },1000);
           }else{
             this.setState({
               footerMsg: "点击加载更多",
@@ -110,7 +111,7 @@ export default class extends React.Component {
           Toast.show(response[0].Message);
         }
       });
-    }
+
   }
 
   _renderFooter() {
