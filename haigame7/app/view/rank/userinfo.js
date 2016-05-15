@@ -55,12 +55,12 @@ export default class extends Component{
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:this.state.userinfo.UserPicture}} />
+              <Image style={styles.headportrait} source={{uri:this.state.userinfo.UserPicture==undefined?this.state.userinfo.UserWebPicture:this.state.userinfo.UserPicture}} />
               <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/><Text style={styles.headportraitvfont}>未认证</Text></View>
             </View>
 
             <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>{this.state.userinfo.UserWebNickName}</Text>
+              <Text style={[styles.headname, commonstyle.white]}>{this.state.userinfo.NickName==undefined?(this.state.userinfo.UserNickName==undefined?this.state.userinfo.UserWebNickName:this.state.userinfo.UserNickName):this.state.userinfo.NickName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>

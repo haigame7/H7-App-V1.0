@@ -109,7 +109,16 @@ export default{
       callback
     );
   },
-
+  /*获取用户信息*/
+    getUserInfoByUserID(userID,callback) {
+      FecthService.postFecth(
+        ApiConfig.USER_API.GET_USER_INFO_BY_ID,
+        {
+          'UserID':userID
+        },
+        callback
+      );
+    },
   /*获取用户游戏信息信息*/
   getUserGameInfo(phoneNumber,callback) {
     FecthService.postFecth(
