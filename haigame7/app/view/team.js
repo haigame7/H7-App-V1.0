@@ -460,10 +460,10 @@ export default class extends Component{
         <View style={styles.nav}>
           <View style={styles.navtab}>
             <TouchableOpacity style={this.state.navbar==0?styles.navbtnactive:styles.navbtn} activeOpacity={0.8}  onPress = {() => this._switchNavbar(0)}>
-              <Text style={this.state.navbar==0?commonstyle.red:commonstyle.white}>加入战队</Text>
+              <Text style={[this.state.navbar==0?commonstyle.red:commonstyle.white, commonstyle.fontsize14]}>加入战队</Text>
             </TouchableOpacity>
             <TouchableOpacity style={this.state.navbar==0?styles.navbtn:styles.navbtnactive} activeOpacity={0.8}  onPress = {() => this._switchNavbar(1)}>
-              <Text style={this.state.navbar==0?commonstyle.white:commonstyle.red}>招募队员</Text>
+              <Text style={[this.state.navbar==0?commonstyle.white:commonstyle.red, commonstyle.fontsize14]}>招募队员</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.navsub}>
