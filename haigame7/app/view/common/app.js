@@ -221,7 +221,8 @@ export default class haigame7 extends Component {
         <Navigator
           initialRoute={{ name: defaultName,component: defaultComponent }}
           configureScene={(route,_navigator) => {
-            let config = route.sceneConfig || Navigator.SceneConfigs.HorizontalSwipeJump;
+            // let config = route.sceneConfig || Navigator.SceneConfigs.HorizontalSwipeJump;
+            let config = Navigator.SceneConfigs.HorizontalSwipeJump;
             if(_navigator.length == 1) {
               config.gestures.jumpForward.overswipe = null;
               config.gestures.jumpBack.overswipe = null;
