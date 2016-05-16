@@ -24,6 +24,7 @@ var {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 import TeamService from '../../network/teamservice';
+import User from '../user.js';
 import Toast from '@remobile/react-native-toast';
 
 export default class extends Component{
@@ -36,6 +37,15 @@ export default class extends Component{
     }
   }
   inviteUser(userID,teamID){
+    if(this.state.userteamid==0){
+       this.props.navigator.push({
+         name:'user',
+         component:User,
+         params:{'userData':this.props.playerinfo,'openmodal':true},
+         sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+       });
+       return;
+     }
     var data = {'teamID':teamID,'userID':userID};
     TeamService.inviteUser(data,(response)=>{
       if(response[0].MessageCode == '20008'){
@@ -68,12 +78,12 @@ export default class extends Component{
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:this.state.playerinfo.UserWebPicture}} />
+              <Image style={styles.headportrait} source={{uri:this.state.playerinfo.UserPicture==undefined?this.state.playerinfo.UserWebPicture:this.state.playerinfo.UserPicture}} />
               <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/><Text style={styles.headportraitvfont}>未认证</Text></View>
             </View>
 
             <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>{this.state.playerinfo.UserWebNickName}</Text>
+            <Text style={[styles.headname, commonstyle.white]}>{this.state.playerinfo.NickName==undefined?(this.state.playerinfo.UserNickName==undefined?this.state.playerinfo.UserWebNickName:this.state.playerinfo.UserNickName):this.state.playerinfo.NickName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
