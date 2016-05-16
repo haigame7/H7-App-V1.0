@@ -74,7 +74,7 @@ export default class extends React.Component {
           Toast.showLongCenter('已同意');
         }else{
           Toast.showLongCenter('已拒绝');
-        }   
+        }
         setTimeout(()=>{
           this.initData();
           },1000);
@@ -135,11 +135,6 @@ export default class extends React.Component {
     );
   }
   _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = this.state.myapplyjoinList;
       let _params ={teamID:this.state.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2};
       _params.startpage = _params.startpage+1;
@@ -150,11 +145,13 @@ export default class extends React.Component {
       TeamService.getApplyUserList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<3){
-            this.setState({
-              keykey:1,
-              footerMsg: "木有更多数据了..."
-            });
+          if(nextData.length<1){
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerMsg: "点击加载更多..."
+             });
+          },1000);
           }
           for(var item in nextData){
             _ds.push(nextData[item])
@@ -172,7 +169,7 @@ export default class extends React.Component {
           });
         }
       },1000);
-    }
+    
   }
   _renderFooter() {
     return (

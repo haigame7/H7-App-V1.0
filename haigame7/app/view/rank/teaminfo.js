@@ -23,9 +23,11 @@ var {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/teamstyle';
 import TeamService from '../../network/teamservice';
+import UserService from '../../network/userservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 import Toast from '@remobile/react-native-toast';
+import UserInfo from '../rank/userinfo';
 
 export default class extends Component{
   constructor(props) {
@@ -34,11 +36,40 @@ export default class extends Component{
       teaminfo:this.props.teaminfo,
       userID:this.props.userID,
       messages: [],
+      creatUser:{},
+    }
+  }
+  componentWillMount(){
+    this.initData();
+  }
+  initData(){
+
+    UserService.getUserInfoByUserID(this.props.teaminfo.CreateUserID, (response) => {
+      if (response[0].MessageCode == '0') {
+        let data = response[1];
+        this.setState({
+          creatUser: data,
+        })
+      } else {
+        Toast.show('获取用户数据失败'+ response[0].Message);
+        this.setState({
+          loading: false,
+        })
+      }
+    });
+  }
+
+  gotoRoute(name,params) {
+
+    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+      this.props.navigator.push({ name: name, component: UserInfo, params:{'userinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   }
   renderUserImageItem(rowData,key){
     return(
-      <Image key={key} style={styles.listviewteamimg} source={{uri:rowData.UserPicture}} />
+      <TouchableOpacity key={key}  onPress={()=>this.gotoRoute('userinfo',rowData)}>
+      <Image style={styles.listviewteamimg} source={{uri:rowData.UserPicture}} />
+      </TouchableOpacity>
     );
   }
   render(){
@@ -47,7 +78,7 @@ export default class extends Component{
       return that.renderUserImageItem(that.state.teaminfo.UserImage[item],key);
     });
     var total = this.state.teaminfo.WinCount + this.state.teaminfo.LoseCount + this.state.teaminfo.FollowCount;
-    var winning = Math.round(this.state.teaminfo.WinCount/total*100);
+    var winning = Math.round(this.state.teaminfo.WinCount/(!isNaN(total)?1:total*100));
 
     return (
       <View>
@@ -99,7 +130,9 @@ export default class extends Component{
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
               <View style={styles.listviewright}>
                 <View style={styles.listviewteam}>
+                 <TouchableOpacity  onPress={()=>this.gotoRoute('userinfo',this.state.creatUser)}>
                   <Image style={styles.listviewteamleader} source={{uri:this.state.teaminfo.CreateUserLogo}} />
+                  </TouchableOpacity>
                   <View style={styles.listviewteamblock}>
                     {userimage}
                   </View>

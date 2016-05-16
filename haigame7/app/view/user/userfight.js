@@ -24,6 +24,7 @@ import Header from '../common/headernav'; // 主屏
 
 import UserFightList from '../fight/userfightdate';
 import Loading from '../common/loading';
+import Toast from '@remobile/react-native-toast';
 import FightService from '../../network/fightservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
@@ -161,15 +162,6 @@ export default class extends Component{
     }
   }
   _onLoadMore(param,data) {
-    if (this.state.keyone > 0 &&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend) {
-      this.setState({
-        footerOneMsg: "木有更多数据了..."
-      });
-    }else if(this.state.keytwo>0 &&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
-      this.setState({
-        footerTwoMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = data;
       let _params = param;
       _params.startpage = _params.startpage+1;
@@ -186,16 +178,20 @@ export default class extends Component{
       FightService.getUserFight(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<5&&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
-            this.setState({
-              keyone:1,
-              footerOneMsg: "木有更多数据了..."
-            });
-          }else if(nextData.length<5&&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
-            this.setState({
-              keytwo:1,
-              footerTwoMsg: "木有更多数据了..."
-            });
+          if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightSend){
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerOneMsg: "点击加载更多..."
+             });
+          },1000);
+        }else if(nextData.length<1&&param.fighttype==GlobalVariable.FIGHT_INFO.FightReceive){
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerTwoMsg: "点击加载更多..."
+             });
+          },1000);
           }
           if(nextData.length==0){
             return;
@@ -226,8 +222,6 @@ export default class extends Component{
         }
       });
       //这等到有api在搞吧
-
-    }
 
   }
   render() {
