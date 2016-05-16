@@ -40,8 +40,8 @@ const buttons = ['取消', '分享给朋友', '分享到朋友圈'];
 const CANCEL_INDEX = 0;
 const DESTRUCTIVE_INDEX = 1;
 
-let shareLink = 'https://github.com/beefe/react-native-wechat-android'
-let thumbImage = 'http://img1.imgtn.bdimg.com/it/u=3924416677,403957246&fm=21&gp=0.jpg'
+let shareLink = 'http://q.eqxiu.com/s/HtKFR6OC?eqrcode=1&from=groupmessage&isappinstalled=0'
+let thumbImage = 'http://images.haigame7.com/wxshare/thumbImage.jpg'
 export default class extends Component{
   constructor(props) {
     super(props);
@@ -171,8 +171,8 @@ export default class extends Component{
     // console.log();
     if (Platform.OS == 'android') {
       let webpageOptions = {
-        title: '分享这个网页给你',
-        desc: '我发现这个网页很有趣，特意分享给你',
+        title: '免费分享呦',
+        desc: '我就不信你敢跟我约战',
         thumbSize: 150,
         scene: type,
         type: 3,

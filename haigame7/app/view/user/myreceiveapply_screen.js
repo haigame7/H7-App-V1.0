@@ -10,6 +10,7 @@ import React, {
   StyleSheet,
   View,
   Image,
+  Navigator,
   ListView,
   Text,
   TouchableHighlight,
@@ -18,6 +19,7 @@ import React, {
 import Button from 'react-native-button';
 import Header from '../common/headernav';
 import Util from '../common/util';
+import TeamInfo from '../team/teaminfo';
 import TeamService from '../../network/teamservice';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
@@ -39,7 +41,8 @@ export default class extends React.Component {
   }
   componentWillMount(){
     this.setState({
-      userData:this.props.userData,
+      userData:this.props.content.userData,
+      paraLoad:{userID:this.props.content.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2}
     });
 
   }
@@ -72,20 +75,28 @@ export default class extends React.Component {
      if(response[0].MessageCode == '40001'){
        Toast.show('服务器请求异常');
      }else if(response[0].MessageCode == '0'){
-       if(isok==0){
-         Toast.showLongCenter('已同意');
-       }else{
-         Toast.showLongCenter('已拒绝');
-       }   
+         if(isok==0){
+           Toast.showLongCenter('已同意');
+         }else{
+           Toast.showLongCenter('已拒绝');
+         }
+
        setTimeout(()=>{
          this.initData();
          },1000);
      }
     }else{
-        Toast.show('请求错误');
+        Toast.show(response[0].Message);
     }
   });
  }
+ gotoRoute(name,params) {
+   if (name == 'teaminfo') {
+     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+         this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.userData.UserID,'role':this.props.role},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+     }
+     }
+   }
   _renderRow(rowData) {
     let state;
     if(rowData.State=="招募队员"){
@@ -96,7 +107,7 @@ export default class extends React.Component {
       state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已拒绝</Button></View>;
     }
     return (
-      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null}>
+      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={()=>this.gotoRoute('teaminfo',rowData)}>
         <View style={commonstyle.row}>
           <Image style={styles.listblockimg} source={{uri:rowData.TeamLogo}} />
           <View style={commonstyle.col1}>
@@ -114,14 +125,9 @@ export default class extends React.Component {
       </TouchableHighlight>
     );
   }
-  _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
+  _onLoadMore(params) {
       let _ds = this.state.myinvitedList;
-      let _params ={userID:this.state.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2};
+      let _params =params
       _params.startpage = _params.startpage+1;
       this.setState({
         footerMsg: "正在加载....."
@@ -130,11 +136,13 @@ export default class extends React.Component {
       TeamService.myApplyTeamList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<5){
-            this.setState({
-              keykey:1,
-              footerMsg: "木有更多数据了..."
-            });
+          if(nextData.length<1){
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerMsg: "点击加载更多..."
+             });
+          },1000);
           }else{
             this.setState({
               footerMsg: "点击加载更多"
@@ -152,13 +160,13 @@ export default class extends React.Component {
           console.log('请求错误' + response[0].MessageCode);
         }
       });
-    }
+
   }
 
 
   _renderFooter() {
     return (
-      <TouchableHighlight underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this)}>
+      <TouchableHighlight underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraLoad)}>
         <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerMsg}</Text>
       </TouchableHighlight>
     );
