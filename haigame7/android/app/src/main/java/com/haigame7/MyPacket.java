@@ -19,6 +19,7 @@ public class MyPacket implements ReactPackage {
         List<NativeModule> modules = new ArrayList<>();
 
         modules.add(new ToastA(reactContext));
+        modules.add(new SetBackToHome(reactContext));
         return modules;
     }
 
