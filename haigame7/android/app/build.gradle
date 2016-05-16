@@ -129,6 +129,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-update')
     compile project(':@remobile/react-native-splashscreen')
     compile project(':react-native-wechat-android')
     compile project(':react-native-vector-icons')
