@@ -12,6 +12,7 @@ import React, {
   Image,
   ListView,
   Text,
+  Navigator,
   TouchableHighlight,
   TouchableOpacity
 } from 'react-native';
@@ -19,6 +20,7 @@ import Header from '../common/headernav';
 import Util from '../common/util';
 import TeamService from '../../network/teamservice';
 import commonstyle from '../../styles/commonstyle';
+import PlayerInfo from '../team/playerinfo';
 import styles from '../../styles/userstyle';
 import GlobalVariable from '../../constants/globalvariable';
 import GlobalSetup from '../../constants/globalsetup';
@@ -29,6 +31,8 @@ export default class extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       userData:{},
+      userteamdata:{},
+
       teamID:0,
       dataSource: ds.cloneWithRows([]),
       mysendapplyList:[],
@@ -46,6 +50,23 @@ export default class extends React.Component {
      this.initData();
   }
   initData(){
+    {/*请求我的战队信息*/}
+    TeamService.getUserDefaultTeam(this.props.userData.UserID,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          this.setState({
+            userteamdata:response[1]
+          });
+        }else{
+          Toast.show(response[0].Message);
+        }
+      }
+      else {
+        Toast.show('请求错误');
+      }
+    });
     TeamService.getInvitedUserList({teamID:this.state.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2},(response) => {
     if (response !== GlobalSetup.REQUEST_SUCCESS) {
       if(response[0].MessageCode == '40001'){
@@ -62,6 +83,14 @@ export default class extends React.Component {
      }
    });
   }
+
+  gotoRoute(name,params) {
+    if (name == 'playerinfo') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.teamID,'playerinfo':params,'userteamdata':this.state.userteamdata},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }
+    }
   renderHeroImageItem(rowData,key){
     return(
       <Image key={key} style={styles.listblocktexthero} source={{uri:rowData.HeroImage}} />
@@ -83,7 +112,7 @@ export default class extends React.Component {
       state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'已失效'}</Text></View>;
     }
     return (
-      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null} >
+      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={()=>this.gotoRoute('playerinfo',rowData)} >
         <View style={commonstyle.row}>
           <Image style={styles.listblockimg} source={{uri:rowData.UserWebPicture}} />
           <View style={commonstyle.col1}>
