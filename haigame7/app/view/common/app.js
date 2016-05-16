@@ -205,7 +205,8 @@ export default class haigame7 extends Component {
       }else {
         if (lastBackPressed && lastBackPressed + 2000 >= Date.now()) {
           //最近2秒内按过back键，可以退出应用。
-          return false;
+          // return false;
+          NativeModules.SetBackToHome.setBackToHome();
         }
         lastBackPressed = Date.now();
         // ToastAndroid.show('再按一次退出应用',ToastAndroid.SHORT);

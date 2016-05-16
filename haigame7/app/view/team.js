@@ -204,12 +204,12 @@ export default class extends Component{
       else if (name == 'myapply') {
 
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MyApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: MyApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
       }
       else if (name == 'myreceiveapply') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MyReceiveApply, params:this.state.content, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: MyReceiveApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
       }
       else if (name == 'mysendapply') {
