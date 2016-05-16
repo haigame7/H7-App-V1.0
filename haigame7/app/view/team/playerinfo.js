@@ -33,17 +33,21 @@ export default class extends Component{
     this.state = {
       playerinfo:this.props.playerinfo,
       teamID:this.props.teamID,
+      userteamdata:this.props.userteamdata,
       messages: []
     }
   }
   inviteUser(userID,teamID){
-    if(this.state.userteamid==0){
+    if(this.state.teamID==0){
        this.props.navigator.push({
          name:'user',
          component:User,
          params:{'userData':this.props.playerinfo,'openmodal':true},
          sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
        });
+       return;
+     }else if(this.state.userteamdata.Role=="teamuser"){
+       Toast.show("队员无法发出邀请");
        return;
      }
     var data = {'teamID':teamID,'userID':userID};

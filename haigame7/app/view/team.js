@@ -58,6 +58,7 @@ export default class extends Component{
         teamlogo:'',
         fightscore:0,
         recruit:'',
+        Role:'',
       },
       data:{
           subnavbarone:'我的申请',
@@ -116,7 +117,7 @@ export default class extends Component{
               TeamID:response[1].TeamID,
               phone:this.state.userteamdata.phone,
               asset:response[1].Asset,
-              role:response[1].Role,
+              Role:response[1].Role,
               teamlogo:response[1].TeamLogo,
               fightscore:response[1].FightScore,
               recruit:response[1].RecruitContent,
@@ -193,11 +194,11 @@ export default class extends Component{
           }
       } else if (name == 'playerinfo') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.userteamid,'playerinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.userteamid,'playerinfo':params,'userteamdata':this.state.userteamdata},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
       }else if (name == 'teaminfo') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID,'role':this.state.userteamdata.role},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID,'role':this.state.userteamdata.Role},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
       }
       else if (name == 'myapply') {
@@ -269,7 +270,7 @@ export default class extends Component{
             </View>
           </View>
         </View>
-        <TouchableOpacity onPress={()=>this.state.content.userData.UserID==0||this.state.content.userData.UserID==undefined||this.state.userteamid==0?this.gotoRoute():this.state.userteamdata.role=="teamuser"?Toast.showLongCenter("队员无法发出邀请"):this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
+        <TouchableOpacity onPress={()=>this.state.content.userData.UserID==0||this.state.content.userData.UserID==undefined||this.state.userteamid==0?this.gotoRoute():this.state.userteamdata.Role=="teamuser"?Toast.show("队员无法发出邀请"):this.inviteUser(rowData.UserID,this.state.userteamid)}  style = {[this.state.invite==0 ? commonstyle.btnredwhite : commonstyle.btncreamblack, styles.userlistbtn]} activeOpacity={0.8}>
           <Text style = {this.state.invite==0 ? commonstyle.white:commonstyle.black}> { this.state.invite==0 ? '邀请' : '已邀请' } </Text>
         </TouchableOpacity>
       </TouchableOpacity>
@@ -320,7 +321,7 @@ export default class extends Component{
               <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
             </View>
             <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>
-            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.state.userteamdata.role=="teamcreater"?this.gotoRoute('teamrecruit',{'teamid':this.state.userteamid,'teamrecruit':this.state.userteamdata.recruit}):Toast.showLongCenter("队员无法发布招募")} >
+            <TouchableOpacity style = {[commonstyle.btnredwhite, styles.teamlistbtn]} activeOpacity={0.8} onPress={()=>this.state.userteamdata.Role==""||this.state.userteamid==0?this.gotoRoute():this.state.userteamdata.Role=="teamcreater"?this.gotoRoute('teamrecruit',{'teamid':this.state.userteamid,'teamrecruit':this.state.userteamdata.recruit}):Toast.show("队员无法发布招募")} >
               <Text style = {commonstyle.white}> {'发布招募'} </Text>
             </TouchableOpacity>
           </View>
@@ -352,7 +353,7 @@ export default class extends Component{
     var data = {'userID':userID,'teamID':teamID};
     TeamService.applyTeam(data,(response)=>{
       if(response[0].MessageCode == '20006'){
-        if(this.state.userteamdata.role=="teamcreater"){
+        if(this.state.userteamdata.Role=="teamcreater"){
             Toast.show('您是战队队长无法加入');
         }
         else{

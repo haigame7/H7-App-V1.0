@@ -68,7 +68,6 @@ export default class extends React.Component {
     );
   }
   _renderRow(rowData) {
-    console.log(rowData);
     var that = this;
     var items =Object.keys(rowData.HeroImage).map(function(item,key) {
       return that.renderHeroImageItem(rowData.HeroImage[item],key);
@@ -122,7 +121,6 @@ export default class extends React.Component {
         footerMsg: "正在加载....."
       });
       {/*加载下一页*/}
-      console.log(_params);
       TeamService.getInvitedUserList(_params,(response) => {
 
         if (response[0].MessageCode == '0') {
