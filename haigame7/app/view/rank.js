@@ -51,6 +51,14 @@ export default class extends Component{
       content:{
         userData:{},
       },
+      userteamdata:{
+        phone:'',
+        asset:0,
+        teamlogo:'',
+        fightscore:0,
+        recruit:'',
+        Role:'',
+      },
       loaded: false,
       footerOneMsg: "点击加载更多团队",
       footerTwoMsg: "点击加载更多名人",
@@ -247,7 +255,7 @@ export default class extends Component{
 
   renderUserRankList(user){
       //返回个人组件
-      return(<UserRankList user={user} userID={this.state.content.userData.UserID} userteamid={this.state.userteamid} {...this.props}  navigator={this.props.navigator}/>);
+      return(<UserRankList user={user} userID={this.state.content.userData.UserID} userteamid={this.state.userteamid} {...this.props} userteamdata={this.state.userteamdata}  navigator={this.props.navigator}/>);
   }
 
   renderTeamRankList(team){

@@ -28,6 +28,7 @@ import PlayerInfo from '../team/playerinfo';
 
 var UserRankList = React.createClass({
   getInitialState() {
+
     return {
       user: this.props.user,
       userID: this.props.userID,
@@ -45,7 +46,7 @@ var UserRankList = React.createClass({
       });
     }
     else if(this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-      this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.props.userteamid,'playerinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+      this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.props.userteamid,'playerinfo':params,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   },
   render: function() {
