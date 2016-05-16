@@ -10,6 +10,7 @@ import React, {
   StyleSheet,
   View,
   Image,
+  Navigator,
   ListView,
   Text,
   TouchableHighlight,
@@ -18,6 +19,7 @@ import React, {
 import Button from 'react-native-button';
 import Header from '../common/headernav';
 import Util from '../common/util';
+import TeamInfo from '../team/teaminfo';
 import TeamService from '../../network/teamservice';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
@@ -39,8 +41,8 @@ export default class extends React.Component {
   }
   componentWillMount(){
     this.setState({
-      userData:this.props.userData,
-      paraLoad:{userID:this.props.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2}
+      userData:this.props.content.userData,
+      paraLoad:{userID:this.props.content.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2}
     });
 
   }
@@ -88,6 +90,13 @@ export default class extends React.Component {
     }
   });
  }
+ gotoRoute(name,params) {
+   if (name == 'teaminfo') {
+     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+         this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.userData.UserID,'role':this.props.role},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+     }
+     }
+   }
   _renderRow(rowData) {
     let state;
     if(rowData.State=="招募队员"){
@@ -98,7 +107,7 @@ export default class extends React.Component {
       state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已拒绝</Button></View>;
     }
     return (
-      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null}>
+      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={()=>this.gotoRoute('teaminfo',rowData)}>
         <View style={commonstyle.row}>
           <Image style={styles.listblockimg} source={{uri:rowData.TeamLogo}} />
           <View style={commonstyle.col1}>
