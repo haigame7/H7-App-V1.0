@@ -4,7 +4,6 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.facebook.react.ReactActivity;
-import cn.reactnative.modules.update.UpdatePackage;
 import com.remobile.splashscreen.RCTSplashScreenPackage;
 import com.heng.wechat.WeChatPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -18,7 +17,6 @@ import cn.reactnative.httpcache.HttpCachePackage;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.reactnative.modules.update.UpdateContext;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -47,7 +45,6 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new UpdatePackage(),
         new RCTSplashScreenPackage(MainActivity.this),
         new WeChatPackage(),
         new RCTDateTimePickerPackage(MainActivity.this),
@@ -59,9 +56,5 @@ public class MainActivity extends ReactActivity {
       );
     }
 
-    /*热更新*/
-    @Override
-    protected String getJSBundleFile() {
-        return UpdateContext.getBundleUrl(this);
-    }
+
 }
