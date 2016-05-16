@@ -211,7 +211,7 @@ export default class extends Component{
     //
     // }
     // console.log(typeof(index) === 'Object');
-    if(typeof(index) !== 'number'){
+    if(typeof(index) !== 'number' || index === 0){
       return
     }
     this._share(index -1)
