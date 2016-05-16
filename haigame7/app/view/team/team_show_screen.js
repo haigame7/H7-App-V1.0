@@ -322,72 +322,75 @@ export default class extends React.Component {
       </View>
     ):(<View></View>);
     let teamUser = (
-      <View style={styles.listviewteam}>
-        <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+      <View style={styles.listviewteam,{flex:1}}>
+        <ScrollView horizontal={true} >
         {items}
+        </ScrollView>
       </View>
       )
-    return(
-      <View>
-        <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
-        <ScrollView style={commonstyle.bodyer}>
-          <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
-            <TouchableOpacity style={styles.blocktop} onPress={()=>this.state.teamData.Role=='teamcreater'?this._editTeam():console.log('member')}>
-              <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
-            </TouchableOpacity>
-            {/*
-              <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>
-              <Icon name="toggle" size={20} color={'#D31B25'} style={commonstyle.iconnobg}/>
+      return(
+        <View>
+          <Header screenTitle='战队信息' isPop={true} iconText={this.state.teamData.Role=='teamcreater'?'添加战队':''} callback={this._callback.bind(this)} navigator={this.props.navigator}/>
+          <ScrollView style={commonstyle.bodyer}>
+            <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
+              <TouchableOpacity style={styles.blocktop} onPress={()=>this.state.teamData.Role=='teamcreater'?this._editTeam():console.log('member')}>
+                <Image style={styles.headportrait} source={{uri:this.state.teamData.TeamLogo}} />
               </TouchableOpacity>
-              */}
-            <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>{this.state.teamData.TeamName}</Text>
-              <View style={[commonstyle.row, styles.headtextblock]}>
-                <View style={styles.headtextleft}>
-                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.teamData.FightScore}{'  '}</Text>
+              {/*
+                <TouchableOpacity style={styles.toggle} onPress={()=>this.state.teamData.Role=='teamcreater'?this._openModa():console.log('member')}>
+                <Icon name="toggle" size={20} color={'#D31B25'} style={commonstyle.iconnobg}/>
+                </TouchableOpacity>
+                */}
+              <View style={styles.blocktop}>
+                <Text style={[styles.headname, commonstyle.white]}>{this.state.teamData.TeamName}</Text>
+                <View style={[commonstyle.row, styles.headtextblock]}>
+                  <View style={styles.headtextleft}>
+                    <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
+                    <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.teamData.FightScore}{'  '}</Text>
+                  </View>
+                  <View style={styles.headtextline}></View>
+                  <View style={styles.headtextright}>
+                    <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                    <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.teamData.Asset}{'  '}</Text>
+                  </View>
                 </View>
-                <View style={styles.headtextline}></View>
-                <View style={styles.headtextright}>
-                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.teamData.Asset}{'  '}</Text>
+                <View style={styles.headtext}>
+                  <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>战队宣言:{this.state.teamData.TeamDescription}</Text>
                 </View>
               </View>
-              <View style={styles.headtext}>
-                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>战队宣言:{this.state.teamData.TeamDescription}</Text>
+            </Image>
+            <View style={styles.listblock}>
+              <View style={styles.listview}>
+                <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队战绩</Text></View>
+                <View style={styles.listviewright}>
+                  <Text style={commonstyle.cream}>参赛场次  </Text>
+                  <Text style={commonstyle.yellow}>{odddata.totalcount}场</Text>
+                  <Text style={commonstyle.cream}>  胜率  </Text>
+                  <Text style={commonstyle.red}>{Math.round(odddata.odd)}%</Text>
+                </View>
+              </View>
+              <View style={styles.listview}>
+                <View style={styles.listviewleft}><Text style={commonstyle.gray}>成立日期</Text></View>
+                <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teamData.CreateTime}</Text></View>
+              </View>
+              <View style={styles.listview}>
+                <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>
+                <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teamData.RecruitContent}</Text></View>
+              </View>
+              <View style={[styles.listview, styles.nobottom]}>
+                <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
+                <View style={styles.listviewright}>
+                  <TouchableOpacity style={styles.listviewteamedit} onPress={this.state.teamData.Role=='teamcreater'?()=>this.editTeamMember():console.log('teamuser')} activeOpacity={0.8}><Icon name="edit" size={20} color={this.state.teamData.Role=='teamcreater'?'#fff':'#000'} /></TouchableOpacity>
+                  <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+                </View>
+              </View>
+              <View style={[styles.listview, styles.nobottom]}>{teamUser}
               </View>
             </View>
-          </Image>
-          <View style={styles.listblock}>
-            <View style={styles.listview}>
-              <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队战绩</Text></View>
-              <View style={styles.listviewright}>
-                <Text style={commonstyle.cream}>参赛场次  </Text>
-                <Text style={commonstyle.yellow}>{odddata.totalcount}场</Text>
-                <Text style={commonstyle.cream}>  胜率  </Text>
-                <Text style={commonstyle.red}>{Math.round(odddata.odd)}%</Text>
-              </View>
-            </View>
-            <View style={styles.listview}>
-              <View style={styles.listviewleft}><Text style={commonstyle.gray}>成立日期</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teamData.CreateTime}</Text></View>
-            </View>
-            <View style={styles.listview}>
-              <View style={styles.listviewleft}><Text style={commonstyle.gray}>招募信息</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.teamData.RecruitContent}</Text></View>
-            </View>
-            <View style={[styles.listview, styles.nobottom]}>
-              <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
-              <View style={styles.listviewright}>
-                <TouchableOpacity style={styles.listviewteamedit} onPress={this.state.teamData.Role=='teamcreater'?()=>this.editTeamMember():console.log('teamuser')} activeOpacity={0.8}><Icon name="edit" size={20} color={this.state.teamData.Role=='teamcreater'?'#fff':'#000'} /></TouchableOpacity>
-                {teamUser}
-              </View>
-            </View>
-          </View>
-            {createrOperate}
-        </ScrollView>
-        {myteammodal}
-      </View>
-    );
+              {createrOperate}
+          </ScrollView>
+          {myteammodal}
+        </View>
+      );
   }
 }
