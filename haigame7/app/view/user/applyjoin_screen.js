@@ -41,6 +41,7 @@ export default class extends React.Component {
     this.setState({
       userData:this.props.userData,
       teamID:this.props.teamID,
+      paraLoad:{teamID:this.props.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2}
     });
   }
   componentDidMount(){
@@ -70,17 +71,18 @@ export default class extends React.Component {
       if(response[0].MessageCode == '40001'){
         Toast.show('服务器请求异常');
       }else if(response[0].MessageCode == '0'){
-        if(isok==0){
-          Toast.showLongCenter('已同意');
-        }else{
-          Toast.showLongCenter('已拒绝');
-        }
+          if(isok==0){
+            Toast.showLongCenter('已同意');
+          }else{
+            Toast.showLongCenter('已拒绝');
+          }
+
         setTimeout(()=>{
           this.initData();
           },1000);
       }
      }else{
-         Toast.show('请求错误');
+          Toast.show(response[0].Message);
      }
    });
   }
@@ -95,11 +97,11 @@ export default class extends React.Component {
      return that.renderHeroImageItem(rowData.HeroImage[item],key);
    });
    let state;
-   if(rowData.State=="加入战队"){
+   if(rowData.State=="加入战队"||rowData.State=="招募队员"){
      state=  <View style={styles.listblocktext}><Button  onPress={()=>this.handleApply(rowData,0)} containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button  onPress={()=>this.handleApply(rowData,1)} containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
-   }else if(rowData.State=="加入成功"){
+   }else if(rowData.State=="加入成功"||rowData.State=="招募成功"){
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnborderred, styles.listblockbutton]} style={[commonstyle.red, commonstyle.fontsize12]} activeOpacity={0.8}>已同意</Button></View>;
-   }else if(rowData.State=="加入失败"){
+   }else if(rowData.State=="加入失败"||rowData.State=="招募失败"){
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已拒绝</Button></View>;
    }else{
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已失效</Button></View>;
@@ -134,9 +136,9 @@ export default class extends React.Component {
       </TouchableHighlight>
     );
   }
-  _onLoadMore() {
+  _onLoadMore(params) {
       let _ds = this.state.myapplyjoinList;
-      let _params ={teamID:this.state.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2};
+      let _params =params;
       _params.startpage = _params.startpage+1;
       this.setState({
         footerMsg: "正在加载....."
@@ -162,14 +164,12 @@ export default class extends React.Component {
       });
       //这等到有api在搞吧
       setTimeout(()=>{
-        if(this.state.keykey==0){
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(_ds),
             footerMsg: "点击加载更多",
           });
-        }
       },1000);
-    
+
   }
   _renderFooter() {
     return (

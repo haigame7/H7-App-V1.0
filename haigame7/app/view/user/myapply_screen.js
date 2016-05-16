@@ -38,6 +38,7 @@ export default class extends React.Component {
  componentWillMount(){
    this.setState({
      userData:this.props.userData,
+     paraLoad:{userID:this.props.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2}
    });
 
  }
@@ -101,9 +102,9 @@ export default class extends React.Component {
       </TouchableHighlight>
     );
   }
-  _onLoadMore() {
+  _onLoadMore(params) {
       let _ds = this.state.myapplyList;
-      let _params ={userID:this.state.userData.UserID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2};
+      let _params =params;
       _params.startpage = _params.startpage+1;
       this.setState({
         footerMsg: "正在加载....."
@@ -140,7 +141,7 @@ export default class extends React.Component {
   }
   _renderFooter() {
     return (
-      <TouchableHighlight underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this)}>
+      <TouchableHighlight underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraLoad)}>
         <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerMsg}</Text>
       </TouchableHighlight>
     );

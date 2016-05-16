@@ -39,6 +39,7 @@ export default class extends React.Component {
     this.setState({
       userData:this.props.userData,
       teamID:this.props.teamID,
+      paraLoad:{teamID:this.props.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2}
     });
   }
   componentDidMount(){
@@ -67,17 +68,16 @@ export default class extends React.Component {
     );
   }
   _renderRow(rowData) {
-    console.log(rowData);
     var that = this;
     var items =Object.keys(rowData.HeroImage).map(function(item,key) {
       return that.renderHeroImageItem(rowData.HeroImage[item],key);
     });
     let state;
-    if(rowData.State=="招募队员"){
+    if(rowData.State=="加入战队"||rowData.State=="招募队员"){
       state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'等待回复'}</Text></View>;
-    }else if(rowData.State=="招募成功"){
+    }else if(rowData.State=="招募成功"||rowData.State=="加入成功"){
       state=<View style={[commonstyle.btnborderred, styles.listblockbtn]}><Text style={commonstyle.red}>{'成功加入'}</Text></View>;
-    }else if(rowData.State=="招募失败"){
+    }else if(rowData.State=="招募失败"||rowData.State=="加入失败"){
       state=<View style={[commonstyle.btnredwhite, styles.listblockbtn]}><Text style={commonstyle.white}>{'被拒绝'}</Text></View>;
     }else{
       state=<View style={[commonstyle.btnbordergray, styles.listblockbtn]}><Text style={commonstyle.gray}>{'已失效'}</Text></View>;
@@ -113,15 +113,16 @@ export default class extends React.Component {
       </TouchableHighlight>
     );
   }
-  _onLoadMore() {
+  _onLoadMore(params) {
       let _ds = this.state.mysendapplyList;
-      let _params ={teamID:this.state.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2};
+      let _params =params;
       _params.startpage = _params.startpage+1;
       this.setState({
         footerMsg: "正在加载....."
       });
       {/*加载下一页*/}
       TeamService.getInvitedUserList(_params,(response) => {
+
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
           if(nextData.length<1){
@@ -141,17 +142,15 @@ export default class extends React.Component {
       });
       //这等到有api在搞吧
       setTimeout(()=>{
-        if(this.state.keykey==0){
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(_ds),
             footerMsg: "点击加载更多",
           });
-        }
       },1000);
   }
   _renderFooter() {
     return (
-      <TouchableHighlight underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this)}>
+      <TouchableHighlight underlayColor='#000000' style={commonstyle.paginationview} onPress={this._onLoadMore.bind(this,this.state.paraLoad)}>
         <Text style={[commonstyle.gray, commonstyle.fontsize14]}>{this.state.footerMsg}</Text>
       </TouchableHighlight>
     );
