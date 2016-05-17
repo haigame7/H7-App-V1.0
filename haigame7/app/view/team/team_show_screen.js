@@ -55,6 +55,10 @@ export default class extends React.Component {
   }
   componentWillMount(){
     this.initData(0);
+    this._gestureHandlers = {
+      onStartShouldSetResponder: () => true,
+      onMoveShouldSetResponder: ()=> true,
+    }
   }
   _getAllMyTeam(){
     let requestData = {'userID':this.props.userData.UserID};
@@ -323,9 +327,8 @@ export default class extends React.Component {
     ):(<View></View>);
     let teamUser = (
       <View style={styles.listviewteam,{flex:1}}>
-        <ScrollView horizontal={true} >
+        <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
         {items}
-        </ScrollView>
       </View>
       )
       return(
@@ -380,11 +383,10 @@ export default class extends React.Component {
               <View style={[styles.listview, styles.nobottom]}>
                 <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
                 <View style={styles.listviewright}>
-                  <TouchableOpacity style={styles.listviewteamedit} onPress={this.state.teamData.Role=='teamcreater'?()=>this.editTeamMember():console.log('teamuser')} activeOpacity={0.8}><Icon name="edit" size={20} color={this.state.teamData.Role=='teamcreater'?'#fff':'#000'} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+                   {teamUser}
                 </View>
-              </View>
-              <View style={[styles.listview, styles.nobottom]}>{teamUser}
+
+
               </View>
             </View>
               {createrOperate}
