@@ -122,6 +122,7 @@ export default class extends Component {
           // let data = this.state.userdata;
           //这里出发了上个界面的componentWillReceiveProps 传入了新的props
           // data['UserWebPicture'] = data //这里就是这里,搞好了可就爽了
+          
           this.setState({
             value: response.data,
             iconText: '确定',
