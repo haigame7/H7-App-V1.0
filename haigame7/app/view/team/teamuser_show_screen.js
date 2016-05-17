@@ -89,7 +89,6 @@ export default class extends React.Component {
      });
   }
   render() {
-    console.log(this.state.teamData);
     let items = this.renderHeroImageItem(this.state.userData.HeroImage);
     let delUser = this.state.teamData.Role=="teamcreater"?this.state.userData.UserID==this.state.teamData.Creater?<View></View>:<TouchableHighlight onPress={()=>this.confirmDelUser()} style = {styles.btn} underlayColor = {'#FF0000'} ><Text style = {styles.btnfont}> {'移出战队' } </Text></TouchableHighlight>:<View></View>
     return(
@@ -99,7 +98,7 @@ export default class extends React.Component {
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:this.state.userData==undefined?this.state.defaultTeamLogo:this.state.userData.UserPicture==undefined?this.state.userData.UserWebPicture:this.state.userData.UserPicture}} />
-              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/></View>
+              <View style={styles.headportraitv}><Icon name="certified" size={15} color={this.state.userData.HeroImage.length > 1? '#00B4FF':'#484848'} style={commonstyle.iconnobg}/><Text style={styles.headportraitvfont}>{this.state.userData.HeroImage.length>1?"已认证":"未认证"}</Text></View>
             </View>
 
             <View style={styles.blocktop}>
