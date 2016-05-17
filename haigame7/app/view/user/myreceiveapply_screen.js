@@ -82,6 +82,7 @@ export default class extends React.Component {
          }
 
        setTimeout(()=>{
+         this.props.updateLoginState();
          this.initData();
          },1000);
      }
