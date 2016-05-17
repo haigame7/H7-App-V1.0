@@ -40,8 +40,6 @@ export default class extends React.Component {
         userData:this.props.teamuser,
         teamData:this.props.teamData,
       }
-console.log(this.props.teamuser);
-console.log(this.props.teamData);
   }
 
   renderHeroImageItem(groups){
@@ -91,8 +89,9 @@ console.log(this.props.teamData);
      });
   }
   render() {
+    console.log(this.state.teamData);
     let items = this.renderHeroImageItem(this.state.userData.HeroImage);
-    let delUser = this.state.userData.UserID==this.state.teamData.Creater?<View></View>:<TouchableHighlight onPress={()=>this.confirmDelUser()} style = {styles.btn} underlayColor = {'#FF0000'} ><Text style = {styles.btnfont}> {'移出战队' } </Text></TouchableHighlight>
+    let delUser = this.state.teamData.Role=="teamcreater"?this.state.userData.UserID==this.state.teamData.Creater?<View></View>:<TouchableHighlight onPress={()=>this.confirmDelUser()} style = {styles.btn} underlayColor = {'#FF0000'} ><Text style = {styles.btnfont}> {'移出战队' } </Text></TouchableHighlight>:<View></View>
     return(
       <View>
         <Header screenTitle='个人信息' isPop={true} navigator={this.props.navigator}/>

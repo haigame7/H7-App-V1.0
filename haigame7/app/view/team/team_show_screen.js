@@ -42,6 +42,7 @@ export default class extends React.Component {
     this.state = {
       navigator: undefined,
       userData:{},
+      createrData:{},
       teamData:{},
       myTeamDataSource: myTeamData.cloneWithRows(['row1']),
       myTeams:[],
@@ -56,6 +57,10 @@ export default class extends React.Component {
   }
   componentWillMount(){
     this.initData(0);
+    this._gestureHandlers = {
+      onStartShouldSetResponder: () => true,
+      onMoveShouldSetResponder: ()=> true,
+    }
   }
   _getAllMyTeam(){
     let requestData = {'userID':this.props.userData.UserID};
@@ -75,12 +80,12 @@ export default class extends React.Component {
         }
       });
   }
-  _getUserData(){
-    UserService.getUserInfoByUserID(this.props.userData.UserID, (response) => {
+  _getCreaterData(CreaterID){
+    UserService.getUserInfoByUserID(CreaterID, (response) => {
       if (response[0].MessageCode == '0') {
         let data = response[1];
         this.setState({
-          userData: data,
+          createrData: data,
         })
       } else {
         Toast.show('获取用户数据失败'+ response[0].Message);
@@ -90,21 +95,25 @@ export default class extends React.Component {
   }
   initData(flag){
     this._getAllMyTeam()
-    this._getUserData()
+
     if(flag==0){
       this.setState({
         navigator: this.props.navigator,
         teamData:this.props.teamData,
+        userData:this.props.userData,
         navbar:this.props.teamData.TeamID,
       });
+      this._getCreaterData(this.props.teamData.Creater);
     } else {
       TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
         if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
               this.setState({
               navigator: this.props.navigator,
               teamData: response[1],
+              userData:this.props.userData,
               navbar:response[1].TeamID,
               });
+            this._getCreaterData(response[1].Creater);
         }else{
           console.log('请求错误' + response[0].Message);
         }
@@ -222,13 +231,10 @@ export default class extends React.Component {
     this._toNextScreen({"name":"队员管理","component":TeamUserManager,"callback":this.initData.bind(this,1)});
   }
   operateTeamUser(teamUser){
-    console.log(this.state.userData);
-    if(this.state.teamData.Role=='teamcreater'){
        this.setState({
          isOpen: false,
        });
        this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":teamUser,"callback":this.initData.bind(this,1)});
-    }
   }
   sendRecruit(){
     this.setState({
@@ -337,9 +343,8 @@ export default class extends React.Component {
     ):(<View></View>);
     let teamUser = (
       <View style={styles.listviewteam,{flex:1}}>
-        <ScrollView horizontal={true} >
+        <TouchableOpacity style={styles.listviewteamlink}   onPress={()=> this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":this.state.createrData,"callback":this.initData.bind(this,1)})} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
         {items}
-        </ScrollView>
       </View>
       )
       return(
@@ -394,11 +399,8 @@ export default class extends React.Component {
               <View style={[styles.listview, styles.nobottom]}>
                 <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
                 <View style={styles.listviewright}>
-                  {/*<TouchableOpacity style={styles.listviewteamedit} onPress={this.state.teamData.Role=='teamcreater'?()=>this.editTeamMember():console.log('teamuser')} activeOpacity={0.8}><Icon name="edit" size={20} color={this.state.teamData.Role=='teamcreater'?'#fff':'#000'} /></TouchableOpacity>*/}
-                  <TouchableOpacity style={styles.listviewteamlink}   onPress={()=> this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":this.state.userData,"callback":this.initData.bind(this,1)})} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+                  {teamUser}
                 </View>
-              </View>
-              <View style={[styles.listview, styles.nobottom]}>{teamUser}
               </View>
             </View>
               {createrOperate}

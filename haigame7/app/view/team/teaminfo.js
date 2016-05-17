@@ -97,6 +97,7 @@ export default class extends Component{
     }
   }
   renderUserImageItem(rowData,key){
+    console.log(rowData);
     return(
       <TouchableOpacity key={key}  onPress={()=>this.gotoRoute('userinfo',rowData)}>
       <Image style={styles.listviewteamimg} source={{uri:rowData.UserPicture}} />
@@ -139,7 +140,7 @@ export default class extends Component{
                 </View>
               </View>
               <View style={styles.headtext}>
-                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>{this.state.teamData.TeamDescription}</Text>
+                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>战队宣言:{this.state.teamData.TeamDescription}</Text>
               </View>
             </View>
           </Image>
