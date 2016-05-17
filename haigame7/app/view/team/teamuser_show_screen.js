@@ -40,14 +40,15 @@ export default class extends React.Component {
         userData:this.props.teamuser,
         teamData:this.props.teamData,
       }
-
+console.log(this.props.teamuser);
+console.log(this.props.teamData);
   }
 
   renderHeroImageItem(groups){
     let that = this;
     var items = Object.keys(groups).map(function(item,key) {
         return(
-            <Image  key={key} style={styles.listviewheroimg} source={{uri:groups[item].UserPicture}} />
+            <Image  key={key} style={styles.listviewheroimg} source={{uri:groups[item].HeroImage}} />
         );
 
     });
@@ -91,22 +92,23 @@ export default class extends React.Component {
   }
   render() {
     let items = this.renderHeroImageItem(this.state.userData.HeroImage);
+    let delUser = this.state.userData.UserID==this.state.teamData.Creater?<View></View>:<TouchableHighlight onPress={()=>this.confirmDelUser()} style = {styles.btn} underlayColor = {'#FF0000'} ><Text style = {styles.btnfont}> {'移出战队' } </Text></TouchableHighlight>
     return(
       <View>
         <Header screenTitle='个人信息' isPop={true} navigator={this.props.navigator}/>
         <ScrollView style={commonstyle.bodyer}>
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
-              <Image style={styles.headportrait} source={{uri:this.state.userData==undefined?this.state.defaultTeamLogo:this.state.userData.UserPicture}} />
+              <Image style={styles.headportrait} source={{uri:this.state.userData==undefined?this.state.defaultTeamLogo:this.state.userData.UserPicture==undefined?this.state.userData.UserWebPicture:this.state.userData.UserPicture}} />
               <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/></View>
             </View>
 
             <View style={styles.blocktop}>
-              <Text style={[styles.headname, commonstyle.white]}>{this.state.userData==undefined?"名字":this.state.userData.UserNickName}</Text>
+              <Text style={[styles.headname, commonstyle.white]}>{this.state.userData==undefined?"名字":this.state.userData.UserNickName==undefined?this.state.userData.UserWebNickName:this.state.userData.UserNickName}</Text>
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userData.FightScore}{'  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userData.FightScore==undefined?this.state.userData.GamePower:this.state.userData.FightScore}{'  '}</Text>
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
@@ -146,10 +148,8 @@ export default class extends React.Component {
                {items}
             </View>
           </View>
+          {delUser}
 
-          <TouchableHighlight onPress={()=>this.confirmDelUser()} style = {styles.btn} underlayColor = {'#FF0000'} >
-            <Text style = {styles.btnfont}> {'移出战队' } </Text>
-          </TouchableHighlight>
         </ScrollView>
       </View>
     );
