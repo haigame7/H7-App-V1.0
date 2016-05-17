@@ -11,6 +11,7 @@ import React, {
   View,
   Image,
   ListView,
+  Navigator,
   Text,
   TouchableHighlight,
   TouchableOpacity
@@ -18,6 +19,7 @@ import React, {
 import Button from 'react-native-button';
 import Header from '../common/headernav';
 import Util from '../common/util';
+import PlayerInfo from '../team/playerinfo';
 import TeamService from '../../network/teamservice';
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/userstyle';
@@ -31,6 +33,7 @@ export default class extends React.Component {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       userData:{},
+      userteamdata:{},
       teamID:0,
       dataSource: ds.cloneWithRows([]),
       myapplyjoinList:[],
@@ -41,12 +44,30 @@ export default class extends React.Component {
     this.setState({
       userData:this.props.userData,
       teamID:this.props.teamID,
+      paraLoad:{teamID:this.props.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2}
     });
   }
   componentDidMount(){
      this.initData();
   }
   initData(){
+    {/*请求我的战队信息*/}
+    TeamService.getUserDefaultTeam(this.props.userData.UserID,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+        if(response[0].MessageCode == '40001'){
+          Toast.show('服务器请求异常');
+        }else if(response[0].MessageCode == '0'){
+          this.setState({
+            userteamdata:response[1]
+          });
+        }else{
+          Toast.show(response[0].Message);
+        }
+      }
+      else {
+        Toast.show('请求错误');
+      }
+    });
     TeamService.getApplyUserList({teamID:this.state.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2},(response) => {
     if (response !== GlobalSetup.REQUEST_SUCCESS) {
       if(response[0].MessageCode == '40001'){
@@ -64,26 +85,38 @@ export default class extends React.Component {
    });
   }
   handleApply(params,isok){
+    if(this.state.userteamdata.Role=="teamuser"){
+      Toast.showLongCenter("队员无法操作");
+      return;
+    }
     let requestdata = {'teamID':this.state.teamID,'userID':params.UserID,'messageID':params.MessageID,'isOK':isok};
     TeamService.handleMyApply(requestdata,(response) => {
     if (response !== GlobalSetup.REQUEST_SUCCESS) {
       if(response[0].MessageCode == '40001'){
         Toast.show('服务器请求异常');
       }else if(response[0].MessageCode == '0'){
-        if(isok==0){
-          Toast.showLongCenter('已同意');
-        }else{
-          Toast.showLongCenter('已拒绝');
-        }   
+          if(isok==0){
+            Toast.showLongCenter('已同意');
+          }else{
+            Toast.showLongCenter('已拒绝');
+          }
+
         setTimeout(()=>{
           this.initData();
           },1000);
       }
      }else{
-         Toast.show('请求错误');
+          Toast.show(response[0].Message);
      }
    });
   }
+  gotoRoute(name,params) {
+    if (name == 'playerinfo') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+            this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.teamID,'playerinfo':params,'userteamdata':this.state.userteamdata},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }
+    }
   renderHeroImageItem(rowData,key){
     return(
       <Image key={key} style={styles.listblocktexthero} source={{uri:rowData.HeroImage}} />
@@ -95,18 +128,18 @@ export default class extends React.Component {
      return that.renderHeroImageItem(rowData.HeroImage[item],key);
    });
    let state;
-   if(rowData.State=="加入战队"){
+   if(rowData.State=="加入战队"||rowData.State=="招募队员"){
      state=  <View style={styles.listblocktext}><Button  onPress={()=>this.handleApply(rowData,0)} containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button  onPress={()=>this.handleApply(rowData,1)} containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
-   }else if(rowData.State=="加入成功"){
+   }else if(rowData.State=="加入成功"||rowData.State=="招募成功"){
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnborderred, styles.listblockbutton]} style={[commonstyle.red, commonstyle.fontsize12]} activeOpacity={0.8}>已同意</Button></View>;
-   }else if(rowData.State=="加入失败"){
+   }else if(rowData.State=="加入失败"||rowData.State=="招募失败"){
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已拒绝</Button></View>;
    }else{
      state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已失效</Button></View>;
 
    }
     return (
-      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={null}>
+      <TouchableHighlight style={styles.listblock} underlayColor='#000000' onPress={()=>this.gotoRoute('playerinfo',rowData)}>
         <View style={commonstyle.row}>
           <Image style={styles.listblockimg} source={{uri:rowData.UserWebPicture}} />
           <View style={commonstyle.col1}>
@@ -134,14 +167,9 @@ export default class extends React.Component {
       </TouchableHighlight>
     );
   }
-  _onLoadMore() {
-    if (this.state.keykey > 0) {
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
+  _onLoadMore(params) {
       let _ds = this.state.myapplyjoinList;
-      let _params ={teamID:this.state.teamID,startpage:GlobalVariable.PAGE_INFO.StartPage,pagecount:GlobalVariable.PAGE_INFO.PageCount-2};
+      let _params =params;
       _params.startpage = _params.startpage+1;
       this.setState({
         footerMsg: "正在加载....."
@@ -150,11 +178,13 @@ export default class extends React.Component {
       TeamService.getApplyUserList(_params,(response) => {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
-          if(nextData.length<3){
-            this.setState({
-              keykey:1,
-              footerMsg: "木有更多数据了..."
-            });
+          if(nextData.length<1){
+            setTimeout(()=>{
+              Toast.show("木有更多数据了...");
+              this.setState({
+              footerMsg: "点击加载更多..."
+             });
+          },1000);
           }
           for(var item in nextData){
             _ds.push(nextData[item])
@@ -165,14 +195,12 @@ export default class extends React.Component {
       });
       //这等到有api在搞吧
       setTimeout(()=>{
-        if(this.state.keykey==0){
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(_ds),
             footerMsg: "点击加载更多",
           });
-        }
       },1000);
-    }
+
   }
   _renderFooter() {
     return (

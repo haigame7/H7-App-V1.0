@@ -68,10 +68,13 @@ export default class extends Component{
       if (response[0].MessageCode == '0') {
         let newData = response[1];
         if(newData.length<1){
-          this.setState({
+          setTimeout(()=>{
+            Toast.show("木有更多数据了...");
+            this.setState({
             isTotalData: true,
-            footerMsg: '没有更多数据:)'
-          })
+            footerMsg: "点击加载"
+           });
+        },1000);
         } else {
           // let b = this.state.assetData
           let a = this.state.assetData.concat(newData)
@@ -89,9 +92,6 @@ export default class extends Component{
     });
   }
   _onLoadMore(){
-    if(this.state.isTotalData) {
-      return
-    }
     this.setState({
       footerMsg: "正在加载.....",
       startPage: this.state.startPage + 1

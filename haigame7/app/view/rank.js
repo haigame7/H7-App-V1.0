@@ -24,6 +24,7 @@ import styles from '../styles/rankstyle';
 
 import UserRankList from './rank/userranklist';
 import TeamRankList from './rank/teamranklist';
+import TeamService from '../network/teamservice';
 import RankService from '../network/rankservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
@@ -43,12 +44,20 @@ export default class extends Component{
       data: {subnavbar:1},
       paraUser: {ranktype:'GameGrade',ranksort:'Desc',startpage:1,pagecount:10},
       paraTeam: {ranktype:'HotScore',ranksort:'Desc',startpage:1,pagecount:10},
-      dataUserSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
-      dataTeamSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      dataUserSource: new ListView.DataSource({rowHasChanged: (row1, row2) => true}),
+      dataTeamSource: new ListView.DataSource({rowHasChanged: (row1, row2) => true}),
       dataUser:[],
       dataTeam:[],
       content:{
         userData:{},
+      },
+      userteamdata:{
+        phone:'',
+        asset:0,
+        teamlogo:'',
+        fightscore:0,
+        recruit:'',
+        Role:'',
       },
       loaded: false,
       footerOneMsg: "点击加载更多团队",
@@ -68,8 +77,21 @@ export default class extends Component{
           userID:content.userData.UserID,
         },
       });
-      this.fetchUserData();
-      this.fetchTeamData();
+      {/*请求我的战队信息*/}
+      TeamService.getUserDefaultTeam(content.userData.UserID,(response) => {
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+         if(response[0].MessageCode == '0'){
+            this.setState({
+              userteamid:response[1].TeamID,
+              userteamdata:response[1],
+            });
+          }
+        }
+        this.fetchUserData();
+        this.fetchTeamData();
+      }
+    );
+
       this.setState({
         loaded: false
       });
@@ -233,12 +255,12 @@ export default class extends Component{
 
   renderUserRankList(user){
       //返回个人组件
-      return(<UserRankList user={user} userteamid={this.state.userteamid} navigator={this.props.navigator}/>);
+      return(<UserRankList user={user} userID={this.state.content.userData.UserID} userteamid={this.state.userteamid} {...this.props} userteamdata={this.state.userteamdata}  navigator={this.props.navigator}/>);
   }
 
   renderTeamRankList(team){
       //返回团队组件
-      return(<TeamRankList team={team} userID={this.state.content.userData.UserID} navigator={this.props.navigator}/>);
+      return(<TeamRankList team={team} userID={this.state.content.userData.UserID}  {...this.props} userteamdata={this.state.userteamdata}  navigator={this.props.navigator}/>);
   }
 
   render() {
@@ -263,21 +285,21 @@ export default class extends Component{
           </View>
           <View style={styles.navsub}>
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1,{'user':'GameGrade','team':'HotScore'})}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
+              <Text style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
               <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'GamePower','team':'FightScore'})}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
+              <Text style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
               <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3,{'user':'Asset','team':'Asset'})}>
-              <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
+              <Text style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
               <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
           </View>
