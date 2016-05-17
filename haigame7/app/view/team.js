@@ -209,7 +209,7 @@ export default class extends Component{
       }
       else if (name == 'myreceiveapply') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MyReceiveApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: MyReceiveApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role,'updateLoginState':this.props.updateLoginState}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
       }
       else if (name == 'mysendapply') {
@@ -219,7 +219,7 @@ export default class extends Component{
       }
       else if (name == 'applyjoin') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+            this.props.navigator.push({ name: name, component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData,'updateLoginState':this.props.updateLoginState}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
         }
       }
     }

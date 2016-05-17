@@ -46,14 +46,14 @@ var UserRankList = React.createClass({
       });
     }
     else if(this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-      this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.props.userteamid,'playerinfo':params,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+      this.props.navigator.push({ name: name, component: UserInfo, params:{'teamID':this.props.userteamid,'userinfo':params,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   },
   render: function() {
     //返回选手排行组件
     return(
       <View>
-        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8} onPress={()=>this.gotoRoute('playerinfo',this.props.user)}>
+        <TouchableOpacity style={styles.ranklist} activeOpacity={0.8} onPress={()=>this.gotoRoute('userinfo',this.props.user)}>
           <Image style={styles.ranklistimg} source={{uri:this.props.user.UserPicture}} />
           <View style={styles.ranklistcenter}>
             <Text style={[commonstyle.white, commonstyle.fontsize14]}>{this.props.user.NickName}</Text>
