@@ -33,6 +33,7 @@ import FightState from './fight/fightstate';
 import UserFight from './user/userfight';
 import Login from './user/login';
 import User from './user.js';
+import TeamInfo from './team/teaminfo';
 import FightService from '../network/fightservice';
 import TeamService from '../network/teamservice';
 import GlobalSetup from '../constants/globalsetup';
@@ -64,6 +65,7 @@ export default class extends Component{
       userteamname:'',
       userteamid:0,
       userteamdata:{
+        TeamID:0,
         phone:'',
         odd:0,
         asset:0,
@@ -107,6 +109,7 @@ export default class extends Component{
             userteamname:response[1].TeamName,
             userteamid:response[1].TeamID,
             userteamdata:{
+              TeamID:response[1].TeamID,
               phone:this.state.userteamdata.phone,
               odd:oddsdata.odd,
               asset:response[1].Asset,
@@ -196,9 +199,9 @@ export default class extends Component{
           Toast.show(response[0].Message);
         }
       });
-    
+
   }
-  gotoRoute(name,userteamid,fightteamid){
+  gotoRoute(name,userteamid,fightteamid,params){
     this.initData();
     {/*先判断登录*/}
     if(this.state.content.userData.UserID==undefined&&name !== 'fightstate'){
@@ -245,6 +248,14 @@ export default class extends Component{
       }else if (name == 'fightstate') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
           this.props.navigator.push({ name: name, component: FightState, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+        }
+      }else if (name == 'teaminfo') {
+        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+           if(userteamid==this.state.userteamid){
+              this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':this.state.userteamdata,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+           }else{
+             this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+           }
         }
       }else if (name == 'userfight') {
         if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
@@ -319,7 +330,9 @@ export default class extends Component{
   renderuserdefaulteam(){
     return(
       <View style={styles.teamlist}>
+      <TouchableOpacity onPress={()=>this.gotoRoute('teaminfo',this.state.userteamid,0)} >
         <Image style={styles.teamlistimg} source={{uri:this.state.userteamdata.teamlogo || 'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
+      </TouchableOpacity>
         <View style={commonstyle.col1}>
           <View style={commonstyle.row}>
             <View style={commonstyle.col1}><Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.userteamname}</Text></View>
@@ -368,7 +381,9 @@ export default class extends Component{
     var oddsdata =  this.initTeamOdd(rowData.WinCount,rowData.LoseCount,rowData.FollowCount);
     return(
       <View style={styles.teamlist}>
+      <TouchableOpacity onPress={()=>this.gotoRoute('teaminfo',this.state.userteamid,0)}>
         <Image style={styles.userlistimg} source={{uri:rowData.TeamLogo}} />
+      </TouchableOpacity>
         <View style={commonstyle.col1}>
           <View style={commonstyle.row}>
             <View style={commonstyle.col1}>

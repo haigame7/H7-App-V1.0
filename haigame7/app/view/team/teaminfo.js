@@ -74,7 +74,12 @@ export default class extends Component{
     var data = {'userID':userID,'teamID':teamID};
     TeamService.applyTeam(data,(response)=>{
       if(response[0].MessageCode == '20006'){
-        Toast.show('您已经加入其他战队');
+        if(this.props.role=="teamcreater"){
+            Toast.show('您是战队队长无法加入');
+        }
+        else{
+              Toast.show('您已经加入其他战队');
+        }
       }
       else if (response[0].MessageCode == '20007') {
          Toast.show('您已向该战队发出申请');

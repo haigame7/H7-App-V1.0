@@ -24,6 +24,7 @@ import styles from '../styles/rankstyle';
 
 import UserRankList from './rank/userranklist';
 import TeamRankList from './rank/teamranklist';
+import TeamService from '../network/teamservice';
 import RankService from '../network/rankservice';
 import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
@@ -43,12 +44,20 @@ export default class extends Component{
       data: {subnavbar:1},
       paraUser: {ranktype:'GameGrade',ranksort:'Desc',startpage:1,pagecount:10},
       paraTeam: {ranktype:'HotScore',ranksort:'Desc',startpage:1,pagecount:10},
-      dataUserSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
-      dataTeamSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      dataUserSource: new ListView.DataSource({rowHasChanged: (row1, row2) => true}),
+      dataTeamSource: new ListView.DataSource({rowHasChanged: (row1, row2) => true}),
       dataUser:[],
       dataTeam:[],
       content:{
         userData:{},
+      },
+      userteamdata:{
+        phone:'',
+        asset:0,
+        teamlogo:'',
+        fightscore:0,
+        recruit:'',
+        Role:'',
       },
       loaded: false,
       footerOneMsg: "点击加载更多团队",
@@ -68,8 +77,21 @@ export default class extends Component{
           userID:content.userData.UserID,
         },
       });
-      this.fetchUserData();
-      this.fetchTeamData();
+      {/*请求我的战队信息*/}
+      TeamService.getUserDefaultTeam(content.userData.UserID,(response) => {
+        if (response !== GlobalSetup.REQUEST_SUCCESS) {
+         if(response[0].MessageCode == '0'){
+            this.setState({
+              userteamid:response[1].TeamID,
+              userteamdata:response[1],
+            });
+          }
+        }
+        this.fetchUserData();
+        this.fetchTeamData();
+      }
+    );
+
       this.setState({
         loaded: false
       });
@@ -233,12 +255,12 @@ export default class extends Component{
 
   renderUserRankList(user){
       //返回个人组件
-      return(<UserRankList user={user} userteamid={this.state.userteamid} navigator={this.props.navigator}/>);
+      return(<UserRankList user={user} userID={this.state.content.userData.UserID} userteamid={this.state.userteamid} {...this.props} userteamdata={this.state.userteamdata}  navigator={this.props.navigator}/>);
   }
 
   renderTeamRankList(team){
       //返回团队组件
-      return(<TeamRankList team={team} userID={this.state.content.userData.UserID} navigator={this.props.navigator}/>);
+      return(<TeamRankList team={team} userID={this.state.content.userData.UserID}  {...this.props} userteamdata={this.state.userteamdata}  navigator={this.props.navigator}/>);
   }
 
   render() {
