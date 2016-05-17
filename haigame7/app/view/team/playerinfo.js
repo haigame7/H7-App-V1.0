@@ -83,7 +83,7 @@ export default class extends Component{
           <Image source={require('../../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
             <View style={styles.blocktop}>
               <Image style={styles.headportrait} source={{uri:this.state.playerinfo.UserPicture==undefined?this.state.playerinfo.UserWebPicture:this.state.playerinfo.UserPicture}} />
-              <View style={styles.headportraitv}><Icon name="certified" size={15} color={'#484848'} style={commonstyle.iconnobg}/><Text style={styles.headportraitvfont}>未认证</Text></View>
+              <View style={styles.headportraitv}><Icon name="certified" size={15} color={this.state.playerinfo.HeroImage.length > 1? '#00B4FF':'#484848'} style={commonstyle.iconnobg}/><Text style={styles.headportraitvfont}>{this.state.playerinfo.HeroImage.length>1?"已认证":"未认证"}</Text></View>
             </View>
 
             <View style={styles.blocktop}>
@@ -120,7 +120,7 @@ export default class extends Component{
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>注册时间</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>2016/01/23</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.playerinfo.RegDate}</Text></View>
             </View>
             <View style={[styles.listview, styles.nobottom]}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>擅长英雄</Text></View>
