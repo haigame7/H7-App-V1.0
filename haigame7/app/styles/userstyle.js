@@ -288,6 +288,27 @@ export default StyleSheet.create({
         left: 5,
         color: '#484848',
     },
+    listviewhero: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    listviewheroimg: {
+        width: 44,
+        height: 44,
+        borderRadius: 3,
+        borderWidth: 2,
+        borderColor: 'rgba(255, 0, 0, 0.4)',
+        marginLeft: 10,
+    },
+    listviewbtnblock: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginRight: 10,
+        marginBottom: 10,
+        marginLeft: 10,
+        width: Util.size.width - 20,
+        height: 40,
+    },
     //模态框
     pickerview: {
         backgroundColor: '#FFFFFF',
