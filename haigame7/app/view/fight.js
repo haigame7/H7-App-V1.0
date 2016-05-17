@@ -44,7 +44,7 @@ export default class extends Component{
     super(props);
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(['row1','row2']),
+      dataSource: ds.cloneWithRows([]),
       teamlist:[],
       teamlistRequestData:{
           createUserID:'0',
@@ -381,7 +381,7 @@ export default class extends Component{
     var oddsdata =  this.initTeamOdd(rowData.WinCount,rowData.LoseCount,rowData.FollowCount);
     return(
       <View style={styles.teamlist}>
-      <TouchableOpacity onPress={()=>this.gotoRoute('teaminfo',this.state.userteamid,0)}>
+      <TouchableOpacity onPress={()=>this.gotoRoute('teaminfo',rowData.TeamID,0,rowData)}>
         <Image style={styles.userlistimg} source={{uri:rowData.TeamLogo}} />
       </TouchableOpacity>
         <View style={commonstyle.col1}>
