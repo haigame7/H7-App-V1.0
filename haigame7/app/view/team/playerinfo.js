@@ -100,7 +100,7 @@ export default class extends Component{
                 </View>
               </View>
               <View style={styles.headtext}>
-                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>个性签名:生命不息电竞不止生命不息电竞不止生命不息电竞不止</Text>
+                <Text style={[commonstyle.cream, commonstyle.fontsize12, styles.headtextfont]}>{this.state.playerinfo.Hobby}</Text>
               </View>
             </View>
           </Image>
@@ -116,7 +116,7 @@ export default class extends Component{
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>擅长位置</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>辅助</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>暂无</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>注册时间</Text></View>

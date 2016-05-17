@@ -82,6 +82,7 @@ export default class extends React.Component {
          }
 
        setTimeout(()=>{
+         this.props.updateLoginState();
          this.initData();
          },1000);
      }
@@ -101,9 +102,9 @@ export default class extends React.Component {
     let state;
     if(rowData.State=="招募队员"){
       state=  <View style={styles.listblocktext}><Button onPress={()=>this.handleInvited(rowData,0)} containerStyle={[commonstyle.btnredwhite, styles.listblockbutton]} style={[commonstyle.white, commonstyle.fontsize12]} activeOpacity={0.8}>同意</Button><Button onPress={()=>this.handleInvited(rowData,1)}  containerStyle={[commonstyle.btngrayblack, styles.listblockbutton]} style={[commonstyle.black, commonstyle.fontsize12]} activeOpacity={0.8}>拒绝</Button></View>;
-    }else if(rowData.State=="加入成功"){
+    }else if(rowData.State=="招募成功"){
       state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnborderred, styles.listblockbutton]} style={[commonstyle.red, commonstyle.fontsize12]} activeOpacity={0.8}>已同意</Button></View>;
-    }else if(rowData.State=="加入失败"){
+    }else if(rowData.State=="招募失败"){
       state=  <View style={styles.listblocktext}><Button containerStyle={[commonstyle.btnbordergray, styles.listblockbutton]} style={[commonstyle.gray, commonstyle.fontsize12]} activeOpacity={0.8}>已拒绝</Button></View>;
     }
     return (
