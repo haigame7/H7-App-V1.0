@@ -27,6 +27,7 @@ import TeamUserManager from './teamuser_manager_screen';
 import TeamUser from './teamuser_show_screen';
 import Header from '../common/headernav';
 import TeamService from '../../network/teamservice';
+import UserService from '../../network/userservice';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 
@@ -74,13 +75,26 @@ export default class extends React.Component {
         }
       });
   }
+  _getUserData(){
+    UserService.getUserInfoByUserID(this.props.userData.UserID, (response) => {
+      if (response[0].MessageCode == '0') {
+        let data = response[1];
+        this.setState({
+          userData: data,
+        })
+      } else {
+        Toast.show('获取用户数据失败'+ response[0].Message);
+
+      }
+    });
+  }
   initData(flag){
     this._getAllMyTeam()
+    this._getUserData()
     if(flag==0){
       this.setState({
         navigator: this.props.navigator,
         teamData:this.props.teamData,
-        userData:this.props.userData,
         navbar:this.props.teamData.TeamID,
       });
     } else {
@@ -89,7 +103,6 @@ export default class extends React.Component {
               this.setState({
               navigator: this.props.navigator,
               teamData: response[1],
-              userData:this.props.userData,
               navbar:response[1].TeamID,
               });
         }else{
@@ -209,6 +222,7 @@ export default class extends React.Component {
     this._toNextScreen({"name":"队员管理","component":TeamUserManager,"callback":this.initData.bind(this,1)});
   }
   operateTeamUser(teamUser){
+    console.log(this.state.userData);
     if(this.state.teamData.Role=='teamcreater'){
        this.setState({
          isOpen: false,
@@ -380,8 +394,8 @@ export default class extends React.Component {
               <View style={[styles.listview, styles.nobottom]}>
                 <View style={styles.listviewleft}><Text style={commonstyle.gray}>战队成员</Text></View>
                 <View style={styles.listviewright}>
-                  <TouchableOpacity style={styles.listviewteamedit} onPress={this.state.teamData.Role=='teamcreater'?()=>this.editTeamMember():console.log('teamuser')} activeOpacity={0.8}><Icon name="edit" size={20} color={this.state.teamData.Role=='teamcreater'?'#fff':'#000'} /></TouchableOpacity>
-                  <TouchableOpacity style={styles.listviewteamlink} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+                  {/*<TouchableOpacity style={styles.listviewteamedit} onPress={this.state.teamData.Role=='teamcreater'?()=>this.editTeamMember():console.log('teamuser')} activeOpacity={0.8}><Icon name="edit" size={20} color={this.state.teamData.Role=='teamcreater'?'#fff':'#000'} /></TouchableOpacity>*/}
+                  <TouchableOpacity style={styles.listviewteamlink}   onPress={()=> this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":this.state.userData,"callback":this.initData.bind(this,1)})} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
                 </View>
               </View>
               <View style={[styles.listview, styles.nobottom]}>{teamUser}
