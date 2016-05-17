@@ -306,6 +306,15 @@ export default class extends Component{
         </View>
         <ScrollView style={commonstyle.modalbody}  showsVerticalScrollIndicator={true} >
           <View style={commonstyle.modalbodybottom}>
+            <Text style={[commonstyle.red, commonstyle.fontsize12]}>
+            {'※\n'}
+            {'1. 战队成员最少五人，战队才可在约战界面显示战队和约战；\n'}
+            {'2. 发起约战和接受约战人员只能是队长；\n'}
+            {'3. 只有通过了氦7账号认证的队员才可以通过约战获得战斗力和奖励加成（通过点击个“人头像脚标”或“战斗力”进入验证页面进行验证，验证规则有详细说明）；\n'}
+            </Text>
+            <Text style={[commonstyle.blue, commonstyle.fontsize14,{textAlign: 'center',}]}>
+            {'约战详则:'}
+            </Text>
             <Text style={[commonstyle.cream, commonstyle.fontsize12]}>
              {'1. 向对方发起约战，必须填写押注金额，押注金额最低为50氦金，不设立上限；\n\n'}
              {'2. 向对方发起约战，必须填写约战日期，双方战队需在所选日期24小时之内进行比赛；\n\n'}
@@ -316,7 +325,7 @@ export default class extends Component{
              {'7. 被约战战队需在24小时的回应时间，如果在24小时之内未回复，则视为“认怂”，记入档案；\n\n'}
              {'8. 当约战生成之后，双方需要在约定日期进行约战。如果有一方在规定日期未上线进行比赛则视为该战队“认怂”记入档案；\n\n'}
              {'9. 比赛之后，胜负双方必须上传比赛ID，如果有一方未上传比赛ID则视为该队比赛失利，如果双方均未上传比赛ID，则视为双方均“认怂”记入档案。如果双方上传的比赛ID不一样，经核实之后，上传虚假比赛ID一方的队长永久取消比赛资格，没收所有个人氦金和该战队氦金；\n\n'}
-             {'10.  双方正常上传比赛ID之后，由氦7平台判断胜负。一切该比赛的所有权和解释权归氦7平台所有。'}
+             {'10. 双方正常上传比赛ID之后，由氦7平台判断胜负。一切该比赛的所有权和解释权归氦7平台所有。'}
             </Text>
           </View>
         </ScrollView>
