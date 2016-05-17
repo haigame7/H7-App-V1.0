@@ -119,7 +119,7 @@ export default class extends React.Component {
             <View style={commonstyle.row}>
               <View style={commonstyle.col1}>
                 <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.UserWebNickName}</Text>
-                <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{'生命不息,电竞不止~~1231231231'}</Text>
+                <Text style={[commonstyle.gray, commonstyle.fontsize12]}>{rowData.Hobby}</Text>
               </View>
               {state}
             </View>
