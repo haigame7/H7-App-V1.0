@@ -64,7 +64,7 @@ export default class extends Component{
               <View style={[commonstyle.row, styles.headtextblock]}>
                 <View style={styles.headtextleft}>
                   <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  战斗力  '}</Text>
-                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userinfo.GamePower}{'  '}</Text>
+                  <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userinfo.GamePower==undefined?this.state.userinfo.FightScore:this.state.userinfo.GamePower}{'  '}</Text>
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
