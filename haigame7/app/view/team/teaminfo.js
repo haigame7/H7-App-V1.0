@@ -97,7 +97,6 @@ export default class extends Component{
     }
   }
   renderUserImageItem(rowData,key){
-    console.log(rowData);
     return(
       <TouchableOpacity key={key}  onPress={()=>this.gotoRoute('userinfo',rowData)}>
       <Image style={styles.listviewteamimg} source={{uri:rowData.UserPicture}} />
