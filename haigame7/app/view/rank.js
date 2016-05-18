@@ -132,15 +132,25 @@ export default class extends Component{
     this.setState({
       navbar:nav,
       data:{subnavbar:1},
+      ranksort:["Desc","Desc","Desc"],
+      paraTeam: {ranktype:'HotScore',ranksort:'Desc',startpage:1,pagecount:10},
+      paraUser: {ranktype:'GameGrade',ranksort:'Desc',startpage:1,pagecount:10},
     });
+    if(nav==0){
+        this.fetchTeamData();
+    }else{          
+      this.fetchUserData();
+    }
   }
-  changeSort(ranksort,sub){
+  changeSort(ranksort,sub,ranktype,currenttype){
     switch(sub){
       case 1:
         if(ranksort[0]=="Desc"){
-          this.setState({
-            ranksort:["Asc","Desc","Desc"],
-          });
+          if(ranktype==currenttype){
+            this.setState({
+              ranksort:["Asc","Desc","Desc"],
+            });
+          }
          }else{
           this.setState({
           ranksort:["Desc","Desc","Desc"],
@@ -149,9 +159,11 @@ export default class extends Component{
       break;
       case 2:
         if(ranksort[1]=="Desc"){
+          if(ranktype==currenttype){
             this.setState({
               ranksort:["Desc","Asc","Desc"],
             });
+          }
          }else{
           this.setState({
           ranksort:["Desc","Desc","Desc"],
@@ -160,9 +172,11 @@ export default class extends Component{
       break;
       case 3:
         if(ranksort[2]=="Desc"){
-          this.setState({
-          ranksort:["Desc","Desc","Asc"],
-          });
+        if(ranktype==currenttype){
+            this.setState({
+                ranksort:["Desc","Desc","Asc"],
+            });
+          }
          }else{
           this.setState({
           ranksort:["Desc","Desc","Desc"],
@@ -175,14 +189,16 @@ export default class extends Component{
   return this.state.ranksort;
   }
   _switchSubNavbar(sub,params){
-   var ranksort = this.changeSort(this.state.ranksort,sub);
     if(this.state.navbar==0){
+      var ranksort = this.changeSort(this.state.ranksort,sub,params.team,this.state.paraTeam.ranktype);
+
     this.setState({
       data:{subnavbar:sub},
       paraTeam: {ranktype:params.team,ranksort:ranksort[sub-1],startpage:1,pagecount:10},
     });
     this.fetchTeamData();
   }else {
+    var ranksort = this.changeSort(this.state.ranksort,sub,params.user,this.state.paraUser.ranktype);
     this.setState({
       data:{subnavbar:sub},
       paraUser: {ranktype:params.user,ranksort:ranksort[sub-1],startpage:1,pagecount:10},
