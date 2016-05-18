@@ -292,7 +292,7 @@ var CommonStyle = StyleSheet.create({
     pointred: {
         position: 'absolute',
         right: 0,
-        bottom: 0,
+        top: 0,
         width: 8,
         height: 8,
         borderRadius: 4,
