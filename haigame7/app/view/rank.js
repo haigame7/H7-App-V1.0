@@ -138,7 +138,7 @@ export default class extends Component{
     });
     if(nav==0){
         this.fetchTeamData();
-    }else{          
+    }else{
       this.fetchUserData();
     }
   }
@@ -343,21 +343,21 @@ export default class extends Component{
           <View style={styles.navsub}>
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1,{'user':'GameGrade','team':'HotScore'})}>
               <Text style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
-              <Icon name={this.state.ranksort[0]=="Desc"?"angle-down":"angle-right"} size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
+              <Icon name={this.state.ranksort[0]=="Desc"?"angle-down":"angle-up"} size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'GamePower','team':'FightScore'})}>
               <Text style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
-              <Icon name={this.state.ranksort[1]=="Desc"?"angle-down":"angle-right"}  size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
+              <Icon name={this.state.ranksort[1]=="Desc"?"angle-down":"angle-up"}  size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3,{'user':'Asset','team':'Asset'})}>
               <Text style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
-              <Icon name={this.state.ranksort[2]=="Desc"?"angle-down":"angle-right"}  size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
+              <Icon name={this.state.ranksort[2]=="Desc"?"angle-down":"angle-up"}  size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
           </View>
         </View>
