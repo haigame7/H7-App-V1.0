@@ -131,6 +131,9 @@ export default class haigame7 extends Component {
     componentDidMount() {
       NetInfo.isConnected.fetch().done((isConnected) => {
         console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+        if(!isConnected){
+          Toast.showLongCenter("无网络连接")
+        }
       });
       NetInfo.isConnected.addEventListener(
         'change',
