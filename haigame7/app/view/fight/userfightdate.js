@@ -25,6 +25,7 @@ import styles from '../../styles/fightstyle';
 import FightDetail from '../user/fightdetail';
 import TeamService from '../../network/teamservice';
 import Toast from '@remobile/react-native-toast';
+import TeamInfo from '../team/teaminfo';
 var Util = require('../common/util');
 
 
@@ -41,6 +42,7 @@ var UserFightList = React.createClass({
     }
   },
   componentDidMount(){
+    console.log(this.props.userdata);
      this.getUserTeamInfo(this.props.rowData.STeamID,1);
      this.getUserTeamInfo(this.props.rowData.ETeamID,0);
   },
@@ -63,11 +65,11 @@ var UserFightList = React.createClass({
       }
     });
   },
-  gotoRoute(params) {
-   if (params.name == 'fightdetail') {
+  gotoRoute(name,params) {
+   if (name == 'fightdetail') {
        this.props.navigator.push({ name: params.name, component: FightDetail, params:{...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-   } else if (params.name == 'userinfo') {
-
+   } else if (name == 'teaminfo') {
+         this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.props.userdata.UserID,'role':"teamcreater"},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
    }
  },
  formatDate(strTime){
@@ -125,7 +127,7 @@ var UserFightList = React.createClass({
    }
    else{
      return(
-       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]} onPress = {this.gotoRoute.bind(this,{"name":"fightdetail"})} >
+       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]} onPress = {this.gotoRoute.bind(this,"fightdetail")} >
          <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.props.rowData.CurrentState}</Text>
        </TouchableOpacity>
      );
@@ -178,21 +180,21 @@ var UserFightList = React.createClass({
   }
  },
   render: function() {
-    console.log(this.state.steamData);
-    console.log(this.state.eteamData);
     var fightresulttitle = this.renderresulttitle();
     return(
       <View>
         <View style={[commonstyle.row, styles.fightlist]}>
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress = {this.gotoRoute.bind(this,"teaminfo",this.state.steamData)}>
             <Image style={styles.fightlistimg} source={{uri:this.state.steamData.TeamLogo}} />
           </TouchableOpacity>
             <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.steamData.TeamName}</Text>
           </View>
            {fightresulttitle}
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
+          <TouchableOpacity onPress = {this.gotoRoute.bind(this,"teaminfo",this.state.eteamData)}>
             <Image style={styles.fightlistimg} source={{uri:this.state.eteamData.TeamLogo}} />
+          </TouchableOpacity>
             <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.eteamData.TeamName}</Text>
           </View>
         </View>

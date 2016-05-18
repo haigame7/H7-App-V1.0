@@ -26,6 +26,7 @@ import UserInfo from '../rank/userinfo';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 import Toast from '@remobile/react-native-toast';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class extends Component{
   constructor(props) {
@@ -36,10 +37,16 @@ export default class extends Component{
       messages: [],
       teamData:[],
       creatUser:[],
+      isOpen: false,
     }
   }
   componentWillMount(){
     this.initData();
+  }
+  componentDidMount(){
+    this.setState({
+      isOpen: true
+    })
   }
   initData(){
     let requestData = {'teamID':this.props.teaminfo.TeamID};
@@ -54,11 +61,12 @@ export default class extends Component{
               let data = response[1];
               this.setState({
                 creatUser: data,
+                isOpen:false,
               })
             } else {
               Toast.show('获取用户数据失败'+ response[0].Message);
               this.setState({
-                loading: false,
+                isOpen: false,
               })
             }
           });
@@ -66,8 +74,6 @@ export default class extends Component{
           Toast.show(response[0].MessageCode);
         };
     });
-
-
   }
 
   applyTeam(userID,teamID){
@@ -179,6 +185,7 @@ export default class extends Component{
             <Text style = {styles.btnfont}> {'申请加入' } </Text>
           </TouchableHighlight>
         </ScrollView>
+         <Spinner visible={this.state.isOpen} />
       </View>
     );
   }
