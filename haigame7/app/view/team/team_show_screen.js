@@ -9,6 +9,7 @@ import React, {
   View,
   Image,
   ScrollView,
+  Navigator,
   ListView,
   ToastAndroid,
   TouchableOpacity,
@@ -144,13 +145,13 @@ export default class extends React.Component {
     this.props.navigator.push({
       name: params.name,
       component: params.component,
-      sceneConfig:params.sceneConfig || undefined,
+      sceneConfig:Navigator.SceneConfigs.FloatFromBottom,
       params: {
         ...this.props,
         ...params,
         teamData:this.state.teamData,
         }
-    })
+    });
   }
   _openModa() {
     this.setState({isOpen: true});
@@ -303,7 +304,7 @@ export default class extends React.Component {
     var items = Object.keys(groups).map(function(item,key) {
       if(item<4){
         return(
-          <TouchableOpacity onPress={()=>that.operateTeamUser(groups[item])} key={key} style={styles.listviewteamlink} activeOpacity={0.8}>
+          <TouchableOpacity onPress={()=>that.operateTeamUser(groups[item])} key={key} style={styles.listviewteamlink} >
           <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
           </TouchableOpacity>
         );
@@ -333,17 +334,17 @@ export default class extends React.Component {
     let odddata = this.initTeamOdd(this.state.teamData.WinCount,this.state.teamData.LoseCount,this.state.teamData.FollowCount);
     let createrOperate = this.state.teamData.Role=='teamcreater'?(
       <View style={styles.listviewbtnblock}>
-        <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this.sendRecruit()} activeOpacity={0.8}>
+        <TouchableOpacity style = {[commonstyle.btncreamblack, styles.recruitbtn]} onPress={()=>this.sendRecruit()} >
         <Text style = {commonstyle.black}> {'招募队员'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} onPress={()=>this.confirmDelTeam()} activeOpacity={0.8}>
+        <TouchableOpacity style = {[commonstyle.btnredwhite, styles.recruitbtn]} onPress={()=>this.confirmDelTeam()} >
         <Text style = {commonstyle.white}> {'解散战队'}</Text>
         </TouchableOpacity>
       </View>
     ):(<View></View>);
     let teamUser = (
       <View style={styles.listviewteam,{flex:1}}>
-        <TouchableOpacity style={styles.listviewteamlink}   onPress={()=> this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":this.state.createrData,"callback":this.initData.bind(this,1)})} activeOpacity={0.8}><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
+        <TouchableOpacity style={styles.listviewteamlink}  onPress={()=> this._toNextScreen({"name":"个人信息","component":TeamUser,"teamuser":this.state.createrData,"callback":this.initData.bind(this,1)})} ><Image style={styles.listviewteamleader} source={{uri:this.state.teamData.CreaterPicture}} /></TouchableOpacity>
         {items}
       </View>
       )
