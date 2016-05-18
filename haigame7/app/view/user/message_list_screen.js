@@ -10,6 +10,7 @@ import React, {
   TouchableHighlight,
   TouchableOpacity,
   RefreshControl,
+  Alert
 } from 'react-native';
 
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -114,7 +115,7 @@ export default class extends React.Component {
         setTimeout(()=>{
           this.getData({userID: this.props.userData.UserID,
           startpage: 1,
-          pagecount: this.state.pagecount,})
+          pagecount: this.state.pagecount})
           this.props.getUserMessage();
         },500)
         //如果量大的话不能这么搞
@@ -174,7 +175,26 @@ export default class extends React.Component {
       });
     }
   }
-
+  _del(rowData){
+    Alert.alert(
+      '确定删除?',
+      rowData.Title,
+      [
+        {text: '取消', onPress: () => console.log('Cancel Pressed!')},
+        {text: '确定', onPress: () => {this._deleteMsg(rowData.MessageID)}},
+      ]
+    )
+  }
+  _deleteMsg(MessageID){
+    UserService.delMessage(MessageID,(response) =>{
+      if (response[0].MessageCode == '0') {
+        console.log('删除成功');
+        this.getData({userID: this.props.userData.UserID,
+        startpage: 1,
+        pagecount: this.state.pagecount,})
+      }
+    })
+  }
   _renderFooter() {
     return(
       <TouchableOpacity style={commonstyle.paginationview} underlayColor='#000000' activeOpacity={0.8} onPress={this._onLoadMore.bind(this,this.state.listdata,this.state.data)}>
@@ -182,13 +202,23 @@ export default class extends React.Component {
       </TouchableOpacity>
     );
   }
+  // renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+  //       return(
+  //         <View
+  //           key={`${sectionID}-${rowID}`}
+  //           style={{
+  //             height: 1,
+  //             backgroundColor: '#158609',
+  //           }} />
+  //       );
+  //     }
   _renderRow(rowData, sectionID, rowID) {
     let point = 0;
     if(rowData.State == '未读'){
       point = 1;
     }
     return(
-      <TouchableOpacity style={[commonstyle.row, styles.msglist]} activeOpacity={0.8} onPress={this.gotoRoute.bind(this,rowData)} underlayColor="#000000" id={rowID}>
+      <TouchableOpacity style={[commonstyle.row, styles.msglist]} activeOpacity={0.5} onPress={this.gotoRoute.bind(this,rowData)} onLongPress={this._del.bind(this,rowData)} underlayColor="#000000" id={rowID}>
         <View style={point == 1 ? styles.msgliststatus : styles.msgliststatusno}></View>
         <View style={commonstyle.col1}>
           <View style={commonstyle.row}>
