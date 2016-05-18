@@ -68,7 +68,7 @@ export default class extends Component{
   }
   //加载完组件后操作
   componentWillMount() {
-    this.setState({loaded: true})
+    // this.setState({loaded: true})
   }
   updateContentData(content){
       this.setState({

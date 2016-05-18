@@ -87,7 +87,7 @@ export default class extends Component{
    this.initData();
   }
   componentWillMount() {
-    this.setState({loaded: true})
+    // this.setState({loaded: true})
   }
   initData(){
     {/*请求我的战队信息*/}
