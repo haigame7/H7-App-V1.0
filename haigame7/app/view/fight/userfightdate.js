@@ -23,6 +23,8 @@ import React, {
 import commonstyle from '../../styles/commonstyle';
 import styles from '../../styles/fightstyle';
 import FightDetail from '../user/fightdetail';
+import TeamService from '../../network/teamservice';
+import Toast from '@remobile/react-native-toast';
 var Util = require('../common/util');
 
 
@@ -32,22 +34,40 @@ var UserFightList = React.createClass({
       rowData: this.props.rowData,
       fightstate:this.props.fightstate,
       userData:this.props.userdata,
+      steamData:{},
+      eteamData:{},
       navigator:this.props.navigator,
       _onPress: null,
     }
   },
   componentDidMount(){
-
+     this.getUserTeamInfo(this.props.rowData.STeamID,1);
+     this.getUserTeamInfo(this.props.rowData.ETeamID,0);
+  },
+  getUserTeamInfo(teamID,flag) {
+    var teamData ={};
+    TeamService.getTeambyID({"teamID":teamID},(response) => {
+      // console.log(creatUserID);
+      if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
+        if(flag){
+          this.setState({
+            steamData:response[1],
+          });
+        }else{
+          this.setState({
+            eteamData:response[1],
+          });
+        }
+      }else{
+        Toast.show(response[0].Message);
+      }
+    });
   },
   gotoRoute(params) {
    if (params.name == 'fightdetail') {
-       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
+       this.props.navigator.push({ name: params.name, component: FightDetail, params:{...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
+   } else if (params.name == 'userinfo') {
 
-           this.props.navigator.push({ name: params.name, component: FightDetail, params:{...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-       }
-   } else if (params.name == 'playerinfo') {
-     if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != params.name) {
-     }
    }
  },
  formatDate(strTime){
@@ -158,18 +178,22 @@ var UserFightList = React.createClass({
   }
  },
   render: function() {
+    console.log(this.state.steamData);
+    console.log(this.state.eteamData);
     var fightresulttitle = this.renderresulttitle();
     return(
       <View>
         <View style={[commonstyle.row, styles.fightlist]}>
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-            <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.props.rowData.STeamName}</Text>
+          <TouchableOpacity>
+            <Image style={styles.fightlistimg} source={{uri:this.state.steamData.TeamLogo}} />
+          </TouchableOpacity>
+            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.steamData.TeamName}</Text>
           </View>
            {fightresulttitle}
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
-            <Image style={styles.fightlistimg} source={{uri:'http://images.haigame7.com/logo/20160216133928XXKqu4W0Z5j3PxEIK0zW6uUR3LY=.png'}} />
-            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.props.rowData.ETeamName}</Text>
+            <Image style={styles.fightlistimg} source={{uri:this.state.eteamData.TeamLogo}} />
+            <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{this.state.eteamData.TeamName}</Text>
           </View>
         </View>
       </View>

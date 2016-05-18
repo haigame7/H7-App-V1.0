@@ -127,8 +127,6 @@ var User = React.createClass({
     TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
       // console.log(creatUserID);
       if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
-        // console.log(getUserTeamInfo);
-        // console.log(response[1]);
         this.setState({teamData: response[1]});
       }else{
         Toast.show(response[0].Message);
