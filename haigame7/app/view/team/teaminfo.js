@@ -92,9 +92,7 @@ export default class extends Component{
     });
   }
   gotoRoute(name,params) {
-    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
       this.props.navigator.push({ name: name, component: UserInfo, params:{'userinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-    }
   }
   renderUserImageItem(rowData,key){
     return(

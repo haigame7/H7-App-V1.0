@@ -39,7 +39,7 @@ var TeamRankList = React.createClass({
        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }
-    else if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+    else {
       this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.props.userID,'role':this.props.userteamdata.Role},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   },

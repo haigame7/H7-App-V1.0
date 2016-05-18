@@ -98,10 +98,40 @@ export default class extends Component{
         }else if(response[0].MessageCode == '20003'){
           this.setState({
             userteamname:'还没有创建战队',
+            userteamid:0,
+            userteamdata:{
+              TeamID:0,
+              phone:'',
+              odd:0,
+              asset:0,
+              teamlogo:'',
+              fightscore:0,
+              losecount:0,
+              role:'',
+              usercount:0,
+              wincount:0,
+              followcount:0,
+              totalcount:0,
+            },
           });
         }else if(response[0].MessageCode=='10001'){
           this.setState({
             userteamname:'还没有登录',
+            userteamid:0,
+            userteamdata:{
+              TeamID:0,
+              phone:'',
+              odd:0,
+              asset:0,
+              teamlogo:'',
+              fightscore:0,
+              losecount:0,
+              role:'',
+              usercount:0,
+              wincount:0,
+              followcount:0,
+              totalcount:0,
+            },
           });
         }else if(response[0].MessageCode == '0'){
           var oddsdata =  this.initTeamOdd(response[1].WinCount,response[1].LoseCount,response[1].FollowCount);
@@ -231,7 +261,6 @@ export default class extends Component{
             },1000);
           }
         }else{
-          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
             this.props.navigator.push({
               name: name,
               params:{
@@ -243,22 +272,16 @@ export default class extends Component{
               component: MakeChanllenge,
               sceneConfig: Navigator.SceneConfigs.FloatFromBottom
             });
-          }
         }
       }else if (name == 'fightstate') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
           this.props.navigator.push({ name: name, component: FightState, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-        }
       }else if (name == 'teaminfo') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
            if(userteamid==this.state.userteamid){
               this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':this.state.userteamdata,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
            }else{
              this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
            }
-        }
       }else if (name == 'userfight') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
           this.props.navigator.push({
             name: name,
             component: UserFight,
@@ -268,7 +291,6 @@ export default class extends Component{
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
           });
         }
-      }
     }
   }
   parseCount(count){
@@ -377,7 +399,7 @@ export default class extends Component{
             </View>
             <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+this.state.userteamdata.losecount+'  '}</Text>
             <View style={[commonstyle.btnborderpurple, styles.userlisttexticon]}>
-              <Text style={[commonstyle.purple, commonstyle.fontsize12]}>{'拒'}</Text>
+              <Text style={[commonstyle.purple, commonstyle.fontsize12]}>{'怂'}</Text>
             </View>
             <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+this.state.userteamdata.followcount+'  '}</Text>
           </View>
@@ -428,7 +450,7 @@ export default class extends Component{
             </View>
             <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+oddsdata.losecount+'  '}</Text>
             <View style={[commonstyle.btnborderpurple, styles.userlisttexticon]}>
-              <Text style={[commonstyle.purple, commonstyle.fontsize12]}>{'拒'}</Text>
+              <Text style={[commonstyle.purple, commonstyle.fontsize12]}>{'怂'}</Text>
             </View>
             <Text style={[styles.teamcontenttext,{fontSize:12,color:'#fff',}]}>{'  '+oddsdata.followcount+'  '}</Text>
           </View>

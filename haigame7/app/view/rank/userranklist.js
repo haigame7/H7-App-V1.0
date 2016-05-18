@@ -45,7 +45,7 @@ var UserRankList = React.createClass({
        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }
-    else if(this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+    else {
       this.props.navigator.push({ name: name, component: UserInfo, params:{'teamID':this.props.userteamid,'userinfo':params,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   },

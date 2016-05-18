@@ -42,6 +42,7 @@ export default class extends Component{
       navbar: 0,
       userteamid:0,
       data: {subnavbar:1},
+      ranksort:["Desc","Desc","Desc"],
       paraUser: {ranktype:'GameGrade',ranksort:'Desc',startpage:1,pagecount:10},
       paraTeam: {ranktype:'HotScore',ranksort:'Desc',startpage:1,pagecount:10},
       dataUserSource: new ListView.DataSource({rowHasChanged: (row1, row2) => true}),
@@ -131,20 +132,76 @@ export default class extends Component{
     this.setState({
       navbar:nav,
       data:{subnavbar:1},
+      ranksort:["Desc","Desc","Desc"],
+      paraTeam: {ranktype:'HotScore',ranksort:'Desc',startpage:1,pagecount:10},
+      paraUser: {ranktype:'GameGrade',ranksort:'Desc',startpage:1,pagecount:10},
     });
+    if(nav==0){
+        this.fetchTeamData();
+    }else{          
+      this.fetchUserData();
+    }
   }
+  changeSort(ranksort,sub,ranktype,currenttype){
+    switch(sub){
+      case 1:
+        if(ranksort[0]=="Desc"){
+          if(ranktype==currenttype){
+            this.setState({
+              ranksort:["Asc","Desc","Desc"],
+            });
+          }
+         }else{
+          this.setState({
+          ranksort:["Desc","Desc","Desc"],
+          });
+         }
+      break;
+      case 2:
+        if(ranksort[1]=="Desc"){
+          if(ranktype==currenttype){
+            this.setState({
+              ranksort:["Desc","Asc","Desc"],
+            });
+          }
+         }else{
+          this.setState({
+          ranksort:["Desc","Desc","Desc"],
+          });
+         }
+      break;
+      case 3:
+        if(ranksort[2]=="Desc"){
+        if(ranktype==currenttype){
+            this.setState({
+                ranksort:["Desc","Desc","Asc"],
+            });
+          }
+         }else{
+          this.setState({
+          ranksort:["Desc","Desc","Desc"],
+          });
+         }
+      break;
+      default:
+    }
 
+  return this.state.ranksort;
+  }
   _switchSubNavbar(sub,params){
     if(this.state.navbar==0){
+      var ranksort = this.changeSort(this.state.ranksort,sub,params.team,this.state.paraTeam.ranktype);
+
     this.setState({
       data:{subnavbar:sub},
-      paraTeam: {ranktype:params.team,ranksort:'Desc',startpage:1,pagecount:10},
+      paraTeam: {ranktype:params.team,ranksort:ranksort[sub-1],startpage:1,pagecount:10},
     });
     this.fetchTeamData();
   }else {
+    var ranksort = this.changeSort(this.state.ranksort,sub,params.user,this.state.paraUser.ranktype);
     this.setState({
       data:{subnavbar:sub},
-      paraUser: {ranktype:params.user,ranksort:'Desc',startpage:1,pagecount:10},
+      paraUser: {ranktype:params.user,ranksort:ranksort[sub-1],startpage:1,pagecount:10},
     });
     this.fetchUserData();
   }
@@ -286,21 +343,21 @@ export default class extends Component{
           <View style={styles.navsub}>
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8}  onPress = {() => this._switchSubNavbar(1,{'user':'GameGrade','team':'HotScore'})}>
               <Text style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.first}</Text>
-              <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
+              <Icon name={this.state.ranksort[0]=="Desc"?"angle-down":"angle-right"} size={8}  style={[this.state.data.subnavbar==1?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(2,{'user':'GamePower','team':'FightScore'})}>
               <Text style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.second}</Text>
-              <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
+              <Icon name={this.state.ranksort[1]=="Desc"?"angle-down":"angle-right"}  size={8}  style={[this.state.data.subnavbar==2?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
 
             <View style={styles.navsubline}></View>
 
             <TouchableOpacity style={styles.navsubblock} activeOpacity={0.8} onPress = {() => this._switchSubNavbar(3,{'user':'Asset','team':'Asset'})}>
               <Text style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, commonstyle.fontsize12]}>{navsubdata.third}</Text>
-              <Icon name="angle-down" size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
+              <Icon name={this.state.ranksort[2]=="Desc"?"angle-down":"angle-right"}  size={8}  style={[this.state.data.subnavbar==3?commonstyle.red:commonstyle.gray, styles.navsubicon]}/>
             </TouchableOpacity>
           </View>
         </View>
