@@ -70,7 +70,6 @@ export default class extends Component {
         selectedValueDate: ['2000', '4', '18']
       })
     }
-
   }
   componentWillReceiveProps(nextProps,nextState) {
   }
@@ -277,7 +276,16 @@ export default class extends Component {
       }
     })
   }
+  renderHeroImageItem(rowData,key){
+    return(
+      <Image key={key} style={styles.listviewheroimg} source={{uri:rowData.HeroImage}} />
+    );
+  }
   render() {
+    var that = this;
+    var HeroImages =Object.keys(that.state.userData.HeroImage).map(function(item,key) {
+      return that.renderHeroImageItem(that.state.userData.HeroImage[item],key);
+    });
     return(
       <View >
       <Header screenTitle='我的资料'  navigator={this.props.navigator}/>
@@ -336,6 +344,13 @@ export default class extends Component {
             <Text style={styles.listviewtextright}>{this.state.userData.Hobby}</Text>
           </TouchableOpacity>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
+        </View>
+
+        <View style={[styles.listview, {height: 60,}]} >
+          <Text  style={styles.listviewtextleft}>擅长英雄</Text>
+          <View style={styles.listviewhero}>
+            {HeroImages}
+          </View>
         </View>
         </ScrollView>
 
