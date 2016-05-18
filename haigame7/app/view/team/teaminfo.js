@@ -41,12 +41,14 @@ export default class extends Component{
     }
   }
   componentWillMount(){
-    this.initData();
   }
   componentDidMount(){
     this.setState({
       isOpen: true
     })
+    setTimeout(()=>{
+      this.initData();
+    },400)
   }
   initData(){
     let requestData = {'teamID':this.props.teaminfo.TeamID};

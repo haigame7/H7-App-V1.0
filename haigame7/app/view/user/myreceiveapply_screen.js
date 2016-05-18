@@ -47,7 +47,9 @@ export default class extends React.Component {
 
   }
   componentDidMount(){
-     this.initData();
+    setTimeout(()=>{
+      this.initData();
+    },400)
   }
 
   initData(){
