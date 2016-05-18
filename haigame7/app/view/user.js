@@ -239,7 +239,7 @@ var User = React.createClass({
             </View>
             <View style={styles.headtabline} ></View>
             <TouchableOpacity style={[commonstyle.col1, styles.headtabli]} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserAsset","component":UserAsset})}>
-              <Text style={[styles.headtabtitle, commonstyle.yellow]}>氦金</Text>
+              <Text style={[styles.headtabtitle, commonstyle.yellow]}>氦气</Text>
               <Text style={[styles.headtabnumber, commonstyle.red]}>{this.state.hjData.totalAsset}</Text>
             </TouchableOpacity>
             <View style={styles.headtabline} ></View>

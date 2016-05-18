@@ -56,7 +56,7 @@ let htmlStr = '<p class="MsoNormal" style="text-align:center;" align="center">\
 </p>\
 <p class="MsoNormal" style="text-align:left;text-indent:21.0pt;background:white;" align="left">\
 	<span style="line-height:150%;font-family:宋体;">3.5\
-APP</span><span style="line-height:150%;font-family:宋体;">中“排行”功能会收集并上传您的对战数据、战斗力数据及氦金数据到我们的服务器中，用于名次排名。<span></span></span>\
+APP</span><span style="line-height:150%;font-family:宋体;">中“排行”功能会收集并上传您的对战数据、战斗力数据及氦气数据到我们的服务器中，用于名次排名。<span></span></span>\
 </p>\
 <p class="MsoNormal" style="text-align:left;text-indent:21.0pt;background:white;" align="left">\
 	<span style="line-height:150%;font-family:宋体;">第<span>4</span>条 账户使用<span></span></span>\

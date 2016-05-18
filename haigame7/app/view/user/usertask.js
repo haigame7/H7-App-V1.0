@@ -107,7 +107,7 @@ export default class extends Component{
           <View style={styles.listviewiconleft}>
             <Icon name="date" size={30} color={'#D31B25'} />
           </View>
-          <Text style={styles.listviewtext}>{'签到'}<Text style={commonstyle.red}>{'  +1氦金'}</Text></Text>
+          <Text style={styles.listviewtext}>{'签到'}<Text style={commonstyle.red}>{'  +1氦气'}</Text></Text>
           <Text style={styles.listviewtextright}>{this.state.signInMsg}</Text>
           <Icon name="angle-right" size={20} color={'#484848'} style={styles.listviewiconright} />
         </TouchableOpacity>

@@ -149,7 +149,7 @@ export default class extends React.Component {
             <View style={styles.listblocktext}>
               <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:  '}</Text>
               <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.GamePower}</Text>
-              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金:  '}</Text>
+              <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦气:  '}</Text>
               <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.Asset}</Text>
             </View>
             <View style={commonstyle.row}>

@@ -150,9 +150,11 @@ export default class extends Component{
      Toast.show("退出登录");
      if(this.props.updateLoginState){
        this.props.updateLoginState();
-      }
-   });
-     this.props.navigator.popToTop();
+        }
+    });
+     setTimeout(()=>{
+       this.props.navigator.popToTop();
+     },200)
  }
  _toNextScreen(params){
     // Toast.show("this is a message")

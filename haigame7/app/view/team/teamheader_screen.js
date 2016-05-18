@@ -73,7 +73,7 @@ export default class extends React.Component {
           </View>
           <View style={styles.headtabline} ></View>
           <TouchableOpacity style={[commonstyle.col1, styles.headtabli]} activeOpacity={0.8} onPress={this._pressUserAsset.bind(this)}>
-            <Text style={[styles.headtabtitle, commonstyle.yellow]}>氦金</Text>
+            <Text style={[styles.headtabtitle, commonstyle.yellow]}>氦气</Text>
             <Text style={[styles.headtabnumber, commonstyle.red]}>000</Text>
           </TouchableOpacity>
           <View style={styles.headtabline} ></View>

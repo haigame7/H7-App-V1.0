@@ -338,7 +338,7 @@ export default class extends Component{
             {'约战详则:'}
             </Text>
             <Text style={[commonstyle.cream, commonstyle.fontsize12]}>
-             {'1. 向对方发起约战，必须填写押注金额，押注金额最低为50氦金，不设立上限；\n\n'}
+             {'1. 向对方发起约战，必须填写押注金额，押注金额最低为50氦气，不设立上限；\n\n'}
              {'2. 向对方发起约战，必须填写约战日期，双方战队需在所选日期24小时之内进行比赛；\n\n'}
              {'3. 如果想要加注或者更改约战日期，必须经过双方的同意，无法单方私自修改任何已经双方定好的约战内容；\n\n'}
              {'4. 每支战队24小时之内只能约战一次；\n\n'}
@@ -346,7 +346,7 @@ export default class extends Component{
              {'6. 如果被约战队伍因任何原因拒绝约战，则视为“认怂”计入战队档案；\n\n'}
              {'7. 被约战战队需在24小时的回应时间，如果在24小时之内未回复，则视为“认怂”，记入档案；\n\n'}
              {'8. 当约战生成之后，双方需要在约定日期进行约战。如果有一方在规定日期未上线进行比赛则视为该战队“认怂”记入档案；\n\n'}
-             {'9. 比赛之后，胜负双方必须上传比赛ID，如果有一方未上传比赛ID则视为该队比赛失利，如果双方均未上传比赛ID，则视为双方均“认怂”记入档案。如果双方上传的比赛ID不一样，经核实之后，上传虚假比赛ID一方的队长永久取消比赛资格，没收所有个人氦金和该战队氦金；\n\n'}
+             {'9. 比赛之后，胜负双方必须上传比赛ID，如果有一方未上传比赛ID则视为该队比赛失利，如果双方均未上传比赛ID，则视为双方均“认怂”记入档案。如果双方上传的比赛ID不一样，经核实之后，上传虚假比赛ID一方的队长永久取消比赛资格，没收所有个人氦气和该战队氦气；\n\n'}
              {'10. 双方正常上传比赛ID之后，由氦7平台判断胜负。一切该比赛的所有权和解释权归氦7平台所有。'}
             </Text>
           </View>
@@ -376,7 +376,7 @@ export default class extends Component{
           <View style={styles.userlistteambox}>
             <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
             <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '+this.state.userteamdata.fightscore+'  '}</Text>
-            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦气:'}</Text>
             <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '+this.state.userteamdata.asset+'  '}</Text>
           </View>
 
@@ -422,7 +422,7 @@ export default class extends Component{
               <View style={styles.userlistteambox}>
                 <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
                 <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '+rowData.FightScore+'  '}</Text>
-                <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
+                <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦气:'}</Text>
                 <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '+rowData.Asset+'  '}</Text>
               </View>
             </View>

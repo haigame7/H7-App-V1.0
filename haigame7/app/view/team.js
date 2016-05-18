@@ -264,7 +264,7 @@ export default class extends Component{
           <View style={styles.userlistteambox}>
             <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
             <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.GamePower}</Text>
-            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦气:'}</Text>
             <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.Asset}</Text>
           </View>
           <View style={styles.userlistteambox}>
@@ -321,7 +321,7 @@ export default class extends Component{
             <View style={styles.userlistteambox}>
               <Text style={commonstyle.yellow}>{'战斗力:'}</Text>
               <Text style={commonstyle.red}>{this.state.userteamdata.fightscore}</Text>
-              <Text style={commonstyle.yellow}>{'氦金:'}</Text>
+              <Text style={commonstyle.yellow}>{'氦气:'}</Text>
               <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
             </View>
             <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>

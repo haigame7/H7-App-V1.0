@@ -228,14 +228,14 @@ export default class extends Component{
       temp = money;
     }
     if (temp === "" || temp == null || temp == undefined) {
-      Toast.show("请选择或填写充值氦金数量");
+      Toast.show("请选择或填写充值氦气数量");
       return
     }
     _money = temp.toString()
     let type = /^[0-9]*[1-9][0-9]*$/;
     let re = new RegExp(type);
     if (_money.match(re) == null) {
-      Toast.show("请填写大于1的整数氦金数量");
+      Toast.show("请填写大于1的整数氦气数量");
       return
     }
     let url = 'http://wx.haigame7.com/Weixin/JsApiPay?'+ "PhoneNum=" + this.props.userData.PhoneNumber + "&TotalFee=" + _money + "&tradeType=APP";
@@ -292,7 +292,7 @@ export default class extends Component{
 
 
   render(){
-    let fields = [{ref: 'money', placeholder: '请输入充值氦金数量', keyboardType: 'numeric', maxLength: 10,placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
+    let fields = [{ref: 'money', placeholder: '请输入充值氦气数量', keyboardType: 'numeric', maxLength: 10,placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
     // console.log(this.state.registerWechat);
     if(this.state.registerWechat && this.state.isWXAppInstalled && this.state.isWXAppSupportApi){
@@ -313,7 +313,7 @@ export default class extends Component{
         <View style={commonstyle.bodyer}>
           <View key={'messages'}>{this.renderMessages()}</View>
           <View style={[styles.loginlabel, commonstyle.viewcenter]}>
-            <Text style={[commonstyle.cream,commonstyle.fontsize14]}>{'氦金充值: '} <Text style={[commonstyle.yellow, commonstyle.fontsize14]}>{'1元 = 10氦金'}</Text></Text>
+            <Text style={[commonstyle.cream,commonstyle.fontsize14]}>{'氦气充值: '} <Text style={[commonstyle.yellow, commonstyle.fontsize14]}>{'1元 = 10氦气'}</Text></Text>
           </View>
           <View key={'money'} style={styles.logininput}>
             <TextInput {...fields[0]} onChangeText={(text) => this.state.data.money = text} defaultValue={this.state.data.money.toString()} />
@@ -324,28 +324,28 @@ export default class extends Component{
           </View>
           <View style={[commonstyle.row, styles.rechargeview]}>
             <TouchableHighlight onPress={() => this._selectRecharge(50)} style={[this.state.data.money==50?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
-              <Text style={this.state.data.money==50?commonstyle.red:commonstyle.gray} >{'50氦金'}</Text>
+              <Text style={this.state.data.money==50?commonstyle.red:commonstyle.gray} >{'50氦气'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
             <TouchableHighlight onPress={() => this._selectRecharge(100)} style={[this.state.data.money==100?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]}>
-              <Text style={this.state.data.money==100?commonstyle.red:commonstyle.gray}>{'100氦金'}</Text>
+              <Text style={this.state.data.money==100?commonstyle.red:commonstyle.gray}>{'100氦气'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
             <TouchableHighlight onPress={() => this._selectRecharge(200)} style={[this.state.data.money==200?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
-              <Text style={this.state.data.money==200?commonstyle.red:commonstyle.gray} >{'200氦金'}</Text>
+              <Text style={this.state.data.money==200?commonstyle.red:commonstyle.gray} >{'200氦气'}</Text>
             </TouchableHighlight>
           </View>
           <View style={[commonstyle.row, styles.rechargeview]}>
             <TouchableHighlight onPress={() => this._selectRecharge(500)} style={[this.state.data.money==500?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
-              <Text style={this.state.data.money==500?commonstyle.red:commonstyle.gray}>{'500氦金'}</Text>
+              <Text style={this.state.data.money==500?commonstyle.red:commonstyle.gray}>{'500氦气'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
             <TouchableHighlight onPress={() => this._selectRecharge(1000)} style={[this.state.data.money==1000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
-              <Text style={this.state.data.money==1000?commonstyle.red:commonstyle.gray} >{'1000氦金'}</Text>
+              <Text style={this.state.data.money==1000?commonstyle.red:commonstyle.gray} >{'1000氦气'}</Text>
             </TouchableHighlight>
             <View style={styles.rechargeline}></View>
             <TouchableHighlight onPress={() => this._selectRecharge(5000)} style={[this.state.data.money==5000?commonstyle.btnborderred:commonstyle.btnbordergray, commonstyle.col1, styles.recharge]} >
-              <Text style={this.state.data.money==5000?commonstyle.red:commonstyle.gray} >{'5000氦金'}</Text>
+              <Text style={this.state.data.money==5000?commonstyle.red:commonstyle.gray} >{'5000氦气'}</Text>
             </TouchableHighlight>
           </View>
           {btn}
