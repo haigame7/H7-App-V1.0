@@ -41,7 +41,7 @@ import UserService from '../network/userservice';
 import TeamService from '../network/teamservice';
 import AssertService from '../network/assertservice';
 import GlobalVariable from '../constants/globalvariable';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 var User = React.createClass({
   getInitialState() {
     return {
@@ -51,7 +51,8 @@ var User = React.createClass({
       modalOpen:false,
       teamData:{},
       hjData: {'totalAsset': 0,'myRank': 1},
-      fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":0,"CertifyName":""}
+      fightData: {"UserID":'',"GameID":"","GamePower":"0","CertifyState":0,"CertifyName":""},
+      totalMessage: 0
     };
   },
   componentWillReceiveProps(nextProps,nextState) {
@@ -127,8 +128,6 @@ var User = React.createClass({
     TeamService.getUserDefaultTeam(this.state.userData.UserID,(response) => {
       // console.log(creatUserID);
       if (response[0].MessageCode == '0'||response[0].MessageCode == '20003') {
-        // console.log(getUserTeamInfo);
-        // console.log(response[1]);
         this.setState({teamData: response[1]});
       }else{
         Toast.show(response[0].Message);
@@ -152,7 +151,8 @@ var User = React.createClass({
     })
   },
   getUserMessage(){
-    UserService.getUserMessage(this.state.userData.UserID,(response) =>{
+    UserService.getUserMessage({'userID':this.state.userData.UserID},(response) =>{
+      // console.log(response[0]);
       if (response[0].MessageCode == '0') {
         this.setState({
           totalMessage: response[0].Message,
@@ -202,15 +202,20 @@ var User = React.createClass({
               _this.getTotalAssertAndRank()
               break;
           default:
-
+              break;
         }
       }}
     })
   },
+  a(){
+    this.setState({
+      totalMessage: 1,
+    });
+  },
   render: function () {
     return (
       <View >
-      <Header  screenTitle='个人中心' iconName='email' iconMessage={this.state.totalMessage} nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} userData={this.state.userData} navigator={this.props.navigator}/>
+      <Header  screenTitle='个人中心' iconName='email' getUserMessage={this.getUserMessage} iconMessage={this.state.totalMessage} nextComponent={{name:"信息",component:MyMsg,sceneConfig:Navigator.SceneConfigs.FloatFromBottom}} userData={this.state.userData} navigator={this.props.navigator}/>
       <ScrollView style={commonstyle.bodyer}>
         <Image source={require('../images/userbg.jpg')} style={styles.headbg} resizeMode={"cover"} >
           <TouchableOpacity style={styles.blocktop} activeOpacity={0.8} onPress={this._toNextScreen.bind(this,{"name":"UserInfo","component":UserInfo})}>
@@ -303,6 +308,7 @@ var User = React.createClass({
            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} activeOpacity={0.8}  onPress={this._joinTeam} style={commonstyle.white}>加入战队</Button>
          </View>
        </Modal>
+       <Spinner visible={this.state.isOpen} />
     </View>
     );
   }

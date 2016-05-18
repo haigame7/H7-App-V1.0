@@ -64,6 +64,8 @@ export default class extends Component{
       userdata:{
         userid:0,
         userteamid:0,
+        userasset:0,
+        role:"",
       },
       hjData:{},
       hjEarnData:{},
@@ -86,14 +88,15 @@ export default class extends Component{
       userdata:{
         userid:0,
         userteamid:0,
-        userasset:0
+        userasset:0,
+        role:"",
       }
     });
     this.initData();
   }
   //加载组件
   componentWillMount() {
-    this.setState({loaded: true})
+    // this.setState({loaded: true})
   }
   initData(){
     {/*请求我的战队信息*/}
@@ -107,6 +110,7 @@ export default class extends Component{
               userid:response[1].Creater,
               userteamid:response[1].TeamID,
               userasset:response[1].Asset,
+              role:response[1].Role,
             },
           });
         }else{
@@ -420,6 +424,10 @@ export default class extends Component{
   }
 
   _quitMatch(params){
+    if(params.modalteamname!==params.jointeamname){
+      Toast.showLongCenter("您的战队已报名参赛，无法再次报名");
+       return;
+    }
     MatchService.quitMatch(params,(response) => {
       if (response !== GlobalSetup.REQUEST_SUCCESS) {
         if(response[0].MessageCode == '40001'){
@@ -473,7 +481,7 @@ export default class extends Component{
           </ScrollView>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btncreamblack]} style={commonstyle.black} activeOpacity={0.8} onPress={this._closeModa.bind(this)} >关闭</Button>
-            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone})} >{this.state.jointeam==''?'报名参赛':'取消报名'}</Button>
+            <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} style={commonstyle.white} activeOpacity={0.8} onPress={this.state.jointeam==''?this._joinMatch.bind(this,{'matchID':this.state.modaData.MatchID,'boboID':this.state.modaData.BoBoID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'jointeam':this.state.jointeam}):this._quitMatch.bind(this,{'matchID':this.state.modaData.MatchID,'teamID':this.state.userdata.userteamid,'phone':this.state.userphone,'modalteamname':this.state.modaData.Name,'jointeamname':this.state.jointeam})} >{this.state.jointeam==''?'报名参赛':(this.state.jointeam==this.state.modaData.Name?'取消报名':'报名')}</Button>
           </View>
         </Modal>
       );

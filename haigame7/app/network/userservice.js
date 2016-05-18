@@ -140,6 +140,16 @@ export default{
       callback
     );
   },
+  /*删除信息*/
+  delMessage(MessageID,callback) {
+    FecthService.postFecth(
+      ApiConfig.USER_API.DEL_MESSAGE,
+      {
+        'MessageID' : MessageID
+      },
+      callback
+    );
+  },
   /*设置用户消息状态*/
   setMessageRead(data, callback){
     FecthService.postFecth(

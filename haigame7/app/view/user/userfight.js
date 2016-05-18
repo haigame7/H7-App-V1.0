@@ -110,9 +110,8 @@ export default class extends Component{
       if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
         this.props.navigator.push({ name: name, component: FightDetail, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
       }
-    } else if (name == 'playerinfo') {
-      if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-      }
+    } else if (name == 'userinfo') {
+
     }
   }
   renderfightList(){

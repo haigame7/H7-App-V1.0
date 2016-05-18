@@ -30,10 +30,10 @@
 		333F77F91CC4D54E00028598 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */; };
 		333F77FB1CC4D55900028598 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77FA1CC4D55900028598 /* libc++.tbd */; };
 		333F77FC1CC4D59800028598 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F01CC4D4C700028598 /* libRCTWeChat.a */; };
+		335A8D571CEC5141007CAC13 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 335A8D561CEC5141007CAC13 /* splash.png */; };
 		336D6AE41CA05CCB0070EB50 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 336D6AE21CA05CBA0070EB50 /* libRNImagePicker.a */; };
 		338261D01CAC1FFC00B141F5 /* libRCTHttpCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 338261C41CAC1FDD00B141F5 /* libRCTHttpCache.a */; };
 		339F537A1CC08E860036A33C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 339F53781CC08E860036A33C /* LaunchScreen.xib */; };
-		339F537D1CC090810036A33C /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 339F537C1CC090810036A33C /* splash.png */; };
 		33D91FD01CE45F360047916A /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 33D91FCF1CE45F360047916A /* libbz2.1.0.tbd */; };
 		33DF19D21CA98E6500F35258 /* libRCTToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33DF19CC1CA98E5800F35258 /* libRCTToast.a */; };
 		5979EE7CF586465D9CCE7CEC /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2B461DEEB048D19D8CDEA4 /* libRNVectorIcons.a */; };
@@ -209,10 +209,10 @@
 		333F77F61CC4D54400028598 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		333F77FA1CC4D55900028598 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		335A8D561CEC5141007CAC13 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		336D6AD31CA05CBA0070EB50 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		338261BD1CAC1FDD00B141F5 /* RCTHttpCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTHttpCache.xcodeproj; path = "../node_modules/react-native-http-cache/ios/RCTHttpCache.xcodeproj"; sourceTree = "<group>"; };
 		339F53781CC08E860036A33C /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		339F537C1CC090810036A33C /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		33D91FCF1CE45F360047916A /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		33DF19C01CA98E5800F35258 /* RCTToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTToast.xcodeproj; path = "../node_modules/@remobile/react-native-toast/ios/RCTToast.xcodeproj"; sourceTree = "<group>"; };
 		3A2347725B0A45C38C627F4C /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -346,7 +346,7 @@
 		13B07FAE1A68108700A75B9A /* haigame7 */ = {
 			isa = PBXGroup;
 			children = (
-				339F537C1CC090810036A33C /* splash.png */,
+				335A8D561CEC5141007CAC13 /* splash.png */,
 				339F53781CC08E860036A33C /* LaunchScreen.xib */,
 				3332C9AC1CBE43470027F8BF /* RCTSplashScreen.h */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -789,13 +789,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				335A8D571CEC5141007CAC13 /* splash.png in Resources */,
 				333A4AB41C8FF9D900157689 /* tabbaricon.ttf in Resources */,
 				22CA41C7503443F2BDCAAFAA /* Entypo.ttf in Resources */,
 				E263D58E0C574F28A5CD25DC /* EvilIcons.ttf in Resources */,
 				339F537A1CC08E860036A33C /* LaunchScreen.xib in Resources */,
 				B4E061BC797940888A39B40F /* FontAwesome.ttf in Resources */,
 				CD917509B82E4FDE92DECBC9 /* Foundation.ttf in Resources */,
-				339F537D1CC090810036A33C /* splash.png in Resources */,
 				078C1D06BD6B437DA3CC2EC5 /* Ionicons.ttf in Resources */,
 				25A1E1301CA939DD004FC6FA /* Iconfont.ttf in Resources */,
 				D18E5C5050DE4144BB5AA4E7 /* MaterialIcons.ttf in Resources */,
