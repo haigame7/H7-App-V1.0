@@ -244,7 +244,7 @@ export default class extends Component{
     // </View>
     return (
       <View >
-        <Header screenTitle='系统设置' navigator={this.props.navigator}/>
+        <Header screenTitle='设置' navigator={this.props.navigator}/>
 
         <ScrollView style={commonstyle.bodyer}>
           <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this.clearCache.bind(this)}>
