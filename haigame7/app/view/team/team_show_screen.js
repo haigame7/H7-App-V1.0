@@ -286,7 +286,7 @@ export default class extends React.Component {
   }
   _renderMyTeamRow(rowData){
     return(
-      <TouchableOpacity style={[commonstyle.row, styles.togglelist]} activeOpacity={0.8} onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
+      <TouchableOpacity style={[commonstyle.row, styles.togglelist]}  onPress = {() => this._switchTeam(rowData.TeamID,rowData.TeamName)}>
         <Image style={rowData.TeamID==this.state.navbar?styles.togglelistimgactive:styles.togglelistimg} source={{uri:rowData.TeamLogo}} />
         <View style={commonstyle.col1}>
           <Text style={[commonstyle.cream, commonstyle.fontsize14]}>{rowData.TeamName}</Text>
@@ -304,7 +304,7 @@ export default class extends React.Component {
     var items = Object.keys(groups).map(function(item,key) {
       if(item<4){
         return(
-          <TouchableOpacity activeOpacity={0.1} onPress={()=>that.operateTeamUser(groups[item])} key={key} style={styles.listviewteamlink} >
+          <TouchableOpacity  onPress={()=>that.operateTeamUser(groups[item])} key={key} style={styles.listviewteamlink} >
           <Image  style={styles.listviewteamimg} source={{uri:groups[item].UserPicture}} />
           </TouchableOpacity>
         );
