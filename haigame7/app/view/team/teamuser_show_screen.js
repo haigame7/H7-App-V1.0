@@ -110,7 +110,7 @@ export default class extends React.Component {
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
-                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦气  '}</Text>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userData.Asset}{'  '}</Text>
                 </View>
               </View>

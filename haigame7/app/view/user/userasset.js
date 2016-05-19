@@ -196,13 +196,13 @@ export default class extends Component{
     } else {
       RechargeView = (
         <TouchableHighlight style={[styles.btn, commonstyle.btnwhitered]} underlayColor={'#FFFFFF'} onPress={() => this.gotoRecharge('recharge')}>
-          <Text style={commonstyle.red} >{'氦金充值'}</Text>
+          <Text style={commonstyle.red} >{'氦气充值'}</Text>
         </TouchableHighlight>
       )
     }
     return (
       <View>
-        <Header screenTitle='我的资产' iconText='氦金说明' isPop={true}  navigator={this.props.navigator} icon_onPress={this._openModa.bind(this)}/>
+        <Header screenTitle='我的资产' iconText='氦气说明' isPop={true}  navigator={this.props.navigator} icon_onPress={this._openModa.bind(this)}/>
         <View style={commonstyle.bodyer}>
           <Image source = {require('../../images/assetbg.jpg')} style={styles.assetbg} resizeMode = {"cover"}>
           <View style={[commonstyle.row, styles.assetblock]}>
@@ -240,10 +240,10 @@ export default class extends Component{
         <Modal isOpen={this.state.modalOpen}  style={[commonstyle.modal, commonstyle.modalmiddle]} position={"center"}>
           <View style={commonstyle.modalclose}><Button onPress={this._closeModa.bind(this)} ><Icon name="error" size={20} color={'#FF0000'} /></Button></View>
           <View style={commonstyle.modaltext}>
-            <Text style={commonstyle.cream}>1）什么是氦金？</Text>
-            <Text style={commonstyle.cream}>氦金是氦7约战平台通用的虚拟货币，可用于约战、竞猜时使用。</Text>
-            <Text style={commonstyle.cream}>2）氦金的获取方式？</Text>
-            <Text style={commonstyle.cream}>注册用户送50氦金，每日签到送1氦金。</Text>
+            <Text style={commonstyle.cream}>1）什么是氦气？</Text>
+            <Text style={commonstyle.cream}>氦气是氦7约战平台通用的虚拟货币，可用于约战、竞猜时使用。</Text>
+            <Text style={commonstyle.cream}>2）氦气的获取方式？</Text>
+            <Text style={commonstyle.cream}>注册用户送50氦气，每日签到送1氦气。</Text>
           </View>
           <View style={[commonstyle.row, commonstyle.modalbtn]}>
             <Button containerStyle={[commonstyle.col1, commonstyle.modalbtnfont, commonstyle.btnredwhite]} activeOpacity={0.8}  onPress={this._closeModa.bind(this)} style={commonstyle.white}>关闭</Button>

@@ -41,12 +41,14 @@ export default class extends Component{
     }
   }
   componentWillMount(){
-    this.initData();
   }
   componentDidMount(){
     this.setState({
       isOpen: true
     })
+    setTimeout(()=>{
+      this.initData();
+    },400)
   }
   initData(){
     let requestData = {'teamID':this.props.teaminfo.TeamID};
@@ -138,7 +140,7 @@ export default class extends Component{
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
-                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦气  '}</Text>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.state.teamData.Asset}</Text>
                 </View>
               </View>

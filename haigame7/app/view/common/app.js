@@ -130,20 +130,11 @@ export default class haigame7 extends Component {
     }
     componentDidMount() {
       NetInfo.isConnected.fetch().done((isConnected) => {
-        console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+        // console.log('First, is ' + (isConnected ? 'online' : 'offline'));
         if(!isConnected){
           Toast.showLongCenter("无网络连接")
         }
       });
-      NetInfo.isConnected.addEventListener(
-        'change',
-        (res) => {
-          if(!res){
-            Toast.showLongCenter("无网络连接")
-          }
-
-        }
-      );
     }
     compareVersion(local,server){
       var result = false;
@@ -276,6 +267,31 @@ class App extends Component {
     }
   }
   componentWillMount() {
+    this.init()
+  }
+  componentWillReceiveProps(nextProps) {
+  }
+  shouldComponentUpdate(nextProps,nextState){
+    return true;
+  }
+  componentWillUpdate() {
+  }
+  componentDidMount() {
+    setTimeout(()=>{
+      SplashScreen.hide()
+    },2000)
+    NetInfo.isConnected.addEventListener(
+      'change',
+      (res) => {
+        if(!res){
+          Toast.showLongCenter("无网络连接")
+        } else {
+          this.init()
+        }
+      }
+    );
+  }
+  init(){
     this.updateLoginState();
     // console.log(userdata);
 
@@ -292,18 +308,6 @@ class App extends Component {
         this.setState({userData: jsondata})
       }
     });
-  }
-  componentWillReceiveProps(nextProps) {
-  }
-  shouldComponentUpdate(nextProps,nextState){
-    return true;
-  }
-  componentWillUpdate() {
-  }
-  componentDidMount() {
-    setTimeout(()=>{
-      SplashScreen.hide()
-    },2000)
   }
   updateLoginState(){
     AsyncStorage.getItem(GlobalVariable.USER_INFO.USERSESSION).then((value)=>{

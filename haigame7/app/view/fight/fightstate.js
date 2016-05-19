@@ -130,7 +130,7 @@ export default class extends React.Component {
             <Icon name='time' size={13} style={styles.textlisticon} color={'#484848'} />
             <Text style={[commonstyle.gray, styles.textlistfont]}>{rowData.FightTime}</Text>
             <Icon name='money' size={13} style={styles.textlisticon} color={'#484848'} />
-            <Text style={commonstyle.gray}>{rowData.FightAsset}{'氦金'}</Text>
+            <Text style={commonstyle.gray}>{rowData.FightAsset}{'氦气'}</Text>
           </View>
         </TouchableOpacity>
     );

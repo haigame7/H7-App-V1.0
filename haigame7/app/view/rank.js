@@ -30,8 +30,8 @@ import GlobalSetup from '../constants/globalsetup';
 import GlobalVariable from '../constants/globalvariable';
 
 var NAVBAR_DATA={first:"荣耀团队",second:"名人堂"};
-var NAVSUBBAR_TEAM={first:"热度",second:"战斗力",third:"氦金"};
-var NAVSUBBAR_USER={first:"大神系数",second:"战斗力",third:"氦金"};
+var NAVSUBBAR_TEAM={first:"热度",second:"战斗力",third:"氦气"};
+var NAVSUBBAR_USER={first:"大神系数",second:"战斗力",third:"氦气"};
 //思路：1.分出两个组件：个人排行和团队排行
 
 export default class extends Component{

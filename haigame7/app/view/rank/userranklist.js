@@ -61,7 +61,7 @@ var UserRankList = React.createClass({
             <View style={styles.ranklistrow}>
               <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
               <Text style={commonstyle.red}>{this.props.user.GamePower}</Text>
-              <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
+              <Text style={commonstyle.yellow}>{'  氦气:  '}</Text>
               <Text style={commonstyle.red}>{this.props.user.Asset}</Text>
             </View>
           </View>

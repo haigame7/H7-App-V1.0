@@ -72,7 +72,7 @@ export default class extends Component{
               <View style={[commonstyle.col1, commonstyle.btnyellowblack, styles.detailresultbg]}><Text style={commonstyle.black}>奶粉去哪了：<Text style={commonstyle.black}>失败</Text></Text></View>
               <View style={[commonstyle.btnyellowblack, styles.detailresulttransform]}></View>
               <View style={[commonstyle.col1, commonstyle.viewright]}>
-                <Text style={[commonstyle.red, commonstyle.fontsize12]}>杀敌 <Text>3</Text> 经验 <Text>1148</Text> 氦金 <Text>150</Text> </Text>
+                <Text style={[commonstyle.red, commonstyle.fontsize12]}>杀敌 <Text>3</Text> 经验 <Text>1148</Text> 氦气 <Text>150</Text> </Text>
               </View>
             </View>
             <View style={styles.detaillist}>
@@ -150,7 +150,7 @@ export default class extends Component{
               <View style={[commonstyle.col1, commonstyle.btnredwhite, styles.detailresultbg]}><Text style={commonstyle.white}>奶粉去哪了：<Text>胜利</Text></Text></View>
               <View style={[commonstyle.btnredwhite, styles.detailresulttransform]}></View>
               <View style={[commonstyle.col1, commonstyle.viewright]}>
-                <Text style={[commonstyle.red, commonstyle.fontsize12]}>杀敌 <Text>3</Text> 经验 <Text>1148</Text> 氦金 <Text>150</Text> </Text>
+                <Text style={[commonstyle.red, commonstyle.fontsize12]}>杀敌 <Text>3</Text> 经验 <Text>1148</Text> 氦气 <Text>150</Text> </Text>
               </View>
             </View>
             <View style={styles.detaillist}>

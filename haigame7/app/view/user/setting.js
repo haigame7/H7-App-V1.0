@@ -150,9 +150,11 @@ export default class extends Component{
      Toast.show("退出登录");
      if(this.props.updateLoginState){
        this.props.updateLoginState();
-      }
-   });
-     this.props.navigator.popToTop();
+        }
+    });
+     setTimeout(()=>{
+       this.props.navigator.popToTop();
+     },200)
  }
  _toNextScreen(params){
     // Toast.show("this is a message")
@@ -242,7 +244,7 @@ export default class extends Component{
     // </View>
     return (
       <View >
-        <Header screenTitle='系统设置' navigator={this.props.navigator}/>
+        <Header screenTitle='设置' navigator={this.props.navigator}/>
 
         <ScrollView style={commonstyle.bodyer}>
           <TouchableOpacity style={styles.listview} activeOpacity={0.8} onPress={this.clearCache.bind(this)}>
