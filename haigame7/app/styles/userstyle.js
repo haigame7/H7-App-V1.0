@@ -24,7 +24,7 @@ export default StyleSheet.create({
     //个人中心
     headbg: {
         flex: 1,
-        height: 260,
+        height: 240,
         width: Util.size.width,
     },
     headportrait: {
