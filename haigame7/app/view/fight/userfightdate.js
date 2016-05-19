@@ -42,7 +42,6 @@ var UserFightList = React.createClass({
     }
   },
   componentDidMount(){
-    console.log(this.props.userdata);
      this.getUserTeamInfo(this.props.rowData.STeamID,1);
      this.getUserTeamInfo(this.props.rowData.ETeamID,0);
   },
