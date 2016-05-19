@@ -173,8 +173,8 @@ export default class extends Component{
     // console.log();
     if (Platform.OS == 'android') {
       let webpageOptions = {
-        title: '免费分享呦',
-        desc: '我就不信你敢跟我约战',
+        title: '来氦7游戏赚钱两不误',
+        desc: '组自己的战队，约最强的敌人，打最爽的团战，赢取更多的奖金。来氦7，输赢我们一起扛！',
         thumbSize: 150,
         scene: type,
         type: 3,
@@ -188,9 +188,9 @@ export default class extends Component{
     } else if(Platform.OS == 'ios') {
       WeChatIOS.sendLinkURL({
         link: shareLink,
-        tagName: '钱隆',
-        title: '哈哈哈哈哈哈  ',
-        desc: '噢噢噢噢哦哦哦哦哦哦',
+        tagName: 'H7',
+        title: '来氦7游戏赚钱两不误',
+        desc: '组自己的战队，约最强的敌人，打最爽的团战，赢取更多的奖金。来氦7，输赢我们一起扛！',
         thumbImage: thumbImage,
         scene: type
       });
