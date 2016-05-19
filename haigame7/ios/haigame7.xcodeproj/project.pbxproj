@@ -22,7 +22,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		22CA41C7503443F2BDCAAFAA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B46EDD696964D7591A03E68 /* Entypo.ttf */; };
-		25A1E1301CA939DD004FC6FA /* Iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */; };
+		258531001CEDAD4200A4D3D1 /* Iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 258530FF1CEDAD4200A4D3D1 /* Iconfont.ttf */; };
 		333A4AB41C8FF9D900157689 /* tabbaricon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 333A4AB31C8FF9D900157689 /* tabbaricon.ttf */; };
 		333F77F31CC4D52B00028598 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F21CC4D52B00028598 /* SystemConfiguration.framework */; };
 		333F77F51CC4D53400028598 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F41CC4D53400028598 /* CoreTelephony.framework */; };
@@ -200,7 +200,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = haigame7/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1B46EDD696964D7591A03E68 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Iconfont.ttf; sourceTree = "<group>"; };
+		258530FF1CEDAD4200A4D3D1 /* Iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Iconfont.ttf; sourceTree = "<group>"; };
 		3332C9AC1CBE43470027F8BF /* RCTSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTSplashScreen.h; sourceTree = "<group>"; };
 		333A4AB31C8FF9D900157689 /* tabbaricon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tabbaricon.ttf; sourceTree = "<group>"; };
 		333F77EB1CC4D4C700028598 /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../node_modules/react-native-wechat-ios/RCTWeChat/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
@@ -481,13 +481,13 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				258530FF1CEDAD4200A4D3D1 /* Iconfont.ttf */,
 				33D91FCF1CE45F360047916A /* libbz2.1.0.tbd */,
 				333F77FA1CC4D55900028598 /* libc++.tbd */,
 				333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */,
 				333F77F61CC4D54400028598 /* libz.tbd */,
 				333F77F41CC4D53400028598 /* CoreTelephony.framework */,
 				333F77F21CC4D52B00028598 /* SystemConfiguration.framework */,
-				25A1E12F1CA939DD004FC6FA /* Iconfont.ttf */,
 				333A4AB31C8FF9D900157689 /* tabbaricon.ttf */,
 				13B07FAE1A68108700A75B9A /* haigame7 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -797,10 +797,10 @@
 				B4E061BC797940888A39B40F /* FontAwesome.ttf in Resources */,
 				CD917509B82E4FDE92DECBC9 /* Foundation.ttf in Resources */,
 				078C1D06BD6B437DA3CC2EC5 /* Ionicons.ttf in Resources */,
-				25A1E1301CA939DD004FC6FA /* Iconfont.ttf in Resources */,
 				D18E5C5050DE4144BB5AA4E7 /* MaterialIcons.ttf in Resources */,
 				A90F12D0EB7940888260786D /* Octicons.ttf in Resources */,
 				AA7EB38F115641FD8DC084AE /* Zocial.ttf in Resources */,
+				258531001CEDAD4200A4D3D1 /* Iconfont.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,7 @@ import Modal from 'react-native-modalbox';
 import Button from 'react-native-button';
 import commonstyle from '../../styles/commonstyle';
 import FightService from '../../network/fightservice';
+import TeamService from '../../network/teamservice';
 import GlobalSetup from '../../constants/globalsetup';
 import Toast from '@remobile/react-native-toast';
 import styles from '../../styles/fightstyle';
@@ -37,18 +38,31 @@ export default class extends Component{
     this.state = {
        content:{},
        userdata:{},
+       userteamdata:{},
        fightstate:'',
      }
     }
   componentDidMount(){
-    this.setState({
-      content:this.props.rowData,
-      userdata:this.props.userdata,
-      fightstate:this.props.fightstate,
-      fightaddress:this.props.fightstate=='send'?this.props.rowData.SFightAddress:this.props.rowData.EFightAddress,
-    });
+    TeamService.getUserDefaultTeam(this.props.userdata.UserID,(response) => {
+      if (response !== GlobalSetup.REQUEST_SUCCESS) {
+       if(response[0].MessageCode == '0'){
+          this.setState({
+            content:this.props.rowData,
+            userdata:this.props.userdata,
+            userteamdata:response[1],
+            fightstate:this.props.fightstate,
+            fightaddress:this.props.fightstate=='send'?this.props.rowData.SFightAddress:this.props.rowData.EFightAddress,
+          });
+        }
+      }
+    }
+  );
   }
   _reject(){
+    if(this.state.userteamdata.Role=="teamuser"){
+      Toast.showLongCenter("队员无权操作");
+      return;
+    }
     let requestdata = {'userID':this.state.userdata.UserID,'dateID':this.state.content.DateID,'money':this.state.content.Money,}
     FightService.reject(requestdata,(response) => {
      if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -68,6 +82,10 @@ export default class extends Component{
     });
   }
   _accept(){
+    if(this.state.userteamdata.Role=="teamuser"){
+      Toast.showLongCenter("队员无权操作");
+      return;
+    }
     let requestdata = {'userID':this.state.userdata.UserID,'dateID':this.state.content.DateID,'money':this.state.content.Money,}
     FightService.accept(requestdata,(response) => {
      if (response !== GlobalSetup.REQUEST_SUCCESS) {
@@ -87,12 +105,15 @@ export default class extends Component{
     });
   }
   confirmResult(fightaddress){
+    if(this.state.userteamdata.Role=="teamuser"){
+      Toast.showLongCenter("队员无权操作");
+      return;
+    }
    if(this.state.fightaddress!==fightaddress){
      Alert.alert(
              '确认比赛ID号',
-             '您跟对方输入不一致，确认输入结果？',
+             '您跟对方输入不一致',
              [
-               {text: '取消', onPress: () => console.log('Cancel Pressed!')},
                {text: '确认', onPress: () => this._updateGameID(this.state.fightaddress)},
              ]
            )
