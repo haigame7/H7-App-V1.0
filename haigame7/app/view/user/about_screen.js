@@ -159,7 +159,7 @@ export default class extends React.Component {
               <Text style={commonstyle.cream}>        电竞已经成为时尚，电竞已经成为风向。热爱电竞执着电竞的玩家，氦7互娱将帮助你完成梦想，实现价值！</Text>
               <Text style={commonstyle.cream}>        如果你对我们感兴趣，也是热爱电竞的小伙伴，可以联系我们。</Text>
               <Text style={commonstyle.cream}>        我们的联系方式：yoyo.liu@haigame7.com</Text>
-              <Text style={commonstyle.cream}>        公司QQ号：2932308448</Text>
+              <Text style={commonstyle.cream}>        问题交流反馈QQ群：2932308448</Text>
             </View>
 
             <View style={[styles.listview, {backgroundColor: 'rgba(0, 0, 0, 0)',}]}></View>
