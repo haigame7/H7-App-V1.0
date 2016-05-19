@@ -134,12 +134,6 @@ export default class extends React.Component {
     },1000);
   }
   _onLoadMore(param,data) {
-    if (this.state.keykey > 0) {
-      Toast.show(this.state.footerMsg)
-      this.setState({
-        footerMsg: "木有更多数据了..."
-      });
-    }else{
       let _ds = data;
       let _params = param;
       _params.startpage = _params.startpage+1;
@@ -150,11 +144,12 @@ export default class extends React.Component {
         if (response[0].MessageCode == '0') {
           let nextData = response[1];
           if(nextData.length<1){
+            setTimeout(()=>{
             this.setState({
-              keykey:1,
-              footerMsg: "木有更多数据了...",
+              footerMsg: "点击加载更多",
             });
-            Toast.show(this.state.footerMsg)
+            Toast.show("木有更多数据了...");
+          },500);
           }else{
             for(var item in nextData){
               _ds.push(nextData[item])
@@ -173,7 +168,7 @@ export default class extends React.Component {
           Toast.show('请求错误' + response[0].Message);
         }
       });
-    }
+
   }
   _del(rowData){
     Alert.alert(
