@@ -60,10 +60,7 @@ export default class extends Component{
   }
 
   gotoRoute(name,params) {
-
-    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
       this.props.navigator.push({ name: name, component: UserInfo, params:{'userinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-    }
   }
   renderUserImageItem(rowData,key){
     return(
@@ -98,7 +95,7 @@ export default class extends Component{
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
-                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦气  '}</Text>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.state.teaminfo.Asset}</Text>
                 </View>
               </View>

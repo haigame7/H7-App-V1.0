@@ -117,8 +117,8 @@ export default class extends Component{
                 <Text style={[commonstyle.yellow, commonstyle.fontsize12, styles.guesslistresulttextfont]}>{'我的选择  '}<Text style={[commonstyle.white, commonstyle.fontsize12 ]}>{rowData.BetTeamName}</Text></Text>
               </View>
               <View style={commonstyle.col1}>
-                <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'押注金额  '}<Text style={[commonstyle.white, commonstyle.fontsize12]}>{rowData.BetMoney}{'氦金'}</Text></Text>
-                <Text style={[commonstyle.yellow, commonstyle.fontsize12, styles.guesslistresulttextfont]}>{'竞猜收益  '}<Text style={[commonstyle.white, commonstyle.fontsize12]}>{rowData.Result==GlobalVariable.GUESS_INFO.NoStart||GlobalVariable.GUESS_INFO.Starting?Math.round(rowData.BetMoney*rowData.Odds):0}{'氦金'}</Text></Text>
+                <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'押注金额  '}<Text style={[commonstyle.white, commonstyle.fontsize12]}>{rowData.BetMoney}{'氦气'}</Text></Text>
+                <Text style={[commonstyle.yellow, commonstyle.fontsize12, styles.guesslistresulttextfont]}>{'竞猜收益  '}<Text style={[commonstyle.white, commonstyle.fontsize12]}>{rowData.Result==GlobalVariable.GUESS_INFO.NoStart||GlobalVariable.GUESS_INFO.Starting?Math.round(rowData.BetMoney*rowData.Odds):0}{'氦气'}</Text></Text>
               </View>
             </View>
           </View>

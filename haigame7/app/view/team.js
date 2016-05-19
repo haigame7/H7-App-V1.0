@@ -76,7 +76,7 @@ export default class extends Component{
   }
   //加载完组件后操作
   componentWillMount() {
-    this.setState({loaded: true})
+    // this.setState({loaded: true})
   }
   updateContentData(content){
     this.setState({
@@ -104,10 +104,28 @@ export default class extends Component{
         }else if(response[0].MessageCode == '20003'){
           this.setState({
             userteamname:'还没有创建战队',
+            userteamid:0,
+            userteamdata:{
+              phone:'',
+              asset:0,
+              teamlogo:'',
+              fightscore:0,
+              recruit:'',
+              Role:'',
+            },
           });
         }else if(response[0].MessageCode=='10001'){
           this.setState({
            userteamname:'还没有登录',
+           userteamid:0,
+           userteamdata:{
+             phone:'',
+             asset:0,
+             teamlogo:'',
+             fightscore:0,
+             recruit:'',
+             Role:'',
+           },
           });
         }else if(response[0].MessageCode == '0'){
           this.setState({
@@ -178,49 +196,33 @@ export default class extends Component{
         name:'login',
         component:Login,
         params:{...this.props},
-       sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }else if(this.state.userteamid==0&&this.state.navbar!==0||this.state.userteamname=='还没有创建战队'&&this.state.navbar!==0){
       this.props.navigator.push({
         name:'user',
         component:User,
         params:{'userData':this.state.content.userData,'openmodal':true},
-        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }else{
       if (name == 'teamrecruit') {
-          if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: TeamRecruit, params:{'teamrecruit':this.state.userteamdata.recruit,'teamid':this.state.userteamid,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-          }
+            this.props.navigator.push({ name: name, sceneConfig: Navigator.SceneConfigs.FloatFromBottom,component: TeamRecruit, params:{'teamrecruit':this.state.userteamdata.recruit,'teamid':this.state.userteamid,...this.props}});
+
       } else if (name == 'playerinfo') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: PlayerInfo, params:{'teamID':this.state.userteamid,'playerinfo':params,'userteamdata':this.state.userteamdata},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-        }
+            this.props.navigator.push({ name: name,  sceneConfig: Navigator.SceneConfigs.FloatFromBottom,component: PlayerInfo, params:{'teamID':this.state.userteamid,'playerinfo':params,'userteamdata':this.state.userteamdata}});
       }else if (name == 'teaminfo') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID,'role':this.state.userteamdata.Role},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-        }
+            this.props.navigator.push({ name: name,  sceneConfig: Navigator.SceneConfigs.FloatFromBottom,component: TeamInfo, params:{'teaminfo':params,'userID':this.state.content.userData.UserID,'role':this.state.userteamdata.Role} });
       }
       else if (name == 'myapply') {
-
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MyApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-        }
+            this.props.navigator.push({ name: name,  sceneConfig: Navigator.SceneConfigs.FloatFromBottom,component: MyApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role}});
       }
       else if (name == 'myreceiveapply') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MyReceiveApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role,'updateLoginState':this.props.updateLoginState}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-        }
+            this.props.navigator.push({ name: name,  sceneConfig: Navigator.SceneConfigs.FloatFromBottom,component: MyReceiveApply, params:{'content':this.state.content,'role':this.state.userteamdata.Role,'updateLoginState':this.props.updateLoginState} });
       }
       else if (name == 'mysendapply') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: MySendApply,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-        }
+            this.props.navigator.push({ name: name,  sceneConfig: Navigator.SceneConfigs.FloatFromBottom,component: MySendApply,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData}});
       }
       else if (name == 'applyjoin') {
-        if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
-            this.props.navigator.push({ name: name, component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData,'updateLoginState':this.props.updateLoginState}, sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-        }
+            this.props.navigator.push({ name: name,  sceneConfig: Navigator.SceneConfigs.FloatFromBottom,component: ApplyJoin,params:{'teamID':this.state.userteamid,'userData':this.state.content.userData,'updateLoginState':this.props.updateLoginState}});
       }
     }
   }
@@ -260,7 +262,7 @@ export default class extends Component{
           <View style={styles.userlistteambox}>
             <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'战斗力:'}</Text>
             <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.GamePower}</Text>
-            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦金:'}</Text>
+            <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'氦气:'}</Text>
             <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.Asset}</Text>
           </View>
           <View style={styles.userlistteambox}>
@@ -317,7 +319,7 @@ export default class extends Component{
             <View style={styles.userlistteambox}>
               <Text style={commonstyle.yellow}>{'战斗力:'}</Text>
               <Text style={commonstyle.red}>{this.state.userteamdata.fightscore}</Text>
-              <Text style={commonstyle.yellow}>{'氦金:'}</Text>
+              <Text style={commonstyle.yellow}>{'氦气:'}</Text>
               <Text style={commonstyle.red}>{this.state.userteamdata.asset}</Text>
             </View>
             <Text style={commonstyle.cream}>{this.state.userteamdata.recruit}</Text>

@@ -26,6 +26,7 @@ import UserInfo from '../rank/userinfo';
 import GlobalSetup from '../../constants/globalsetup';
 import GlobalVariable from '../../constants/globalvariable';
 import Toast from '@remobile/react-native-toast';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class extends Component{
   constructor(props) {
@@ -36,10 +37,18 @@ export default class extends Component{
       messages: [],
       teamData:[],
       creatUser:[],
+      isOpen: false,
     }
   }
   componentWillMount(){
-    this.initData();
+  }
+  componentDidMount(){
+    this.setState({
+      isOpen: true
+    })
+    setTimeout(()=>{
+      this.initData();
+    },400)
   }
   initData(){
     let requestData = {'teamID':this.props.teaminfo.TeamID};
@@ -54,11 +63,12 @@ export default class extends Component{
               let data = response[1];
               this.setState({
                 creatUser: data,
+                isOpen:false,
               })
             } else {
               Toast.show('获取用户数据失败'+ response[0].Message);
               this.setState({
-                loading: false,
+                isOpen: false,
               })
             }
           });
@@ -66,8 +76,6 @@ export default class extends Component{
           Toast.show(response[0].MessageCode);
         };
     });
-
-
   }
 
   applyTeam(userID,teamID){
@@ -92,9 +100,7 @@ export default class extends Component{
     });
   }
   gotoRoute(name,params) {
-    if (this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
       this.props.navigator.push({ name: name, component: UserInfo, params:{'userinfo':params},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
-    }
   }
   renderUserImageItem(rowData,key){
     return(
@@ -134,7 +140,7 @@ export default class extends Component{
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
-                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦气  '}</Text>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.state.teamData.Asset}</Text>
                 </View>
               </View>
@@ -181,6 +187,7 @@ export default class extends Component{
             <Text style = {styles.btnfont}> {'申请加入' } </Text>
           </TouchableHighlight>
         </ScrollView>
+         <Spinner visible={this.state.isOpen} />
       </View>
     );
   }

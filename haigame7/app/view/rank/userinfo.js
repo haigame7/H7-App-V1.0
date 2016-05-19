@@ -39,16 +39,12 @@ export default class extends Component{
   }
 
   render(){
+
     var that = this
     var items =Object.keys(that.state.userinfo.HeroImage).map(function(item,key) {
       return that.renderHeroImageItem(that.state.userinfo.HeroImage[item],key);
     });
-    var Sex = '';
-    if(this.state.userinfo.Sex == 0){
-      Sex = '男';
-    }else{
-      Sex = '女';
-    }
+
     return (
       <View>
         <Header screenTitle='个人信息'   navigator={this.props.navigator}/>
@@ -68,7 +64,7 @@ export default class extends Component{
                 </View>
                 <View style={styles.headtextline}></View>
                 <View style={styles.headtextright}>
-                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦金  '}</Text>
+                  <Text style={[commonstyle.yellow, commonstyle.fontsize12]}>{'  氦气  '}</Text>
                   <Text style={[commonstyle.red, commonstyle.fontsize12]}>{'  '}{this.state.userinfo.Asset}{'  '}</Text>
                 </View>
               </View>
@@ -81,7 +77,7 @@ export default class extends Component{
           <View style={styles.listblock}>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>性别</Text></View>
-              <View style={styles.listviewright}><Text style={commonstyle.cream}>{Sex}</Text></View>
+              <View style={styles.listviewright}><Text style={commonstyle.cream}>{this.state.userinfo.Sex}</Text></View>
             </View>
             <View style={styles.listview}>
               <View style={styles.listviewleft}><Text style={commonstyle.gray}>地区</Text></View>

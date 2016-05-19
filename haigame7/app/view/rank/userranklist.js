@@ -45,7 +45,7 @@ var UserRankList = React.createClass({
        sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
       });
     }
-    else if(this.props.navigator && this.props.navigator.getCurrentRoutes()[this.props.navigator.getCurrentRoutes().length - 1].name != name) {
+    else {
       this.props.navigator.push({ name: name, component: UserInfo, params:{'teamID':this.props.userteamid,'userinfo':params,...this.props},sceneConfig: Navigator.SceneConfigs.FloatFromBottom });
     }
   },
@@ -61,7 +61,7 @@ var UserRankList = React.createClass({
             <View style={styles.ranklistrow}>
               <Text style={commonstyle.yellow}>{'战斗力:  '}</Text>
               <Text style={commonstyle.red}>{this.props.user.GamePower}</Text>
-              <Text style={commonstyle.yellow}>{'  氦金:  '}</Text>
+              <Text style={commonstyle.yellow}>{'  氦气:  '}</Text>
               <Text style={commonstyle.red}>{this.props.user.Asset}</Text>
             </View>
           </View>
