@@ -70,7 +70,7 @@ export default class extends Component{
     else if(this.state.money>this.state.teamasset){
           Toast.showLongCenter('战队资产不够');
     }else if(this.state.money<50){
-        Toast.showLongCenter('请输入大于50氦金的正整数');
+        Toast.showLongCenter('请输入大于50氦气的正整数');
     }else if(this.state.money.match(re) == null) {
       Toast.showLongCenter("请填写大于1的整数金额");
     }else if(datefight<datetomorrow){
@@ -133,7 +133,7 @@ export default class extends Component{
         <Headernav screenTitle='发起约战'  navigator={this.props.navigator}/>
         <View style={commonstyle.bodyer}>
           <View  style={styles.fightview}>
-            <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于50氦金'}</Text>
+            <Text style={[commonstyle.yellow,commonstyle.fontsize12]}>{'您的压注金额需大于50氦气'}</Text>
             <View style={styles.fightviewinput}>
               <TextInput style={[commonstyle.cream, styles.fightviewinputfont]} placeholder={'请输入压注金额'} maxLength={11} underlineColorAndroid = 'transparent' placeholderTextColor={'#484848'} keyboardType={'numeric'} onChangeText={(text) => this.state.money = text}  />
             </View>

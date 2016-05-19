@@ -364,10 +364,10 @@ export default class extends Component{
         return
       }
       if(params.money>this.state.hjData.totalAsset){
-        Toast.showShortCenter("没有足够的氦金");
+        Toast.showShortCenter("没有足够的氦气");
         return
       }else if(params.money<10){
-        Toast.showShortCenter("最小押注10氦金");
+        Toast.showShortCenter("最小押注10氦气");
         return
       }
       GuessService.doGuessBet(params,(response) => {
@@ -491,10 +491,10 @@ export default class extends Component{
           <View style={[styles.modalheader]}>
             <Text style={[commonstyle.cream, styles.modaltext]}>{'您的选择：'}{this.state.modaData.guessname}</Text>
             <View  style = {styles.modalinput }>
-              <TextInput placeholder={'押注最小氦金为10氦金,请输入押注金额'} maxLength={8} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.calculateGuess(text)}/>
+              <TextInput placeholder={'押注最小为10氦气,请输入押注金额'} maxLength={8} placeholderTextColor='#484848' underlineColorAndroid = 'transparent' style={styles.modalinputfont} keyboardType='numeric'  onChangeText = {(text) => this.calculateGuess(text)}/>
             </View>
             <View style ={commonstyle.row}>
-              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦金:  '}<Text style={commonstyle.yellow}>{this.state.hjEarnData.totalAsset}</Text></Text></View>
+              <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  可用氦气:  '}<Text style={commonstyle.yellow}>{this.state.hjEarnData.totalAsset}</Text></Text></View>
               <View style={commonstyle.col1}><Text style={[commonstyle.cream, styles.modaltext]}>{'  预估收益:  '}<Text style={commonstyle.yellow}>{Math.round(this.state.hjEarnData.totalEarnAsset)}</Text></Text></View>
             </View>
           </View>
@@ -590,7 +590,7 @@ export default class extends Component{
           <View style={styles.matchlisttabline}></View>
           <TouchableOpacity style={[commonstyle.col1, commonstyle.viewcenter]} activeOpacity={0.8} >
             <Icon name="fire" size={20} color={'#D31B25'}/>
-            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.AllMoney}{'氦金'}</Text>
+            <Text style={[commonstyle.red, commonstyle.fontsize12]}>{rowData.AllMoney}{'氦气'}</Text>
           </TouchableOpacity>
           <View style={styles.matchlisttabline} ></View>
           <View style={[commonstyle.col1, commonstyle.viewcenter]}>
