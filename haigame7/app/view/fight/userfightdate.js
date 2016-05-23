@@ -126,8 +126,8 @@ var UserFightList = React.createClass({
    }
    else{
      return(
-       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnborderred]} onPress = {this.gotoRoute.bind(this,"fightdetail")} >
-         <Text style={[commonstyle.red, commonstyle.fontsize12]}>{this.props.rowData.CurrentState}</Text>
+       <TouchableOpacity style={[styles.fightlistbtn,commonstyle.btnyellowblack]} onPress = {this.gotoRoute.bind(this,"fightdetail")} >
+         <Text style={[commonstyle.black, commonstyle.fontsize12]}>{'确认赛果'}</Text>
        </TouchableOpacity>
      );
    }
