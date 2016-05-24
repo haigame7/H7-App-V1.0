@@ -248,7 +248,8 @@ var FightStyle = StyleSheet.create({
     },
     fightlistbtn: {
         width: 70,
-        height: 20,
+        height: 25,
+        marginTop: 5,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
