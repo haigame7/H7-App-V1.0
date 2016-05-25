@@ -111,6 +111,8 @@ export default{
           'DateID':data.dateID,
           'SFightAddress':data.sfightaddress,
           'EFightAddress':data.efightaddress,
+          'SFightPic':data.sfightpic,
+          'EFightPic':data.efightpic,
         },
         callback
       );
