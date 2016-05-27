@@ -32,5 +32,13 @@ export default {
       {'OutTradeno':outTradeno},
       callback
     );
+  },
+
+  addAssetRecord(data,callback) {
+    FecthService.postFecth(
+      ApiConfig.ASSERT_API.ADD_ASSETRECORD,
+      data,
+      callback
+    );
   }
 }

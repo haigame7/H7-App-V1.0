@@ -56,6 +56,7 @@ export default class extends Component{
     }
   }
   componentWillMount() {
+    // console.log(this.props.userData.UserID);
     let _this = this
     if (Platform.OS == 'android') {
       WeChatAndroid.registerApp(appId,(err,registerOK) => {
@@ -88,10 +89,10 @@ export default class extends Component{
        }
       });
     } else {
-      this.subscription = NativeAppEventEmitter.addListener(
-        'EventReminder',
-        (reminder) => console.log(reminder.name)
-      );
+      // this.subscription = NativeAppEventEmitter.addListener(
+      //   'EventReminder',
+      //   (reminder) => console.log(reminder.name)
+      // );
       // WeChatIOS.registerApp(appId, (res) => {
       //   if(res) {
       //     // Toast.show(res.toString())
@@ -124,10 +125,27 @@ export default class extends Component{
   }
 
   componentDidMount() {
+    let _this = this
     this.isWXAppInstalled()
     this.subscription = NativeAppEventEmitter.addListener(
       'PaymentResult',
-      (reminder) => console.log(reminder.paymentResult)
+      (reminder) => {
+        if(reminder.paymentResult === '交易完成') {
+          let params = {
+            'UserID': this.props.userData.UserID,
+            'VirtualMoney': this.state.data.money
+          }
+          AssertService.addAssetRecord(params,(response) => {
+            if (response[0].MessageCode == '0') {
+              console.log(_this.props._userAssetCallback);
+              _this.props._userAssetCallback('TotalAssertAndRank',1)
+              console.log("充值成功");
+            } else {
+              console.log('deleteAssetRecord 请求错误' + response[0].Message);
+            }
+          })
+        }
+      }
     );
   }
   componentWillUnmount() {
@@ -200,10 +218,23 @@ export default class extends Component{
   }
 
   _selectRecharge(money){
+    let _this = this
     this.setState({
       data:{money:money},
     });
     // console.log(this.state.data.money);
+    let params = {
+      'UserID': this.props.userData.UserID,
+      'VirtualMoney': this.state.data.money
+    }
+    AssertService.addAssetRecord(params,(response) => {
+      if (response[0].MessageCode == '0') {
+        console.log("充值成功");
+        _this.props._userAssetCallback('TotalAssertAndRank',1)
+      } else {
+        console.log('addAssetRecord 请求错误' + response[0].Message);
+      }
+    })
     return;
   }
 

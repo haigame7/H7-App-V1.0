@@ -29,6 +29,7 @@ const assertApi = {
   'GET_ASSERTANDRANK' : apiSetup.MASTER_API_PATH +'v1/User/MyTotalAsset?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'FETCH_ASSERTLIST' : apiSetup.MASTER_API_PATH +'v1/User/MyAssetList?accesstoken='+ apiSetup.ACCESS_TOKEN,
   'DELETE_ASSETRECORD' : apiSetup.MASTER_API_PATH +'v1/User/DeleteAssetRecord?accesstoken='+ apiSetup.ACCESS_TOKEN,
+  'ADD_ASSETRECORD' : apiSetup.MASTER_API_PATH +'v1/User/Recharge?accesstoken='+ apiSetup.ACCESS_TOKEN,
 }
 const fightApi = {
   'GETUSERDEFAULTTEAM':apiSetup.MASTER_API_PATH +'/v1/Team/MyTeam?accesstoken='+ apiSetup.ACCESS_TOKEN,

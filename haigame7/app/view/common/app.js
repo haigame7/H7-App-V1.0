@@ -433,12 +433,6 @@ class App extends Component {
           </View>
           </RawContent>
         </Tab>
-        <Tab name="IAP">
-          <IconWithBar label="IAP" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
-          <RawContent>
-          <Iap />
-          </RawContent>
-        </Tab>
       </Tabbar>
     );
   }
