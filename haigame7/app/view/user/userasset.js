@@ -119,10 +119,10 @@ export default class extends Component{
      this.setState({modalOpen: true});
   }
   gotoRecharge(name) {
-    if (Platform.OS == 'ios') {
-      Toast.showShortCenter('充值功能暂未提供...')
-      return
-    }
+    // if (Platform.OS == 'ios') {
+    //   Toast.showShortCenter('充值功能暂未提供...')
+    //   return
+    // }
     this.props.navigator.push({
       name: name,
       component: Recharge,
@@ -192,7 +192,11 @@ export default class extends Component{
   render(){
     let RechargeView;
     if (Platform.OS == 'ios') {
-
+      RechargeView = (
+        <TouchableHighlight style={[styles.btn, commonstyle.btnwhitered]} underlayColor={'#FFFFFF'} onPress={() => this.gotoRecharge('recharge')}>
+          <Text style={commonstyle.red} >{'氦气充值'}</Text>
+        </TouchableHighlight>
+      )
     } else {
       RechargeView = (
         <TouchableHighlight style={[styles.btn, commonstyle.btnwhitered]} underlayColor={'#FFFFFF'} onPress={() => this.gotoRecharge('recharge')}>

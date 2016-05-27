@@ -30,6 +30,14 @@
 		333F77F91CC4D54E00028598 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */; };
 		333F77FB1CC4D55900028598 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77FA1CC4D55900028598 /* libc++.tbd */; };
 		333F77FC1CC4D59800028598 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333F77F01CC4D4C700028598 /* libRCTWeChat.a */; };
+		3342C64A1CF2F75600CAFD6B /* ManagerBridger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342C6491CF2F75600CAFD6B /* ManagerBridger.swift */; };
+		3342C64C1CF2F7B300CAFD6B /* Bridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342C64B1CF2F7B300CAFD6B /* Bridge.m */; };
+		3342C64E1CF2FB0900CAFD6B /* LikeDetaiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342C64D1CF2FB0900CAFD6B /* LikeDetaiViewController.swift */; };
+		3342C68C1CF34D2D00CAFD6B /* PaymentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342C68B1CF34D2D00CAFD6B /* PaymentManager.m */; };
+		3342C68F1CF3F5D500CAFD6B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3342C68E1CF3F5D500CAFD6B /* StoreKit.framework */; };
+		3342C6911CF3F62900CAFD6B /* RCTIAPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342C6901CF3F62900CAFD6B /* RCTIAPManager.m */; };
+		3342C6941CF3F73300CAFD6B /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342C6931CF3F73300CAFD6B /* PaymentViewController.m */; };
+		3342C6D61CF4055900CAFD6B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342C6D51CF4055900CAFD6B /* MainViewController.m */; };
 		335A8D571CEC5141007CAC13 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 335A8D561CEC5141007CAC13 /* splash.png */; };
 		336D6AE41CA05CCB0070EB50 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 336D6AE21CA05CBA0070EB50 /* libRNImagePicker.a */; };
 		338261D01CAC1FFC00B141F5 /* libRCTHttpCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 338261C41CAC1FDD00B141F5 /* libRCTHttpCache.a */; };
@@ -209,6 +217,19 @@
 		333F77F61CC4D54400028598 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		333F77F81CC4D54E00028598 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		333F77FA1CC4D55900028598 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		3342C6461CF2F70700CAFD6B /* haigame7-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "haigame7-Bridging-Header.h"; sourceTree = "<group>"; };
+		3342C6491CF2F75600CAFD6B /* ManagerBridger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerBridger.swift; sourceTree = "<group>"; };
+		3342C64B1CF2F7B300CAFD6B /* Bridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bridge.m; sourceTree = "<group>"; };
+		3342C64D1CF2FB0900CAFD6B /* LikeDetaiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeDetaiViewController.swift; sourceTree = "<group>"; };
+		3342C68A1CF34CC400CAFD6B /* PaymentManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentManager.h; sourceTree = "<group>"; };
+		3342C68B1CF34D2D00CAFD6B /* PaymentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentManager.m; sourceTree = "<group>"; };
+		3342C68D1CF3F5AD00CAFD6B /* RCTIAPManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTIAPManager.h; sourceTree = "<group>"; };
+		3342C68E1CF3F5D500CAFD6B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		3342C6901CF3F62900CAFD6B /* RCTIAPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTIAPManager.m; sourceTree = "<group>"; };
+		3342C6921CF3F71700CAFD6B /* PaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		3342C6931CF3F73300CAFD6B /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
+		3342C6D41CF4052900CAFD6B /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		3342C6D51CF4055900CAFD6B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		335A8D561CEC5141007CAC13 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		336D6AD31CA05CBA0070EB50 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		338261BD1CAC1FDD00B141F5 /* RCTHttpCache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTHttpCache.xcodeproj; path = "../node_modules/react-native-http-cache/ios/RCTHttpCache.xcodeproj"; sourceTree = "<group>"; };
@@ -241,6 +262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3342C68F1CF3F5D500CAFD6B /* StoreKit.framework in Frameworks */,
 				33D91FD01CE45F360047916A /* libbz2.1.0.tbd in Frameworks */,
 				333F77F71CC4D54400028598 /* libz.tbd in Frameworks */,
 				333F77FB1CC4D55900028598 /* libc++.tbd in Frameworks */,
@@ -399,6 +421,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3342C6341CF2F3E400CAFD6B /* RCTModuel_SWIFT */ = {
+			isa = PBXGroup;
+			children = (
+				3342C6461CF2F70700CAFD6B /* haigame7-Bridging-Header.h */,
+				3342C6491CF2F75600CAFD6B /* ManagerBridger.swift */,
+				3342C64B1CF2F7B300CAFD6B /* Bridge.m */,
+				3342C64D1CF2FB0900CAFD6B /* LikeDetaiViewController.swift */,
+			);
+			name = RCTModuel_SWIFT;
+			sourceTree = "<group>";
+		};
+		3342C6891CF34C3800CAFD6B /* RCTModuel */ = {
+			isa = PBXGroup;
+			children = (
+				3342C68A1CF34CC400CAFD6B /* PaymentManager.h */,
+				3342C68B1CF34D2D00CAFD6B /* PaymentManager.m */,
+				3342C68D1CF3F5AD00CAFD6B /* RCTIAPManager.h */,
+				3342C6901CF3F62900CAFD6B /* RCTIAPManager.m */,
+				3342C6921CF3F71700CAFD6B /* PaymentViewController.h */,
+				3342C6931CF3F73300CAFD6B /* PaymentViewController.m */,
+				3342C6D41CF4052900CAFD6B /* MainViewController.h */,
+				3342C6D51CF4055900CAFD6B /* MainViewController.m */,
+			);
+			name = RCTModuel;
+			sourceTree = "<group>";
+		};
 		336D6AD41CA05CBA0070EB50 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,6 +529,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3342C68E1CF3F5D500CAFD6B /* StoreKit.framework */,
+				3342C6891CF34C3800CAFD6B /* RCTModuel */,
+				3342C6341CF2F3E400CAFD6B /* RCTModuel_SWIFT */,
 				258530FF1CEDAD4200A4D3D1 /* Iconfont.ttf */,
 				33D91FCF1CE45F360047916A /* libbz2.1.0.tbd */,
 				333F77FA1CC4D55900028598 /* libc++.tbd */,
@@ -553,6 +604,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 720;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -836,8 +888,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3342C6911CF3F62900CAFD6B /* RCTIAPManager.m in Sources */,
+				3342C64C1CF2F7B300CAFD6B /* Bridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				3342C64A1CF2F75600CAFD6B /* ManagerBridger.swift in Sources */,
+				3342C6D61CF4055900CAFD6B /* MainViewController.m in Sources */,
+				3342C64E1CF2FB0900CAFD6B /* LikeDetaiViewController.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				3342C68C1CF34D2D00CAFD6B /* PaymentManager.m in Sources */,
+				3342C6941CF3F73300CAFD6B /* PaymentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -907,6 +966,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: zi hai (N84LFTHA3B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zi hai (N84LFTHA3B)";
 				DEAD_CODE_STRIPPING = NO;
@@ -928,6 +988,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios;
 				PRODUCT_NAME = "氦7约战";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "haigame7-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -936,6 +998,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: zi hai (N84LFTHA3B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zi hai (N84LFTHA3B)";
 				HEADER_SEARCH_PATHS = (
@@ -956,6 +1019,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.haigame7.ios;
 				PRODUCT_NAME = "氦7约战";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "haigame7-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

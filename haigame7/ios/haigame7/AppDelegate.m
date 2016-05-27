@@ -13,9 +13,12 @@
 #import "RCTSplashScreen.h"
 #import "RCTWeChat.h"
 #import "RCTHotUpdate.h"
+
+#import "MainViewController.h"
+#import "PaymentViewController.h"
 @implementation AppDelegate
 
-
+RCT_EXPORT_MODULE()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -72,6 +75,29 @@
 
   return [[RCTWeChat shareInstance] handleOpenURL: url];
 
+}
+
+RCT_EXPORT_METHOD(jumpto:(NSString *)name callback:(RCTResponseSenderBlock)callback)
+{
+//  name = @"huhaoran";
+//  UIViewController *mainVC = [[MainViewController alloc] init];
+//  PaymentViewController *payVC = [[PaymentViewController alloc] init];
+//  payVC.view.backgroundColor=[UIColor colorWithWhite:0 alpha:0.4];
+//  
+//  payVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+////  [self.window.rootViewController presentViewController:payVC animated:YES completion:^(void){
+////    
+////    payVC.view.superview.backgroundColor = [UIColor clearColor];
+////    
+////    
+////  }];
+//  NSLog(@"%s","asdf");
+//  [mainVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+//  [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:mainVC animated:YES completion:nil];
+// [nav pushViewController:sec animated:YES];
+  
+  
+  
 }
 
 @end

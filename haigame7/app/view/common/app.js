@@ -46,6 +46,7 @@ import Cache from '../../../temp/cache'
 import userdata from '../../modules/data_model'
 import SplashScreen from '@remobile/react-native-splashscreen';
 import _updateConfig from '../../../update.json';
+import Iap from '../../../temp/iap.js'
 
 const {appKey} = _updateConfig[Platform.OS];
 var url = 'http://sso.haigame7.com/upload/H7.apk';
@@ -430,6 +431,12 @@ class App extends Component {
              updateLoginState={this.updateLoginState.bind(this)}
              navigator={this.props.navigator} {...this.state}/>
           </View>
+          </RawContent>
+        </Tab>
+        <Tab name="IAP">
+          <IconWithBar label="IAP" onInactiveColor={'white'} onActiveColor={'red'} type={glypy.Team} ontype={glypy.TeamOn} from={'tabbaricon'}/>
+          <RawContent>
+          <Iap />
           </RawContent>
         </Tab>
       </Tabbar>
