@@ -361,7 +361,7 @@ export default class extends Component{
 
 
   render(){
-    let fields = [{ref: 'money', placeholder: '请输入充值氦气数量', keyboardType: 'numeric', maxLength: 10,placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
+    let fields = [{ref: 'money', placeholder: '请输入充值氦气数量', keyboardType: 'numeric', underlineColorAndroid: 'rgba(0, 0, 0, 0)', maxLength: 10,placeholderTextColor: '#484848', message: '充值金额不能为空', style: [styles.logininputfont]},]
     let btn;
     let inputView ;
     // console.log(this.state.registerWechat);
