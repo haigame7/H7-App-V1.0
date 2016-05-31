@@ -132,18 +132,15 @@ export default class extends Component{
       }});
   }
   _userAssetCallback(key,params){
-    console.log('binnnnn');
     switch (key) {
       case 'TotalAssertAndRank':
-        // this._getTotalAssertAndRank()
-        // this.props._callback('TotalAssertAndRank') //回调user的callback方法
+        this._getTotalAssertAndRank()
+        this.props._callback('TotalAssertAndRank') //回调user的callback方法
         if('startPage' in params){
-          // console.log('&&&&&&&&&&&');
-          // console.log('回调更新');
           this.setState({
             assetData: []
           })
-          // this._fetchAssertList(params['startPage'])
+          this._fetchAssertList(params['startPage'])
         }
         break;
     }

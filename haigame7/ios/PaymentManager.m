@@ -25,11 +25,11 @@ NSString *_result = @"";
 
 RCT_EXPORT_METHOD(purchaseEvent:(NSString *)productID callback:(RCTResponseSenderBlock)callback)
 {
+  NSLog(@"%@",productID);
   _productID = productID;
-  [[SKPaymentQueue defaultQueue] addTransactionObserver:self]; 
-  NSString *product = productID;
+  [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
   if([SKPaymentQueue canMakePayments]){
-    [self requestProductData:product];
+    [self requestProductData:_productID];
   }else{
     NSLog(@"不允许程序内付费");
   }
@@ -69,6 +69,8 @@ RCT_EXPORT_METHOD(purchaseEvent:(NSString *)productID callback:(RCTResponseSende
 //    NSLog(@"%@", [pro productIdentifier]);
     if([pro.productIdentifier isEqualToString:_productID]){
       p = pro;
+    } else {
+      NSLog(@"%s","errooooo");
     }
   }
   
@@ -86,10 +88,10 @@ RCT_EXPORT_METHOD(purchaseEvent:(NSString *)productID callback:(RCTResponseSende
 
 - (void)requestDidFinish:(SKRequest *)request{
   NSLog(@"------------反馈信息结束-----------------");
+  NSLog(@"%@",request);
 }
 //监听购买结果
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transaction{
-  NSLog(@"%s","这里出发ICI");
   for(SKPaymentTransaction *tran in transaction){
     
     switch (tran.transactionState) {
@@ -113,12 +115,12 @@ RCT_EXPORT_METHOD(purchaseEvent:(NSString *)productID callback:(RCTResponseSende
         break;
     }
   }
-  [self paymentEventReminderReceived];
+//  [self paymentEventReminderReceived];
 }
 
 //交易结束
 - (void)completeTransaction:(SKPaymentTransaction *)transaction{
-  NSLog(@"交易结束");
+  NSLog(@"is over");
   
   [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 //  [self paymentEventReminderReceived];

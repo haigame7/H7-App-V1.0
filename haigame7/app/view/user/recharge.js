@@ -130,16 +130,18 @@ export default class extends Component{
     this.subscription = NativeAppEventEmitter.addListener(
       'PaymentResult',
       (reminder) => {
-        if(reminder.paymentResult === '交易完成') {
+        console.log(reminder);
+        if(reminder.paymentResult == '交易完成') {
+          Toast.show('交易完成')
           let params = {
             'UserID': this.props.userData.UserID,
             'VirtualMoney': this.state.data.money
           }
           AssertService.addAssetRecord(params,(response) => {
             if (response[0].MessageCode == '0') {
-              console.log(_this.props._userAssetCallback);
-              _this.props._userAssetCallback('TotalAssertAndRank',1)
-              console.log("充值成功");
+              // console.log(_this.props._userAssetCallback);
+              _this.props._userAssetCallback('TotalAssertAndRank',{'startPage':1})
+              console.log("充值成功lalal");
             } else {
               console.log('deleteAssetRecord 请求错误' + response[0].Message);
             }
@@ -223,19 +225,6 @@ export default class extends Component{
       data:{money:money},
     });
     // console.log(this.state.data.money);
-    let params = {
-      'UserID': this.props.userData.UserID,
-      'VirtualMoney': this.state.data.money
-    }
-    AssertService.addAssetRecord(params,(response) => {
-      if (response[0].MessageCode == '0') {
-        console.log("充值成功");
-        _this.props._userAssetCallback('TotalAssertAndRank',1)
-      } else {
-        console.log('addAssetRecord 请求错误' + response[0].Message);
-      }
-    })
-    return;
   }
 
   _rechargeFail() {
